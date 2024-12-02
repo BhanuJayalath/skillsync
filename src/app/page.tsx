@@ -1,101 +1,248 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import styles from "./assets/css/landing.module.css";
 
-export default function Home() {
+interface Testimonial {
+  id: number;
+  text: string;
+  name: string;
+}
+
+const LandingPage = () => {
+  const [email, setEmail] = useState("");
+  const testimonials: Testimonial[] = [
+    {
+      id: 1,
+      text: "Thank You for your service. I am very pleased with the result. I have seen exponential growth in my business and it's all thanks to your amazing service.",
+      name: "Customer 1",
+    },
+    {
+      id: 2,
+      text: "Thank You for your service. I am very pleased with the result. I have seen exponential growth in my business and it's all thanks to your amazing service.",
+      name: "Customer 2",
+    },
+    {
+      id: 3,
+      text: "Thank You for your service. I am very pleased with the result. I have seen exponential growth in my business and it's all thanks to your amazing service.",
+      name: "Customer 3",
+    },
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div className={styles.container1}>
+      {/* Navigation */}
+      <nav className="navbar navbar-expand-lg navbar px-4">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="#">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/logo.png"
+              alt="SkillSync"
+              width={120}
+              height={40}
+              className="logo"
             />
-            Deploy now
           </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          <div className="d-flex align-items-center">
+            <ul className="navbar-nav me-3">
+              <li className="nav-item dropdown">
+                <a className="nav-link" href="#">
+                  Services
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  About Us
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  Contact Us
+                </a>
+              </li>
+            </ul>
+            <button className="btn btn-outline-primary me-2">Login</button>
+            <button className="btn btn-dark">Register</button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </nav>
+
+      {/* Hero Section */}
+      <section className={`${styles.hero} container mt-5`}>
+        <div className="row align-items-center">
+          <div className="col-md-6">
+            <h1 className="display-4 fw-bold mb-4">
+              Increase Your Skills
+              <br />
+              And Be Updated on
+              <br />
+              Industry Standards
+            </h1>
+            <button className="btn btn-dark btn-lg">Get Started</button>
+          </div>
+          <div className="col-md-6">
+            <Image
+              src="/hero-image.jpg"
+              alt="Professional"
+              width={500}
+              height={400}
+              className={styles.heroImage}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Partner Logos */}
+      <div className={`${styles.partners} container3 my-5`}>
+        <div className="row justify-content-center align-items-center">
+          {["Google", "Trello", "Monday", "LinkedIn", "TopJobs"].map(
+            (partner) => (
+              <div key={partner} className="col">
+                <Image
+                  src={`/${partner.toLowerCase()}.jpg`}
+                  alt={partner}
+                  width={100}
+                  height={40}
+                  className={styles.partnerLogo}
+                />
+              </div>
+            )
+          )}
+        </div>
+      </div>
+
+      <div className={styles.container2}>
+        {/* What We Do Section */}
+        <section className="container my-5 whatwedo">
+          <h2 className="mb-4">WHAT WE DO</h2>
+          <h3 className="h2 mb-5">
+            We provide the Perfect Solutions
+            <br />
+            to Improve Your Skill-Set
+          </h3>
+
+          <div className="row">
+            {["Grow Your Skills", "Improve Resume", "AI-Driven Interviews"].map(
+              (service) => (
+                <div key={service} className="col-md-4 mb-4">
+                  <div className={styles.serviceCard}>
+                    <div className={styles.serviceIcon}></div>
+                    <h4>{service}</h4>
+                    <a href="#" className={styles.learnMore}>
+                      Learn More →
+                    </a>
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className={`${styles.testimonials} container my-5`}>
+          <h2>TESTIMONIALS</h2>
+          <h3 className="h2 mb-5">
+            See What Our Customers
+            <br />
+            Say About Us
+          </h3>
+
+          <div className="row">
+            {testimonials.map((testimonial) => (
+              <div key={testimonial.id} className="col-md-4 mb-4">
+                <div className={styles.testimonialCard}>
+                  <p>{testimonial.text}</p>
+                  <div className={styles.testimonialAuthor}>
+                    <Image
+                      src={`/avatar-${testimonial.id}.jpg`}
+                      alt={testimonial.name}
+                      width={50}
+                      height={50}
+                      className={styles.avatar}
+                    />
+                    <span>{testimonial.name}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Subscribe Section */}
+        <section className={`${styles.subscribe} container my-5 text-center`}>
+          <h2>SUBSCRIBE</h2>
+          <h3 className="h2 mb-3">
+            Subscribe To Get The Latest
+            <br />
+            News About Us
+          </h3>
+          <p className="text-muted">
+            Please Drop Your Email Below To Get Daily Updates About What We Do
+          </p>
+
+          <div className="row justify-content-center">
+            <div className="col-md-6">
+              <div className="input-group mb-3">
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter Your Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <button className="btn btn-dark">Subscribe</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Footer */}
+      <footer className={`${styles.footer} mt-5 py-5`}>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-4">
+              <Image src="/logo.png" alt="SkillSync" width={120} height={40} />
+              <p className="mt-3">
+                We provide the Perfect Solutions
+                <br />
+                to Improve Your Skill-Set
+              </p>
+              <div className={styles.socialIcons}>
+                <a href="#"><i className="fab fa-facebook"></i></a>
+                <a href="#"><i className="fab fa-twitter"></i></a>
+                <a href="#"><i className="fab fa-linkedin"></i></a>
+                <a href="#"><i className="fab fa-youtube"></i></a>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <h5>Quick Links</h5>
+              <ul className="list-unstyled">
+                <li><a href="#">Services</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact Us</a></li>
+              </ul>
+            </div>
+            <div className="col-md-4">
+              <h5>Address</h5>
+              <p>
+                CS123,
+                <br />
+                SkillSync,
+                <br />
+                Colombo 4.
+              </p>
+            </div>
+          </div>
+          <div className="text-center mt-4">
+            <p>©Copyright Design SkillSync 2024</p>
+          </div>
+        </div>
       </footer>
     </div>
   );
-}
+};
+
+export default LandingPage;
