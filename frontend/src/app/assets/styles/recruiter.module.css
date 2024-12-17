@@ -1,0 +1,143 @@
+html {
+  margin: 0 auto;
+  background-color: aliceblue;
+}
+.montserrat h1 {
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.main {
+  z-index: -1;
+  height: auto;
+  width: 100%;
+}
+.navigation {
+  background-color: aqua;
+  width: 100%;
+  height: 100px;
+}
+.contentContainer {
+  background-color: rgb(96, 181, 255);
+  float: right;
+  width: 84%;
+  height: 100vh;
+}
+.sideBar {
+  position: fixed;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 0%;
+  background-color: aliceblue;
+  width: 15%;
+  color: black;
+  float: left;
+  height: 100vh;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sideBar ul li {
+  gap: 20px;
+}
+#contentSection {
+  background-color: aliceblue;
+  width: 100%;
+  min-height: 100vh;
+}
+#contentContainer1,
+#contentContainer2 {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: black;
+  width: 100%;
+}
+#contentContainer1 {
+  flex-direction: row;
+  height: 70vh;
+}
+
+#contentContainer2 {
+  flex-direction: column;
+  height: 100vh;
+}
+#topGraded,
+#profiles,
+#results {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+  width: 32%;
+  gap: 10px;
+  height: 100%;
+  background-color: aliceblue;
+}
+#topGraded > :first-child,
+#profiles > :first-child,
+#results > :first-child {
+  color: black;
+  font-weight: 500;
+  font-size: 20px;
+}
+#topGradedContainer,
+#profilesContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 5px;
+  gap: 20px;
+  padding: 10px 20px 10px 20px;
+  width: 100%;
+  height: 12%;
+  background-color: rgb(5, 5, 5);
+}
+#topGradedContainer > :last-child,
+#profilesContainer > :last-child {
+  margin-left: auto;
+}
+#mockExams,
+#jobListing {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 45%;
+  background-color: aqua;
+  color: black;
+}
+#mockExamscontainerHeader,
+#jobListingcontainerHeader {
+  text-align: left;
+  font-size: 20px;
+  width: 100%;
+  height: 20%;
+}
+.mockExamscontainerSection,
+.jobListingcontainerSection {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#mockExamscontainer,
+#jobListingcontainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 20px;
+  gap: 20px;
+  width: 32%;
+  height: 100%;
+  background-color: aliceblue;
+}
