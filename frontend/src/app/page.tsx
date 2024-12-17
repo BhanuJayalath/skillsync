@@ -3,7 +3,9 @@
 import Image from "next/image";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import styles from "./assets/css/landing.module.css";
+import styles from "./assets/styles/landing.module.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 interface Testimonial {
   id: number;
@@ -33,41 +35,7 @@ const LandingPage = () => {
 
   return (
     <div className={styles.container1}>
-      {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar px-4">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            <Image
-              src="/logo.png"
-              alt="SkillSync"
-              width={120}
-              height={40}
-              className="logo"
-            />
-          </a>
-          <div className="d-flex align-items-center">
-            <ul className="navbar-nav me-3">
-              <li className="nav-item dropdown">
-                <a className="nav-link" href="#">
-                  Services
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  About Us
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Contact Us
-                </a>
-              </li>
-            </ul>
-            <button className="btn btn-outline-primary me-2">Login</button>
-            <button className="btn btn-dark">Register</button>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <section className={`${styles.hero} container mt-5`}>
@@ -84,7 +52,7 @@ const LandingPage = () => {
           </div>
           <div className="col-md-6">
             <Image
-              src="/hero-image.jpg"
+              src="/girl.png"
               alt="Professional"
               width={500}
               height={400}
@@ -95,24 +63,28 @@ const LandingPage = () => {
       </section>
 
       {/* Partner Logos */}
-      <div className={`${styles.partners} container3 my-5`}>
-        <div className="row justify-content-center align-items-center">
-          {["Google", "Trello", "Monday", "LinkedIn", "TopJobs"].map(
-            (partner) => (
-              <div key={partner} className="col">
-                <Image
-                  src={`/${partner.toLowerCase()}.jpg`}
-                  alt={partner}
-                  width={100}
-                  height={40}
-                  className={styles.partnerLogo}
-                />
-              </div>
-            )
-          )}
+      <section>
+        <div className={`${styles.partners} container3 my-5`}>
+          <div className="row justify-content-center align-items-center">
+            {["Google", "Trello", "Monday", "LinkedIn", "TopJobs"].map(
+              (partner) => (
+                <div key={partner} className="col-6 col-md-2 text-center">
+                  <Image
+                    src={`/${partner.toLowerCase()}.jpg`}
+                    alt={partner}
+                    width={100}
+                    height={40}
+                    className={styles.partnerLogo}
+                  />
+                </div>
+              )
+            )}
+          </div>
         </div>
-      </div>
+      </section>
 
+      {/* Features Section */}
+      
       <div className={styles.container2}>
         {/* What We Do Section */}
         <section className="container my-5 whatwedo">
@@ -199,48 +171,7 @@ const LandingPage = () => {
         </section>
       </div>
 
-      {/* Footer */}
-      <footer className={`${styles.footer} mt-5 py-5`}>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-4">
-              <Image src="/logo.png" alt="SkillSync" width={120} height={40} />
-              <p className="mt-3">
-                We provide the Perfect Solutions
-                <br />
-                to Improve Your Skill-Set
-              </p>
-              <div className={styles.socialIcons}>
-                <a href="#"><i className="fab fa-facebook"></i></a>
-                <a href="#"><i className="fab fa-twitter"></i></a>
-                <a href="#"><i className="fab fa-linkedin"></i></a>
-                <a href="#"><i className="fab fa-youtube"></i></a>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <h5>Quick Links</h5>
-              <ul className="list-unstyled">
-                <li><a href="#">Services</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact Us</a></li>
-              </ul>
-            </div>
-            <div className="col-md-4">
-              <h5>Address</h5>
-              <p>
-                CS123,
-                <br />
-                SkillSync,
-                <br />
-                Colombo 4.
-              </p>
-            </div>
-          </div>
-          <div className="text-center mt-4">
-            <p>©Copyright Design SkillSync 2024</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
