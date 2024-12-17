@@ -84,7 +84,7 @@ const LandingPage = () => {
           </div>
           <div className="col-md-6">
             <Image
-              src="/hero-image.jpg"
+              src="/HomePageImg.png"
               alt="Professional"
               width={500}
               height={400}

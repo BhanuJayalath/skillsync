@@ -67,11 +67,11 @@ const LandingPage = () => {
             <button className="btn btn-dark btn-lg">Get Started</button>
           </div>
           <div className="col-md-6">
-            <Image 
-              src="/hero-image.jpg" 
-              alt="Professional" 
-              width={500} 
-              height={400} 
+            <Image
+              src="/HomePageImg.png"
+              alt="Professional"
+              width={500}
+              height={400}
               className={styles.heroImage}
             />
           </div>
