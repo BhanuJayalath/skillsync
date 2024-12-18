@@ -28,21 +28,12 @@ const page = () =>{
                     <Image src={"/logo.png"} alt="Logo" width={200} height={0} />
                     <nav className={styles.nav}>
                         <ul>
-                            <a href="/">
-                                <li>🏠 Home</li>
-                            </a>
-                            <a href="#">
-                                <li>💬 Messages</li>
-                            </a>
-                            <a href="#">
-                                <li>⭐ Favorites</li>
-                            </a>
-                            <a href="#">
-                                <li>📈 Analytics</li>
-                            </a>
-                            <a href="#">
-                                <li>⚙️ Settings</li>
-                            </a>
+                            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+                            <li><a href="/">🏠 Home</a></li>
+                            <li><a href="#">💬 Messages</a></li>
+                            <li><a href="#">⭐ Favorites</a></li>
+                            <li><a href="#">📈 Analytics</a></li>
+                            <li><a href="#">⚙️ Settings</a></li>
                         </ul>
                     </nav>
                 </aside>
