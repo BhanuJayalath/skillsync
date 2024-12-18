@@ -1,25 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
 html {
   margin: 0 auto;
-  background-color: aliceblue;
+  background-color: #f9f9f9;
 }
-.montserrat h1 {
-  font-family: "Montserrat", serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
-}
+
 .main {
+  font-family: "Montserrat", serif;
   z-index: -1;
   height: auto;
   width: 100%;
 }
 .navigation {
-  background-color: aqua;
+  display: flex;
+  flex-direction: row;
+  background-color: #f9f9f9;
   width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
   height: 100px;
 }
+.navigation .welcomeBar {
+  display: flex;
+  padding: 20px;
+  flex-direction: row;
+  align-items: center;
+  width: 60%;
+  height: 60%;
+  border-radius: 10px;
+  background: linear-gradient(to right, #040829, #48afc9);
+}
+.navigation .searchBar {
+  display: flex;
+  padding: 20px;
+  flex-direction: row;
+  align-items: center;
+  font-size: 15px;
+  gap: 20px;
+  width: 30%;
+  height: 45%;
+  color: black;
+  border-radius: 50px;
+  background-color: #d1e5f4;
+}
+.navigation .searchBar > :last-child {
+  margin-left: auto;
+}
+
 .contentContainer {
-  background-color: rgb(96, 181, 255);
   float: right;
   width: 84%;
   height: 100vh;
@@ -31,7 +59,9 @@ html {
   flex-direction: column;
   align-items: center;
   top: 0%;
-  background-color: aliceblue;
+  gap: 50px;
+  padding-top: 20px;
+  background-color: #ffffff;
   width: 15%;
   color: black;
   float: left;
@@ -39,11 +69,28 @@ html {
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.sideBar ul li {
-  gap: 20px;
+.sideBar ul {
+  display: flex;
+  width: 100%;
+  height: 40%;
+  flex-direction: column;
+  gap: 5px;
+}
+.sideBar li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px;
+  gap: 15px;
+  font-size: 15px;
+  width: 100%;
+  height: 20%;
+  /* border-bottom: 1px solid rgb(214, 214, 214); */
 }
 #contentSection {
-  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: 100%;
   min-height: 100vh;
 }
@@ -53,17 +100,17 @@ html {
   padding: 20px;
   align-items: center;
   justify-content: space-between;
-  background-color: black;
   width: 100%;
 }
 #contentContainer1 {
   flex-direction: row;
   height: 70vh;
 }
-
 #contentContainer2 {
   flex-direction: column;
-  height: 100vh;
+  height: 90vh;
+  border-radius: 20px;
+  background-color: #ffffff;
 }
 #topGraded,
 #profiles,
@@ -75,29 +122,34 @@ html {
   width: 32%;
   gap: 10px;
   height: 100%;
-  background-color: aliceblue;
+  border-radius: 5px;
+  background-color: #d1e5f4;
 }
 #topGraded > :first-child,
 #profiles > :first-child,
 #results > :first-child {
   color: black;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 15px;
+  height: 30px;
 }
 #topGradedContainer,
-#profilesContainer {
+#profilesContainer,
+#resultsContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
   border-radius: 5px;
+  font-size: 15px;
   gap: 20px;
   padding: 10px 20px 10px 20px;
   width: 100%;
   height: 12%;
-  background-color: rgb(5, 5, 5);
+  background-color: #000f22;
 }
 #topGradedContainer > :last-child,
-#profilesContainer > :last-child {
+#profilesContainer > :last-child,
+#resultsContainer > :last-child {
   margin-left: auto;
 }
 #mockExams,
@@ -108,8 +160,7 @@ html {
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
-  height: 45%;
-  background-color: aqua;
+  height: 50%;
   color: black;
 }
 #mockExamscontainerHeader,
@@ -139,5 +190,14 @@ html {
   gap: 20px;
   width: 32%;
   height: 100%;
-  background-color: aliceblue;
+  background-color: #d1e5f4;
+}
+.sideBar li:hover,
+#topGradedContainer:hover,
+#profilesContainer:hover,
+#resultsContainer:hover,
+#mockExamscontainer:hover,
+#jobListingcontainer:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease-in-out;
 }

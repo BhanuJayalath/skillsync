@@ -4,9 +4,9 @@ export default function Tab() {
     <>
       <Image
         alt="profile-icon"
-        width={30}
-        height={30}
-        src="/profile-icon.svg"
+        width={20}
+        height={20}
+        src="/recruiter/profile-icon.svg"
       />
 
       <h1>User </h1>

@@ -4,13 +4,18 @@ export default function Tab() {
     <>
       <Image
         alt="profile-icon"
-        width={30}
-        height={30}
-        src="/profile-icon.svg"
+        width={20}
+        height={20}
+        src="/recruiter/profile-icon.svg"
       />
 
       <h1>User </h1>
-      <Image alt="tik-icon" width={20} height={20} src="/tik-icon.svg" />
+      <Image
+        alt="tik-icon"
+        width={15}
+        height={15}
+        src="/recruiter/tik-icon.svg"
+      />
     </>
   );
 }

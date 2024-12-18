@@ -8,7 +8,30 @@ export default function RecruiterProfile() {
   return (
     <section className={styles.main}>
       <div className={styles.contentContainer}>
-        <div className={styles.navigation}></div>
+        <div className={styles.navigation}>
+          <div className={styles.welcomeBar}>Welcome User</div>
+          <search className={styles.searchBar}>
+            <Image
+              alt="menu-icon"
+              width={23}
+              height={23}
+              src="/recruiter/menu.svg"
+            />
+            Search
+            <Image
+              alt="search-icon"
+              width={23}
+              height={23}
+              src="/recruiter/search.svg"
+            />
+          </search>
+          <Image
+            alt="notification-icon"
+            width={23}
+            height={23}
+            src="/recruiter/bell.svg"
+          />
+        </div>
         <div id={styles.contentSection}>
           <div id={styles.contentContainer1}>
             <div id={styles.topGraded}>
@@ -52,13 +75,13 @@ export default function RecruiterProfile() {
             </div>
             <div id={styles.results}>
               <h1>Results</h1>
-              <div id={styles.profilesContainer}>
+              <div id={styles.resultsContainer}>
                 <ResultTab />
               </div>
-              <div id={styles.profilesContainer}>
+              <div id={styles.resultsContainer}>
                 <ResultTab />
               </div>
-              <div id={styles.profilesContainer}>
+              <div id={styles.resultsContainer}>
                 <ResultTab />
               </div>
             </div>
@@ -72,7 +95,7 @@ export default function RecruiterProfile() {
                     alt="exam-icon"
                     width={60}
                     height={60}
-                    src="/exam-icon.svg"
+                    src="/recruiter/exam-icon.svg"
                   />
                   <h1>Mock Exam 1</h1>
                 </div>
@@ -81,7 +104,7 @@ export default function RecruiterProfile() {
                     alt="exam-icon"
                     width={60}
                     height={60}
-                    src="/exam-icon.svg"
+                    src="/recruiter/exam-icon.svg"
                   />
                   <h1>Mock Exam 2</h1>
                 </div>
@@ -90,7 +113,7 @@ export default function RecruiterProfile() {
                     alt="exam-icon"
                     width={60}
                     height={60}
-                    src="/exam-icon.svg"
+                    src="/recruiter/exam-icon.svg"
                   />
                   <h1>Mock Exam 3</h1>
                 </div>
@@ -104,7 +127,7 @@ export default function RecruiterProfile() {
                     alt="job-search"
                     width={60}
                     height={60}
-                    src="/job-search.svg"
+                    src="/recruiter/job-search.svg"
                   />
                   <h1>Internship 01</h1>
                 </div>
@@ -114,7 +137,7 @@ export default function RecruiterProfile() {
                     alt="job-search"
                     width={60}
                     height={60}
-                    src="/job-search.svg"
+                    src="/recruiter/job-search.svg"
                   />
                   <h1>Internship 02</h1>
                 </div>
@@ -124,7 +147,7 @@ export default function RecruiterProfile() {
                     alt="job-search"
                     width={60}
                     height={60}
-                    src="/job-search.svg"
+                    src="/recruiter/job-search.svg"
                   />
                   <h1>Internship 03</h1>
                 </div>
@@ -142,10 +165,42 @@ export default function RecruiterProfile() {
           className="logo"
         />
         <ul>
-          <li>Home</li>
-          <li>Message</li>
-          <li>Favourites</li>
-          <li>Analytics</li>
+          <li>
+            <Image
+              src="/recruiter/home.svg"
+              alt="home-icon"
+              width={23}
+              height={23}
+            />
+            Home
+          </li>
+          <li>
+            <Image
+              src="/recruiter/message.svg"
+              alt="message-icon"
+              width={23}
+              height={23}
+            />
+            Message
+          </li>
+          <li>
+            <Image
+              src="/recruiter/add-to-favourites.svg"
+              alt="favourites-icon"
+              width={23}
+              height={23}
+            />
+            Favourites
+          </li>
+          <li>
+            <Image
+              src="/recruiter/analytics.svg"
+              alt="analytics-icon"
+              width={23}
+              height={23}
+            />
+            Analytics
+          </li>
         </ul>
       </div>
     </section>
