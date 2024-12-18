@@ -17,8 +17,8 @@ const Navbar = () => {
         <div className="d-flex align-items-center">
           <ul className="navbar-nav me-3">
             <li className="nav-item dropdown">
-              <a className="nav-link" href="#">
-                Services
+              <a className="nav-link" href="./userProfile">
+                User Profile
               </a>
             </li>
             <li className="nav-item">
