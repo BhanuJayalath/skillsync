@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+html {
+  margin: 0 auto;
+  background-color: #f9f9f9;
+}
+
+.main {
+  font-family: "Montserrat", serif;
+  z-index: -1;
+  height: auto;
+  width: 100%;
+}
+.navigation {
+  display: flex;
+  flex-direction: row;
+  background-color: #f9f9f9;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100px;
+}
+.navigation .welcomeBar {
+  display: flex;
+  padding: 20px;
+  flex-direction: row;
+  align-items: center;
+  width: 60%;
+  height: 60%;
+  border-radius: 10px;
+  background: linear-gradient(to right, #040829, #48afc9);
+}
+.navigation .searchBar {
+  display: flex;
+  padding: 20px;
+  flex-direction: row;
+  align-items: center;
+  font-size: 15px;
+  gap: 20px;
+  width: 30%;
+  height: 45%;
+  color: black;
+  border-radius: 50px;
+  background-color: #d1e5f4;
+}
+.navigation .searchBar > :last-child {
+  margin-left: auto;
+}
+
+.contentContainer {
+  float: right;
+  width: 84%;
+  height: 100vh;
+}
+.sideBar {
+  position: fixed;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 0%;
+  gap: 50px;
+  padding-top: 20px;
+  background-color: #ffffff;
+  width: 15%;
+  color: black;
+  float: left;
+  height: 100vh;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sideBar ul {
+  display: flex;
+  width: 100%;
+  height: 40%;
+  flex-direction: column;
+  gap: 5px;
+}
+.sideBar li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px;
+  gap: 15px;
+  font-size: 15px;
+  width: 100%;
+  height: 20%;
+  /* border-bottom: 1px solid rgb(214, 214, 214); */
+}
+#contentSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  min-height: 100vh;
+}
+#contentContainer1,
+#contentContainer2 {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+#contentContainer1 {
+  flex-direction: row;
+  height: 70vh;
+}
+#contentContainer2 {
+  flex-direction: column;
+  height: 90vh;
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+#topGraded,
+#profiles,
+#results {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px;
+  width: 32%;
+  gap: 10px;
+  height: 100%;
+  border-radius: 5px;
+  background-color: #d1e5f4;
+}
+#topGraded > :first-child,
+#profiles > :first-child,
+#results > :first-child {
+  color: black;
+  font-weight: 500;
+  font-size: 15px;
+  height: 30px;
+}
+#topGradedContainer,
+#profilesContainer,
+#resultsContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 15px;
+  gap: 20px;
+  padding: 10px 20px 10px 20px;
+  width: 100%;
+  height: 12%;
+  background-color: #000f22;
+}
+#topGradedContainer > :last-child,
+#profilesContainer > :last-child,
+#resultsContainer > :last-child {
+  margin-left: auto;
+}
+#mockExams,
+#jobListing {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 50%;
+  color: black;
+}
+#mockExamscontainerHeader,
+#jobListingcontainerHeader {
+  text-align: left;
+  font-size: 20px;
+  width: 100%;
+  height: 20%;
+}
+.mockExamscontainerSection,
+.jobListingcontainerSection {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#mockExamscontainer,
+#jobListingcontainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 20px;
+  gap: 20px;
+  width: 32%;
+  height: 100%;
+  background-color: #d1e5f4;
+}
+.sideBar li:hover,
+#topGradedContainer:hover,
+#profilesContainer:hover,
+#resultsContainer:hover,
+#mockExamscontainer:hover,
+#jobListingcontainer:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease-in-out;
+}
