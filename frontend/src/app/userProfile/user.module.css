@@ -204,7 +204,10 @@
 
 .chart svg {
     height: 100%;
-    width: 100%;
+}
+.chart polyline{
+    padding: 0.5em;
+    justify-content: center;
 }
 
 .chartLabels {
