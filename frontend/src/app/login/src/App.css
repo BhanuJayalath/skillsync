@@ -1,0 +1,169 @@
+
+.Login-page {
+  display: flex;
+  height: 100vh; 
+  width:100vw;
+  font-family: "Arial", sans-serif;
+  background-color: #d1e5f4; 
+  margin: 0;
+}
+
+/* Left Section - White Box */
+.left-section {
+  flex: 2;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  padding: 20px;
+  position: relative;
+}
+
+
+.image-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-overlay {
+  width: 160px; 
+  margin-bottom: 20px;
+}
+
+.background-image {
+  width: 300px; 
+}
+
+/* Right Section - Blue Background */
+.right-section {
+  flex: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d1e5f4;
+  padding: 20px; 
+}
+
+/* Form Container - White Box */
+.form-container {
+  background-color: #ffffff;
+  padding: 40px 50px; 
+  border-radius: 8px;
+  width: 450px; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+
+.welcome-text {
+  font-size: 18px;
+  color: #666;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.app-name {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: left;
+  margin: 0 0 20px 0;
+  color: #000e40; 
+}
+
+.social-btn {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.google-btn {
+  background-color: #f1f1f1;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.facebook-btn {
+  background-color: #3b5998;
+  color: white;
+}
+
+
+.divider {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.divider span {
+  background-color: white;
+  padding: 0 10px;
+  color: #666;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #ddd;
+}
+
+/* Input Box */
+.input-box {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color:aliceblue;
+}
+
+/* Options and Login Button */
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.forgot-password {
+  text-decoration: none;
+  color: #0078ff;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #000e40;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Register Link */
+.register-link {
+  font-size: 14px;
+  margin-top: 20px;
+  color: #666;
+}
+
+.register-link a {
+  color: #0078ff;
+  text-decoration: none;
+}
