@@ -201,3 +201,49 @@ html {
   transform: scale(1.02);
   transition: transform 0.3s ease-in-out;
 }
+
+.mockExam {
+  width: 100%;
+  height: 100%;
+  color: #000f22;
+  background-color: #48afc9;
+}
+#mockExamHeading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  text-align: center;
+}
+#mockExamSection {
+  width: 100%;
+  height: 100%;
+  background-color: #d1e5f4;
+}
+#mockExamSectionBlock {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background-color: aquamarine;
+  gap: 20px;
+}
+#mockExamSectionQuestion,
+#mockExamSectionAnswer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+}
+#mockExamSectionAnswer input[type="checkbox"]{
+  width: 10%;
+  height: 50%;
+}
+#mockExamSectionAnswer input[type="text"]{
+  width: 90%;
+  height: 100%;
+}

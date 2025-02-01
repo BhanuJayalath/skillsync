@@ -1,10 +1,18 @@
+"use client";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import MockExam from "./MockExam";
 import Tab from "./Tab";
 import ResultTab from "./ResultTab";
 import Image from "next/image";
+import { useState } from "react";
 import styles from "../assets/styles/recruiter.module.css";
 export default function RecruiterProfile() {
+  const [mockExamContainer, setMockExamContainer] = useState(false);
+
+  function loadMockExamComponent() {
+    setMockExamContainer(!mockExamContainer);
+  }
   return (
     <section className={styles.main}>
       <div className={styles.contentContainer}>
@@ -87,72 +95,82 @@ export default function RecruiterProfile() {
             </div>
           </div>
           <div id={styles.contentContainer2}>
-            <div id={styles.mockExams}>
-              <h1 id={styles.mockExamscontainerHeader}>Mock Exams</h1>
-              <div className={styles.mockExamscontainerSection}>
-                <div id={styles.mockExamscontainer}>
-                  <Image
-                    alt="exam-icon"
-                    width={60}
-                    height={60}
-                    src="/recruiter/exam-icon.svg"
-                  />
-                  <h1>Mock Exam 1</h1>
+            {mockExamContainer ? (
+              <MockExam />
+            ) : (
+              <>
+                {" "}
+                <div id={styles.mockExams}>
+                  <h1 id={styles.mockExamscontainerHeader}>Mock Exams</h1>
+                  <div className={styles.mockExamscontainerSection}>
+                    <div
+                      id={styles.mockExamscontainer}
+                      onClick={loadMockExamComponent}
+                    >
+                      <Image
+                        alt="exam-icon"
+                        width={60}
+                        height={60}
+                        src="/recruiter/exam-icon.svg"
+                      />
+                      <h1>Mock Exam 1</h1>
+                    </div>
+                    <div id={styles.mockExamscontainer}>
+                      <Image
+                        alt="exam-icon"
+                        width={60}
+                        height={60}
+                        src="/recruiter/exam-icon.svg"
+                      />
+                      <h1>Mock Exam 2</h1>
+                    </div>
+                    <div id={styles.mockExamscontainer}>
+                      <Image
+                        alt="exam-icon"
+                        width={60}
+                        height={60}
+                        src="/recruiter/exam-icon.svg"
+                      />
+                      <h1>Mock Exam 3</h1>
+                    </div>
+                  </div>
                 </div>
-                <div id={styles.mockExamscontainer}>
-                  <Image
-                    alt="exam-icon"
-                    width={60}
-                    height={60}
-                    src="/recruiter/exam-icon.svg"
-                  />
-                  <h1>Mock Exam 2</h1>
+                <div id={styles.jobListing}>
+                  <h1 id={styles.jobListingcontainerHeader}>Job Listing</h1>
+                  <div className={styles.jobListingcontainerSection}>
+                    <div id={styles.jobListingcontainer}>
+                      <Image
+                        alt="job-search"
+                        width={60}
+                        height={60}
+                        src="/recruiter/job-search.svg"
+                      />
+                      <h1>Internship 01</h1>
+                    </div>
+                    <div id={styles.jobListingcontainer}>
+                      {" "}
+                      <Image
+                        alt="job-search"
+                        width={60}
+                        height={60}
+                        src="/recruiter/job-search.svg"
+                      />
+                      <h1>Internship 02</h1>
+                    </div>
+                    <div id={styles.jobListingcontainer}>
+                      {" "}
+                      <Image
+                        alt="job-search"
+                        width={60}
+                        height={60}
+                        src="/recruiter/job-search.svg"
+                      />
+                      <h1>Internship 03</h1>
+                    </div>
+                  </div>
                 </div>
-                <div id={styles.mockExamscontainer}>
-                  <Image
-                    alt="exam-icon"
-                    width={60}
-                    height={60}
-                    src="/recruiter/exam-icon.svg"
-                  />
-                  <h1>Mock Exam 3</h1>
-                </div>
-              </div>
-            </div>
-            <div id={styles.jobListing}>
-              <h1 id={styles.jobListingcontainerHeader}>Job Listing</h1>
-              <div className={styles.jobListingcontainerSection}>
-                <div id={styles.jobListingcontainer}>
-                  <Image
-                    alt="job-search"
-                    width={60}
-                    height={60}
-                    src="/recruiter/job-search.svg"
-                  />
-                  <h1>Internship 01</h1>
-                </div>
-                <div id={styles.jobListingcontainer}>
-                  {" "}
-                  <Image
-                    alt="job-search"
-                    width={60}
-                    height={60}
-                    src="/recruiter/job-search.svg"
-                  />
-                  <h1>Internship 02</h1>
-                </div>
-                <div id={styles.jobListingcontainer}>
-                  {" "}
-                  <Image
-                    alt="job-search"
-                    width={60}
-                    height={60}
-                    src="/recruiter/job-search.svg"
-                  />
-                  <h1>Internship 03</h1>
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>
