@@ -1,15 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
-export default function MockExamContainer({ questionId }: { questionId: any }) {
+export default function MockExamContainer({
+  questionId,
+  questionItem,
+  setQuestionItem,
+}: {
+  questionId: any;
+  questionItem: number[];
+  setQuestionItem: React.Dispatch<React.SetStateAction<number[]>>;
+}) {
   const [question, setQuestion] = useState();
   const [answer1, setAnswer1] = useState();
   const [answer2, setAnswer2] = useState();
   const [answer3, setAnswer3] = useState();
   const [answer4, setAnswer4] = useState();
+  useEffect(() => {
+    if (
+      question != undefined ||
+      answer1 != undefined ||
+      answer2 != undefined ||
+      answer3 != undefined ||
+      answer4 != undefined
+    ) {
+      localStorage.setItem(questionId, JSON.stringify(storage));
+    }
+  });
 
   const storage = {
     Question: question,
-    "Answwer 1": answer1,
+    "Answer 1": answer1,
     "Answer 2": answer2,
     "Answer 3": answer3,
     "Answer 4": answer4,
@@ -35,9 +54,9 @@ export default function MockExamContainer({ questionId }: { questionId: any }) {
     setAnswer4(event.target.value);
   }
 
-  function save() {
-    localStorage.setItem(questionId, JSON.stringify(storage));
-  }
+  //   function save() {
+  //     localStorage.setItem(questionId, JSON.stringify(storage));
+  //   }
   function remove(questionId: number) {
     localStorage.removeItem(questionId.toString());
   }
@@ -69,7 +88,7 @@ export default function MockExamContainer({ questionId }: { questionId: any }) {
           <input type="checkbox" />
           <input type="text" onChange={saveAnswer4} />
         </div>
-        <button onClick={save}>Save</button>
+        {/* <button onClick={save}>Save</button> */}
         <button
           onClick={() => {
             remove(questionId);

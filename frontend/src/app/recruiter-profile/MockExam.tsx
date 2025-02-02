@@ -7,7 +7,7 @@ export default function MockExam() {
   const [questionItem, setQuestionItem] = useState<number[]>([]);
 
   useEffect(() => {
-    // retrieveLocalStorage();
+    retrieveLocalStorage();
   }, []);
 
   function addQuestion() {
@@ -15,23 +15,26 @@ export default function MockExam() {
     setQuestionItem([...questionItem, questionId]);
     console.log(questionId);
   }
-  function remove() {
-    const temp = [];
+  function retrieveLocalStorage() {
+    var temp = [];
     for (let QuestionId = 0; QuestionId < localStorage.length; QuestionId++) {
-      temp.push(QuestionId);
+      const local = localStorage.getItem(QuestionId.toString());
+      if (local) {
+        temp.push(JSON.parse(local));
+        setQuestionId(1 + QuestionId);
+      }
     }
     setQuestionItem(temp);
   }
-
   return (
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>Mock Exam 01</header>
       <button onClick={addQuestion}>Click me</button>
-      <button onClick={remove}>Test</button>
       {questionItem.map((item: any) => (
         <MockExamContainer
           questionId={item}
-          // setQuestionItem={setQuestionItem}
+          questionItem={questionItem}
+          setQuestionItem={setQuestionItem}
         />
       ))}
     </section>
