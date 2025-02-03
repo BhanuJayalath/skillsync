@@ -1,80 +1,141 @@
-//import React, { useState } from "react";
-import "./login.css";
-import logo from "../assets/images/"
-import image from "../images/Illustration.svg";
+"use client"; 
+import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link"; 
+import logo from "../assets/images/logo.png";
+import image from "../assets/images/Illustration.svg";
+import styles from "../assets/styles/login.module.css";
 
+const Login: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginError, setLoginError] = useState("");
 
-// const Login: React.FC = () => {
-//   const [email, setEmail] = useState<string>("");
-//   const [password, setPassword] = useState<string>("");
-//   const [error, setError] = useState<string>("");
+  
+  const handleSocialLogin = (provider: string) => {
+    setIsLoading(true);
+    setLoginError("");
 
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!email || !password) {
-//       setError("Email and password are required.");
-//       return;
-//     }
-//     console.log("Logging in with:", { email, password });
-//     setError("");
-//   };
+    
+    setTimeout(() => {
+      setIsLoading(false);
+      alert(`Mock Login with ${provider} successful!`);
+    }, 1500);
+  };
+
+  
+  const handleFormLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setLoginError("");
+
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      setLoginError("Please enter a valid email address.");
+      setIsLoading(false);
+      return;
+    }
+
+    
+    setTimeout(() => {
+      setIsLoading(false);
+      if (email === "test@example.com" && password === "password") {
+        alert("Mock Login successful! (Backend not implemented yet)");
+      } else {
+        setLoginError("Invalid email or password.");
+      }
+    }, 1500);
+  };
 
   return (
-    <div className={Login-page}>
+    <div className={styles.loginPage}>
       {/* Left Section */}
-      <div className="left-section">
-        <div className="image-container">
-          <img src={logo} alt="Logo" className="logo-overlay" />
-          <img src={image} alt="Illustration" className="background-image" />
+      <div className={styles.leftSection}>
+        <div className={styles.imageContainer}>
+          <Image
+            src={logo}
+            alt="Logo"
+            className={styles.logoOverlay}
+            width={160}
+            height={40}
+          />
+          <Image
+            src={image}
+            alt="Illustration"
+            className={styles.backgroundImage}
+            width={400}
+            height={400}
+          />
         </div>
       </div>
 
       {/* Right Section */}
-      <div className="right-section">
-        <div className="form-container">
-          <h4 className="welcome-text">Welcome to</h4>
-          <h1 className="app-name">SkillSync</h1>
+      <div className={styles.rightSection}>
+        <div className={styles.formContainer}>
+          <h4 className={styles.welcomeText}>Welcome to</h4>
+          <h1 className={styles.appName}>SkillSync</h1>
 
-          {/* Login Buttons */}
-          <button className="social-btn google-btn">Login with Google</button>
-          <button className="social-btn facebook-btn">Login with Facebook</button>
+          {/* Social Buttons */}
+          <button
+            className={`${styles.socialBtn} ${styles.googleBtn}`}
+            onClick={() => handleSocialLogin("Google")}
+            disabled={isLoading}
+          >
+            Login with Google
+          </button>
+          <button
+            className={`${styles.socialBtn} ${styles.facebookBtn}`}
+            onClick={() => handleSocialLogin("Facebook")}
+            disabled={isLoading}
+          >
+            Login with Facebook
+          </button>
 
           {/* Divider */}
-          <div className="divider">
+          <div className={styles.divider}>
             <span>OR</span>
           </div>
 
           {/* Login Form */}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleFormLogin}>
             <input
               type="email"
               placeholder="example@gmail.com"
+              className={styles.inputBox}
               value={email}
-             // onChange={(e) => setEmail(e.target.value)}
-              className="input-box"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <input
               type="password"
               placeholder="**********"
+              className={styles.inputBox}
               value={password}
-              //onChange={(e) => setPassword(e.target.value)}
-              className="input-box"
+              onChange={(e) => setPassword(e.target.value)}
             />
 
+            {/* Error Message */}
+            {loginError && <p className={styles.errorMessage}>{loginError}</p>}
+
             {/* Options */}
-            <div className="options">
+            <div className={styles.options}>
               <label>
                 <input type="checkbox" /> Remember me
               </label>
-              <a href="#" className="forgot-password">Forgot Password?</a>
+              <a href="#" className={styles.forgotPassword}>
+                Forgot Password?
+              </a>
             </div>
 
             {/* Login Button */}
-            <button type="submit" className="login-btn">Login</button>
+            <button type="submit" className={styles.loginBtn} disabled={isLoading}>
+              {isLoading ? "Logging in..." : "Login"}
+            </button>
           </form>
 
-          <p className="register-link">
-            Don't have an account? <a href="#">Register</a>
+          <p className={styles.registerLink}>
+            <br></br>
+            Don't have an account?{" "}
+            <Link href="/sign-up">Register</Link>
           </p>
         </div>
       </div>
