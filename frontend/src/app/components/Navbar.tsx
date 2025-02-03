@@ -32,8 +32,12 @@ const Navbar = () => {
               </a>
             </li>
           </ul>
-          <button className="btn btn-outline-primary me-2">Login</button>
-          <button className="btn btn-dark">Register</button>
+          <a href="./login">
+          <button className="btn btn-outline-primary me-2">Sign In</button>
+          </a>
+          <a href="./sign-up">
+            <button className="btn btn-dark">sign Up</button>
+          </a>
         </div>
       </div>
     </nav>

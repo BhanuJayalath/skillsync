@@ -119,9 +119,15 @@ const page = () =>{
                                         <polyline
                                             fill="none"
                                             stroke="#007bff"
-                                            strokeWidth="3"
+                                            strokeWidth="1"
                                             points="0,80 50,40 100,20 150,80 200,10 250,70"
                                         />
+                                        <circle cx="0" cy="80" r="3" fill="#007bff"/>
+                                        <circle cx="50" cy="40" r="3" fill="#007bff"/>
+                                        <circle cx="100" cy="20" r="3" fill="#007bff"/>
+                                        <circle cx="150" cy="80" r="3" fill="#007bff"/>
+                                        <circle cx="200" cy="10" r="3" fill="#007bff"/>
+                                        <circle cx="250" cy="70" r="3" fill="#007bff"/>
                                     </svg>
                                 </div>
                                 <div className={styles.chartLabels}>
