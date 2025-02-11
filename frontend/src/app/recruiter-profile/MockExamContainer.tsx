@@ -1,13 +1,18 @@
+"use client";
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExamContainer({
   questionId,
   questionItem,
+  questionCounter,
   setQuestionItem,
+  updateLocalStorage,
 }: {
   questionId: any;
   questionItem: number[];
+  questionCounter: number;
   setQuestionItem: React.Dispatch<React.SetStateAction<number[]>>;
+  updateLocalStorage: () => void;
 }) {
   const [question, setQuestion] = useState();
   const [answer1, setAnswer1] = useState();
@@ -54,17 +59,19 @@ export default function MockExamContainer({
     setAnswer4(event.target.value);
   }
 
-  //   function save() {
-  //     localStorage.setItem(questionId, JSON.stringify(storage));
-  //   }
+  function save() {
+    localStorage.setItem(questionId, JSON.stringify(storage));
+  }
   function remove(questionId: number) {
     localStorage.removeItem(questionId.toString());
+    updateLocalStorage();
   }
 
   return (
     <div id={styles.mockExamSection}>
       <div id={styles.mockExamSectionBlock}>
-        <header>Question{questionId}</header>
+        <header>Question{questionCounter}</header>
+        {/* <h1>{questionId}</h1> */}
         <h2>Add your question here</h2>
         <input
           id={styles.mockExamSectionQuestion}
@@ -88,7 +95,7 @@ export default function MockExamContainer({
           <input type="checkbox" />
           <input type="text" onChange={saveAnswer4} />
         </div>
-        {/* <button onClick={save}>Save</button> */}
+        <button onClick={save}>Save</button>
         <button
           onClick={() => {
             remove(questionId);
