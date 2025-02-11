@@ -7,12 +7,22 @@ export default function MockExamContainer({
   questionCounter,
   setQuestionItem,
   updateLocalStorage,
+  Question,
+  Answer1,
+  Answer2,
+  Answer3,
+  Answer4,
 }: {
   questionId: any;
   questionItem: number[];
   questionCounter: number;
   setQuestionItem: React.Dispatch<React.SetStateAction<number[]>>;
   updateLocalStorage: () => void;
+  Question: any;
+  Answer1: string;
+  Answer2: string;
+  Answer3: string;
+  Answer4: string;
 }) {
   const [question, setQuestion] = useState();
   const [answer1, setAnswer1] = useState();
@@ -20,16 +30,18 @@ export default function MockExamContainer({
   const [answer3, setAnswer3] = useState();
   const [answer4, setAnswer4] = useState();
   useEffect(() => {
-    if (
-      question != undefined ||
-      answer1 != undefined ||
-      answer2 != undefined ||
-      answer3 != undefined ||
-      answer4 != undefined
-    ) {
-      localStorage.setItem(questionId, JSON.stringify(storage));
-    }
-  });
+    // setQuestion(Question);
+    // console.log(Question);
+    // // if (
+    // //   question != undefined ||
+    // //   answer1 != undefined ||
+    // //   answer2 != undefined ||
+    // //   answer3 != undefined ||
+    // //   answer4 != undefined
+    // // ) {
+    //   localStorage.setItem(questionId, JSON.stringify(storage));
+    // // }
+  }, []);
 
   const storage = {
     Question: question,
@@ -41,6 +53,7 @@ export default function MockExamContainer({
 
   function saveQuestion(event: any) {
     setQuestion(event.target.value);
+    // console.log(event.target.value);
   }
 
   function saveAnswer1(event: any) {
@@ -71,11 +84,12 @@ export default function MockExamContainer({
     <div id={styles.mockExamSection}>
       <div id={styles.mockExamSectionBlock}>
         <header>Question{questionCounter}</header>
-        {/* <h1>{questionId}</h1> */}
+        <h1>{questionId}</h1>
         <h2>Add your question here</h2>
         <input
           id={styles.mockExamSectionQuestion}
           type="text"
+          value={question}
           onChange={saveQuestion}
         />
         <h2>Add your answers here</h2>

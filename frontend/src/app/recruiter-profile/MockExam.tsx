@@ -6,6 +6,11 @@ export default function MockExam() {
   const [questionId, setQuestionId] = useState(Date.now());
   const [questionItem, setQuestionItem] = useState<number[]>([1]);
   var counter = 0;
+  let question: string,
+    answer1: string,
+    answer2: string,
+    answer3: string,
+    answer4: string;
 
   useEffect(() => {
     retrieveLocalStorage();
@@ -18,14 +23,22 @@ export default function MockExam() {
   }
   function retrieveLocalStorage() {
     var temp = [];
-    for (let QuestionId = 1; QuestionId <= localStorage.length; QuestionId++) {
-      const local = localStorage.getItem(QuestionId.toString());
-      if (local) {
-        temp.push(JSON.parse(local));
-        // setQuestionId(1 + QuestionId);
+    for (let i = 0; i <= localStorage.length; i++) {
+      let key = localStorage.key(i);
+      if (key) {
+        const local = localStorage.getItem(key);
+        if (local) {
+          let jplocal = JSON.parse(local);
+          question = jplocal.Question;
+          answer1 = jplocal.answer1;
+          answer2 = jplocal.answer2;
+          answer3 = jplocal.answer3;
+          answer4 = jplocal.answer4;
+        }
+        temp.push(JSON.parse(key));
       }
     }
-    console.log(temp);
+    // console.log(temp);
     setQuestionItem(temp);
   }
   return (
@@ -34,7 +47,7 @@ export default function MockExam() {
       <button onClick={addQuestion}>Click me</button>
       {questionItem.map((item: any) => {
         counter++;
-        console.log(item);
+        console.log(question);
         return (
           <MockExamContainer
             key={item}
@@ -43,6 +56,11 @@ export default function MockExam() {
             questionItem={item}
             updateLocalStorage={retrieveLocalStorage}
             setQuestionItem={setQuestionItem}
+            Question={question}
+            Answer1={answer1}
+            Answer2={answer2}
+            Answer3={answer3}
+            Answer4={answer4}
           />
         );
       })}
