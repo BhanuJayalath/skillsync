@@ -2,54 +2,46 @@
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExamContainer({
-  questionId,
   questionItem,
   questionCounter,
-  setQuestionItem,
   updateLocalStorage,
-  Question,
-  Answer1,
-  Answer2,
-  Answer3,
-  Answer4,
 }: {
-  questionId: any;
-  questionItem: number[];
+  questionItem: any;
   questionCounter: number;
-  setQuestionItem: React.Dispatch<React.SetStateAction<number[]>>;
-  updateLocalStorage: () => void;
-  Question: any;
-  Answer1: string;
-  Answer2: string;
-  Answer3: string;
-  Answer4: string;
-}) {
-  const [question, setQuestion] = useState();
-  const [answer1, setAnswer1] = useState();
-  const [answer2, setAnswer2] = useState();
-  const [answer3, setAnswer3] = useState();
-  const [answer4, setAnswer4] = useState();
-  useEffect(() => {
-    // setQuestion(Question);
-    // console.log(Question);
-    // // if (
-    // //   question != undefined ||
-    // //   answer1 != undefined ||
-    // //   answer2 != undefined ||
-    // //   answer3 != undefined ||
-    // //   answer4 != undefined
-    // // ) {
-    //   localStorage.setItem(questionId, JSON.stringify(storage));
-    // // }
-  }, []);
 
+  updateLocalStorage: () => void;
+}) {
+  const [question, setQuestion] = useState("");
+  const [answer1, setAnswer1] = useState("");
+  const [answer2, setAnswer2] = useState("");
+  const [answer3, setAnswer3] = useState("");
+  const [answer4, setAnswer4] = useState("");
   const storage = {
+    QuestionId: questionItem.QuestionId,
     Question: question,
-    "Answer 1": answer1,
-    "Answer 2": answer2,
-    "Answer 3": answer3,
-    "Answer 4": answer4,
+    Answer1: answer1,
+    Answer2: answer2,
+    Answer3: answer3,
+    Answer4: answer4,
   };
+  useEffect(() => {
+    setQuestion(questionItem.Question);
+    setAnswer1(questionItem.Answer1);
+    setAnswer2(questionItem.Answer2);
+    setAnswer3(questionItem.Answer3);
+    setAnswer4(questionItem.Answer4);
+  }, []);
+  useEffect(() => {
+    if (
+      question != "" ||
+      answer1 != "" ||
+      answer2 != "" ||
+      answer3 != "" ||
+      answer4 != ""
+    ) {
+      localStorage.setItem(questionItem.QuestionId, JSON.stringify(storage));
+    }
+  }, [storage]);
 
   function saveQuestion(event: any) {
     setQuestion(event.target.value);
@@ -73,7 +65,8 @@ export default function MockExamContainer({
   }
 
   function save() {
-    localStorage.setItem(questionId, JSON.stringify(storage));
+    // console.log(questionId);
+    // localStorage.setItem(questionId, JSON.stringify(questionItem));
   }
   function remove(questionId: number) {
     localStorage.removeItem(questionId.toString());
@@ -84,7 +77,6 @@ export default function MockExamContainer({
     <div id={styles.mockExamSection}>
       <div id={styles.mockExamSectionBlock}>
         <header>Question{questionCounter}</header>
-        <h1>{questionId}</h1>
         <h2>Add your question here</h2>
         <input
           id={styles.mockExamSectionQuestion}
@@ -95,24 +87,24 @@ export default function MockExamContainer({
         <h2>Add your answers here</h2>
         <div id={styles.mockExamSectionAnswer}>
           <input type="checkbox" />
-          <input type="text" onChange={saveAnswer1} />
+          <input type="text" value={answer1} onChange={saveAnswer1} />
         </div>
         <div id={styles.mockExamSectionAnswer}>
           <input type="checkbox" />
-          <input type="text" onChange={saveAnswer2} />
+          <input type="text" value={answer2} onChange={saveAnswer2} />
         </div>
         <div id={styles.mockExamSectionAnswer}>
           <input type="checkbox" />
-          <input type="text" onChange={saveAnswer3} />
+          <input type="text" value={answer3} onChange={saveAnswer3} />
         </div>
         <div id={styles.mockExamSectionAnswer}>
           <input type="checkbox" />
-          <input type="text" onChange={saveAnswer4} />
+          <input type="text" value={answer4} onChange={saveAnswer4} />
         </div>
         <button onClick={save}>Save</button>
         <button
           onClick={() => {
-            remove(questionId);
+            remove(questionItem.QuestionId);
           }}
         >
           remove
