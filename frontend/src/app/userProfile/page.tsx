@@ -25,7 +25,9 @@ const page = () =>{
             <div className={styles.innerContainer}>
                 {/* Sidebar */}
                 <aside className={styles.sidebar}>
-                    <Image src={"/logo.png"} alt="Logo" width={200} height={0} />
+                    <div className={styles.logoContainer}>
+                        <Image src={"/logo.png"} alt="Logo" width={150} height={0} className={styles.logo} />
+                    </div>
                     <nav className={styles.nav}>
                         <ul>
                             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
@@ -113,32 +115,44 @@ const page = () =>{
                             <div className={styles.progress}>
                                 <h4>Dashboard Progress</h4>
                                 <div className={styles.chart}>
-                                    <svg viewBox="0 0 300 100">
-                                        <polyline
-                                            fill="none"
-                                            stroke="#007bff"
-                                            strokeWidth="1"
-                                            points="0,80 50,40 100,20 150,80 200,10 250,70"
-                                        />
-                                        <circle cx="0" cy="80" r="3" fill="#007bff"/>
-                                        <circle cx="50" cy="40" r="3" fill="#007bff"/>
-                                        <circle cx="100" cy="20" r="3" fill="#007bff"/>
-                                        <circle cx="150" cy="80" r="3" fill="#007bff"/>
-                                        <circle cx="200" cy="10" r="3" fill="#007bff"/>
-                                        <circle cx="250" cy="70" r="3" fill="#007bff"/>
+                                    <svg viewBox="-15 -10 300 125">
+                                        <g transform="scale(1, -1) translate(0, -100)">
+                                            <polyline
+                                                fill="none"
+                                                stroke="black"
+                                                strokeWidth="1"
+                                                points="0,100 0,0 275,0"
+                                            />
+                                            <polyline
+                                                fill="none"
+                                                stroke="#007bff"
+                                                strokeWidth="1"
+                                                points="10,80 50,40 100,20 150,80 200,20 250,70"
+                                            />
+                                            <circle cx="10" cy="80" r="3" fill="#007bff"/>
+                                            <circle cx="50" cy="40" r="3" fill="#007bff"/>
+                                            <circle cx="100" cy="20" r="3" fill="#007bff"/>
+                                            <circle cx="150" cy="80" r="3" fill="#007bff"/>
+                                            <circle cx="200" cy="20" r="3" fill="#007bff"/>
+                                            <circle cx="250" cy="70" r="3" fill="#007bff"/>
+                                        </g>
+                                        <text x="-12" y="0" fontSize="7" fill="black">100</text>
+                                        <text x="-11" y="50" fontSize="7" fill="black">50</text>
+                                        <text x="-10" y="100" fontSize="7" fill="black">0</text>
+
+                                        <text x="5" y="110" fontSize="7" fill="black">C1</text>
+                                        <text x="45" y="110" fontSize="7" fill="black">C2</text>
+                                        <text x="95" y="110" fontSize="7" fill="black">C3</text>
+                                        <text x="145" y="110" fontSize="7" fill="black">C5</text>
+                                        <text x="195" y="110" fontSize="7" fill="black">C6</text>
+                                        <text x="245" y="110" fontSize="7" fill="black">C7</text>
+
                                     </svg>
-                                </div>
-                                <div className={styles.chartLabels}>
-                                    <span>May</span>
-                                    <span>June</span>
-                                    <span>July</span>
-                                    <span>Aug.</span>
-                                    <span>Sept.</span>
                                 </div>
                             </div>
 
                             <div className={styles.courses}>
-                                <div className={styles.courseCard}><Image src={"/user/courses.png"} alt="course1"
+                            <div className={styles.courseCard}><Image src={"/user/courses.png"} alt="course1"
                                                                           width={100} height={100}/>🎓 Course 01
                                 </div>
                                 <div className={styles.courseCard}><Image src={"/user/courses.png"} alt="course2"
