@@ -1,7 +1,7 @@
 "use client"; // Indicating as a client-side component
 import Image from 'next/image';     // Importing images
 import Footer from "@/app/components/Footer";   // Importing Footer component
-import { useState } from 'react';   // Importing useState hook from React for state management
+import React, { useState } from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from './user.module.css';   // Importing custom styles
 
@@ -29,11 +29,14 @@ const page = () =>{
                     <nav className={styles.nav}>
                         <ul>
                             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                            <li><a href="/">🏠 Home</a></li>
-                            <li><a href="#">💬 Messages</a></li>
-                            <li><a href="#">⭐ Favorites</a></li>
-                            <li><a href="#">📈 Analytics</a></li>
-                            <li><a href="#">⚙️ Settings</a></li>
+                            <li><a href="/"><Image src={"/user/homeIcon.png"} alt="homeIcon"
+                                                   width={40} height={0} className={styles.navImage}/> Home</a></li>
+                            <li><a href="#"><Image src={"/user/progressChart.png"} alt="progressChart"
+                                                   width={40} height={0} className={styles.navImage}/> Progress</a></li>
+                            <li><a href="#"><Image src={"/user/courses.png"} alt="courses"
+                                                   width={50} height={0} className={styles.navImage}/> Courses</a></li>
+                            <li><a href="#"><Image src={"/user/cvIcon.png"} alt="CV_Icon"
+                                                   width={30} height={0} className={styles.navImage}/> Resume</a></li>
                         </ul>
                     </nav>
                 </aside>
@@ -106,11 +109,6 @@ const page = () =>{
 
                         {/* Courses and Progress */}
                         <section className={styles.dashboard}>
-                            <div className={styles.courses}>
-                                <div className={styles.courseCard}>🎓 Course 01</div>
-                                <div className={styles.courseCard}>🎓 Course 02</div>
-                                <div className={styles.courseCard}>🎓 Course 03</div>
-                            </div>
 
                             <div className={styles.progress}>
                                 <h4>Dashboard Progress</h4>
@@ -138,6 +136,19 @@ const page = () =>{
                                     <span>Sept.</span>
                                 </div>
                             </div>
+
+                            <div className={styles.courses}>
+                                <div className={styles.courseCard}><Image src={"/user/courses.png"} alt="course1"
+                                                                          width={100} height={100}/>🎓 Course 01
+                                </div>
+                                <div className={styles.courseCard}><Image src={"/user/courses.png"} alt="course2"
+                                                                          width={100} height={100}/>🎓 Course 02
+                                </div>
+                                <div className={styles.courseCard}><Image src={"/user/courses.png"} alt="course3"
+                                                                          width={100} height={100}/>🎓 Course 03
+                                </div>
+                            </div>
+
                         </section>
                     </div>
                 </main>

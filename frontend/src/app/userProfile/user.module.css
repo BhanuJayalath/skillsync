@@ -26,12 +26,19 @@
 }
 
 .nav ul {
+    display: flex;
+    flex-direction: column;
     list-style: none;
+    justify-content: center;
+    align-items: center;
     padding: 0;
     margin-top: 4em;
 }
 .nav a{
     text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .nav li {
@@ -40,7 +47,9 @@
     cursor: pointer;
     text-align: center;
 }
-
+.navImage{
+    margin-right: 0.6em;
+}
 /* Main Content */
 .mainContent {
     flex: 1;
@@ -176,15 +185,19 @@
     flex-wrap: wrap;
 }
 
+
 .courseCard {
     background: #e3f2fd;
     border-radius: 0.5em;
     padding: 1em;
+    display: flex;
+    flex-direction: column;
     flex: 1 1 calc(50% - 1em); /* Ensures responsive width */
     text-align: center;
     font-weight: bold;
+    justify-content: center;
+    align-items: center;
 }
-
 /* Progress Section */
 .progress {
     background: #f9f9f9;
