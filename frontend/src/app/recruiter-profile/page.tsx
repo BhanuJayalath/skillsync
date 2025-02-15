@@ -15,16 +15,7 @@ export default function RecruiterProfile() {
     {
       mockExamId: number;
       mockExamContent: {
-        QuestionId: undefined;
-        questionContent: [
-          {
-            Question: string;
-            Answer1: string;
-            Answer2: string;
-            Answer3: string;
-            Answer4: string;
-          }
-        ];
+        questionContent: [];
       };
     }[]
   >();
@@ -34,20 +25,11 @@ export default function RecruiterProfile() {
   }, []);
   function loadMockExamComponent(mockexamId: number) {
     setMockExamComponent([
-      ...(mockExamComponent ?? []),
+      // ...(mockExamComponent ?? []),
       {
         mockExamId: mockexamId,
         mockExamContent: {
-          QuestionId: undefined,
-          questionContent: [
-            {
-              Question: "",
-              Answer1: "",
-              Answer2: "",
-              Answer3: "",
-              Answer4: "",
-            },
-          ],
+          questionContent: [],
         },
       },
     ]);

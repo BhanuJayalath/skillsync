@@ -21,22 +21,22 @@ export default function MockExam({
   >();
   var counter = 0;
 
-  // useEffect(() => {
-  //   retrieveLocalStorage();
-  //   console.log(mockExamComponent);
-  // }, []);
+  useEffect(() => {
+    // retrieveLocalStorage();
+    console.log(mockExamComponent[0].mockExamContent.questionContent.length);
+  }, []);
 
   function addQuestion() {
     // setQuestionId();
     setMockExamComponent([
-      ...(mockExamComponent ?? []),
+      // ...mockExamComponent,
       {
-        mockExamId: mockExamComponent.mockExamId,
+        mockExamId: mockExamComponent[0].mockExamId,
         mockExamContent: {
-          QuestionId:
-            mockExamComponent.mockExamContent.questionContent.length + 1,
           questionContent: [
             {
+              QuestionId:
+                mockExamComponent[0].mockExamContent.questionContent.length + 1,
               Question: "",
               Answer1: "",
               Answer2: "",
@@ -66,17 +66,19 @@ export default function MockExam({
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>Mock Exam 01</header>
       <button onClick={addQuestion}>Click me</button>
-      {mockExamComponent?.map((item: any) => {
-        counter++;
-        return (
-          <MockExamContainer
-            key={item.QuestionId}
-            questionCounter={counter}
-            mockExamComponent={item}
-            // updateLocalStorage={retrieveLocalStorage}
-          />
-        );
-      })}
+      {mockExamComponent[0].mockExamContent.questionContent.length != 0
+        ? mockExamComponent?.map((item: any) => {
+            counter++;
+            return (
+              <MockExamContainer
+                key={counter}
+                questionCounter={counter}
+                mockExamComponent={item}
+                // updateLocalStorage={retrieveLocalStorage}
+              />
+            );
+          })
+        : null}
     </section>
   );
 }

@@ -2,14 +2,11 @@
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExamContainer({
-  mockExamComponent,
   questionCounter,
-}: // updateLocalStorage,
-{
+  mockExamComponent,
+}: {
+  questionCounter: any;
   mockExamComponent: any;
-  questionCounter: number;
-
-  // updateLocalStorage: () => void;
 }) {
   const [question, setQuestion] = useState<string>();
   const [answer1, setAnswer1] = useState<string>();
@@ -19,9 +16,10 @@ export default function MockExamContainer({
   const storage = {
     mockExamId: mockExamComponent.mockExamId,
     mockExamContent: {
-      QuestionId: mockExamComponent.mockExamContent.QuestionId,
       questionContent: [
         {
+          QuestionId:
+            mockExamComponent.mockExamContent.questionContent[0].QuestionId,
           Question: question,
           Answer1: answer1,
           Answer2: answer2,
@@ -40,12 +38,9 @@ export default function MockExamContainer({
     // console.log(questionItem.QuestionId);
   }, []);
   useEffect(() => {
-    if (mockExamComponent.mockExamContent.QuestionId != undefined) {
-      localStorage.setItem(
-        mockExamComponent.mockExamId,
-        JSON.stringify(storage)
-      );
-    }
+    // if (mockExamComponent.mockExamContent.QuestionId != undefined) {
+    localStorage.setItem(mockExamComponent.mockExamId, JSON.stringify(storage));
+    // }
   }, [storage]);
 
   function saveQuestion(event: any) {
