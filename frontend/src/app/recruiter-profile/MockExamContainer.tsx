@@ -2,14 +2,14 @@
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExamContainer({
-  questionItem,
+  mockExamComponent,
   questionCounter,
-  updateLocalStorage,
-}: {
-  questionItem: any;
+}: // updateLocalStorage,
+{
+  mockExamComponent: any;
   questionCounter: number;
 
-  updateLocalStorage: () => void;
+  // updateLocalStorage: () => void;
 }) {
   const [question, setQuestion] = useState<string>();
   const [answer1, setAnswer1] = useState<string>();
@@ -17,23 +17,35 @@ export default function MockExamContainer({
   const [answer3, setAnswer3] = useState<string>();
   const [answer4, setAnswer4] = useState<string>();
   const storage = {
-    QuestionId: questionItem.QuestionId,
-    Question: question,
-    Answer1: answer1,
-    Answer2: answer2,
-    Answer3: answer3,
-    Answer4: answer4,
+    mockExamId: mockExamComponent.mockExamId,
+    mockExamContent: {
+      QuestionId: mockExamComponent.mockExamContent.QuestionId,
+      questionContent: [
+        {
+          Question: question,
+          Answer1: answer1,
+          Answer2: answer2,
+          Answer3: answer3,
+          Answer4: answer4,
+        },
+      ],
+    },
   };
   useEffect(() => {
-    setQuestion(questionItem.Question);
-    setAnswer1(questionItem.Answer1);
-    setAnswer2(questionItem.Answer2);
-    setAnswer3(questionItem.Answer3);
-    setAnswer4(questionItem.Answer4);
+    setQuestion(mockExamComponent.mockExamContent.questionContent.Question);
+    setAnswer1(mockExamComponent.mockExamContent.questionContent.Answer1);
+    setAnswer2(mockExamComponent.mockExamContent.questionContent.Answer2);
+    setAnswer3(mockExamComponent.mockExamContent.questionContent.Answer3);
+    setAnswer4(mockExamComponent.mockExamContent.questionContent.Answer4);
     // console.log(questionItem.QuestionId);
   }, []);
   useEffect(() => {
-    localStorage.setItem(questionItem.QuestionId, JSON.stringify(storage));
+    if (mockExamComponent.mockExamContent.QuestionId != undefined) {
+      localStorage.setItem(
+        mockExamComponent.mockExamId,
+        JSON.stringify(storage)
+      );
+    }
   }, [storage]);
 
   function saveQuestion(event: any) {
@@ -63,7 +75,7 @@ export default function MockExamContainer({
   }
   function remove(questionId: number) {
     localStorage.removeItem(questionId.toString());
-    updateLocalStorage();
+    // updateLocalStorage();
   }
 
   return (
@@ -97,7 +109,7 @@ export default function MockExamContainer({
         <button onClick={save}>Save</button>
         <button
           onClick={() => {
-            remove(questionItem.QuestionId);
+            // remove(questionItem.QuestionId);
           }}
         >
           remove

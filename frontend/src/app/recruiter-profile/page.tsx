@@ -5,14 +5,52 @@ import MockExam from "./MockExam";
 import Tab from "./Tab";
 import ResultTab from "./ResultTab";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
 import MockExamContainer from "./MockExamContainer";
 export default function RecruiterProfile() {
   const [mockExamState, setMockExamState] = useState(false);
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([1]);
-
-  function loadMockExamComponent() {
+  const [mockExamComponent, setMockExamComponent] = useState<
+    {
+      mockExamId: number;
+      mockExamContent: {
+        QuestionId: undefined;
+        questionContent: [
+          {
+            Question: string;
+            Answer1: string;
+            Answer2: string;
+            Answer3: string;
+            Answer4: string;
+          }
+        ];
+      };
+    }[]
+  >();
+  useEffect(() => {
+    retrieveLocalStorage();
+    // console.log(mockExamComponent);
+  }, []);
+  function loadMockExamComponent(mockexamId: number) {
+    setMockExamComponent([
+      ...(mockExamComponent ?? []),
+      {
+        mockExamId: mockexamId,
+        mockExamContent: {
+          QuestionId: undefined,
+          questionContent: [
+            {
+              Question: "",
+              Answer1: "",
+              Answer2: "",
+              Answer3: "",
+              Answer4: "",
+            },
+          ],
+        },
+      },
+    ]);
     setMockExamState(!mockExamState);
   }
   function addMockExamContainers() {
@@ -31,6 +69,21 @@ export default function RecruiterProfile() {
       setMockExamContainerId(newItems);
     }
   }
+  function retrieveLocalStorage() {
+    var temp = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      if (key) {
+        const local = localStorage.getItem(key);
+        if (local) {
+          temp.push(JSON.parse(local));
+        }
+      }
+    }
+    // console.log(localStorage.key(0));
+    setMockExamComponent(temp);
+  }
+  let counter = 0;
   return (
     <section className={styles.main}>
       <div className={styles.contentContainer}>
@@ -114,7 +167,10 @@ export default function RecruiterProfile() {
           </div>
           <div id={styles.contentContainer2}>
             {mockExamState ? (
-              <MockExam />
+              <MockExam
+                setMockExamComponent={setMockExamComponent}
+                mockExamComponent={mockExamComponent}
+              />
             ) : (
               <>
                 <div id={styles.mockExams}>
@@ -122,11 +178,14 @@ export default function RecruiterProfile() {
                   <button onClick={addMockExamContainers}>Add</button>
                   <div className={styles.mockExamscontainerSection}>
                     {mockExamContainerId?.map((item: any) => {
+                      counter++;
                       return (
                         <div
                           key={item}
                           id={styles.mockExamscontainer}
-                          // onClick={loadMockExamComponent}
+                          onClick={() => {
+                            loadMockExamComponent(counter);
+                          }}
                         >
                           <Image
                             alt="exam-icon"
@@ -134,7 +193,7 @@ export default function RecruiterProfile() {
                             height={60}
                             src="/recruiter/exam-icon.svg"
                           />
-                          <h1>Mock Exam {item}</h1>
+                          <h1>Mock Exam {counter}</h1>
                           <button
                             onClick={() => {
                               removeMockExamContainer(item);
