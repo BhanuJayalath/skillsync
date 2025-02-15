@@ -11,11 +11,11 @@ export default function MockExamContainer({
 
   updateLocalStorage: () => void;
 }) {
-  const [question, setQuestion] = useState("");
-  const [answer1, setAnswer1] = useState("");
-  const [answer2, setAnswer2] = useState("");
-  const [answer3, setAnswer3] = useState("");
-  const [answer4, setAnswer4] = useState("");
+  const [question, setQuestion] = useState<string>();
+  const [answer1, setAnswer1] = useState<string>();
+  const [answer2, setAnswer2] = useState<string>();
+  const [answer3, setAnswer3] = useState<string>();
+  const [answer4, setAnswer4] = useState<string>();
   const storage = {
     QuestionId: questionItem.QuestionId,
     Question: question,
@@ -30,17 +30,10 @@ export default function MockExamContainer({
     setAnswer2(questionItem.Answer2);
     setAnswer3(questionItem.Answer3);
     setAnswer4(questionItem.Answer4);
+    // console.log(questionItem.QuestionId);
   }, []);
   useEffect(() => {
-    if (
-      question != "" ||
-      answer1 != "" ||
-      answer2 != "" ||
-      answer3 != "" ||
-      answer4 != ""
-    ) {
-      localStorage.setItem(questionItem.QuestionId, JSON.stringify(storage));
-    }
+    localStorage.setItem(questionItem.QuestionId, JSON.stringify(storage));
   }, [storage]);
 
   function saveQuestion(event: any) {

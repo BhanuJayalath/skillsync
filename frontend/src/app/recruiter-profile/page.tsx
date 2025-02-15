@@ -7,11 +7,29 @@ import ResultTab from "./ResultTab";
 import Image from "next/image";
 import { useState } from "react";
 import styles from "../assets/styles/recruiter.module.css";
+import MockExamContainer from "./MockExamContainer";
 export default function RecruiterProfile() {
-  const [mockExamContainer, setMockExamContainer] = useState(false);
+  const [mockExamState, setMockExamState] = useState(false);
+  const [mockExamContainerId, setMockExamContainerId] = useState<any>([1]);
 
   function loadMockExamComponent() {
-    setMockExamContainer(!mockExamContainer);
+    setMockExamState(!mockExamState);
+  }
+  function addMockExamContainers() {
+    setMockExamContainerId([
+      ...mockExamContainerId,
+      mockExamContainerId.at(-1) + 1,
+    ]);
+    console.log(mockExamContainerId);
+  }
+
+  function removeMockExamContainer(item: number) {
+    const newItems = [...mockExamContainerId];
+    const index = mockExamContainerId.indexOf(item);
+    if (index != -1) {
+      newItems.splice(index, 1);
+      setMockExamContainerId(newItems);
+    }
   }
   return (
     <section className={styles.main}>
@@ -95,44 +113,38 @@ export default function RecruiterProfile() {
             </div>
           </div>
           <div id={styles.contentContainer2}>
-            {mockExamContainer ? (
+            {mockExamState ? (
               <MockExam />
             ) : (
               <>
-                {" "}
                 <div id={styles.mockExams}>
                   <h1 id={styles.mockExamscontainerHeader}>Mock Exams</h1>
+                  <button onClick={addMockExamContainers}>Add</button>
                   <div className={styles.mockExamscontainerSection}>
-                    <div
-                      id={styles.mockExamscontainer}
-                      onClick={loadMockExamComponent}
-                    >
-                      <Image
-                        alt="exam-icon"
-                        width={60}
-                        height={60}
-                        src="/recruiter/exam-icon.svg"
-                      />
-                      <h1>Mock Exam 1</h1>
-                    </div>
-                    <div id={styles.mockExamscontainer}>
-                      <Image
-                        alt="exam-icon"
-                        width={60}
-                        height={60}
-                        src="/recruiter/exam-icon.svg"
-                      />
-                      <h1>Mock Exam 2</h1>
-                    </div>
-                    <div id={styles.mockExamscontainer}>
-                      <Image
-                        alt="exam-icon"
-                        width={60}
-                        height={60}
-                        src="/recruiter/exam-icon.svg"
-                      />
-                      <h1>Mock Exam 3</h1>
-                    </div>
+                    {mockExamContainerId?.map((item: any) => {
+                      return (
+                        <div
+                          key={item}
+                          id={styles.mockExamscontainer}
+                          // onClick={loadMockExamComponent}
+                        >
+                          <Image
+                            alt="exam-icon"
+                            width={60}
+                            height={60}
+                            src="/recruiter/exam-icon.svg"
+                          />
+                          <h1>Mock Exam {item}</h1>
+                          <button
+                            onClick={() => {
+                              removeMockExamContainer(item);
+                            }}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
                 <div id={styles.jobListing}>
