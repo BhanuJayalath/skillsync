@@ -27,22 +27,8 @@ export default function RecruiterProfile() {
     // console.log(mockExamComponent);
   }, []);
   function loadMockExamComponent(mockexamId: number) {
-    console.log(mockexamId);
     if (!localStorage.getItem(JSON.stringify(mockexamId))) {
       localStorage.clear();
-    }
-
-    if (mockExamComponent?.[mockexamId - 1]) {
-      setMockExamComponent([
-        {
-          mockExamId: mockExamComponent[mockexamId - 1].mockExamId,
-          mockExamContent: {
-            questionContent:
-              mockExamComponent[mockexamId - 1].mockExamContent.questionContent,
-          },
-        },
-      ]);
-    } else {
       setMockExamComponent([
         {
           mockExamId: mockexamId,
@@ -56,7 +42,7 @@ export default function RecruiterProfile() {
   }
   function addMockExamContainers() {
     setMockExamContainerId([...mockExamContainerId, Date.now()]);
-    console.log(mockExamContainerId);
+    // console.log(mockExamContainerId);
   }
 
   function removeMockExamContainer(item: number) {
