@@ -10,7 +10,9 @@ import styles from "../assets/styles/recruiter.module.css";
 import MockExamContainer from "./MockExamContainer";
 export default function RecruiterProfile() {
   const [mockExamState, setMockExamState] = useState(false);
-  const [mockExamContainerId, setMockExamContainerId] = useState<any>([1]);
+  const [mockExamContainerId, setMockExamContainerId] = useState<any>([
+    Date.now(),
+  ]);
   const [mockExamComponent, setMockExamComponent] = useState<
     {
       mockExamId: number;
@@ -21,25 +23,39 @@ export default function RecruiterProfile() {
   >();
   useEffect(() => {
     retrieveLocalStorage();
+    // console.log(mockExamContainerId);
     // console.log(mockExamComponent);
   }, []);
   function loadMockExamComponent(mockexamId: number) {
-    setMockExamComponent([
-      // ...(mockExamComponent ?? []),
-      {
-        mockExamId: mockexamId,
-        mockExamContent: {
-          questionContent: [],
+    console.log(mockexamId);
+    if (!localStorage.getItem(JSON.stringify(mockexamId))) {
+      localStorage.clear();
+    }
+
+    if (mockExamComponent?.[mockexamId - 1]) {
+      setMockExamComponent([
+        {
+          mockExamId: mockExamComponent[mockexamId - 1].mockExamId,
+          mockExamContent: {
+            questionContent:
+              mockExamComponent[mockexamId - 1].mockExamContent.questionContent,
+          },
         },
-      },
-    ]);
+      ]);
+    } else {
+      setMockExamComponent([
+        {
+          mockExamId: mockexamId,
+          mockExamContent: {
+            questionContent: [],
+          },
+        },
+      ]);
+    }
     setMockExamState(!mockExamState);
   }
   function addMockExamContainers() {
-    setMockExamContainerId([
-      ...mockExamContainerId,
-      mockExamContainerId.at(-1) + 1,
-    ]);
+    setMockExamContainerId([...mockExamContainerId, Date.now()]);
     console.log(mockExamContainerId);
   }
 
@@ -50,20 +66,31 @@ export default function RecruiterProfile() {
       newItems.splice(index, 1);
       setMockExamContainerId(newItems);
     }
+    console.log(item);
+    if (localStorage.getItem(JSON.stringify(item))) {
+      localStorage.removeItem(JSON.stringify(item));
+    }
   }
   function retrieveLocalStorage() {
-    var temp = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
-      if (key) {
-        const local = localStorage.getItem(key);
-        if (local) {
-          temp.push(JSON.parse(local));
+    if (localStorage.length != 0) {
+      var temp = [];
+      var tempIds: number[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        if (key) {
+          const local = localStorage.getItem(key);
+          if (local) {
+            temp.push(JSON.parse(local));
+          }
         }
       }
+      temp.map((item) => {
+        tempIds.push(item.mockExamId);
+      });
+
+      setMockExamContainerId(tempIds);
+      setMockExamComponent(temp);
     }
-    // console.log(localStorage.key(0));
-    setMockExamComponent(temp);
   }
   let counter = 0;
   return (
@@ -162,13 +189,7 @@ export default function RecruiterProfile() {
                     {mockExamContainerId?.map((item: any) => {
                       counter++;
                       return (
-                        <div
-                          key={item}
-                          id={styles.mockExamscontainer}
-                          onClick={() => {
-                            loadMockExamComponent(counter);
-                          }}
-                        >
+                        <div key={item} id={styles.mockExamscontainer}>
                           <Image
                             alt="exam-icon"
                             width={60}
@@ -176,6 +197,13 @@ export default function RecruiterProfile() {
                             src="/recruiter/exam-icon.svg"
                           />
                           <h1>Mock Exam {counter}</h1>
+                          <button
+                            onClick={() => {
+                              loadMockExamComponent(item);
+                            }}
+                          >
+                            Click
+                          </button>
                           <button
                             onClick={() => {
                               removeMockExamContainer(item);
