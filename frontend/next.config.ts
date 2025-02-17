@@ -4,4 +4,11 @@ const nextConfig: NextConfig = {
   /* config options here */
 };
 
+module.exports = {
+  reactStrictMode: true,
+  images: {
+    domains: ['img.icons8.com'],
+  },
+};
+
 export default nextConfig;
