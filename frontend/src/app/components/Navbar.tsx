@@ -18,8 +18,8 @@ const Navbar = () => {
             </Link>
           </div>
           <div className={styles.desktopMenu}>
-            <Link href="/userProfile" className={styles.navLink}>
-              User Profile
+            <Link href="/mock-interview" className={styles.navLink}>
+              Mock Interview
             </Link>
             <Link href="#" className={styles.navLink}>
               About Us
