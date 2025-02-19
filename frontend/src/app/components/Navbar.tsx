@@ -24,7 +24,7 @@ const Navbar = () => {
             <Link href="#" className={styles.navLink}>
               About Us
             </Link>
-            <Link href="#" className={styles.navLink}>
+            <Link href="/contact-us" className={styles.navLink}>
               Contact Us
             </Link>
             <Link href="/login">
