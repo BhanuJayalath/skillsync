@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExamContainer({
   questionCounter,
@@ -65,7 +66,9 @@ export default function MockExamContainer({
   }
 
   function save() {
-    // console.log(questionId);
+    axios.post("http://localhost:3000/mock-test", mockExamComponent, {
+      headers: { "Content-Type": "application/json" },
+    });
     // localStorage.setItem(questionId, JSON.stringify(questionItem));
   }
   function remove(questionId: number) {
