@@ -4,14 +4,14 @@ import { AppService } from './app.service';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { MocktestModule } from './mocktest/mocktest.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { config } from 'dotenv';
+config();
 
 @Module({
   imports: [
     RecruiterModule,
     MocktestModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://bhanu:bhanu2003@studyy-cluster.cmoox.mongodb.net/?retryWrites=true&w=majority&appName=studyy-cluster',
-    ),
+    MongooseModule.forRoot(process.env.MONGODB_URL),
   ],
   controllers: [AppController],
   providers: [AppService],

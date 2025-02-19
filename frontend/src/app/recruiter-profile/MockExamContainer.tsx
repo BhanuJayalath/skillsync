@@ -66,7 +66,7 @@ export default function MockExamContainer({
   }
 
   function save() {
-    axios.post("http://localhost:3000/mock-test", mockExamComponent, {
+    axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, storage, {
       headers: { "Content-Type": "application/json" },
     });
     // localStorage.setItem(questionId, JSON.stringify(questionItem));
