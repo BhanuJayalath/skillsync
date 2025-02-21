@@ -27,21 +27,29 @@ export default function MockExam({
 
   useEffect(() => {
     // retrieveLocalStorage();
-    console.log(loadMockTestQuestions);
+    // console.log(loadMockTestQuestions);
   }, []);
 
   function addQuestion() {
     // console.log(loadMockTestQuestions);
-    const temp = [];
-    temp.push({
+    var temp = {
       QuestionId: 2,
       Question: "",
       Answer1: "",
       Answer2: "",
       Answer3: "",
       Answer4: "",
+    };
+    setLoadMockTestQuestions({
+      ...loadMockTestQuestions,
+      mockExamContent: {
+        ...loadMockTestQuestions.mockExamContent,
+        questionContent: [
+          ...loadMockTestQuestions.mockExamContent.questionContent,
+          temp,
+        ],
+      },
     });
-    setLoadMockTestQuestions([...loadMockTestQuestions, temp]);
     // setQuestionId();
     // setMockExamComponent([
     //   // ...mockExamComponent,
@@ -83,7 +91,6 @@ export default function MockExam({
       <button onClick={addQuestion}>Click me</button>
       {loadMockTestQuestions.mockExamContent.questionContent.map(
         (item: any) => {
-          // console.log("This is :", item);
           return (
             <MockExamContainer
               key={item.QuestionId}
