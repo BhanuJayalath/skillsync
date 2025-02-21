@@ -11,55 +11,75 @@ import MockExamContainer from "./MockExamContainer";
 
 import axios from "axios";
 export default function RecruiterProfile() {
-  const [loadMockTests, setLoadMockTests] = useState([]);
+  const [loadMockTests, setLoadMockTests] = useState<
+    {
+      mockExamId: number;
+      mockExamContent: {
+        questionContent: any[];
+      };
+    }[]
+  >([{ mockExamId: 1, mockExamContent: { questionContent: [] } }]);
+
   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
   const [mockExamState, setMockExamState] = useState(false);
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
   ]);
-  const [mockExamComponent, setMockExamComponent] = useState<
-    {
-      mockExamId: number;
-      mockExamContent: {
-        questionContent: [];
-      };
-    }[]
-  >();
+  const [mockExamCount, setMockExamCount] = useState(Number);
+  // const [mockExamComponent, setMockExamComponent] = useState<
+  //   {
+  //     mockExamId: number;
+  //     mockExamContent: {
+  //       questionContent: [];
+  //     };
+  //   }[]
+  // >();
 
   useEffect(() => {
-    // retrieveLocalStorage();
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
-        setLoadMockTests(response.data);
+        if (localStorage.length > 0) {
+          for (let i = 0; i < localStorage.length; i++) {
+            const key: any = localStorage.key(i);
+            let Item = localStorage.getItem(key);
+            let jsonParsedItem = Item ? JSON.parse(Item) : null;
+            response.data.push(jsonParsedItem);
+            console.log(response.data);
+          }
+          setLoadMockTests(response.data);
+        } else {
+          setLoadMockTests(response.data);
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
-  function loadMockExamComponent(mockexamId: number) {
-    console.log(mockexamId);
+  function loadMockExamComponent(mockexamId: number, mockExamCounter: number) {
+    // setMockExamCount(mockExamCounter);
+    // console.log(mockExamCounter);
     loadMockTests.find((item: any) => {
       if (item.mockExamId === mockexamId) {
         setLoadMockTestQuestions(item);
       }
     });
-    // if (!localStorage.getItem(JSON.stringify(mockexamId))) {
-    //   localStorage.clear();
-    //   setMockExamComponent([
-    //     {
-    //       mockExamId: mockexamId,
-    //       mockExamContent: {
-    //         questionContent: [],
-    //       },
-    //     },
-    //   ]);
-    // }
+
     setMockExamState(!mockExamState);
   }
   function addMockExamContainers() {
-    setMockExamContainerId([...mockExamContainerId, Date.now()]);
+    localStorage.clear();
+    setLoadMockTests([
+      ...loadMockTests,
+      {
+        mockExamId: Date.now(),
+        mockExamContent: {
+          questionContent: [],
+        },
+      },
+    ]);
+    // setMockExamContainerId([...mockExamContainerId, Date.now()]);
     // console.log(mockExamContainerId);
   }
 
@@ -93,7 +113,7 @@ export default function RecruiterProfile() {
       });
 
       setMockExamContainerId(tempIds);
-      setMockExamComponent(temp);
+      // setMockExamComponent(temp);
     }
   }
   let counter = 0;
@@ -181,10 +201,9 @@ export default function RecruiterProfile() {
           <div id={styles.contentContainer2}>
             {mockExamState ? (
               <MockExam
-                // setMockExamComponent={setMockExamComponent}
-                // mockExamComponent={mockExamComponent}
                 setLoadMockTestQuestions={setLoadMockTestQuestions}
                 loadMockTestQuestions={loadMockTestQuestions}
+                mockExamCount={mockExamCount}
               />
             ) : (
               <>
@@ -194,6 +213,7 @@ export default function RecruiterProfile() {
                   <div className={styles.mockExamscontainerSection}>
                     {loadMockTests?.map((item: any) => {
                       counter++;
+                      // console.log(counter);
                       return (
                         <div
                           key={item.mockExamId}
@@ -208,7 +228,7 @@ export default function RecruiterProfile() {
                           <h1>Mock Exam {counter}</h1>
                           <button
                             onClick={() => {
-                              loadMockExamComponent(item.mockExamId);
+                              loadMockExamComponent(item.mockExamId, counter);
                             }}
                           >
                             Click

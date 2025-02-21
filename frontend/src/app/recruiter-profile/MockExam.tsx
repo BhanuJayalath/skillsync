@@ -5,11 +5,13 @@ import styles from "../assets/styles/recruiter.module.css";
 export default function MockExam({
   loadMockTestQuestions,
   setLoadMockTestQuestions,
+  mockExamCount,
 }: // mockExamComponent,
 // setMockExamComponent,
 {
   setLoadMockTestQuestions: any;
   loadMockTestQuestions: any;
+  mockExamCount: number;
   // mockExamComponent: any;
   // setMockExamComponent: any;
 }) {
@@ -27,6 +29,7 @@ export default function MockExam({
   var counter = 0;
 
   useEffect(() => {
+    console.log(loadMockTestQuestions);
     localStorage.setItem("1", JSON.stringify(loadMockTestQuestions));
     // console.log(loadMockTestQuestions);
   }, [loadMockTestQuestions]);
@@ -37,10 +40,7 @@ export default function MockExam({
   function addQuestion() {
     // console.log(loadMockTestQuestions);
     var temp = {
-      QuestionId:
-        loadMockTestQuestions.mockExamContent.questionContent[
-          loadMockTestQuestions.mockExamContent.questionContent.length - 1
-        ].QuestionId + 1,
+      QuestionId: Date.now(),
       Question: "",
       Answer1: "",
       Answer2: "",
@@ -59,18 +59,38 @@ export default function MockExam({
     });
   }
 
+  function update(id: number, questionItem: any) {
+    const index =
+      loadMockTestQuestions.mockExamContent.questionContent.findIndex(
+        (item: any) => item.QuestionId == id
+      );
+    setLoadMockTestQuestions((prev: any) => {
+      const updateQuestionItems = [...prev.mockExamContent.questionContent];
+      updateQuestionItems[index] = questionItem;
+      return {
+        ...prev,
+        mockExamContent: {
+          ...prev.mockExamContent,
+          questionContent: updateQuestionItems,
+        },
+      };
+    });
+  }
+  var questionCounter = 0;
 
   return (
     <section className={styles.mockExam}>
-      <header id={styles.mockExamHeading}>Mock Exam 01</header>
+      <header id={styles.mockExamHeading}>Mock Exam {mockExamCount}</header>
       <button onClick={addQuestion}>Click me</button>
       {loadMockTestQuestions.mockExamContent.questionContent.map(
         (item: any) => {
+          questionCounter++;
           return (
             <MockExamContainer
-              key={item.QuestionId}
+              key={questionCounter}
               MockTestQuestions={item}
-              setQuestionItem={setQuestionItem}
+              questionCounter={questionCounter}
+              update={update}
               // key={counter}
               // questionCounter={counter}
               // mockExamComponent={item}
