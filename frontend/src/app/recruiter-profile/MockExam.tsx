@@ -3,11 +3,15 @@ import { useState, useEffect } from "react";
 import MockExamContainer from "./MockExamContainer";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExam({
-  mockExamComponent,
-  setMockExamComponent,
-}: {
-  mockExamComponent: any;
-  setMockExamComponent: any;
+  loadMockTestQuestions,
+  setLoadMockTestQuestions,
+}: // mockExamComponent,
+// setMockExamComponent,
+{
+  setLoadMockTestQuestions: any;
+  loadMockTestQuestions: any;
+  // mockExamComponent: any;
+  // setMockExamComponent: any;
 }) {
   const [questionItem, setQuestionItem] = useState<
     {
@@ -23,30 +27,41 @@ export default function MockExam({
 
   useEffect(() => {
     // retrieveLocalStorage();
-    // console.log(mockExamComponent);
+    console.log(loadMockTestQuestions);
   }, []);
 
   function addQuestion() {
+    // console.log(loadMockTestQuestions);
+    const temp = [];
+    temp.push({
+      QuestionId: 2,
+      Question: "",
+      Answer1: "",
+      Answer2: "",
+      Answer3: "",
+      Answer4: "",
+    });
+    setLoadMockTestQuestions([...loadMockTestQuestions, temp]);
     // setQuestionId();
-    setMockExamComponent([
-      // ...mockExamComponent,
-      {
-        mockExamId: mockExamComponent[0].mockExamId,
-        mockExamContent: {
-          questionContent: [
-            {
-              QuestionId:
-                mockExamComponent[0].mockExamContent.questionContent.length + 1,
-              Question: "",
-              Answer1: "",
-              Answer2: "",
-              Answer3: "",
-              Answer4: "",
-            },
-          ],
-        },
-      },
-    ]);
+    // setMockExamComponent([
+    //   // ...mockExamComponent,
+    //   {
+    //     mockExamId: mockExamComponent[0].mockExamId,
+    //     mockExamContent: {
+    //       questionContent: [
+    //         {
+    //           QuestionId:
+    //             mockExamComponent[0].mockExamContent.questionContent.length + 1,
+    //           Question: "",
+    //           Answer1: "",
+    //           Answer2: "",
+    //           Answer3: "",
+    //           Answer4: "",
+    //         },
+    //       ],
+    //     },
+    //   },
+    // ]);
   }
   // function retrieveLocalStorage() {
   //   var temp = [];
@@ -66,19 +81,21 @@ export default function MockExam({
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>Mock Exam 01</header>
       <button onClick={addQuestion}>Click me</button>
-      {mockExamComponent[0].mockExamContent.questionContent.length != 0
-        ? mockExamComponent?.map((item: any) => {
-            counter++;
-            return (
-              <MockExamContainer
-                key={counter}
-                questionCounter={counter}
-                mockExamComponent={item}
-                // updateLocalStorage={retrieveLocalStorage}
-              />
-            );
-          })
-        : null}
+      {loadMockTestQuestions.mockExamContent.questionContent.map(
+        (item: any) => {
+          // console.log("This is :", item);
+          return (
+            <MockExamContainer
+              key={item.QuestionId}
+              MockTestQuestions={item}
+              // key={counter}
+              // questionCounter={counter}
+              // mockExamComponent={item}
+              // updateLocalStorage={retrieveLocalStorage}
+            />
+          );
+        }
+      )}
     </section>
   );
 }

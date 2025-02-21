@@ -11,6 +11,8 @@ import MockExamContainer from "./MockExamContainer";
 
 import axios from "axios";
 export default function RecruiterProfile() {
+  const [loadMockTests, setLoadMockTests] = useState([]);
+  const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
   const [mockExamState, setMockExamState] = useState(false);
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
@@ -23,12 +25,13 @@ export default function RecruiterProfile() {
       };
     }[]
   >();
+
   useEffect(() => {
     // retrieveLocalStorage();
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
-        console.log(response.data.length);
+        setLoadMockTests(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -36,17 +39,23 @@ export default function RecruiterProfile() {
   }, []);
 
   function loadMockExamComponent(mockexamId: number) {
-    if (!localStorage.getItem(JSON.stringify(mockexamId))) {
-      localStorage.clear();
-      setMockExamComponent([
-        {
-          mockExamId: mockexamId,
-          mockExamContent: {
-            questionContent: [],
-          },
-        },
-      ]);
-    }
+    console.log(mockexamId);
+    loadMockTests.find((item: any) => {
+      if (item.mockExamId === mockexamId) {
+        setLoadMockTestQuestions(item);
+      }
+    });
+    // if (!localStorage.getItem(JSON.stringify(mockexamId))) {
+    //   localStorage.clear();
+    //   setMockExamComponent([
+    //     {
+    //       mockExamId: mockexamId,
+    //       mockExamContent: {
+    //         questionContent: [],
+    //       },
+    //     },
+    //   ]);
+    // }
     setMockExamState(!mockExamState);
   }
   function addMockExamContainers() {
@@ -172,8 +181,10 @@ export default function RecruiterProfile() {
           <div id={styles.contentContainer2}>
             {mockExamState ? (
               <MockExam
-                setMockExamComponent={setMockExamComponent}
-                mockExamComponent={mockExamComponent}
+                // setMockExamComponent={setMockExamComponent}
+                // mockExamComponent={mockExamComponent}
+                setLoadMockTestQuestions={setLoadMockTestQuestions}
+                loadMockTestQuestions={loadMockTestQuestions}
               />
             ) : (
               <>
@@ -181,10 +192,13 @@ export default function RecruiterProfile() {
                   <h1 id={styles.mockExamscontainerHeader}>Mock Exams</h1>
                   <button onClick={addMockExamContainers}>Add</button>
                   <div className={styles.mockExamscontainerSection}>
-                    {mockExamContainerId?.map((item: any) => {
+                    {loadMockTests?.map((item: any) => {
                       counter++;
                       return (
-                        <div key={item} id={styles.mockExamscontainer}>
+                        <div
+                          key={item.mockExamId}
+                          id={styles.mockExamscontainer}
+                        >
                           <Image
                             alt="exam-icon"
                             width={60}
@@ -194,7 +208,7 @@ export default function RecruiterProfile() {
                           <h1>Mock Exam {counter}</h1>
                           <button
                             onClick={() => {
-                              loadMockExamComponent(item);
+                              loadMockExamComponent(item.mockExamId);
                             }}
                           >
                             Click

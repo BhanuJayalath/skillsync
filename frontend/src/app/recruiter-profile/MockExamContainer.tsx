@@ -3,24 +3,25 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExamContainer({
-  questionCounter,
-  mockExamComponent,
-}: {
-  questionCounter: any;
-  mockExamComponent: any;
+  MockTestQuestions,
+}: // questionCounter,
+// mockExamComponent,
+{
+  MockTestQuestions: any;
+  // questionCounter: any;
+  // mockExamComponent: any;
 }) {
-  const [question, setQuestion] = useState<string>();
-  const [answer1, setAnswer1] = useState<string>();
-  const [answer2, setAnswer2] = useState<string>();
-  const [answer3, setAnswer3] = useState<string>();
-  const [answer4, setAnswer4] = useState<string>();
+  const [question, setQuestion] = useState<string[]>();
+  const [answer1, setAnswer1] = useState<string[]>();
+  const [answer2, setAnswer2] = useState<string[]>();
+  const [answer3, setAnswer3] = useState<string[]>();
+  const [answer4, setAnswer4] = useState<string[]>();
   const storage = {
-    mockExamId: mockExamComponent.mockExamId,
+    mockExamId: MockTestQuestions.mockExamId,
     mockExamContent: {
       questionContent: [
         {
-          QuestionId:
-            mockExamComponent.mockExamContent.questionContent[0].QuestionId,
+          QuestionId: MockTestQuestions.QuestionId,
           Question: question,
           Answer1: answer1,
           Answer2: answer2,
@@ -31,16 +32,18 @@ export default function MockExamContainer({
     },
   };
   useEffect(() => {
-    setQuestion(mockExamComponent.mockExamContent.questionContent.Question);
-    setAnswer1(mockExamComponent.mockExamContent.questionContent.Answer1);
-    setAnswer2(mockExamComponent.mockExamContent.questionContent.Answer2);
-    setAnswer3(mockExamComponent.mockExamContent.questionContent.Answer3);
-    setAnswer4(mockExamComponent.mockExamContent.questionContent.Answer4);
+    // console.log(MockTestQuestions);
+    setQuestion(MockTestQuestions.Question);
+    setAnswer1(MockTestQuestions.Answer1);
+    setAnswer2(MockTestQuestions.Answer2);
+    setAnswer3(MockTestQuestions.Answer3);
+    setAnswer4(MockTestQuestions.Answer4);
+
     // console.log(questionItem.QuestionId);
   }, []);
   useEffect(() => {
     // if (mockExamComponent.mockExamContent.QuestionId != undefined) {
-    localStorage.setItem(mockExamComponent.mockExamId, JSON.stringify(storage));
+    // localStorage.setItem(mockExamComponent.mockExamId, JSON.stringify(storage));
     // }
   }, [storage]);
 
@@ -79,7 +82,7 @@ export default function MockExamContainer({
   return (
     <div id={styles.mockExamSection}>
       <div id={styles.mockExamSectionBlock}>
-        <header>Question{questionCounter}</header>
+        {/* <header>Question{questionCounter}</header> */}
         <h2>Add your question here</h2>
         <input
           id={styles.mockExamSectionQuestion}
