@@ -13,27 +13,34 @@ export default function MockExam({
   // mockExamComponent: any;
   // setMockExamComponent: any;
 }) {
-  const [questionItem, setQuestionItem] = useState<
-    {
-      QuestionId: number;
-      Question: string;
-      Answer1: string;
-      Answer2: string;
-      Answer3: string;
-      Answer4: string;
-    }[]
-  >();
+  // const [questionItem, setQuestionItem] = useState<
+  //   {
+  //     QuestionId: number;
+  //     Question: string;
+  //     Answer1: string;
+  //     Answer2: string;
+  //     Answer3: string;
+  //     Answer4: string;
+  //   }[]
+  // >();
+  const [questionItem, setQuestionItem] = useState({});
   var counter = 0;
 
   useEffect(() => {
-    // retrieveLocalStorage();
+    localStorage.setItem("1", JSON.stringify(loadMockTestQuestions));
     // console.log(loadMockTestQuestions);
-  }, []);
+  }, [loadMockTestQuestions]);
+  // useEffect(() => {
+  //   console.log("Hello");
+  // }, [questionItem]);
 
   function addQuestion() {
     // console.log(loadMockTestQuestions);
     var temp = {
-      QuestionId: 2,
+      QuestionId:
+        loadMockTestQuestions.mockExamContent.questionContent[
+          loadMockTestQuestions.mockExamContent.questionContent.length - 1
+        ].QuestionId + 1,
       Question: "",
       Answer1: "",
       Answer2: "",
@@ -50,41 +57,9 @@ export default function MockExam({
         ],
       },
     });
-    // setQuestionId();
-    // setMockExamComponent([
-    //   // ...mockExamComponent,
-    //   {
-    //     mockExamId: mockExamComponent[0].mockExamId,
-    //     mockExamContent: {
-    //       questionContent: [
-    //         {
-    //           QuestionId:
-    //             mockExamComponent[0].mockExamContent.questionContent.length + 1,
-    //           Question: "",
-    //           Answer1: "",
-    //           Answer2: "",
-    //           Answer3: "",
-    //           Answer4: "",
-    //         },
-    //       ],
-    //     },
-    //   },
-    // ]);
   }
-  // function retrieveLocalStorage() {
-  //   var temp = [];
-  //   for (let i = 0; i < localStorage.length; i++) {
-  //     let key = localStorage.key(i);
-  //     if (key) {
-  //       const local = localStorage.getItem(key);
-  //       if (local) {
-  //         temp.push(JSON.parse(local));
-  //       }
-  //     }
-  //   }
-  //   console.log(localStorage.key(0));
-  //   setMockExamComponent(temp);
-  // }
+
+
   return (
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>Mock Exam 01</header>
@@ -95,6 +70,7 @@ export default function MockExam({
             <MockExamContainer
               key={item.QuestionId}
               MockTestQuestions={item}
+              setQuestionItem={setQuestionItem}
               // key={counter}
               // questionCounter={counter}
               // mockExamComponent={item}

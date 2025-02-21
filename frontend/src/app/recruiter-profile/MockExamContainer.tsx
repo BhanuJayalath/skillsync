@@ -4,10 +4,12 @@ import axios from "axios";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExamContainer({
   MockTestQuestions,
+  setQuestionItem,
 }: // questionCounter,
 // mockExamComponent,
 {
   MockTestQuestions: any;
+  setQuestionItem: any;
   // questionCounter: any;
   // mockExamComponent: any;
 }) {
@@ -16,21 +18,21 @@ export default function MockExamContainer({
   const [answer2, setAnswer2] = useState<string[]>();
   const [answer3, setAnswer3] = useState<string[]>();
   const [answer4, setAnswer4] = useState<string[]>();
-  const storage = {
-    mockExamId: MockTestQuestions.mockExamId,
-    mockExamContent: {
-      questionContent: [
-        {
-          QuestionId: MockTestQuestions.QuestionId,
-          Question: question,
-          Answer1: answer1,
-          Answer2: answer2,
-          Answer3: answer3,
-          Answer4: answer4,
-        },
-      ],
-    },
-  };
+  // const storage = {
+  //   mockExamId: MockTestQuestions.mockExamId,
+  //   mockExamContent: {
+  //     questionContent: [
+  //       {
+  //         QuestionId: MockTestQuestions.QuestionId,
+  //         Question: question,
+  //         Answer1: answer1,
+  //         Answer2: answer2,
+  //         Answer3: answer3,
+  //         Answer4: answer4,
+  //       },
+  //     ],
+  //   },
+  // };
   useEffect(() => {
     // console.log(MockTestQuestions);
     setQuestion(MockTestQuestions.Question);
@@ -38,14 +40,29 @@ export default function MockExamContainer({
     setAnswer2(MockTestQuestions.Answer2);
     setAnswer3(MockTestQuestions.Answer3);
     setAnswer4(MockTestQuestions.Answer4);
+    // setQuestionItem(storage);
 
     // console.log(questionItem.QuestionId);
   }, []);
-  useEffect(() => {
-    // if (mockExamComponent.mockExamContent.QuestionId != undefined) {
-    // localStorage.setItem(mockExamComponent.mockExamId, JSON.stringify(storage));
-    // }
-  }, [storage]);
+  // useEffect(() => {
+  //   setQuestionItem(storage);
+  // }, [storage]);
+
+  // setQuestionItem({
+  //   mockExamId: MockTestQuestions.mockExamId,
+  //   mockExamContent: {
+  //     questionContent: [
+  //       {
+  //         QuestionId: MockTestQuestions.QuestionId,
+  //         Question: question,
+  //         Answer1: answer1,
+  //         Answer2: answer2,
+  //         Answer3: answer3,
+  //         Answer4: answer4,
+  //       },
+  //     ],
+  //   },
+  // });
 
   function saveQuestion(event: any) {
     setQuestion(event.target.value);
@@ -68,12 +85,12 @@ export default function MockExamContainer({
     setAnswer4(event.target.value);
   }
 
-  function save() {
-    axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, storage, {
-      headers: { "Content-Type": "application/json" },
-    });
-    // localStorage.setItem(questionId, JSON.stringify(questionItem));
-  }
+  // function save() {
+  //   axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, storage, {
+  //     headers: { "Content-Type": "application/json" },
+  //   });
+  //   // localStorage.setItem(questionId, JSON.stringify(questionItem));
+  // }
   function remove(questionId: number) {
     localStorage.removeItem(questionId.toString());
     // updateLocalStorage();
@@ -82,7 +99,7 @@ export default function MockExamContainer({
   return (
     <div id={styles.mockExamSection}>
       <div id={styles.mockExamSectionBlock}>
-        {/* <header>Question{questionCounter}</header> */}
+        <header>Question{MockTestQuestions.QuestionId}</header>
         <h2>Add your question here</h2>
         <input
           id={styles.mockExamSectionQuestion}
@@ -107,7 +124,7 @@ export default function MockExamContainer({
           <input type="checkbox" />
           <input type="text" value={answer4} onChange={saveAnswer4} />
         </div>
-        <button onClick={save}>Save</button>
+        {/* <button onClick={save}>Save</button> */}
         <button
           onClick={() => {
             // remove(questionItem.QuestionId);
