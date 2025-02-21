@@ -18,7 +18,7 @@ export class MocktestController {
     return this.mockTestService.create(createDto);
   }
 
-  @Get()
+  @Get('all-mock-test')
   findAll() {
     return this.mockTestService.findAll();
   }

@@ -8,6 +8,8 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
 import MockExamContainer from "./MockExamContainer";
+
+import axios from "axios";
 export default function RecruiterProfile() {
   const [mockExamState, setMockExamState] = useState(false);
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
@@ -22,10 +24,17 @@ export default function RecruiterProfile() {
     }[]
   >();
   useEffect(() => {
-    retrieveLocalStorage();
-    // console.log(mockExamContainerId);
-    // console.log(mockExamComponent);
+    // retrieveLocalStorage();
+    axios
+      .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
+      .then((response) => {
+        console.log(response.data.length);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
+
   function loadMockExamComponent(mockexamId: number) {
     if (!localStorage.getItem(JSON.stringify(mockexamId))) {
       localStorage.clear();
@@ -52,7 +61,7 @@ export default function RecruiterProfile() {
       newItems.splice(index, 1);
       setMockExamContainerId(newItems);
     }
-    console.log(item);
+    // console.log(item);
     if (localStorage.getItem(JSON.stringify(item))) {
       localStorage.removeItem(JSON.stringify(item));
     }

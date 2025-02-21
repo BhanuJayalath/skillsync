@@ -23,7 +23,7 @@ export default function MockExam({
 
   useEffect(() => {
     // retrieveLocalStorage();
-    console.log(mockExamComponent);
+    // console.log(mockExamComponent);
   }, []);
 
   function addQuestion() {
