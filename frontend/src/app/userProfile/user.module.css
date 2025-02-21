@@ -52,6 +52,9 @@
     cursor: pointer;
     text-align: center;
 }
+.activeLink {
+    background-color: black;
+}
 .navImage{
     margin-right: 0.6em;
 }
@@ -234,4 +237,102 @@
     margin-top: 0.5em;
     color: black;
     font-size: 0.9em;
+}
+.courses {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.coursesTitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.courseList {
+    list-style: none;
+    padding: 0;
+}
+
+.courseItem {
+    margin-bottom: 5px;
+}
+
+.courseCode {
+    font-weight: bold;
+}
+
+.courseName {
+    font-style: italic;
+}
+
+.courseResult {
+    color: #007bff;
+}
+/*CV Section*/
+.cvSection {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.contactInfo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.name {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.jobTitle {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.contactDetails {
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.experience, .education, .skills {
+    margin-top: 20px;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.job, .degree {
+    margin-bottom: 15px;
+}
+
+.jobTitle, .degreeTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.companyName, .schoolName {
+    font-size: 1rem;
+    color: #777;
+}
+
+.jobDates, .graduationYear {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.jobResponsibilities, .skillList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.jobResponsibilities li, .skillList li {
+    margin: 5px 0;
+}
+
+.skill {
+    font-size: 1rem;
 }
