@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "../assets/styles/landing.module.css";
+// import styles from "../assets/styles/landing.module.css";
 
 const Navbar = () => {
   return (
@@ -19,6 +19,11 @@ const Navbar = () => {
             <li className="nav-item dropdown">
               <a className="nav-link" href="./userProfile">
                 User Profile
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="./adminPage">
+                Admin
               </a>
             </li>
             <li className="nav-item">
