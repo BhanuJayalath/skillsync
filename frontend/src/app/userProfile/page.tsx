@@ -14,29 +14,29 @@ export default function UserProfile () {
     // Initializing profile state with default user details
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [user,setUser] = useState({
-        id:"001",    // Unique user ID
-        email: "drake@gmail.com",   // User's email address
-        number : '(+94)77 225 0332', // number
-        displayName: "Drake",  // User's display name
+        id:"000",    // Unique user ID
+        email: "Name@gmail.com",   // User's email address
+        number : '(+94)12 345 6789', // number
+        userName: "UserName",  // User's display name
         fullName:"Drake Winston", // User's full name
         avatar:"",  //profile picture
-        gender:"male",  // User's gender
-        language:"English",     //language
-        city :'Colombo',    //city
-        country:"Sri Lanka", //country
-        timeZone:"GTM-5",   //time zone
+        gender:"Gender",  // User's gender
+        language:"Language",     //language
+        city :'City',    //city
+        country:"Country", //country
+        timeZone:"Time Zone",   //time zone
         courses : [
             { code: 'CS101', name: 'Introduction to Computer Science', result: 'A', mark : '95' },
             { code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark : '67' },
             { code: 'CS103', name: 'Database Systems', result: 'A-', mark : '74' }
         ],
         tests : [
-            {testId : '250106', testLevel:'basic', mark :'58', xAxis : '20'},
-            {testId : '250107', testLevel:'generated', mark :'86', xAxis : '100'},
-            {testId : '250108', testLevel:'interview', mark :'46', xAxis : '180'}
+            {testId : '250106', testLevel:'Basic', mark :'58', xAxis : '20'},
+            {testId : '250107', testLevel:'Generated', mark :'86', xAxis : '100'},
+            {testId : '250108', testLevel:'Interview', mark :'46', xAxis : '180'}
         ],
         jobRole :[{
-            jobName: 'Software Engineering '
+            jobName: 'Job Role '
         }],
         experience : [1],
         education : [1],
@@ -104,18 +104,18 @@ export default function UserProfile () {
                             <li
                                 onClick={()=> setActiveTab(0)}
                                 className={activeTab === 0 ? styles.activeLink : ''}
-                            ><Image src={"/user/progressChart.png"} alt="progressChart"
-                                                   width={40} height={0} className={styles.navImage}/> Progress</li>
+                            ><a href="#"><Image src={"/user/progressChart.png"} alt="progressChart"
+                                                   width={40} height={0} className={styles.navImage}/> Progress</a></li>
                             <li
                                 onClick={()=> setActiveTab(1)}
                                 className={activeTab === 1 ? styles.activeLink : ''}
-                            ><Image src={"/user/courses.png"} alt="courses"
-                                                   width={50} height={0} className={styles.navImage}/> Courses</li>
+                            ><a href="#"><Image src={"/user/courses.png"} alt="courses"
+                                                   width={50} height={0} className={styles.navImage}/> Courses</a></li>
                             <li
                                 onClick={()=> setActiveTab(2)}
                                 className={activeTab === 2 ? styles.activeLink : ''}
-                            ><Image src={"/user/cvIcon.png"} alt="CV_Icon"
-                                                   width={30} height={0} className={styles.navImage}/> Resume</li>
+                            ><a href="#"><Image src={"/user/cvIcon.png"} alt="CV_Icon"
+                                                   width={30} height={0} className={styles.navImage}/> Resume</a></li>
                         </ul>
                     </nav>
                 </aside>
@@ -130,13 +130,13 @@ export default function UserProfile () {
                     <div className={styles.contentWrapper}>
                         {/* User Info Section */}
                         <section className={styles.userInfo}>
-                            <div className={styles.welcomeMessage}>Welcome, {user.displayName}</div>
+                            <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
                             <div className={styles.userDetails}>
                                 <div className={styles.profilePic}>
                                     <span>👤{user.avatar}</span>
                                 </div>
                                 <div>
-                                    <strong>{user.displayName}</strong>
+                                    <strong>{user.userName}</strong>
                                     <p>{user.email}</p>
                                 </div>
                                 <button className={styles.editButton}>Edit</button>
@@ -226,7 +226,7 @@ export default function UserProfile () {
                                             <li key={index} className={styles.courseItem}>
                                                 <span className={styles.courseCode}>{test.testId}:</span>
                                                 <span className={styles.courseName}> {test.testLevel} Test</span> -
-                                                <span className={styles.courseResult}> {test.mark}</span>
+                                                <span className={styles.courseResult}> {test.mark}%</span>
                                             </li>
                                         ))}
                                     </ul>
