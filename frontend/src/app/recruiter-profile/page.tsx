@@ -1,10 +1,84 @@
+"use client";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import MockExam from "./MockExam";
 import Tab from "./Tab";
 import ResultTab from "./ResultTab";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
+import MockExamContainer from "./MockExamContainer";
 export default function RecruiterProfile() {
+  const [mockExamState, setMockExamState] = useState(false);
+  const [mockExamContainerId, setMockExamContainerId] = useState<any>([
+    Date.now(),
+  ]);
+  const [mockExamComponent, setMockExamComponent] = useState<
+    {
+      mockExamId: number;
+      mockExamContent: {
+        questionContent: [];
+      };
+    }[]
+  >();
+  useEffect(() => {
+    retrieveLocalStorage();
+    // console.log(mockExamContainerId);
+    // console.log(mockExamComponent);
+  }, []);
+  function loadMockExamComponent(mockexamId: number) {
+    if (!localStorage.getItem(JSON.stringify(mockexamId))) {
+      localStorage.clear();
+      setMockExamComponent([
+        {
+          mockExamId: mockexamId,
+          mockExamContent: {
+            questionContent: [],
+          },
+        },
+      ]);
+    }
+    setMockExamState(!mockExamState);
+  }
+  function addMockExamContainers() {
+    setMockExamContainerId([...mockExamContainerId, Date.now()]);
+    // console.log(mockExamContainerId);
+  }
+
+  function removeMockExamContainer(item: number) {
+    const newItems = [...mockExamContainerId];
+    const index = mockExamContainerId.indexOf(item);
+    if (index != -1) {
+      newItems.splice(index, 1);
+      setMockExamContainerId(newItems);
+    }
+    console.log(item);
+    if (localStorage.getItem(JSON.stringify(item))) {
+      localStorage.removeItem(JSON.stringify(item));
+    }
+  }
+  function retrieveLocalStorage() {
+    if (localStorage.length != 0) {
+      var temp = [];
+      var tempIds: number[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        if (key) {
+          const local = localStorage.getItem(key);
+          if (local) {
+            temp.push(JSON.parse(local));
+          }
+        }
+      }
+      temp.map((item) => {
+        tempIds.push(item.mockExamId);
+      });
+
+      setMockExamContainerId(tempIds);
+      setMockExamComponent(temp);
+    }
+  }
+  let counter = 0;
   return (
     <section className={styles.main}>
       <div className={styles.contentContainer}>
@@ -87,72 +161,83 @@ export default function RecruiterProfile() {
             </div>
           </div>
           <div id={styles.contentContainer2}>
-            <div id={styles.mockExams}>
-              <h1 id={styles.mockExamscontainerHeader}>Mock Exams</h1>
-              <div className={styles.mockExamscontainerSection}>
-                <div id={styles.mockExamscontainer}>
-                  <Image
-                    alt="exam-icon"
-                    width={60}
-                    height={60}
-                    src="/recruiter/exam-icon.svg"
-                  />
-                  <h1>Mock Exam 1</h1>
+            {mockExamState ? (
+              <MockExam
+                setMockExamComponent={setMockExamComponent}
+                mockExamComponent={mockExamComponent}
+              />
+            ) : (
+              <>
+                <div id={styles.mockExams}>
+                  <h1 id={styles.mockExamscontainerHeader}>Mock Exams</h1>
+                  <button onClick={addMockExamContainers}>Add</button>
+                  <div className={styles.mockExamscontainerSection}>
+                    {mockExamContainerId?.map((item: any) => {
+                      counter++;
+                      return (
+                        <div key={item} id={styles.mockExamscontainer}>
+                          <Image
+                            alt="exam-icon"
+                            width={60}
+                            height={60}
+                            src="/recruiter/exam-icon.svg"
+                          />
+                          <h1>Mock Exam {counter}</h1>
+                          <button
+                            onClick={() => {
+                              loadMockExamComponent(item);
+                            }}
+                          >
+                            Click
+                          </button>
+                          <button
+                            onClick={() => {
+                              removeMockExamContainer(item);
+                            }}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-                <div id={styles.mockExamscontainer}>
-                  <Image
-                    alt="exam-icon"
-                    width={60}
-                    height={60}
-                    src="/recruiter/exam-icon.svg"
-                  />
-                  <h1>Mock Exam 2</h1>
+                <div id={styles.jobListing}>
+                  <h1 id={styles.jobListingcontainerHeader}>Job Listing</h1>
+                  <div className={styles.jobListingcontainerSection}>
+                    <div id={styles.jobListingcontainer}>
+                      <Image
+                        alt="job-search"
+                        width={60}
+                        height={60}
+                        src="/recruiter/job-search.svg"
+                      />
+                      <h1>Internship 01</h1>
+                    </div>
+                    <div id={styles.jobListingcontainer}>
+                      {" "}
+                      <Image
+                        alt="job-search"
+                        width={60}
+                        height={60}
+                        src="/recruiter/job-search.svg"
+                      />
+                      <h1>Internship 02</h1>
+                    </div>
+                    <div id={styles.jobListingcontainer}>
+                      {" "}
+                      <Image
+                        alt="job-search"
+                        width={60}
+                        height={60}
+                        src="/recruiter/job-search.svg"
+                      />
+                      <h1>Internship 03</h1>
+                    </div>
+                  </div>
                 </div>
-                <div id={styles.mockExamscontainer}>
-                  <Image
-                    alt="exam-icon"
-                    width={60}
-                    height={60}
-                    src="/recruiter/exam-icon.svg"
-                  />
-                  <h1>Mock Exam 3</h1>
-                </div>
-              </div>
-            </div>
-            <div id={styles.jobListing}>
-              <h1 id={styles.jobListingcontainerHeader}>Job Listing</h1>
-              <div className={styles.jobListingcontainerSection}>
-                <div id={styles.jobListingcontainer}>
-                  <Image
-                    alt="job-search"
-                    width={60}
-                    height={60}
-                    src="/recruiter/job-search.svg"
-                  />
-                  <h1>Internship 01</h1>
-                </div>
-                <div id={styles.jobListingcontainer}>
-                  {" "}
-                  <Image
-                    alt="job-search"
-                    width={60}
-                    height={60}
-                    src="/recruiter/job-search.svg"
-                  />
-                  <h1>Internship 02</h1>
-                </div>
-                <div id={styles.jobListingcontainer}>
-                  {" "}
-                  <Image
-                    alt="job-search"
-                    width={60}
-                    height={60}
-                    src="/recruiter/job-search.svg"
-                  />
-                  <h1>Internship 03</h1>
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>
