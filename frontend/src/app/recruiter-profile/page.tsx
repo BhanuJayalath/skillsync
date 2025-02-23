@@ -36,21 +36,35 @@ export default function RecruiterProfile() {
   // >();
 
   useEffect(() => {
+    const tempArray: any = [];
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
-        if (localStorage.length > 0) {
-          for (let i = 0; i < localStorage.length; i++) {
-            const key: any = localStorage.key(i);
-            let Item = localStorage.getItem(key);
-            let jsonParsedItem = Item ? JSON.parse(Item) : null;
-            response.data.push(jsonParsedItem);
-            console.log(response.data);
+        response.data.map((item: any, index: number) => {
+          tempArray.push(item);
+          if (localStorage.length > 0) {
+            for (let i = 0; i < localStorage.length; i++) {
+              const key: any = localStorage.key(i);
+              let Item: any = localStorage.getItem(key);
+              let jsonParsedItem = Item ? JSON.parse(Item) : null;
+              // console.log(Item.mockExamId);
+              if (item.mockExamId === jsonParsedItem.mockExamId) {
+                tempArray[index] = jsonParsedItem;
+                // console.log(index);
+              } else if (response.data.length - 1 === index) {
+                const lastElement = tempArray.find(
+                  (item: any) => item.mockExamId === jsonParsedItem.mockExamId
+                );
+                // console.log(lastElement);
+                if (!lastElement) {
+                  tempArray.push(jsonParsedItem);
+                }
+                // console.log(index);
+              }
+            }
           }
-          setLoadMockTests(response.data);
-        } else {
-          setLoadMockTests(response.data);
-        }
+          setLoadMockTests(tempArray);
+        });
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
