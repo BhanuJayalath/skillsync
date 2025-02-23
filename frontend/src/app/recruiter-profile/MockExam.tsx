@@ -25,7 +25,7 @@ export default function MockExam({
   //     Answer4: string;
   //   }[]
   // >();
-  const [questionItem, setQuestionItem] = useState({});
+  // const [questionItem, setQuestionItem] = useState({});
   var counter = 0;
 
   useEffect(() => {
