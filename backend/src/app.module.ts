@@ -3,8 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserProfileModule } from './user-profile/user-profile.module';
 import { UserProfileController } from './user-profile/user-profile.controller';
+import { JobRecommendationModule } from './job-recommendation/job-recommendation.module';
 @Module({
-  imports: [UserProfileModule],
+  imports: [UserProfileModule, JobRecommendationModule],
   controllers: [AppController, UserProfileController],
   providers: [AppService],
 })
