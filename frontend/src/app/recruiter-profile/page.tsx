@@ -222,8 +222,18 @@ export default function RecruiterProfile() {
             ) : (
               <>
                 <div id={styles.mockExams}>
-                  <h1 id={styles.mockExamscontainerHeader}>Mock Exams</h1>
-                  <button onClick={addMockExamContainers}>Add</button>
+                  <div id={styles.mockExamscontainerHeader}>
+                    <h1>Mock Exams</h1>
+                    <button onClick={addMockExamContainers}>
+                      {" "}
+                      <Image
+                        alt="plus-icon"
+                        width={23}
+                        height={23}
+                        src="/recruiter/plus-icon.svg"
+                      />
+                    </button>
+                  </div>
                   <div className={styles.mockExamscontainerSection}>
                     {loadMockTests?.map((item: any) => {
                       counter++;
@@ -240,20 +250,32 @@ export default function RecruiterProfile() {
                             src="/recruiter/exam-icon.svg"
                           />
                           <h1>Mock Exam {counter}</h1>
-                          <button
-                            onClick={() => {
-                              loadMockExamComponent(item.mockExamId, counter);
-                            }}
-                          >
-                            Click
-                          </button>
-                          <button
-                            onClick={() => {
-                              removeMockExamContainer(item);
-                            }}
-                          >
-                            Remove
-                          </button>
+                          <div id={styles.mockExamscontainerButtons}>
+                            <button
+                              onClick={() => {
+                                loadMockExamComponent(item.mockExamId, counter);
+                              }}
+                            >
+                              <Image
+                                alt="plus-icon"
+                                width={20}
+                                height={20}
+                                src="/recruiter/update-icon.svg"
+                              />
+                            </button>
+                            <button
+                              onClick={() => {
+                                removeMockExamContainer(item);
+                              }}
+                            >
+                              <Image
+                                alt="plus-icon"
+                                width={30}
+                                height={30}
+                                src="/recruiter/remove-icon.svg"
+                              />
+                            </button>
+                          </div>
                         </div>
                       );
                     })}

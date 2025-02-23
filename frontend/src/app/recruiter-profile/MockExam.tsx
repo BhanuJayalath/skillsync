@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import MockExamContainer from "./MockExamContainer";
+import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExam({
   loadMockTestQuestions,
@@ -80,8 +81,17 @@ export default function MockExam({
 
   return (
     <section className={styles.mockExam}>
-      <header id={styles.mockExamHeading}>Mock Exam {mockExamCount}</header>
-      <button onClick={addQuestion}>Click me</button>
+      <header id={styles.mockExamHeading}>
+        <h1>Mock Exam {mockExamCount}</h1>
+        <button onClick={addQuestion}>
+          <Image
+            alt="plus-icon"
+            width={25}
+            height={25}
+            src="/recruiter/plus-icon.svg"
+          />
+        </button>
+      </header>
       {loadMockTestQuestions.mockExamContent.questionContent.map(
         (item: any) => {
           questionCounter++;

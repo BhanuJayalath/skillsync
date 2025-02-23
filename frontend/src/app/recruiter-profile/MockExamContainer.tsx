@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExamContainer({
   MockTestQuestions,
@@ -93,7 +94,31 @@ export default function MockExamContainer({
   return (
     <div id={styles.mockExamSection}>
       <div id={styles.mockExamSectionBlock}>
-        <header>Question{questionCounter}</header>
+        <header>
+          Question {questionCounter}
+          <div id={styles.mockExamSectionSaveandClose}>
+            <button onClick={save}>
+              <Image
+                alt="plus-icon"
+                width={25}
+                height={25}
+                src="/recruiter/tick-icon.svg"
+              />
+            </button>
+            <button
+              onClick={() => {
+                // remove(questionItem.QuestionId);
+              }}
+            >
+              <Image
+                alt="plus-icon"
+                width={25}
+                height={25}
+                src="/recruiter/remove-icon.svg"
+              />
+            </button>
+          </div>
+        </header>
         <h2>Add your question here</h2>
         <input
           id={styles.mockExamSectionQuestion}
@@ -118,14 +143,6 @@ export default function MockExamContainer({
           <input type="checkbox" />
           <input type="text" value={answer4} onChange={saveAnswer4} />
         </div>
-        <button onClick={save}>Save</button>
-        <button
-          onClick={() => {
-            // remove(questionItem.QuestionId);
-          }}
-        >
-          remove
-        </button>
       </div>
     </div>
   );
