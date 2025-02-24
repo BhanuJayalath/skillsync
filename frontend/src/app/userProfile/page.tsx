@@ -89,7 +89,7 @@ export default function UserProfile () {
         }
     },[activeTab,user.education,user.experience,user.skills]);
     return (
-        <div className={styles.outerContainer}>
+        <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
             <div className={styles.innerContainer}>
                 {/* Sidebar */}
                 <aside className={styles.sidebar}>
