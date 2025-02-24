@@ -1,12 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExamContainer({
+  MockTestQuestions,
+  update,
   questionCounter,
-  mockExamComponent,
-}: {
-  questionCounter: any;
-  mockExamComponent: any;
+}: // questionCounter,
+// mockExamComponent,
+{
+  MockTestQuestions: any;
+  update: any;
+  questionCounter: number;
+  // questionCounter: any;
+  // mockExamComponent: any;
 }) {
   const [question, setQuestion] = useState<string>();
   const [answer1, setAnswer1] = useState<string>();
@@ -14,34 +22,42 @@ export default function MockExamContainer({
   const [answer3, setAnswer3] = useState<string>();
   const [answer4, setAnswer4] = useState<string>();
   const storage = {
-    mockExamId: mockExamComponent.mockExamId,
-    mockExamContent: {
-      questionContent: [
-        {
-          QuestionId:
-            mockExamComponent.mockExamContent.questionContent[0].QuestionId,
-          Question: question,
-          Answer1: answer1,
-          Answer2: answer2,
-          Answer3: answer3,
-          Answer4: answer4,
-        },
-      ],
-    },
+    QuestionId: MockTestQuestions.QuestionId,
+    Question: question,
+    Answer1: answer1,
+    Answer2: answer2,
+    Answer3: answer3,
+    Answer4: answer4,
   };
   useEffect(() => {
-    setQuestion(mockExamComponent.mockExamContent.questionContent.Question);
-    setAnswer1(mockExamComponent.mockExamContent.questionContent.Answer1);
-    setAnswer2(mockExamComponent.mockExamContent.questionContent.Answer2);
-    setAnswer3(mockExamComponent.mockExamContent.questionContent.Answer3);
-    setAnswer4(mockExamComponent.mockExamContent.questionContent.Answer4);
+    setQuestion(MockTestQuestions.Question);
+    setAnswer1(MockTestQuestions.Answer1);
+    setAnswer2(MockTestQuestions.Answer2);
+    setAnswer3(MockTestQuestions.Answer3);
+    setAnswer4(MockTestQuestions.Answer4);
+    // setQuestionItem(storage);
+
     // console.log(questionItem.QuestionId);
   }, []);
   useEffect(() => {
-    // if (mockExamComponent.mockExamContent.QuestionId != undefined) {
-    localStorage.setItem(mockExamComponent.mockExamId, JSON.stringify(storage));
-    // }
-  }, [storage]);
+    update(MockTestQuestions.QuestionId, storage);
+  }, [question, answer1, answer2, answer3, answer4]);
+
+  // setQuestionItem({
+  //   mockExamId: MockTestQuestions.mockExamId,
+  //   mockExamContent: {
+  //     questionContent: [
+  //       {
+  //         QuestionId: MockTestQuestions.QuestionId,
+  //         Question: question,
+  //         Answer1: answer1,
+  //         Answer2: answer2,
+  //         Answer3: answer3,
+  //         Answer4: answer4,
+  //       },
+  //     ],
+  //   },
+  // });
 
   function saveQuestion(event: any) {
     setQuestion(event.target.value);
@@ -65,7 +81,9 @@ export default function MockExamContainer({
   }
 
   function save() {
-    // console.log(questionId);
+    axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, storage, {
+      headers: { "Content-Type": "application/json" },
+    });
     // localStorage.setItem(questionId, JSON.stringify(questionItem));
   }
   function remove(questionId: number) {
@@ -76,7 +94,31 @@ export default function MockExamContainer({
   return (
     <div id={styles.mockExamSection}>
       <div id={styles.mockExamSectionBlock}>
-        <header>Question{questionCounter}</header>
+        <header>
+          Question {questionCounter}
+          <div id={styles.mockExamSectionSaveandClose}>
+            <button onClick={save}>
+              <Image
+                alt="plus-icon"
+                width={25}
+                height={25}
+                src="/recruiter/tick-icon.svg"
+              />
+            </button>
+            <button
+              onClick={() => {
+                // remove(questionItem.QuestionId);
+              }}
+            >
+              <Image
+                alt="plus-icon"
+                width={25}
+                height={25}
+                src="/recruiter/remove-icon.svg"
+              />
+            </button>
+          </div>
+        </header>
         <h2>Add your question here</h2>
         <input
           id={styles.mockExamSectionQuestion}
@@ -101,14 +143,6 @@ export default function MockExamContainer({
           <input type="checkbox" />
           <input type="text" value={answer4} onChange={saveAnswer4} />
         </div>
-        <button onClick={save}>Save</button>
-        <button
-          onClick={() => {
-            // remove(questionItem.QuestionId);
-          }}
-        >
-          remove
-        </button>
       </div>
     </div>
   );
