@@ -107,9 +107,9 @@ const LandingPage = () => {
                   <img src={service.icon} alt={service.name} width={50} height={50} />
                 </div>
                 <h4>{service.name}</h4>
-                <a href="#" className={styles.learnMore}>
-                  Learn More →
-                </a>
+                  <a href={service.name === "AI-Driven Interviews" ? "/mock-interview" : "#"} className={styles.learnMore}>
+                    Learn More →
+                  </a>
               </div>
             </div>
           ))}
