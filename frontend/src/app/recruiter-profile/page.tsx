@@ -8,40 +8,92 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
 import MockExamContainer from "./MockExamContainer";
+
+import axios from "axios";
 export default function RecruiterProfile() {
+  const [loadMockTests, setLoadMockTests] = useState<
+    {
+      mockExamId: number;
+      mockExamContent: {
+        questionContent: any[];
+      };
+    }[]
+  >([{ mockExamId: 1, mockExamContent: { questionContent: [] } }]);
+
+  const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
   const [mockExamState, setMockExamState] = useState(false);
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
   ]);
-  const [mockExamComponent, setMockExamComponent] = useState<
-    {
-      mockExamId: number;
-      mockExamContent: {
-        questionContent: [];
-      };
-    }[]
-  >();
+  const [mockExamCount, setMockExamCount] = useState(Number);
+  // const [mockExamComponent, setMockExamComponent] = useState<
+  //   {
+  //     mockExamId: number;
+  //     mockExamContent: {
+  //       questionContent: [];
+  //     };
+  //   }[]
+  // >();
+
   useEffect(() => {
-    retrieveLocalStorage();
-    // console.log(mockExamContainerId);
-    // console.log(mockExamComponent);
+    const tempArray: any = [];
+    axios
+      .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
+      .then((response) => {
+        response.data.map((item: any, index: number) => {
+          tempArray.push(item);
+          if (localStorage.length > 0) {
+            for (let i = 0; i < localStorage.length; i++) {
+              const key: any = localStorage.key(i);
+              let Item: any = localStorage.getItem(key);
+              let jsonParsedItem = Item ? JSON.parse(Item) : null;
+              // console.log(Item.mockExamId);
+              if (item.mockExamId === jsonParsedItem.mockExamId) {
+                tempArray[index] = jsonParsedItem;
+                // console.log(index);
+              } else if (response.data.length - 1 === index) {
+                const lastElement = tempArray.find(
+                  (item: any) => item.mockExamId === jsonParsedItem.mockExamId
+                );
+                // console.log(lastElement);
+                if (!lastElement) {
+                  tempArray.push(jsonParsedItem);
+                }
+                // console.log(index);
+              }
+            }
+          }
+          setLoadMockTests(tempArray);
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
-  function loadMockExamComponent(mockexamId: number) {
-    if (!localStorage.getItem(JSON.stringify(mockexamId))) {
-      localStorage.clear();
-      setMockExamComponent([
-        {
-          mockExamId: mockexamId,
-          mockExamContent: {
-            questionContent: [],
-          },
-        },
-      ]);
-    }
+
+  function loadMockExamComponent(mockexamId: number, mockExamCounter: number) {
+    // setMockExamCount(mockExamCounter);
+    // console.log(mockExamCounter);
+    loadMockTests.find((item: any) => {
+      if (item.mockExamId === mockexamId) {
+        setLoadMockTestQuestions(item);
+      }
+    });
+
     setMockExamState(!mockExamState);
   }
   function addMockExamContainers() {
-    setMockExamContainerId([...mockExamContainerId, Date.now()]);
+    localStorage.clear();
+    setLoadMockTests([
+      ...loadMockTests,
+      {
+        mockExamId: Date.now(),
+        mockExamContent: {
+          questionContent: [],
+        },
+      },
+    ]);
+    // setMockExamContainerId([...mockExamContainerId, Date.now()]);
     // console.log(mockExamContainerId);
   }
 
@@ -52,7 +104,7 @@ export default function RecruiterProfile() {
       newItems.splice(index, 1);
       setMockExamContainerId(newItems);
     }
-    console.log(item);
+    // console.log(item);
     if (localStorage.getItem(JSON.stringify(item))) {
       localStorage.removeItem(JSON.stringify(item));
     }
@@ -75,7 +127,7 @@ export default function RecruiterProfile() {
       });
 
       setMockExamContainerId(tempIds);
-      setMockExamComponent(temp);
+      // setMockExamComponent(temp);
     }
   }
   let counter = 0;
@@ -163,19 +215,34 @@ export default function RecruiterProfile() {
           <div id={styles.contentContainer2}>
             {mockExamState ? (
               <MockExam
-                setMockExamComponent={setMockExamComponent}
-                mockExamComponent={mockExamComponent}
+                setLoadMockTestQuestions={setLoadMockTestQuestions}
+                loadMockTestQuestions={loadMockTestQuestions}
+                mockExamCount={mockExamCount}
               />
             ) : (
               <>
                 <div id={styles.mockExams}>
-                  <h1 id={styles.mockExamscontainerHeader}>Mock Exams</h1>
-                  <button onClick={addMockExamContainers}>Add</button>
+                  <div id={styles.mockExamscontainerHeader}>
+                    <h1>Mock Exams</h1>
+                    <button onClick={addMockExamContainers}>
+                      {" "}
+                      <Image
+                        alt="plus-icon"
+                        width={23}
+                        height={23}
+                        src="/recruiter/plus-icon.svg"
+                      />
+                    </button>
+                  </div>
                   <div className={styles.mockExamscontainerSection}>
-                    {mockExamContainerId?.map((item: any) => {
+                    {loadMockTests?.map((item: any) => {
                       counter++;
+                      // console.log(counter);
                       return (
-                        <div key={item} id={styles.mockExamscontainer}>
+                        <div
+                          key={item.mockExamId}
+                          id={styles.mockExamscontainer}
+                        >
                           <Image
                             alt="exam-icon"
                             width={60}
@@ -183,20 +250,32 @@ export default function RecruiterProfile() {
                             src="/recruiter/exam-icon.svg"
                           />
                           <h1>Mock Exam {counter}</h1>
-                          <button
-                            onClick={() => {
-                              loadMockExamComponent(item);
-                            }}
-                          >
-                            Click
-                          </button>
-                          <button
-                            onClick={() => {
-                              removeMockExamContainer(item);
-                            }}
-                          >
-                            Remove
-                          </button>
+                          <div id={styles.mockExamscontainerButtons}>
+                            <button
+                              onClick={() => {
+                                loadMockExamComponent(item.mockExamId, counter);
+                              }}
+                            >
+                              <Image
+                                alt="plus-icon"
+                                width={20}
+                                height={20}
+                                src="/recruiter/update-icon.svg"
+                              />
+                            </button>
+                            <button
+                              onClick={() => {
+                                removeMockExamContainer(item);
+                              }}
+                            >
+                              <Image
+                                alt="plus-icon"
+                                width={30}
+                                height={30}
+                                src="/recruiter/remove-icon.svg"
+                              />
+                            </button>
+                          </div>
                         </div>
                       );
                     })}

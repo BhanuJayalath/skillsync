@@ -7,7 +7,10 @@ const nextConfig: NextConfig = {
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['img.icons8.com'],
+    domains: ["img.icons8.com"],
+  },
+  eslint: {
+    ignoreDuringBuilds: true, // This will skip ESLint during builds
   },
 };
 

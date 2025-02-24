@@ -7,6 +7,12 @@ import { JobRecommendationModule } from './job-recommendation/job-recommendation
 @Module({
   imports: [UserProfileModule, JobRecommendationModule],
   controllers: [AppController, UserProfileController],
+import { RecruiterModule } from './recruiter/recruiter.module';
+import { MocktestModule } from './mocktest/mocktest.module';
+
+@Module({
+  imports: [RecruiterModule, MocktestModule],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
