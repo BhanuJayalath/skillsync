@@ -31,6 +31,8 @@ Example Interactions: this is only an example. dont ask in the same way every ti
 Stay adaptive to the user's responses and maintain an engaging conversation throughout the session."
 `
 
+
+// Extend the Window interface to include the SpeechRecognition API
 declare global {
   interface Window {
     SpeechRecognition: new () => SpeechRecognition;
@@ -38,6 +40,7 @@ declare global {
   }
 }
 
+// Speech recognition API types
 type SpeechRecognition = EventTarget & {
   lang: string;
   interimResults: boolean;
@@ -48,6 +51,7 @@ type SpeechRecognition = EventTarget & {
   start: () => void;
 };
 
+// Speech recognition event types
 interface SpeechRecognitionEvent {
   results: {
     [index: number]: {
@@ -62,6 +66,7 @@ interface SpeechRecognitionErrorEvent extends Event {
   error: string;
 }
 
+// Main chat component
 export default function Chat() {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([])
   const [isInterviewStarted, setIsInterviewStarted] = useState(false)
@@ -69,7 +74,11 @@ export default function Chat() {
   const recognitionRef = useRef<SpeechRecognition | null>(null)
   const synthesisRef = useRef<SpeechSynthesis | null>(null)
   const voicesRef = useRef<SpeechSynthesisVoice[]>([])
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false)
+  const chatMessagesRef = useRef<HTMLDivElement>(null)
 
+
+  // Initialize the speech synthesis and recognition APIs when the component mounts
   useEffect(() => {
     if (typeof window !== 'undefined') {
       synthesisRef.current = window.speechSynthesis
@@ -99,6 +108,7 @@ export default function Chat() {
     }
   }, [])
 
+  // Generate a question based on the conversation history
   const generateQuestion = async (conversationHistory: { role: string; content: string }[]) => {
     try {
       const requestBody = {
@@ -144,6 +154,7 @@ export default function Chat() {
     speakText(nextQuestion)
   }
 
+  // Handle speech recognition errors
   const handleSpeechError = (event: SpeechRecognitionErrorEvent) => {
     console.error('Speech recognition error:', event.error)
     setIsRecording(false)
@@ -152,13 +163,15 @@ export default function Chat() {
   const handleSpeechEnd = () => {
     setIsRecording(false)
   }
-
+  
+  // Speak the given text using the browser's speech synthesis API
   const speakText = (text: string) => {
     if (synthesisRef.current) {
       synthesisRef.current.cancel() // Cancel any ongoing speech synthesis
   
       const utterances = text.match(/[^.!?]+[.!?]+/g) || [text]; // Split text into sentences
   
+      // Speak each sentence sequentially
       const speakNext = (index: number) => {
         if (index < utterances.length) {
           const utterance = new SpeechSynthesisUtterance(utterances[index]);
@@ -178,7 +191,9 @@ export default function Chat() {
     }
   };
 
+  // Start the interview by generating the first question
   const startInterview = async () => {
+    setIsTermsAccepted(true)
     setIsInterviewStarted(true)
     setMessages([])
     const firstQuestion = await generateQuestion([])
@@ -186,15 +201,27 @@ export default function Chat() {
     speakText(firstQuestion)
   }
 
+  // Start listening for user responses
   const startSpeaking = () => {
     setIsRecording(true)
     recognitionRef.current?.start()
   }
 
+  // End the interview and clear the chat messages
   const endInterview = () => {
     setIsInterviewStarted(false)
     setMessages([])
+    if (synthesisRef.current) {
+      synthesisRef.current.cancel() // Cancel any ongoing speech synthesis
+    }
   }
+ 
+  // scroll to the bottom of the chat messages when new messages are added
+  useEffect(() => {
+    if (chatMessagesRef.current) {
+      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight
+    }
+  }, [messages])
 
   return (
     <>
@@ -204,11 +231,33 @@ export default function Chat() {
           <h1 className={styles.title}>AI Mock Interview</h1>
           <p className={styles.subtitle}>Practice your interview skills with an AI interviewer.</p>
         </div>
+        {!isTermsAccepted ? (
+        <div className={styles.termsArea}>
+          <h3 className={styles.terms}>Terms and Conditions:</h3>
+          <p className={styles.li}>Please read and accept the terms and conditions before starting the interview.</p>
+          
+        <p>By using this AI Mock Interview tool, you agree to the following terms and conditions:</p>
+        <ul>
+          <li className={styles.li}>• This tool is for educational purposes only and is designed to help you practice your interview skills.</li>
+          <li className={styles.li}>• The AI interviewer will ask you a series of technical and behavioral questions to simulate a real interview.</li>
+          <li className={styles.li}>• Your responses will be recorded and analyzed to provide feedback and improve your performance.</li>
+          <li className={styles.li}>• Do not share any personal or sensitive information during the interview.</li>
+          <li className={styles.li}>• We are not responsible for any decisions made based on the feedback provided by this tool.</li>
+  
+          <li className={styles.accept}>By clicking the start button, you agree to these terms and conditions and consent to the use of your responses for educational purposes.</li>
+        </ul>
+
+       <button className={styles.icons} onClick={startInterview}>
+            <img width="30" height="30" src="https://img.icons8.com/ios/50/shutdown--v1.png" alt="shutdown--v1" />
+          </button>
+        </div>
+      ) : (
+        <>
         <div className={styles.interviewArea}>
           <div className={styles.aiVisual}>
-            <Image src="/mock-interview/voiceai.gif" alt="AI Interviewer" width={200} height={200} className={styles.interviewer}/>
+            <Image src="/mock-interview/ai.gif" alt="AI Interviewer" width={200} height={200} className={styles.interviewer}/>
           </div>
-          <div className={styles.chatMessages}>
+          <div className={styles.chatMessages} ref={chatMessagesRef}>
             {messages.map((msg, index) => (
               <div key={index} className={`${styles.message} ${msg.role === 'assistant' ? styles.bot : styles.user}`}>
                 {msg.content}
@@ -218,17 +267,24 @@ export default function Chat() {
         </div>
         <div className={styles.userInput}>
           {!isInterviewStarted ? (
-            <button className={styles.button} onClick={startInterview}>Start New Interview</button>
+            <button className={styles.icons} onClick={startInterview}>
+                    <img width="30" height="30" src="https://img.icons8.com/ios/50/shutdown--v1.png" alt="shutdown--v1" />
+
+            </button>
           ) : (
             <>
-              <button className={styles.button} onClick={startSpeaking} disabled={isRecording}>
-                {isRecording ? 'Listning...' : 'Start Speaking'}
+              <button className={styles.icons} onClick={startSpeaking} disabled={isRecording}>
+                <img width="30" height="30" src="https://img.icons8.com/ios/50/microphone.png" alt="microphone" />
               </button>
-              {isRecording && <div className={styles.recordingIndicator}>Recording...</div>}
-              <button className={styles.button} onClick={endInterview}>End Interview</button>
-            </>
+              {isRecording && <div className={styles.recordingIndicator}>Listening...</div>}
+              <button className={styles.icons} onClick={endInterview}>
+                <img width="30" height="30" src="https://img.icons8.com/ios/50/shutdown--v1.png" alt="end--v1" />
+              </button>            
+              </>
           )}
         </div>
+        </>
+      )}
       </div>
       <Footer />
     </>
