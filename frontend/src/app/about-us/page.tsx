@@ -6,11 +6,11 @@ import Navbar from "../components/Navbar"
 
 const teamMembers = [
   { name: "Bhanu Jayalath", role: "Full Stack Developer", image: "/team/bhanu.png" },
-  { name: "Dishika Venuravaththa", role: "Full Stack Developer", image: "/team/dishika.png" },
+  { name: "Dishika Veruwantha", role: "Full Stack Developer", image: "/team/dishika.png" },
   { name: "Linuka Arambawela", role: "Full Stack Developer", image: "/team/linuka.png" },
   { name: "Dulith Mayakaduwa", role: "Full Stack Developer", image: "/team/dulith.png" },
-  { name: "Ashmirah Bandaranayaka", role: "Full Stack Developer", image: "/team/ashmira.png" },
-  { name: "Pesandu De Silva", role: "Full Stack Developer", image: "/team/pesandu.png" },
+  { name: "Ashmirah Bandaranaike", role: "Full Stack Developer", image: "/team/ashmira.png" },
+  { name: "Pesandu De Alwis", role: "Full Stack Developer", image: "/team/pesadu.png" },
 ]
 
 export default function AboutUs() {
