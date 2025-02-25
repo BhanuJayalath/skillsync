@@ -5,12 +5,12 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 
 const teamMembers = [
-  { name: "Bhanu Jayalath", role: "Project Manager", image: "/placeholder.svg?height=200&width=200" },
-  { name: "Dishika Venuravaththa", role: "UI/UX Designer", image: "/placeholder.svg?height=200&width=200" },
-  { name: "Linuka Arambawela", role: "Full Stack Developer", image: "/placeholder.svg?height=200&width=200" },
-  { name: "Dulith Mayakaduwa", role: "Data Scientist", image: "/placeholder.svg?height=200&width=200" },
-  { name: "Ashmirah Bandaranayaka", role: "AI Specialist", image: "/placeholder.svg?height=200&width=200" },
-  { name: "Pesandu De Silva", role: "Content Strategist", image: "/placeholder.svg?height=200&width=200" },
+  { name: "Bhanu Jayalath", role: "Full Stack Developer", image: "/team/bhanu.png" },
+  { name: "Dishika Venuravaththa", role: "Full Stack Developer", image: "/team/dishika.png" },
+  { name: "Linuka Arambawela", role: "Full Stack Developer", image: "/team/linuka.png" },
+  { name: "Dulith Mayakaduwa", role: "Full Stack Developer", image: "/team/dulith.png" },
+  { name: "Ashmirah Bandaranayaka", role: "Full Stack Developer", image: "/team/ashmira.png" },
+  { name: "Pesandu De Silva", role: "Full Stack Developer", image: "/team/pesandu.png" },
 ]
 
 export default function AboutUs() {
@@ -46,7 +46,7 @@ export default function AboutUs() {
           <h2 className={styles.sectionTitle}>Our Solution</h2>
           <p className={styles.text}>
             SkillSync offers a range of features including personalized study materials, interactive exercises,
-            realistic mock interview scenarios, progress tracking, and expert tips. Our collaborative community feature
+            realistic mock interview scenarios, progress tracking, and expert tips. Our AI mock interview feature
             enables peer-to-peer practice interviews, forums, and discussion groups. We also provide personalized
             performance analytics and recommend adaptive simulations for real-world scenarios.
           </p>
