@@ -1,30 +1,44 @@
 "use client";
-
-import { useState } from "react";
 import styles from "./sign-up.module.css";
+import Link from 'next/link';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
-const SignUpPage = () => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    mobileNumber: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+export default function SignUpPage() {
+  const router = useRouter();
+  const [user, setUser] = React.useState({
+    username: '',
+    email: '',
+    password: '',
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const onSignUp = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    try {
+      setLoading(true);
+      const response = await axios.post('/api/users/sign-up', user);
+      console.log("Signup success", response.data);
+      router.push('/login'); // Navigate to login page after signup
+    } catch (error) {
+      console.log("Signup failed", error.message);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const togglePasswordVisibility = (field: "password" | "confirmPassword") => {
-    if (field === "password") setShowPassword(!showPassword);
-    if (field === "confirmPassword")
-      setShowConfirmPassword(!showConfirmPassword);
-  };
+  useEffect(() => {
+    if(user.email && user.password && user.username){
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [user]);
 
   return (
     <div className={styles.signupContainer}>
@@ -33,7 +47,7 @@ const SignUpPage = () => {
         <div className={styles.imagePlaceholder}>
           {/* Replace with your image */}
           <img src="../logo.png" alt="logo" />
-          <img src="../SignUpPageImg.png" alt="Clipboard" />
+          <img src="../SignUpPageImg.png" alt="Sign Up Illustration" />
         </div>
       </div>
 
@@ -48,97 +62,61 @@ const SignUpPage = () => {
           </p>
 
           {/* Form */}
-          <form>
-            {/* Full Name */}
+          <form onSubmit={onSignUp}>
+            {/* User Name */}
             <div className={styles.formGroup}>
-              <label>Full Name</label>
+              <label htmlFor='username'>User Name</label>
               <input
-                type="text"
-                name="fullName"
-                placeholder="Full Name"
-                value={formData.fullName}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* Mobile Number */}
-            <div className={styles.formGroup}>
-              <label>Mobile Number</label>
-              <input
-                type="text"
-                name="mobileNumber"
-                placeholder="123 456 7890"
-                value={formData.mobileNumber}
-                onChange={handleChange}
+                id='username'
+                type='text'
+                value={user.username}
+                onChange={(e) => setUser({ ...user, username: e.target.value })}
+                placeholder='Username'
               />
             </div>
 
             {/* Email */}
             <div className={styles.formGroup}>
-              <label>Email</label>
+              <label htmlFor='email'>Email</label>
               <input
-                type="email"
-                name="email"
-                placeholder="example@gmail.com"
-                value={formData.email}
-                onChange={handleChange}
+                id='email'
+                type='email'
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                placeholder='Email'
               />
             </div>
 
             {/* Password */}
             <div className={styles.formGroup}>
-              <label>Password</label>
+              <label htmlFor='password'>Password</label>
               <div className={styles.passwordField}>
                 <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="********"
-                  value={formData.password}
-                  onChange={handleChange}
+                  id='password'
+                  type='password'
+                  value={user.password}
+                  onChange={(e) => setUser({ ...user, password: e.target.value })}
+                  placeholder='Password'
                 />
-                <button
-                  type="button"
-                  onClick={() => togglePasswordVisibility("password")}
-                >
-                  👁
-                </button>
-              </div>
-            </div>
-
-            {/* Confirm Password */}
-            <div className={styles.formGroup}>
-              <label>Confirm Password</label>
-              <div className={styles.passwordField}>
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  placeholder="********"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                />
-                <button
-                  type="button"
-                  onClick={() => togglePasswordVisibility("confirmPassword")}
-                >
-                  👁
-                </button>
               </div>
             </div>
 
             {/* Submit Button */}
-            <button type="submit" className={styles.submitButton}>
-              Register
+            <button
+              type="submit"
+              className={styles.submitButton}
+              disabled={buttonDisabled || loading}
+            >
+              {loading ? "Processing..." : "Register"}
             </button>
           </form>
 
           {/* Already Have Account */}
           <p className={styles.loginText}>
-            Already have an account? <a href="/sign-in">Login</a>
+            Already have an account? <Link href="/login">Login</Link>
           </p>
         </div>
       </div>
     </div>
   );
-};
-
-export default SignUpPage;
+}
