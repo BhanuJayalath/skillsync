@@ -62,7 +62,11 @@ export default function page(){
 
                         {/* Users List */}
                         <div className={styles.usersCard}>
-                            <h3>Users</h3>
+                            <div className={styles.usersBar}>
+                                <h3>Users</h3>
+                                <input type="text" placeholder="Search users" className={styles.searchInput} />
+                            </div>
+                            <hr />
                             <div className={styles.userList}>
                                 {["User1", "User2", "User3", "User4"].map((user) => (
                                     <div key={user} className={styles.userItem}>{user}</div>

@@ -55,6 +55,7 @@
     border-radius: 10px;
   }
   
+
   .searchInput {
     padding: 5px;
     width: 200px;
@@ -137,4 +138,13 @@
     font-weight: bold;
     color: #007bff;
   }
-  
+
+  .usersBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    padding-bottom: 0;
+    border-radius: 10px;
+    
+  }
