@@ -201,13 +201,8 @@
     padding: 0 1em; /* Add padding */
 }
 
-.profilePic span {
-    font-size: 2.5em;
-    background: #ddd;
-    border-radius: 50%;
-    padding: 0.5em;
-    margin-right: 1em;
-    color: #555;
+.profilePic .userAvatar {
+    margin: 1em 1em 2em 1em ;
 }
 
 .editButton {

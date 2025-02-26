@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="deleted the unnecessary files">
-      <change afterPath="$PROJECT_DIR$/public/user/courseIcon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/user/cvIcon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/user/homeIcon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/user/overviewIcon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/user/progressIcon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/user/settingsIcon.svg" afterDir="false" />
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add a settings section to the nav bar and add content to the cv section">
+      <change afterPath="$PROJECT_DIR$/public/user/userIcon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/app.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
@@ -40,6 +36,9 @@
 }</component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -171,7 +170,31 @@
       <option name="project" value="LOCAL" />
       <updated>1740573706373</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add new icons">
+      <option name="closed" value="true" />
+      <created>1740574827079</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1740574827079</updated>
+    </task>
+    <task id="LOCAL-00011" summary="updated the cv section styles">
+      <option name="closed" value="true" />
+      <created>1740574891680</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1740574891680</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add a settings section to the nav bar and add content to the cv section">
+      <option name="closed" value="true" />
+      <created>1740575003366</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1740575003366</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,6 +223,9 @@
     <MESSAGE value="making the cv section downloadable" />
     <MESSAGE value="add a button to download the cv and change the structure" />
     <MESSAGE value="deleted the unnecessary files" />
-    <option name="LAST_COMMIT_MESSAGE" value="deleted the unnecessary files" />
+    <MESSAGE value="add new icons" />
+    <MESSAGE value="updated the cv section styles" />
+    <MESSAGE value="add a settings section to the nav bar and add content to the cv section" />
+    <option name="LAST_COMMIT_MESSAGE" value="add a settings section to the nav bar and add content to the cv section" />
   </component>
 </project>
