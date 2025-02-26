@@ -41,8 +41,8 @@ export default function UserProfile () {
         jobRole :[{
             jobName: 'Job Role '
         }],
-        experience : [1],
-        education : [1],
+        experience : [1,1,1,1],
+        education : [1,1,1,1],
         skills : [1]
     });
     // const handleClick = (): void => {
@@ -151,7 +151,7 @@ export default function UserProfile () {
                                         <strong>{user.userName}</strong>
                                         <p>{user.email}</p>
                                     </div>
-                                    <button className={styles.editButton} onClick={handleClick}>Edit</button>
+                                    <button className={styles.editButton} >Edit</button>
                                 </div>
                                 {/*form section*/}
                                 <form className={styles.form}>
@@ -257,66 +257,67 @@ export default function UserProfile () {
                                 </ul>
                             </section>
                             <section id="tab-3" className={styles.cvSection}>
-                                <div className={styles.contactInfo}>
-                                    <h1 className={styles.name}>{user.fullName}</h1>
-                                    <p className={styles.jobTitle}>{user.jobRole[0].jobName}</p>
-                                    <div className={styles.contactDetails}>
-                                        <p>Email: {user.email}</p>
-                                        <p>Phone: {user.number}</p>
-                                        <p>Location: {user.city}, {user.country}</p>
+                                    <div className={styles.contactInfo}>
+                                        <h1 className={styles.name}>{user.fullName}</h1>
+                                        <p className={styles.jobTitle}>{user.jobRole[0].jobName}</p>
+                                        <div className={styles.contactDetails}>
+                                            <p>Email: {user.email}</p>
+                                            <p>Phone: {user.number}</p>
+                                            <p>Location: {user.city}, {user.country}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div id="experienceSection" className={styles.experience}>
-                                    <h2 className={styles.sectionTitle}>Experience</h2>
-                                    <ul className={styles.courseList}>
-                                        {user.experience.map((experience, index) => (
-                                            <li key={index} className={styles.expItem}>
-                                                <div className={styles.job}>
-                                                    <h3 className={styles.jobTitle}>Software Engineer</h3>
-                                                    <p className={styles.companyName}>Tech Company</p>
-                                                    <p className={styles.jobDates}>Jan 2020 - Present</p>
-                                                    <ul className={styles.jobResponsibilities}>
-                                                        <li>Developed and maintained web applications using React and
-                                                            Node.js
-                                                        </li>
-                                                        <li>Collaborated with cross-functional teams to design
-                                                            user-friendly
-                                                            features
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
+                                    <div id="experienceSection" className={styles.experience}>
+                                        <h2 className={styles.sectionTitle}>Experience</h2>
+                                        <ul className={styles.courseList}>
+                                            {user.experience.map((experience, index) => (
+                                                <li key={index} className={styles.expItem}>
+                                                    <div className={styles.job}>
+                                                        <h3 className={styles.jobTitle}>Software Engineer</h3>
+                                                        <p className={styles.companyName}>Tech Company</p>
+                                                        <p className={styles.jobDates}>Jan 2020 - Present</p>
+                                                        <ul className={styles.jobResponsibilities}>
+                                                            <li>Developed and maintained web applications using React
+                                                                and
+                                                                Node.js
+                                                            </li>
+                                                            <li>Collaborated with cross-functional teams to design
+                                                                user-friendly
+                                                                features
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
 
-                                <div id="educationSection" className={styles.education}>
-                                    <h2 className={styles.sectionTitle}>Education</h2>
-                                    <ul className={styles.educationList}>
-                                        {user.education.map((education, index) => (
-                                            <li key={index} className={styles.eduItem}>
-                                                <div className={styles.degree}>
-                                                    <h3 className={styles.degreeTitle}>Bachelor of Science in Computer
-                                                        Science</h3>
-                                                    <p className={styles.schoolName}>University of XYZ</p>
-                                                    <p className={styles.graduationYear}>Graduated: 2019</p>
-                                                </div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-
-                                <div id="skillSection" className={styles.skills}>
-                                    <h2 className={styles.sectionTitle}>Skills</h2>
-                                    <ul className={styles.skillList}>
-                                        {user.skills.map((skill, index) => (
-                                            <li key={index} className={styles.skill}>JavaScript / TypeScript</li>
-                                        ))}
-                                    </ul>
-                                </div>
+                                    <div id="educationSection" className={styles.education}>
+                                        <h2 className={styles.sectionTitle}>Education</h2>
+                                        <ul className={styles.educationList}>
+                                            {user.education.map((education, index) => (
+                                                <li key={index} className={styles.eduItem}>
+                                                    <div className={styles.degree}>
+                                                        <h3 className={styles.degreeTitle}>Bachelor of Science in
+                                                            Computer
+                                                            Science</h3>
+                                                        <p className={styles.schoolName}>University of XYZ</p>
+                                                        <p className={styles.graduationYear}>Graduated: 2019</p>
+                                                    </div>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div id="skillSection" className={styles.skills}>
+                                        <h2 className={styles.sectionTitle}>Skills</h2>
+                                        <ul className={styles.skillList}>
+                                            {user.skills.map((skill, index) => (
+                                                <li key={index} className={styles.skill}>JavaScript / TypeScript</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <button onClick={window.print}>Print Preview / Save as PDF</button>
+                                </section>
                             </section>
-
-                        </section>
                     </div>
                 </main>
             </div>
