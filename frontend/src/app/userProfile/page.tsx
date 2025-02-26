@@ -38,9 +38,9 @@ export default function UserProfile () {
         jobRole :[{
             jobName: 'Job Role '
         }],
-        experience : [1],
-        education : [1],
-        skills : [1]
+        experience : [1,2,4],
+        education : [1,2,3],
+        skills : [1,3,3]
     });
     useEffect(()=>{
         const fetchUserDetails = async () => {
