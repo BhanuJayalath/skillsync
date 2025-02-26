@@ -4,6 +4,8 @@ import Footer from "@/app/components/Footer";   // Importing Footer component
 import React, {useEffect, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from './user.module.css';   // Importing custom styles
+import '../globals.css';
+
 
 
 export default function UserProfile () {

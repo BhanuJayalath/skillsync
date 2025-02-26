@@ -475,11 +475,6 @@
 }
 /*downloading the pdf*/
 @media print {
-    /* Hide everything by default */
-    body * {
-        visibility: hidden;
-    }
-
     /* making the CV section and its contents visible */
     .cvSection,
     .cvSection * {
