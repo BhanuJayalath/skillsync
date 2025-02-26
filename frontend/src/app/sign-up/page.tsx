@@ -1,30 +1,30 @@
 "use client";
 import styles from "./sign-up.module.css";
-import Link from 'next/link';
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import Link from "next/link";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 export default function SignUpPage() {
   const router = useRouter();
   const [user, setUser] = React.useState({
-    username: '',
-    email: '',
-    password: '',
+    username: "",
+    email: "",
+    password: "",
   });
 
   const [buttonDisabled, setButtonDisabled] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
 
-  const onSignUp = async (e) => {
+  const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission
     try {
       setLoading(true);
-      const response = await axios.post('/api/users/sign-up', user);
+      const response = await axios.post("/api/users/sign-up", user);
       console.log("Signup success", response.data);
-      router.push('/login'); // Navigate to login page after signup
-    } catch (error) {
+      router.push("/login"); // Navigate to login page after signup
+    } catch (error: any) {
       console.log("Signup failed", error.message);
       toast.error(error.message);
     } finally {
@@ -33,7 +33,7 @@ export default function SignUpPage() {
   };
 
   useEffect(() => {
-    if(user.email && user.password && user.username){
+    if (user.email && user.password && user.username) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
@@ -65,38 +65,42 @@ export default function SignUpPage() {
           <form onSubmit={onSignUp}>
             {/* User Name */}
             <div className={styles.formGroup}>
-              <label htmlFor='username'>User Name</label>
+              <label htmlFor="username">User Name</label>
               <input
-                id='username'
-                type='text'
+                id="username"
+                type="text"
                 value={user.username}
-                onChange={(e) => setUser({ ...user, username: e.target.value })}
-                placeholder='Username'
+                onChange={(e) =>
+                  setUser({ ...user, username: e.target.value })
+                }
+                placeholder="Username"
               />
             </div>
 
             {/* Email */}
             <div className={styles.formGroup}>
-              <label htmlFor='email'>Email</label>
+              <label htmlFor="email">Email</label>
               <input
-                id='email'
-                type='email'
+                id="email"
+                type="email"
                 value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
-                placeholder='Email'
+                placeholder="Email"
               />
             </div>
 
             {/* Password */}
             <div className={styles.formGroup}>
-              <label htmlFor='password'>Password</label>
+              <label htmlFor="password">Password</label>
               <div className={styles.passwordField}>
                 <input
-                  id='password'
-                  type='password'
+                  id="password"
+                  type="password"
                   value={user.password}
-                  onChange={(e) => setUser({ ...user, password: e.target.value })}
-                  placeholder='Password'
+                  onChange={(e) =>
+                    setUser({ ...user, password: e.target.value })
+                  }
+                  placeholder="Password"
                 />
               </div>
             </div>
