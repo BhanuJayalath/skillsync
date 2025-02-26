@@ -238,6 +238,74 @@ export default function QuizApp() {
     )
   }
 
+  if (quizState === "quiz" && shuffledQuestions.length > 0) {
+    const currentQuestion = shuffledQuestions[currentQuestionIndex]
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+        <h1 className="text-3xl font-bold mb-6">Question {currentQuestionIndex + 1}</h1>
+        <p className="text-xl mb-4">{currentQuestion.text}</p>
+        <div className="space-y-2 w-full max-w-md mb-4">
+          {currentQuestion.options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => handleAnswerSelection(option)}
+              className={`w-full p-2 text-left border rounded transition-colors ${
+                selectedAnswer === option ? "bg-blue-100 border-blue-500" : "hover:bg-gray-100"
+              }`}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={handleSubmitAnswer}
+          disabled={selectedAnswer === null}
+          className="bg-green-500 text-white px-4 py-2 rounded disabled:bg-gray-300"
+        >
+          Submit Answer
+        </button>
+      </div>
+    )
+  }
+
+  if (quizState === "results") {
+    const scores = calculateScores()
+    const totalCorrect = Object.values(scores).reduce((sum, score) => sum + score.correct, 0)
+    const totalQuestions = Object.values(scores).reduce((sum, score) => sum + score.total, 0)
+    const overallPercentage = Math.round((totalCorrect / totalQuestions) * 100)
+
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+        <h1 className="text-3xl font-bold mb-6">Quiz Results</h1>
+        <p className="text-2xl mb-2">
+          Overall Score: {totalCorrect} out of {totalQuestions} ({overallPercentage}%)
+        </p>
+        <div className="w-full max-w-md mt-4">
+          <h2 className="text-xl font-bold mb-2">Skill Breakdown:</h2>
+          {Object.entries(scores).map(([skill, score]) => {
+            const percentage = Math.round((score.correct / score.total) * 100)
+            return (
+              <div key={skill} className="mb-2">
+                <p className="font-semibold">
+                  {skill}: {score.correct}/{score.total} ({percentage}%)
+                </p>
+                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                  <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${percentage}%` }}></div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+        <button
+          onClick={restartQuiz}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors mt-6"
+        >
+          Take Another Quiz
+        </button>
+      </div>
+    )
+  }
+
   return <div>Loading...</div>
 }
 
