@@ -3,32 +3,172 @@
 import { useState, useEffect } from "react"
 
 const skills = [
-    "JavaScript",
-    "Python",
-    "React",
-    "Node.js",
-    "SQL",
-    "TypeScript",
-    "HTML5",
-    "CSS3",
-    "Angular",
-    "Django",
-    "Flask",
-    "Ruby on Rails",
-    "Java",
-    "C#",
-    "PHP",
-    "Kotlin",
-    "Docker",
-    "AWS",
-    "GraphQL",
-    "MongoDB"
+  "Angular",
+  "AWS",
+  "C#",
+  "CSS3",
+  "Django",
+  "Docker",
+  "Flask",
+  "GraphQL",
+  "HTML5",
+  "Java",
+  "JavaScript",
+  "Kotlin",
+  "MongoDB",
+  "Node.js",
+  "PHP",
+  "Python",
+  "React",
+  "Ruby on Rails",
+  "SQL",
+  "TypeScript"
 ];
 
 const questions = [
-    // JavaScript Questions
+    // Angular Questions
     {
       id: 1,
+      skill: "Angular",
+      text: "Angular is best described as:",
+      options: [
+        "A front-end web application framework",
+        "A back-end programming language",
+        "A CSS preprocessor",
+        "A database management system"
+      ],
+      correctAnswer: "A front-end web application framework"
+    },
+  
+    // AWS Question
+    {
+      id: 2,
+      skill: "AWS",
+      text: "What does AWS stand for?",
+      options: [
+        "Amazon Web Services",
+        "Advanced Web Solutions",
+        "Applied Web Systems",
+        "Automated Workflow Software"
+      ],
+      correctAnswer: "Amazon Web Services"
+    },
+  
+    // C# Question
+    {
+      id: 3,
+      skill: "C#",
+      text: "Which company developed C#?",
+      options: [
+        "Microsoft",
+        "Apple",
+        "Google",
+        "Oracle"
+      ],
+      correctAnswer: "Microsoft"
+    },
+  
+    // CSS3 Question
+    {
+      id: 4,
+      skill: "CSS3",
+      text: "Which CSS3 feature is used to create smooth transitions between style changes?",
+      options: [
+        "transition",
+        "animation",
+        "transform",
+        "filter"
+      ],
+      correctAnswer: "transition"
+    },
+  
+    // Django Question
+    {
+      id: 5,
+      skill: "Django",
+      text: "Which programming language is Django built with?",
+      options: [
+        "Python",
+        "Ruby",
+        "Java",
+        "PHP"
+      ],
+      correctAnswer: "Python"
+    },
+  
+    // Docker Question
+    {
+      id: 6,
+      skill: "Docker",
+      text: "What is Docker primarily used for?",
+      options: [
+        "Containerization",
+        "Virtualization",
+        "Compiling code",
+        "Managing databases"
+      ],
+      correctAnswer: "Containerization"
+    },
+  
+    // Flask Question
+    {
+      id: 7,
+      skill: "Flask",
+      text: "Flask is known as a:",
+      options: [
+        "Micro web framework",
+        "Full-stack web framework",
+        "Front-end library",
+        "Database engine"
+      ],
+      correctAnswer: "Micro web framework"
+    },
+  
+    // GraphQL Question
+    {
+      id: 8,
+      skill: "GraphQL",
+      text: "GraphQL is best described as:",
+      options: [
+        "An API query language",
+        "A type of database",
+        "A front-end framework",
+        "A CSS library"
+      ],
+      correctAnswer: "An API query language"
+    },
+  
+    // HTML5 Question
+    {
+      id: 9,
+      skill: "HTML5",
+      text: "Which HTML5 element is used to draw graphics on the fly via scripting?",
+      options: [
+        "<canvas>",
+        "<svg>",
+        "<div>",
+        "<section>"
+      ],
+      correctAnswer: "<canvas>"
+    },
+  
+    // Java Question
+    {
+      id: 10,
+      skill: "Java",
+      text: "Which of the following is a core principle of Java?",
+      options: [
+        "Object-oriented programming",
+        "Functional programming only",
+        "Procedural scripting",
+        "Assembly language programming"
+      ],
+      correctAnswer: "Object-oriented programming"
+    },
+  
+    // JavaScript Questions
+    {
+      id: 11,
       skill: "JavaScript",
       text: "What is closure in JavaScript?",
       options: [
@@ -40,7 +180,7 @@ const questions = [
       correctAnswer: "A function with access to its outer scope"
     },
     {
-      id: 2,
+      id: 12,
       skill: "JavaScript",
       text: 'What is the purpose of the "use strict" directive in JavaScript?',
       options: [
@@ -52,9 +192,77 @@ const questions = [
       correctAnswer: "To enable strict mode"
     },
   
+    // Kotlin Question
+    {
+      id: 13,
+      skill: "Kotlin",
+      text: "Kotlin is widely used as an alternative to which programming language for Android development?",
+      options: [
+        "Java",
+        "Swift",
+        "C++",
+        "Python"
+      ],
+      correctAnswer: "Java"
+    },
+  
+    // MongoDB Question
+    {
+      id: 14,
+      skill: "MongoDB",
+      text: "What type of database is MongoDB?",
+      options: [
+        "NoSQL",
+        "SQL",
+        "Graph database",
+        "Relational database"
+      ],
+      correctAnswer: "NoSQL"
+    },
+  
+    // Node.js Questions
+    {
+      id: 15,
+      skill: "Node.js",
+      text: "What is the event loop in Node.js?",
+      options: [
+        "A mechanism that allows Node.js to perform non-blocking I/O operations",
+        "A type of data structure in Node.js",
+        "A method to create loops in JavaScript",
+        "A way to handle errors in Node.js"
+      ],
+      correctAnswer: "A mechanism that allows Node.js to perform non-blocking I/O operations"
+    },
+    {
+      id: 16,
+      skill: "Node.js",
+      text: "What is the purpose of the package.json file in a Node.js project?",
+      options: [
+        "To manage project dependencies and scripts",
+        "To store application data",
+        "To configure the server",
+        "To define database schemas"
+      ],
+      correctAnswer: "To manage project dependencies and scripts"
+    },
+  
+    // PHP Question
+    {
+      id: 17,
+      skill: "PHP",
+      text: "PHP is primarily used for which of the following?",
+      options: [
+        "Server-side scripting",
+        "Front-end styling",
+        "Mobile app development",
+        "Operating system development"
+      ],
+      correctAnswer: "Server-side scripting"
+    },
+  
     // Python Questions
     {
-      id: 3,
+      id: 18,
       skill: "Python",
       text: "What is a list comprehension in Python?",
       options: [
@@ -66,7 +274,7 @@ const questions = [
       correctAnswer: "A concise way to create lists"
     },
     {
-      id: 4,
+      id: 19,
       skill: "Python",
       text: "What is the difference between a tuple and a list in Python?",
       options: [
@@ -80,7 +288,7 @@ const questions = [
   
     // React Questions
     {
-      id: 5,
+      id: 20,
       skill: "React",
       text: "What is JSX?",
       options: [
@@ -92,7 +300,7 @@ const questions = [
       correctAnswer: "A syntax extension for JavaScript"
     },
     {
-      id: 6,
+      id: 21,
       skill: "React",
       text: "What is the purpose of the useEffect hook in React?",
       options: [
@@ -104,35 +312,23 @@ const questions = [
       correctAnswer: "To perform side effects in function components"
     },
   
-    // Node.js Questions
+    // Ruby on Rails Question
     {
-      id: 7,
-      skill: "Node.js",
-      text: "What is the event loop in Node.js?",
+      id: 22,
+      skill: "Ruby on Rails",
+      text: "Ruby on Rails is primarily used with which programming language?",
       options: [
-        "A mechanism that allows Node.js to perform non-blocking I/O operations",
-        "A type of data structure in Node.js",
-        "A method to create loops in JavaScript",
-        "A way to handle errors in Node.js"
+        "Ruby",
+        "Python",
+        "JavaScript",
+        "PHP"
       ],
-      correctAnswer: "A mechanism that allows Node.js to perform non-blocking I/O operations"
-    },
-    {
-      id: 8,
-      skill: "Node.js",
-      text: "What is the purpose of the package.json file in a Node.js project?",
-      options: [
-        "To manage project dependencies and scripts",
-        "To store application data",
-        "To configure the server",
-        "To define database schemas"
-      ],
-      correctAnswer: "To manage project dependencies and scripts"
+      correctAnswer: "Ruby"
     },
   
     // SQL Questions
     {
-      id: 9,
+      id: 23,
       skill: "SQL",
       text: "What is a primary key in SQL?",
       options: [
@@ -144,7 +340,7 @@ const questions = [
       correctAnswer: "A column or set of columns that uniquely identifies each row in a table"
     },
     {
-      id: 10,
+      id: 24,
       skill: "SQL",
       text: "What is the difference between INNER JOIN and LEFT JOIN in SQL?",
       options: [
@@ -158,7 +354,7 @@ const questions = [
   
     // TypeScript Question
     {
-      id: 11,
+      id: 25,
       skill: "TypeScript",
       text: "What is a key advantage of using TypeScript over JavaScript?",
       options: [
@@ -168,204 +364,9 @@ const questions = [
         "No support for classes"
       ],
       correctAnswer: "Static type checking"
-    },
-  
-    // HTML5 Question
-    {
-      id: 12,
-      skill: "HTML5",
-      text: "Which HTML5 element is used to draw graphics on the fly via scripting?",
-      options: [
-        "<canvas>",
-        "<svg>",
-        "<div>",
-        "<section>"
-      ],
-      correctAnswer: "<canvas>"
-    },
-  
-    // CSS3 Question
-    {
-      id: 13,
-      skill: "CSS3",
-      text: "Which CSS3 feature is used to create smooth transitions between style changes?",
-      options: [
-        "transition",
-        "animation",
-        "transform",
-        "filter"
-      ],
-      correctAnswer: "transition"
-    },
-  
-    // Angular Question
-    {
-      id: 14,
-      skill: "Angular",
-      text: "Angular is best described as:",
-      options: [
-        "A front-end web application framework",
-        "A back-end programming language",
-        "A CSS preprocessor",
-        "A database management system"
-      ],
-      correctAnswer: "A front-end web application framework"
-    },
-  
-    // Django Question
-    {
-      id: 15,
-      skill: "Django",
-      text: "Which programming language is Django built with?",
-      options: [
-        "Python",
-        "Ruby",
-        "Java",
-        "PHP"
-      ],
-      correctAnswer: "Python"
-    },
-  
-    // Flask Question
-    {
-      id: 16,
-      skill: "Flask",
-      text: "Flask is known as a:",
-      options: [
-        "Micro web framework",
-        "Full-stack web framework",
-        "Front-end library",
-        "Database engine"
-      ],
-      correctAnswer: "Micro web framework"
-    },
-  
-    // Ruby on Rails Question
-    {
-      id: 17,
-      skill: "Ruby on Rails",
-      text: "Ruby on Rails is primarily used with which programming language?",
-      options: [
-        "Ruby",
-        "Python",
-        "JavaScript",
-        "PHP"
-      ],
-      correctAnswer: "Ruby"
-    },
-  
-    // Java Question
-    {
-      id: 18,
-      skill: "Java",
-      text: "Which of the following is a core principle of Java?",
-      options: [
-        "Object-oriented programming",
-        "Functional programming only",
-        "Procedural scripting",
-        "Assembly language programming"
-      ],
-      correctAnswer: "Object-oriented programming"
-    },
-  
-    // C# Question
-    {
-      id: 19,
-      skill: "C#",
-      text: "Which company developed C#?",
-      options: [
-        "Microsoft",
-        "Apple",
-        "Google",
-        "Oracle"
-      ],
-      correctAnswer: "Microsoft"
-    },
-  
-    // PHP Question
-    {
-      id: 20,
-      skill: "PHP",
-      text: "PHP is primarily used for which of the following?",
-      options: [
-        "Server-side scripting",
-        "Front-end styling",
-        "Mobile app development",
-        "Operating system development"
-      ],
-      correctAnswer: "Server-side scripting"
-    },
-  
-    // Kotlin Question
-    {
-      id: 21,
-      skill: "Kotlin",
-      text: "Kotlin is widely used as an alternative to which programming language for Android development?",
-      options: [
-        "Java",
-        "Swift",
-        "C++",
-        "Python"
-      ],
-      correctAnswer: "Java"
-    },
-  
-    // Docker Question
-    {
-      id: 22,
-      skill: "Docker",
-      text: "What is Docker primarily used for?",
-      options: [
-        "Containerization",
-        "Virtualization",
-        "Compiling code",
-        "Managing databases"
-      ],
-      correctAnswer: "Containerization"
-    },
-  
-    // AWS Question
-    {
-      id: 23,
-      skill: "AWS",
-      text: "What does AWS stand for?",
-      options: [
-        "Amazon Web Services",
-        "Advanced Web Solutions",
-        "Applied Web Systems",
-        "Automated Workflow Software"
-      ],
-      correctAnswer: "Amazon Web Services"
-    },
-  
-    // GraphQL Question
-    {
-      id: 24,
-      skill: "GraphQL",
-      text: "GraphQL is best described as:",
-      options: [
-        "An API query language",
-        "A type of database",
-        "A front-end framework",
-        "A CSS library"
-      ],
-      correctAnswer: "An API query language"
-    },
-  
-    // MongoDB Question
-    {
-      id: 25,
-      skill: "MongoDB",
-      text: "What type of database is MongoDB?",
-      options: [
-        "NoSQL",
-        "SQL",
-        "Graph database",
-        "Relational database"
-      ],
-      correctAnswer: "NoSQL"
     }
 ];
+  
 
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array]
