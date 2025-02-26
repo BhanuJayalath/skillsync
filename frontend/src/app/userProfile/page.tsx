@@ -324,7 +324,12 @@ export default function UserProfile () {
                                         ))}
                                     </ul>
                                 </div>
-                                <button onClick={window.print}>Print Preview / Save as PDF</button>
+                                <button onClick={() => {
+                                    if (typeof window !== 'undefined') {
+                                        window.print();
+                                    }
+                                }}>Print Preview / Save as PDF
+                                </button>
                             </section>
                         </section>
                     </div>
