@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add a settings section to the nav bar and add content to the cv section">
-      <change afterPath="$PROJECT_DIR$/public/user/userIcon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/app.module.ts" afterDir="false" />
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -194,7 +191,39 @@
       <option name="project" value="LOCAL" />
       <updated>1740575003366</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="fix the errors in module.ts">
+      <option name="closed" value="true" />
+      <created>1740578918958</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1740578918958</updated>
+    </task>
+    <task id="LOCAL-00014" summary="add a user icon">
+      <option name="closed" value="true" />
+      <created>1740578931163</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1740578931163</updated>
+    </task>
+    <task id="LOCAL-00015" summary="adjust the user icon styles">
+      <option name="closed" value="true" />
+      <created>1740578959299</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1740578959299</updated>
+    </task>
+    <task id="LOCAL-00016" summary="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics">
+      <option name="closed" value="true" />
+      <created>1740579050619</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1740579050619</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,6 +255,10 @@
     <MESSAGE value="add new icons" />
     <MESSAGE value="updated the cv section styles" />
     <MESSAGE value="add a settings section to the nav bar and add content to the cv section" />
-    <option name="LAST_COMMIT_MESSAGE" value="add a settings section to the nav bar and add content to the cv section" />
+    <MESSAGE value="fix the errors in module.ts" />
+    <MESSAGE value="add a user icon" />
+    <MESSAGE value="adjust the user icon styles" />
+    <MESSAGE value="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
