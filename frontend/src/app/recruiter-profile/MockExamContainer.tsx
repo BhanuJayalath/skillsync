@@ -99,7 +99,7 @@ export default function MockExamContainer({
           <div id={styles.mockExamSectionSaveandClose}>
             <button onClick={save}>
               <Image
-                alt="plus-icon"
+                alt="tick-icon"
                 width={25}
                 height={25}
                 src="/recruiter/tick-icon.svg"
@@ -107,11 +107,11 @@ export default function MockExamContainer({
             </button>
             <button
               onClick={() => {
-                // remove(questionItem.QuestionId);
+                remove(MockTestQuestions.QuestionId);
               }}
             >
               <Image
-                alt="plus-icon"
+                alt="remove-icon"
                 width={25}
                 height={25}
                 src="/recruiter/remove-icon.svg"
