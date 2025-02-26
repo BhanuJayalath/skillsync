@@ -26,6 +26,7 @@
     width: 15em; /* Slightly wider sidebar */
     background-color: rgb(96, 166, 236);
     display: flex;
+    position: relative;
     flex-direction: column;
     color: #000000; /* White text on the sidebar */
     transition: width 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
@@ -155,7 +156,7 @@
 /* Content Wrapper */
 .contentWrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
     width: 100%;
     padding: 1em; /* Add padding around the content */
@@ -269,6 +270,8 @@
 .dashboard {
     flex: 1 1 45%;
     display: flex;
+    justify-content: center;
+    max-width: 50em;
     flex-direction: column;
     gap: 1em;
     margin: 1em;
@@ -360,7 +363,14 @@
 /* CV Section */
 .cvSection {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    width: 21cm;
+    height: 29.7cm;
+    padding: 2cm;
+    margin: 0 auto;
+    background: #ffffff;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+    page-break-after: always;
+    border: 1px solid #ccc;
     line-height: 1.6;
 }
 
