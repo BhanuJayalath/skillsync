@@ -48,21 +48,25 @@ const Login: React.FC = () => {
     event.preventDefault();
     setIsLoading(true);
     setLoginError("");
-
+  
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
       setLoginError("Please enter a valid email address.");
       setIsLoading(false);
       return;
     }
-
+  
     try {
-      await signInWithEmail(email, password); 
+      const response = await fetch("http://localhost:5001/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+  
+      localStorage.setItem("token", data.token);
       alert("Login successful!");
-      if (rememberMe) {
-        localStorage.setItem("userEmail", email);
-      } else {
-        localStorage.removeItem("userEmail");
-      }
     } catch (error: any) {
       console.error("Login Error:", error.message);
       setLoginError(error.message || "Invalid email or password.");
@@ -70,6 +74,7 @@ const Login: React.FC = () => {
       setIsLoading(false);
     }
   };
+  
 
   // Forgot Password
   const handleForgotPassword = async () => {
