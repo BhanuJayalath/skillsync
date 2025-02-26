@@ -78,7 +78,15 @@ export default function page(){
                         <div className={styles.coursesSection}>
                             <h3>Courses</h3>
                             <div className={styles.coursesList}>
-                                {["Course 01", "Course 02", "Course 03"].map((course, index) => (
+                                {["Course 01", "Course 02", "Course 03", "Course 04", "Course 05"].map((course, index) => (
+                                    <div key={index} className={styles.courseItem}>
+                                        <div className={styles.icon}>🎓</div>
+                                        <p className={styles.courseName}>{course}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className={styles.coursesList}>
+                                {["Course 01", "Course 02", "Course 03", "Course 04", "Course 05"].map((course, index) => (
                                     <div key={index} className={styles.courseItem}>
                                         <div className={styles.icon}>🎓</div>
                                         <p className={styles.courseName}>{course}</p>
