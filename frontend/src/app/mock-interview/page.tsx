@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar'
 import Image from 'next/image'
 
 
-const GEMINI_API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent'
+const GEMINI_API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
 const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY
 
 const SYSTEM_MESSAGE = `
