@@ -7,14 +7,12 @@ export default function MockExamContainer({
   MockTestQuestions,
   update,
   questionCounter,
-}: // questionCounter,
-// mockExamComponent,
-{
+  removeQuestion,
+}: {
   MockTestQuestions: any;
   update: any;
   questionCounter: number;
-  // questionCounter: any;
-  // mockExamComponent: any;
+  removeQuestion: any;
 }) {
   const [question, setQuestion] = useState<string>();
   const [answer1, setAnswer1] = useState<string>();
@@ -87,7 +85,8 @@ export default function MockExamContainer({
     // localStorage.setItem(questionId, JSON.stringify(questionItem));
   }
   function remove(questionId: number) {
-    localStorage.removeItem(questionId.toString());
+    // localStorage.removeItem(questionId.toString());
+    removeQuestion(questionId);
     // updateLocalStorage();
   }
 

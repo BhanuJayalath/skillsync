@@ -77,6 +77,25 @@ export default function MockExam({
       };
     });
   }
+
+  function removeQuestion(questionId: number) {
+    const index =
+      loadMockTestQuestions.mockExamContent.questionContent.findIndex(
+        (item: any) => item.QuestionId == questionId
+      );
+    setLoadMockTestQuestions((prev: any) => {
+      const prevQuestionItems = [...prev.mockExamContent.questionContent];
+      prevQuestionItems.splice(index, 1);
+      console.log(prevQuestionItems);
+      return {
+        ...prev,
+        mockExamContent: {
+          ...prev.mockExamContent,
+          questionContent: prevQuestionItems,
+        },
+      };
+    });
+  }
   var questionCounter = 0;
 
   return (
@@ -101,6 +120,7 @@ export default function MockExam({
               MockTestQuestions={item}
               questionCounter={questionCounter}
               update={update}
+              removeQuestion={removeQuestion}
               // key={counter}
               // questionCounter={counter}
               // mockExamComponent={item}
