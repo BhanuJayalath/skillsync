@@ -19,6 +19,7 @@ export default function MockExamContainer({
   const [answer2, setAnswer2] = useState<string>();
   const [answer3, setAnswer3] = useState<string>();
   const [answer4, setAnswer4] = useState<string>();
+  const [removed, setRemoved] = useState(false);
   const storage = {
     QuestionId: MockTestQuestions.QuestionId,
     Question: question,
@@ -39,7 +40,7 @@ export default function MockExamContainer({
   }, []);
   useEffect(() => {
     update(MockTestQuestions.QuestionId, storage);
-  }, [question, answer1, answer2, answer3, answer4]);
+  }, [question, answer1, answer2, answer3, answer4, removed]);
 
   // setQuestionItem({
   //   mockExamId: MockTestQuestions.mockExamId,
@@ -86,7 +87,9 @@ export default function MockExamContainer({
   }
   function remove(questionId: number) {
     // localStorage.removeItem(questionId.toString());
+    // console.log(questionId);
     removeQuestion(questionId);
+    setRemoved(!removed);
     // updateLocalStorage();
   }
 
@@ -96,14 +99,14 @@ export default function MockExamContainer({
         <header>
           Question {questionCounter}
           <div id={styles.mockExamSectionSaveandClose}>
-            <button onClick={save}>
+            {/* <button onClick={save}>
               <Image
                 alt="tick-icon"
                 width={25}
                 height={25}
                 src="/recruiter/tick-icon.svg"
               />
-            </button>
+            </button> */}
             <button
               onClick={() => {
                 remove(MockTestQuestions.QuestionId);

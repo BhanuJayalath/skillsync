@@ -7,36 +7,17 @@ export default function MockExam({
   loadMockTestQuestions,
   setLoadMockTestQuestions,
   mockExamCount,
-}: // mockExamComponent,
-// setMockExamComponent,
-{
+}: {
   setLoadMockTestQuestions: any;
   loadMockTestQuestions: any;
   mockExamCount: number;
-  // mockExamComponent: any;
-  // setMockExamComponent: any;
 }) {
-  // const [questionItem, setQuestionItem] = useState<
-  //   {
-  //     QuestionId: number;
-  //     Question: string;
-  //     Answer1: string;
-  //     Answer2: string;
-  //     Answer3: string;
-  //     Answer4: string;
-  //   }[]
-  // >();
-  // const [questionItem, setQuestionItem] = useState({});
   var counter = 0;
 
   useEffect(() => {
-    console.log(loadMockTestQuestions);
-    localStorage.setItem("1", JSON.stringify(loadMockTestQuestions));
-    // console.log(loadMockTestQuestions);
+    // localStorage.setItem("1", JSON.stringify(loadMockTestQuestions));
+    // console.log("This loads ", loadMockTestQuestions);
   }, [loadMockTestQuestions]);
-  // useEffect(() => {
-  //   console.log("Hello");
-  // }, [questionItem]);
 
   function addQuestion() {
     // console.log(loadMockTestQuestions);
@@ -83,18 +64,20 @@ export default function MockExam({
       loadMockTestQuestions.mockExamContent.questionContent.findIndex(
         (item: any) => item.QuestionId == questionId
       );
+    // console.log(index);
     setLoadMockTestQuestions((prev: any) => {
       const prevQuestionItems = [...prev.mockExamContent.questionContent];
-      prevQuestionItems.splice(index, 1);
-      console.log(prevQuestionItems);
+      const updateQuestionItems = prevQuestionItems.splice(index, 1);
+      // console.log(prevQuestionItems);
       return {
         ...prev,
         mockExamContent: {
           ...prev.mockExamContent,
-          questionContent: prevQuestionItems,
+          questionContent: updateQuestionItems,
         },
       };
     });
+    console.log(loadMockTestQuestions);
   }
   var questionCounter = 0;
 
@@ -114,6 +97,7 @@ export default function MockExam({
       {loadMockTestQuestions.mockExamContent.questionContent.map(
         (item: any) => {
           questionCounter++;
+          // console.log(item);
           return (
             <MockExamContainer
               key={questionCounter}

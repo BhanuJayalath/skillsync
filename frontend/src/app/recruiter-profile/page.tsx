@@ -34,6 +34,11 @@ export default function RecruiterProfile() {
   //     };
   //   }[]
   // >();
+  // console.log(loadMockTestQuestions);
+  // useEffect(()=>{
+  //   console.log(loadMockTestQuestions);
+
+  // },[loadMockTestQuestions])
 
   useEffect(() => {
     const tempArray: any = [];
@@ -41,6 +46,7 @@ export default function RecruiterProfile() {
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
         response.data.map((item: any, index: number) => {
+          // console.log(item);
           tempArray.push(item);
           if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++) {
@@ -72,8 +78,6 @@ export default function RecruiterProfile() {
   }, []);
 
   function loadMockExamComponent(mockexamId: number, mockExamCounter: number) {
-    // setMockExamCount(mockExamCounter);
-    // console.log(mockExamCounter);
     loadMockTests.find((item: any) => {
       if (item.mockExamId === mockexamId) {
         setLoadMockTestQuestions(item);
@@ -109,27 +113,27 @@ export default function RecruiterProfile() {
       localStorage.removeItem(JSON.stringify(item));
     }
   }
-  function retrieveLocalStorage() {
-    if (localStorage.length != 0) {
-      var temp = [];
-      var tempIds: number[] = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        if (key) {
-          const local = localStorage.getItem(key);
-          if (local) {
-            temp.push(JSON.parse(local));
-          }
-        }
-      }
-      temp.map((item) => {
-        tempIds.push(item.mockExamId);
-      });
+  // function retrieveLocalStorage() {
+  //   if (localStorage.length != 0) {
+  //     var temp = [];
+  //     var tempIds: number[] = [];
+  //     for (let i = 0; i < localStorage.length; i++) {
+  //       let key = localStorage.key(i);
+  //       if (key) {
+  //         const local = localStorage.getItem(key);
+  //         if (local) {
+  //           temp.push(JSON.parse(local));
+  //         }
+  //       }
+  //     }
+  //     temp.map((item) => {
+  //       tempIds.push(item.mockExamId);
+  //     });
 
-      setMockExamContainerId(tempIds);
-      // setMockExamComponent(temp);
-    }
-  }
+  //     setMockExamContainerId(tempIds);
+  //     // setMockExamComponent(temp);
+  //   }
+  // }
   let counter = 0;
   return (
     <section className={styles.main}>
