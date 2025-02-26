@@ -7,15 +7,17 @@ export default function MockExam({
   loadMockTestQuestions,
   setLoadMockTestQuestions,
   mockExamCount,
+  updateMockExamContainer,
 }: {
   setLoadMockTestQuestions: any;
   loadMockTestQuestions: any;
   mockExamCount: number;
+  updateMockExamContainer: any;
 }) {
   var counter = 0;
 
   useEffect(() => {
-    // localStorage.setItem("1", JSON.stringify(loadMockTestQuestions));
+    localStorage.setItem("1", JSON.stringify(loadMockTestQuestions));
     // console.log("This loads ", loadMockTestQuestions);
   }, [loadMockTestQuestions]);
 
@@ -67,7 +69,7 @@ export default function MockExam({
 
     setLoadMockTestQuestions((prev: any) => {
       const prevQuestionItems = [...prev.mockExamContent.questionContent];
-      if (index !== -1) {
+      if (index >= 0) {
         prevQuestionItems.splice(index, 1);
       }
       return {
@@ -85,14 +87,16 @@ export default function MockExam({
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
         <h1>Mock Exam {mockExamCount}</h1>
-        <button onClick={addQuestion}>
-          <Image
-            alt="plus-icon"
-            width={25}
-            height={25}
-            src="/recruiter/plus-icon.svg"
-          />
-        </button>
+        {updateMockExamContainer ? (
+          <button onClick={addQuestion}>
+            <Image
+              alt="plus-icon"
+              width={25}
+              height={25}
+              src="/recruiter/plus-icon.svg"
+            />
+          </button>
+        ) : null}
       </header>
       {loadMockTestQuestions.mockExamContent.questionContent.map(
         (item: any) => {
@@ -105,6 +109,7 @@ export default function MockExam({
               questionCounter={questionCounter}
               update={update}
               removeQuestion={removeQuestion}
+              updateMockExamContainer={updateMockExamContainer}
               // key={counter}
               // questionCounter={counter}
               // mockExamComponent={item}

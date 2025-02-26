@@ -8,11 +8,13 @@ export default function MockExamContainer({
   update,
   questionCounter,
   removeQuestion,
+  updateMockExamContainer,
 }: {
   MockTestQuestions: any;
   update: any;
   questionCounter: number;
   removeQuestion: any;
+  updateMockExamContainer: any;
 }) {
   const [question, setQuestion] = useState<string>();
   const [answer1, setAnswer1] = useState<string>();
@@ -38,22 +40,6 @@ export default function MockExamContainer({
   useEffect(() => {
     update(MockTestQuestions.QuestionId, storage);
   }, [question, answer1, answer2, answer3, answer4]);
-
-  // setQuestionItem({
-  //   mockExamId: MockTestQuestions.mockExamId,
-  //   mockExamContent: {
-  //     questionContent: [
-  //       {
-  //         QuestionId: MockTestQuestions.QuestionId,
-  //         Question: question,
-  //         Answer1: answer1,
-  //         Answer2: answer2,
-  //         Answer3: answer3,
-  //         Answer4: answer4,
-  //       },
-  //     ],
-  //   },
-  // });
 
   function saveQuestion(event: any) {
     setQuestion(event.target.value);
@@ -96,26 +82,20 @@ export default function MockExamContainer({
         <header>
           Question {questionCounter}
           <div id={styles.mockExamSectionSaveandClose}>
-            {/* <button onClick={save}>
-              <Image
-                alt="tick-icon"
-                width={25}
-                height={25}
-                src="/recruiter/tick-icon.svg"
-              />
-            </button> */}
-            <button
-              onClick={() => {
-                remove(MockTestQuestions.QuestionId);
-              }}
-            >
-              <Image
-                alt="remove-icon"
-                width={25}
-                height={25}
-                src="/recruiter/remove-icon.svg"
-              />
-            </button>
+            {updateMockExamContainer ? (
+              <button
+                onClick={() => {
+                  remove(MockTestQuestions.QuestionId);
+                }}
+              >
+                <Image
+                  alt="remove-icon"
+                  width={25}
+                  height={25}
+                  src="/recruiter/remove-icon.svg"
+                />
+              </button>
+            ) : null}
           </div>
         </header>
         <h2>Add your question here</h2>
