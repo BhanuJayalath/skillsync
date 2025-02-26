@@ -2,7 +2,28 @@
 
 import { useState, useEffect } from "react"
 
-const skills = ["JavaScript", "Python", "React", "Node.js", "SQL"]
+const skills = [
+    "JavaScript",
+    "Python",
+    "React",
+    "Node.js",
+    "SQL",
+    "TypeScript",
+    "HTML5",
+    "CSS3",
+    "Angular",
+    "Django",
+    "Flask",
+    "Ruby on Rails",
+    "Java",
+    "C#",
+    "PHP",
+    "Kotlin",
+    "Docker",
+    "AWS",
+    "GraphQL",
+    "MongoDB"
+];
 
 const questions = [
   {
@@ -214,7 +235,7 @@ export default function QuizApp() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <h1 className="text-3xl font-bold mb-6">Select Your Skills</h1>
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-4 gap-4 mb-6">
           {skills.map((skill) => (
             <button
               key={skill}
