@@ -3,8 +3,27 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import styles from './adminPage.module.css';   // Importing custom styles
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
+import {useState} from "react";
 
-export default function page(){
+export default function Page(){
+    const [isEditing, setIsEditing] = useState(false);
+
+    const [userInfo, setUserInfo] = useState({
+        fullName: "Your First Name",
+        displayName: "Your Display Name",
+        ender: "Your Gender",
+        country: "Your Country",
+    });
+
+    // Handle input changes
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setUserInfo((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+      };
+
     return(
         <div className={styles.outerContainer}>
             <Navbar/>
@@ -40,24 +59,25 @@ export default function page(){
                             <h3>User Name</h3>
                             <p>example@gmail.com</p>
                             <div className={styles.detailsGrid}>
-                                <div>
-                                    <p className={styles.label}>Full Name</p>
-                                    <p>Your First Name</p>
-                                </div>
-                                <div>
-                                    <p className={styles.label}>Display Name</p>
-                                    <p>Your Display Name</p>
-                                </div>
-                                <div>
-                                    <p className={styles.label}>Gender</p>
-                                    <p>Your Gender</p>
-                                </div>
-                                <div>
-                                    <p className={styles.label}>Country</p>
-                                    <p>Your Country</p>
-                                </div>
+                                {(Object.keys(userInfo) as Array<keyof typeof userInfo>).map((key) => (
+                                    <div key={key}>
+                                        <p className={styles.label}>{key.replace(/([A-Z])/g, " $1")}</p>
+                                        {isEditing ? (
+                                            <input
+                                            type="text"
+                                            name={key}
+                                            value={userInfo[key]}
+                                            onChange={handleChange}
+                                            />
+                                        ) : (
+                                            <p>{userInfo[key]}</p>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
-                            <button className={styles.editButton}>Edit</button>
+                            <button className={styles.editButton} onClick={() => setIsEditing(!isEditing)}>
+                                {isEditing ? "Save" : "Edit"}
+                            </button>
                         </div>
 
                         {/* Users List */}
