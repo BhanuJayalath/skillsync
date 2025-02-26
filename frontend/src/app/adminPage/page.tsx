@@ -15,11 +15,11 @@ export default function page(){
                     <nav className={styles.nav}>
                         <ul>
                             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                            <li><a href="/">🏠 Home</a></li>
-                            <li><a href="#">💬 Messages</a></li>
-                            <li><a href="#">⭐ Favorites</a></li>
-                            <li><a href="#">📈 Analytics</a></li>
-                            <li><a href="#">⚙️ Settings</a></li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="#">Messages</a></li>
+                            <li><a href="#">Favorites</a></li>
+                            <li><a href="#">Analytics</a></li>
+                            <li><a href="#">Settings</a></li>
                         </ul>
                     </nav>
                 </aside>
