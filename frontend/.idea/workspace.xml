@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add more styles and animation to the user profile" />
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="put all sections inside the tabs sections and add few courses for testing">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,7 +108,39 @@
       <option name="project" value="LOCAL" />
       <updated>1740313987972</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="making a user profile editor section">
+      <option name="closed" value="true" />
+      <created>1740551861425</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1740551861425</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add styling to the cv section">
+      <option name="closed" value="true" />
+      <created>1740568213626</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1740568213626</updated>
+    </task>
+    <task id="LOCAL-00005" summary="updated the tabs section and course items styles">
+      <option name="closed" value="true" />
+      <created>1740570598762</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1740570598762</updated>
+    </task>
+    <task id="LOCAL-00006" summary="put all sections inside the tabs sections and add few courses for testing">
+      <option name="closed" value="true" />
+      <created>1740570728197</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1740570728197</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,6 +162,10 @@
     <MESSAGE value="add more styles and animation to the user profile" />
     <MESSAGE value="testing the default user object" />
     <MESSAGE value="converting crlf to lf" />
-    <option name="LAST_COMMIT_MESSAGE" value="converting crlf to lf" />
+    <MESSAGE value="making a user profile editor section" />
+    <MESSAGE value="add styling to the cv section" />
+    <MESSAGE value="updated the tabs section and course items styles" />
+    <MESSAGE value="put all sections inside the tabs sections and add few courses for testing" />
+    <option name="LAST_COMMIT_MESSAGE" value="put all sections inside the tabs sections and add few courses for testing" />
   </component>
 </project>

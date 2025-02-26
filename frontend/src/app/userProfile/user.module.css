@@ -371,14 +371,38 @@
 .cvSection {
     font-family: Arial, sans-serif;
     width: 21cm;
-    height: 29.7cm;
     padding: 2cm;
     margin: 0 auto;
     background: #ffffff;
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-    page-break-after: always;
     border: 1px solid #ccc;
     line-height: 1.6;
+}
+
+@media print {
+    /* Hide everything by default */
+    body * {
+        visibility: hidden;
+    }
+
+    /* making the CV section and its contents visible */
+    .cvSection,
+    .cvSection * {
+        visibility: visible;
+    }
+
+    /* Position the CV section at the top-left of the printed page */
+    .cvSection {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 0; /* Reset any margins */
+        padding: 2cm; /* Keep the padding */
+        width: 21cm; /* Ensure it takes the full page width */
+        height: auto; /* expanding to the full height needed */
+        box-shadow: none; /* Remove shadow for printing */
+        border: none; /*Remove the border*/
+    }
 }
 
 .contactInfo {
