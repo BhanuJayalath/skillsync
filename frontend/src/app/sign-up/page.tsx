@@ -47,7 +47,7 @@ export default function SignUpPage() {
         <div className={styles.imagePlaceholder}>
           {/* Replace with your image */}
           <img src="../logo.png" alt="logo" />
-          <img src="../SignUpPageImg.png" alt="Sign Up Illustration" />
+          <img src="../SignUpPageImg.png" alt="Sign Up Img" />
         </div>
       </div>
 
