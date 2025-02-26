@@ -183,6 +183,59 @@ export default function UserProfile () {
                                 <p>1 month ago</p>
                                 <button>+Add Email Address</button>
                             </div>
+                            <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
+                            <div className={styles.userDetails}>
+                                <div className={styles.profilePic}>
+                                    <span>👤{user.avatar}</span>
+                                </div>
+                                <div>
+                                    <strong>{user.userName}</strong>
+                                    <p>{user.email}</p>
+                                </div>
+                                <button className={styles.editButton}>Edit</button>
+                            </div>
+                            {/*form section*/}
+                            <form className={styles.form}>
+                                <div>
+                                    <label>Full Name</label>
+                                    <input placeholder="Your First Name"/>
+                                </div>
+                                <div>
+                                    <label>Display Name</label>
+                                    <input placeholder="Your Display Name"/>
+                                </div>
+                                <div>
+                                    <label>Gender</label>
+                                    <select>
+                                        <option>Your Gender</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Country</label>
+                                    <select>
+                                        <option>Your Country</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Language</label>
+                                    <select>
+                                        <option>Languages</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Time Zone</label>
+                                    <select>
+                                        <option>Time Zone</option>
+                                    </select>
+                                </div>
+                            </form>
+
+                            <div className={styles.emailSection}>
+                                <h3>My Email Address</h3>
+                                <p>{user.email}</p>
+                                <p>1 month ago</p>
+                                <button>+Add Email Address</button>
+                            </div>
                         </section>
                         {/* Courses and Progress */}
                         <section className={styles.dashboard}>
@@ -224,7 +277,7 @@ export default function UserProfile () {
                                     <ul className={styles.courseList}>
                                         {user.tests.map((test, index) => (
                                             <li key={index} className={styles.courseItem}>
-                                                <span className={styles.courseCode}>{test.testId}:</span>
+                                            <span className={styles.courseCode}>{test.testId}:</span>
                                                 <span className={styles.courseName}> {test.testLevel} Test</span> -
                                                 <span className={styles.courseResult}> {test.mark}%</span>
                                             </li>

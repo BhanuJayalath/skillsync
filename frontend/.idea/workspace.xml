@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add more styles and animation to the user profile">
-      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add more styles and animation to the user profile" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,27 +40,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "userProfile",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/veruw/Desktop/skillsync/frontend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "C:\\Users\\veruw\\Desktop\\skillsync\\frontend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;userProfile&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/veruw/Desktop/skillsync/frontend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\veruw\\Desktop\\skillsync\\frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\veruw\Desktop\skillsync\frontend\public" />
@@ -129,6 +124,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="created the job recommendation module and updated the relevant parts" />
     <MESSAGE value="add more styles and animation to the user profile" />
-    <option name="LAST_COMMIT_MESSAGE" value="add more styles and animation to the user profile" />
+    <MESSAGE value="testing the default user object" />
+    <MESSAGE value="converting crlf to lf" />
+    <option name="LAST_COMMIT_MESSAGE" value="converting crlf to lf" />
   </component>
 </project>
