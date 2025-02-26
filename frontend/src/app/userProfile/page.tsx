@@ -19,7 +19,7 @@ export default function UserProfile () {
         number : '(+94)12 345 6789', // number
         userName: "UserName",  // User's display name
         fullName:"Drake Winston", // User's full name
-        avatar:"",  //profile picture
+        avatar:null,  //profile picture
         gender:"Gender",  // User's gender
         language:"Language",     //language
         city :'City',    //city
@@ -69,9 +69,7 @@ export default function UserProfile () {
                 console.log('Failed to fetch user details');
             }
         };
-
         fetchUserDetails();
-
         //checking the availability of the window
         if(typeof window !== 'undefined'){
             for (let i = 0; i < 4; i++) {
@@ -151,7 +149,12 @@ export default function UserProfile () {
                                 <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
                                 <div className={styles.userDetails}>
                                     <div className={styles.profilePic}>
-                                        <span>👤{user.avatar}</span>
+                                        {user.avatar ? (
+                                            <span className={styles.userAvatar}>{user.avatar}</span>
+                                        ) : (
+                                            <span><Image src={"/user/userIcon.svg"} alt="userIcon"
+                                                         width={100} height={0} className={styles.userAvatar}/></span>
+                                        )}
                                     </div>
                                     <div>
                                         <strong>{user.userName}</strong>
