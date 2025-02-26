@@ -5,7 +5,6 @@ import Link from "next/link";
 import logo from "../assets/images/logo.png";
 import illustration from "../assets/images/Illustration.svg";
 import styles from "../assets/styles/login.module.css";
-import { signInWithGoogle, signInWithFacebook, signInWithEmail, resetPassword } from "./firebaseConfig";
 
 
 const Login: React.FC = () => {
