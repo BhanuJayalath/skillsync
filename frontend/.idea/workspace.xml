@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="making the cv section downloadable">
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="deleted the unnecessary files">
+      <change afterPath="$PROJECT_DIR$/public/user/courseIcon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/user/cvIcon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/user/homeIcon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/user/overviewIcon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/user/progressIcon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/user/settingsIcon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +73,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\veruw\Desktop\skillsync\frontend\public\user" />
       <recent name="C:\Users\veruw\Desktop\skillsync\frontend\public" />
     </key>
   </component>
@@ -146,7 +155,23 @@
       <option name="project" value="LOCAL" />
       <updated>1740573333037</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="add a button to download the cv and change the structure">
+      <option name="closed" value="true" />
+      <created>1740573440802</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1740573440802</updated>
+    </task>
+    <task id="LOCAL-00009" summary="deleted the unnecessary files">
+      <option name="closed" value="true" />
+      <created>1740573706373</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1740573706373</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,6 +198,8 @@
     <MESSAGE value="updated the tabs section and course items styles" />
     <MESSAGE value="put all sections inside the tabs sections and add few courses for testing" />
     <MESSAGE value="making the cv section downloadable" />
-    <option name="LAST_COMMIT_MESSAGE" value="making the cv section downloadable" />
+    <MESSAGE value="add a button to download the cv and change the structure" />
+    <MESSAGE value="deleted the unnecessary files" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted the unnecessary files" />
   </component>
 </project>
