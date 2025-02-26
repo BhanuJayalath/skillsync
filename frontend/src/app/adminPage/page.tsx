@@ -61,7 +61,7 @@ export default function Page(){
                             <div className={styles.detailsGrid}>
                                 {(Object.keys(userInfo) as Array<keyof typeof userInfo>).map((key) => (
                                     <div key={key}>
-                                        <p className={styles.label}>{key.replace(/([A-Z])/g, " $1")}</p>
+                                        <p className={styles.label}>{key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1")}</p>
                                         {isEditing ? (
                                             <input
                                             type="text"
