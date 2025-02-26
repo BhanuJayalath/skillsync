@@ -161,6 +161,16 @@
     width: 100%;
     padding: 1em; /* Add padding around the content */
 }
+.tabsSection {
+    flex: 1 1 45%;
+    display: flex;
+    justify-content: center;
+    max-width: 70em;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 1em;
+}
+
 
 /* User Info */
 .userInfo {
@@ -266,21 +276,12 @@
     background-color: #2980b9; /* Darker shade on hover */
 }
 
-/* Dashboard */
-.dashboard {
-    flex: 1 1 45%;
-    display: flex;
-    justify-content: center;
-    max-width: 50em;
-    flex-direction: column;
-    gap: 1em;
-    margin: 1em;
-}
-
 /* Courses Section */
 .courses {
     display: flex;
     flex-direction: column; /* Stack courses vertically */
+    border: 2px solid #ededed;
+    padding: 2em;
     gap: 0.75em;
     margin: 1em;
 }
@@ -294,21 +295,27 @@
 
 .courseList {
     list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
     padding: 0;
     margin: 0;
 }
 
 .courseItem {
-    margin-bottom: 0.5em;
+    margin: 1em;
     padding: 0.75em;
-    background: #f9f9f9;
+    max-width: 15em;
+    background: #f1f1f1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 0.4em;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Hover effect */
 }
 
 .courseItem:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
 }
 
 .courseCode {
