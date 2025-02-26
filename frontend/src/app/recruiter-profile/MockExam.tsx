@@ -64,20 +64,20 @@ export default function MockExam({
       loadMockTestQuestions.mockExamContent.questionContent.findIndex(
         (item: any) => item.QuestionId == questionId
       );
-    // console.log(index);
+
     setLoadMockTestQuestions((prev: any) => {
       const prevQuestionItems = [...prev.mockExamContent.questionContent];
-      const updateQuestionItems = prevQuestionItems.splice(index, 1);
-      // console.log(prevQuestionItems);
+      if (index !== -1) {
+        prevQuestionItems.splice(index, 1);
+      }
       return {
         ...prev,
         mockExamContent: {
           ...prev.mockExamContent,
-          questionContent: updateQuestionItems,
+          questionContent: prevQuestionItems,
         },
       };
     });
-    console.log(loadMockTestQuestions);
   }
   var questionCounter = 0;
 

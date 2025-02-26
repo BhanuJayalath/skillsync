@@ -34,13 +34,10 @@ export default function MockExamContainer({
     setAnswer2(MockTestQuestions.Answer2);
     setAnswer3(MockTestQuestions.Answer3);
     setAnswer4(MockTestQuestions.Answer4);
-    // setQuestionItem(storage);
-
-    // console.log(questionItem.QuestionId);
-  }, []);
+  }, [removed]);
   useEffect(() => {
     update(MockTestQuestions.QuestionId, storage);
-  }, [question, answer1, answer2, answer3, answer4, removed]);
+  }, [question, answer1, answer2, answer3, answer4]);
 
   // setQuestionItem({
   //   mockExamId: MockTestQuestions.mockExamId,
