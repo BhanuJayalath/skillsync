@@ -6,7 +6,6 @@ import logo from "../assets/images/logo.png";
 import illustration from "../assets/images/Illustration.svg";
 import styles from "../assets/styles/login.module.css";
 
-
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,56 +13,38 @@ const Login: React.FC = () => {
   const [loginError, setLoginError] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  // Google Login
-  const handleGoogleLogin = async () => {
-    try {
-      setIsLoading(true);
-      await signInWithGoogle();
-      alert("Google login successful!");
-    } catch (error: any) {
-      console.error("Google Login Error:", error.message);
-      setLoginError("Failed to sign in with Google. Try again.");
-    } finally {
-      setIsLoading(false);
-    }
+  // ✅ Google Login (Redirects to Backend)
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5001/api/auth/google";
   };
 
-  // Facebook Login
-  const handleFacebookLogin = async () => {
-    try {
-      setIsLoading(true);
-      await signInWithFacebook();
-      alert("Facebook login successful!");
-    } catch (error: any) {
-      console.error("Facebook Login Error:", error.message);
-      setLoginError("Failed to sign in with Facebook. Try again.");
-    } finally {
-      setIsLoading(false);
-    }
+  // ✅ Facebook Login (Redirects to Backend)
+  const handleFacebookLogin = () => {
+    window.location.href = "http://localhost:5001/api/auth/facebook";
   };
 
-  // Email & Password Login
+  // ✅ Email & Password Login
   const handleFormLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
     setLoginError("");
-  
+
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
       setLoginError("Please enter a valid email address.");
       setIsLoading(false);
       return;
     }
-  
+
     try {
       const response = await fetch("http://localhost:5001/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-  
+
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
-  
+
       localStorage.setItem("token", data.token);
       alert("Login successful!");
     } catch (error: any) {
@@ -73,17 +54,16 @@ const Login: React.FC = () => {
       setIsLoading(false);
     }
   };
-  
 
-  // Forgot Password
+  // ✅ Forgot Password (Placeholder - Backend API Needed)
   const handleForgotPassword = async () => {
     if (!email) {
       setLoginError("Enter your email to reset password.");
       return;
     }
     try {
-      await resetPassword(email);
-      alert("Password reset email sent!");
+      // Placeholder - Implement password reset API later
+      alert("Password reset functionality not implemented yet.");
     } catch (error: any) {
       console.error("Forgot Password Error:", error.message);
       setLoginError("Failed to send password reset email.");
@@ -154,7 +134,7 @@ const Login: React.FC = () => {
           </form>
 
           {/* Register Link */}
-          <p className={styles.registerLink}><br></br>
+          <p className={styles.registerLink}>
             Don't have an account? <Link href="/sign-up">Register</Link>
           </p>
         </div>
