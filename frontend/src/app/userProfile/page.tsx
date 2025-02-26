@@ -28,7 +28,10 @@ export default function UserProfile () {
         courses : [
             { code: 'CS101', name: 'Introduction to Computer Science', result: 'A', mark : '95' },
             { code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark : '67' },
-            { code: 'CS103', name: 'Database Systems', result: 'A-', mark : '74' }
+            { code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark : '67' },
+            { code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark : '67' },
+            { code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark : '67' },
+            { code: 'CS103', name: 'Data Structures and Algorithms', result: 'A-', mark : '74' }
         ],
         tests : [
             {testId : '250106', testLevel:'Basic', mark :'58', xAxis : '20'},
@@ -38,10 +41,13 @@ export default function UserProfile () {
         jobRole :[{
             jobName: 'Job Role '
         }],
-        experience : [1,2,4],
-        education : [1,2,3],
-        skills : [1,3,3]
+        experience : [1],
+        education : [1],
+        skills : [1]
     });
+    // const handleClick = (): void => {
+    //     alert('Button clicked!');
+    // };
     useEffect(()=>{
         const fetchUserDetails = async () => {
             const response = await fetch('http://localhost:3001/getUser', {
@@ -68,7 +74,7 @@ export default function UserProfile () {
 
         //checking the availability of the window
         if(typeof window !== 'undefined'){
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 4; i++) {
                 const section = document.querySelector<HTMLDivElement>(`#tab-${i}`);
                 if (section) {
                     section.style.display = i === activeTab ? 'block' : 'none';
@@ -102,20 +108,25 @@ export default function UserProfile () {
                             <li><a href="/"><Image src={"/user/homeIcon.png"} alt="homeIcon"
                                                    width={40} height={0} className={styles.navImage}/> Home</a></li>
                             <li
-                                onClick={()=> setActiveTab(0)}
+                                onClick={() => setActiveTab(0)}
                                 className={activeTab === 0 ? styles.activeLink : ''}
                             ><a href="#"><Image src={"/user/progressChart.png"} alt="progressChart"
-                                                   width={40} height={0} className={styles.navImage}/> Progress</a></li>
+                                                width={40} height={0} className={styles.navImage}/> Overview</a></li>
                             <li
-                                onClick={()=> setActiveTab(1)}
+                                onClick={() => setActiveTab(1)}
                                 className={activeTab === 1 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/courses.png"} alt="courses"
-                                                   width={50} height={0} className={styles.navImage}/> Courses</a></li>
+                            ><a href="#"><Image src={"/user/progressChart.png"} alt="progressChart"
+                                                width={40} height={0} className={styles.navImage}/> Progress</a></li>
                             <li
-                                onClick={()=> setActiveTab(2)}
+                                onClick={() => setActiveTab(2)}
                                 className={activeTab === 2 ? styles.activeLink : ''}
+                            ><a href="#"><Image src={"/user/courses.png"} alt="courses"
+                                                width={50} height={0} className={styles.navImage}/> Courses</a></li>
+                            <li
+                                onClick={() => setActiveTab(3)}
+                                className={activeTab === 3 ? styles.activeLink : ''}
                             ><a href="#"><Image src={"/user/cvIcon.png"} alt="CV_Icon"
-                                                   width={30} height={0} className={styles.navImage}/> Resume</a></li>
+                                                width={30} height={0} className={styles.navImage}/> Resume</a></li>
                         </ul>
                     </nav>
                 </aside>
@@ -128,118 +139,64 @@ export default function UserProfile () {
                         </div>
                     </header>
                     <div className={styles.contentWrapper}>
-                        {/* User Info Section */}
-                        <section className={styles.userInfo}>
-                            <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
-                            <div className={styles.userDetails}>
-                                <div className={styles.profilePic}>
-                                    <span>👤{user.avatar}</span>
+                        <section className={styles.tabsSection}>
+                            {/* User Info Section */}
+                            <section id="tab-0" className={styles.userInfo}>
+                                <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
+                                <div className={styles.userDetails}>
+                                    <div className={styles.profilePic}>
+                                        <span>👤{user.avatar}</span>
+                                    </div>
+                                    <div>
+                                        <strong>{user.userName}</strong>
+                                        <p>{user.email}</p>
+                                    </div>
+                                    <button className={styles.editButton} onClick={handleClick}>Edit</button>
                                 </div>
-                                <div>
-                                    <strong>{user.userName}</strong>
-                                    <p>{user.email}</p>
-                                </div>
-                                <button className={styles.editButton}>Edit</button>
-                            </div>
-                            {/*form section*/}
-                            <form className={styles.form}>
-                                <div>
-                                    <label>Full Name</label>
-                                    <input placeholder="Your First Name"/>
-                                </div>
-                                <div>
-                                    <label>Display Name</label>
-                                    <input placeholder="Your Display Name"/>
-                                </div>
-                                <div>
-                                    <label>Gender</label>
-                                    <select>
-                                        <option>Your Gender</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Country</label>
-                                    <select>
-                                        <option>Your Country</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Language</label>
-                                    <select>
-                                        <option>Languages</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Time Zone</label>
-                                    <select>
-                                        <option>Time Zone</option>
-                                    </select>
-                                </div>
-                            </form>
+                                {/*form section*/}
+                                <form className={styles.form}>
+                                    <div>
+                                        <label>Full Name</label>
+                                        <input placeholder="Your First Name"/>
+                                    </div>
+                                    <div>
+                                        <label>Display Name</label>
+                                        <input placeholder="Your Display Name"/>
+                                    </div>
+                                    <div>
+                                        <label>Gender</label>
+                                        <select>
+                                            <option>Your Gender</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Country</label>
+                                        <select>
+                                            <option>Your Country</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Language</label>
+                                        <select>
+                                            <option>Languages</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Time Zone</label>
+                                        <select>
+                                            <option>Time Zone</option>
+                                        </select>
+                                    </div>
+                                </form>
 
-                            <div className={styles.emailSection}>
-                                <h3>My Email Address</h3>
-                                <p>{user.email}</p>
-                                <p>1 month ago</p>
-                                <button>+Add Email Address</button>
-                            </div>
-                            <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
-                            <div className={styles.userDetails}>
-                                <div className={styles.profilePic}>
-                                    <span>👤{user.avatar}</span>
-                                </div>
-                                <div>
-                                    <strong>{user.userName}</strong>
+                                <div className={styles.emailSection}>
+                                    <h3>My Email Address</h3>
                                     <p>{user.email}</p>
+                                    <p>1 month ago</p>
+                                    <button>+Add Email Address</button>
                                 </div>
-                                <button className={styles.editButton}>Edit</button>
-                            </div>
-                            {/*form section*/}
-                            <form className={styles.form}>
-                                <div>
-                                    <label>Full Name</label>
-                                    <input placeholder="Your First Name"/>
-                                </div>
-                                <div>
-                                    <label>Display Name</label>
-                                    <input placeholder="Your Display Name"/>
-                                </div>
-                                <div>
-                                    <label>Gender</label>
-                                    <select>
-                                        <option>Your Gender</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Country</label>
-                                    <select>
-                                        <option>Your Country</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Language</label>
-                                    <select>
-                                        <option>Languages</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Time Zone</label>
-                                    <select>
-                                        <option>Time Zone</option>
-                                    </select>
-                                </div>
-                            </form>
-
-                            <div className={styles.emailSection}>
-                                <h3>My Email Address</h3>
-                                <p>{user.email}</p>
-                                <p>1 month ago</p>
-                                <button>+Add Email Address</button>
-                            </div>
-                        </section>
-                        {/* Courses and Progress */}
-                        <section className={styles.dashboard}>
-                            <section id="tab-0" className={styles.progress}>
+                            </section>
+                            <section id="tab-1" className={styles.progress}>
                                 <h4>Dashboard Progress</h4>
                                 <div className={styles.chart}>
                                     <svg viewBox="-15 -10 300 125">
@@ -285,7 +242,7 @@ export default function UserProfile () {
                                     </ul>
                                 </div>
                             </section>
-                            <section id="tab-1" className={styles.courses}>
+                            <section id="tab-2" className={styles.courses}>
                                 <ul className={styles.courseList}>
                                     {user.courses.map((course, index) => (
                                         <li key={index} className={styles.courseItem}>
@@ -299,7 +256,7 @@ export default function UserProfile () {
                                     ))}
                                 </ul>
                             </section>
-                            <section id="tab-2" className={styles.cvSection}>
+                            <section id="tab-3" className={styles.cvSection}>
                                 <div className={styles.contactInfo}>
                                     <h1 className={styles.name}>{user.fullName}</h1>
                                     <p className={styles.jobTitle}>{user.jobRole[0].jobName}</p>
