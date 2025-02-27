@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import MockExamContainer from "./MockExamContainer";
+import axios from "axios";
 import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExam({
@@ -28,7 +29,7 @@ export default function MockExam({
       Answer2: "",
       Answer3: "",
       Answer4: "",
-      correctAnswers: [Number],
+      correctAnswer: Number,
     };
     setLoadMockTestQuestions({
       ...loadMockTestQuestions,
@@ -41,29 +42,8 @@ export default function MockExam({
       },
     });
   }
-  function addCorrectAnswers(correctAnswer: Number, questionId: Number) {
-    const updatedQuestions =
-      loadMockTestQuestions.mockExamContent.questionContent.map(
-        (question: any) => {
-          if (question.QuestionId === questionId) {
-            return {
-              ...question,
-              correctAnswers: [correctAnswer],
-            };
-          }
-          return question;
-        }
-      );
-    setLoadMockTestQuestions({
-      ...loadMockTestQuestions,
-      mockExamContent: {
-        ...loadMockTestQuestions.mockExamContent,
-        questionContent: updatedQuestions,
-      },
-    });
-  }
-
   function update(id: number, questionItem: any) {
+    console.log("trigger");
     const index =
       loadMockTestQuestions.mockExamContent.questionContent.findIndex(
         (item: any) => item.QuestionId == id
@@ -101,6 +81,11 @@ export default function MockExam({
       };
     });
   }
+  function save() {
+    axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, loadMockTestQuestions, {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
   var questionCounter = 0;
 
   return (
@@ -108,14 +93,17 @@ export default function MockExam({
       <header id={styles.mockExamHeading}>
         <h1>Mock Exam {mockExamCount}</h1>
         {updateMockExamContainer ? (
-          <button onClick={addQuestion}>
-            <Image
-              alt="plus-icon"
-              width={25}
-              height={25}
-              src="/recruiter/plus-icon.svg"
-            />
-          </button>
+          <>
+            <button onClick={addQuestion}>
+              <Image
+                alt="plus-icon"
+                width={25}
+                height={25}
+                src="/recruiter/plus-icon.svg"
+              />
+            </button>
+            <button onClick={save}>Save</button>
+          </>
         ) : null}
       </header>
       {loadMockTestQuestions.mockExamContent.questionContent.map(
@@ -130,11 +118,6 @@ export default function MockExam({
               update={update}
               removeQuestion={removeQuestion}
               updateMockExamContainer={updateMockExamContainer}
-              addCorrectAnswers={addCorrectAnswers}
-              // key={counter}
-              // questionCounter={counter}
-              // mockExamComponent={item}
-              // updateLocalStorage={retrieveLocalStorage}
             />
           );
         }

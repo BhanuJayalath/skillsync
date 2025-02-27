@@ -18,7 +18,7 @@ export class MockTest {
           Answer2: String,
           Answer3: String,
           Answer4: String,
-          correctAnswers: [],
+          correctAnswer: Number,
         },
       ],
     },

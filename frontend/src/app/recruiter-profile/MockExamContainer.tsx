@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 export default function MockExamContainer({
@@ -9,14 +8,12 @@ export default function MockExamContainer({
   questionCounter,
   removeQuestion,
   updateMockExamContainer,
-  addCorrectAnswers,
 }: {
   MockTestQuestions: any;
   update: any;
   questionCounter: number;
   removeQuestion: any;
   updateMockExamContainer: any;
-  addCorrectAnswers: any;
 }) {
   const [question, setQuestion] = useState<string>();
   const [answer1, setAnswer1] = useState<string>();
@@ -33,26 +30,25 @@ export default function MockExamContainer({
     Answer2: answer2,
     Answer3: answer3,
     Answer4: answer4,
+    correctAnswer: selectedAnswer,
   };
   useEffect(() => {
-    console.log(MockTestQuestions.correctAnswer);
+    console.log(MockTestQuestions);
     setQuestion(MockTestQuestions.Question);
     setAnswer1(MockTestQuestions.Answer1);
     setAnswer2(MockTestQuestions.Answer2);
     setAnswer3(MockTestQuestions.Answer3);
     setAnswer4(MockTestQuestions.Answer4);
-    // setSelectedAnswer(
-    //   MockTestQuestions.correctAnswers[0]
-    //     ? MockTestQuestions.correctAnswers[0]
-    //     : null
-    // );
+    setSelectedAnswer(
+      MockTestQuestions.correctAnswer ? MockTestQuestions.correctAnswer : null
+    );
     if (updateMockExamContainer == false) {
       setReadOnly(true);
     }
   }, [removed]);
   useEffect(() => {
     update(MockTestQuestions.QuestionId, storage);
-  }, [question, answer1, answer2, answer3, answer4]);
+  }, [question, answer1, answer2, answer3, answer4, selectedAnswer]);
 
   function saveQuestion(event: any) {
     setQuestion(event.target.value);
@@ -74,11 +70,6 @@ export default function MockExamContainer({
     setAnswer4(event.target.value);
   }
 
-  function save() {
-    axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, storage, {
-      headers: { "Content-Type": "application/json" },
-    });
-  }
   function remove(questionId: number) {
     removeQuestion(questionId);
     setRemoved(!removed);
@@ -86,7 +77,7 @@ export default function MockExamContainer({
 
   function handleCheckBoxChange(selection: Number) {
     setSelectedAnswer(selection);
-    addCorrectAnswers(selection, MockTestQuestions.QuestionId);
+    // addCorrectAnswer(selection, MockTestQuestions.QuestionId);
   }
   return (
     <div id={styles.mockExamSection}>

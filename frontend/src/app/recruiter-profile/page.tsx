@@ -20,7 +20,7 @@ export default function RecruiterProfile() {
     }[]
   >([
     {
-      mockExamId: 1,
+      mockExamId: Date.now(),
       mockExamContent: { questionContent: [] },
     },
   ]);
@@ -48,6 +48,7 @@ export default function RecruiterProfile() {
             for (let i = 0; i < localStorage.length; i++) {
               const key: any = localStorage.key(i);
               let Item: any = localStorage.getItem(key);
+              // console.log(Item);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
               if (item.mockExamId === jsonParsedItem.mockExamId) {
                 tempArray[index] = jsonParsedItem;
