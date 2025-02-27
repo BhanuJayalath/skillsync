@@ -19,10 +19,10 @@ export default function RecruiterProfile() {
       };
     }[]
   >([
-    {
-      mockExamId: Date.now(),
-      mockExamContent: { questionContent: [] },
-    },
+    // {
+    //   mockExamId: Date.now(),
+    //   mockExamContent: { questionContent: [] },
+    // },
   ]);
 
   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
@@ -63,6 +63,7 @@ export default function RecruiterProfile() {
             }
           }
           setLoadMockTests(tempArray);
+          console.log(tempArray);
         });
       })
       .catch((error) => {
@@ -92,7 +93,7 @@ export default function RecruiterProfile() {
       },
     ]);
   }
-
+  function removeMockExamComponent() {}
   let counter = 0;
   return (
     <section className={styles.main}>
@@ -228,39 +229,62 @@ export default function RecruiterProfile() {
                   <div className={styles.mockExamscontainerSection}>
                     {loadMockTests?.map((item: any, index: number) => {
                       return (
-                        <button
-                          onClick={() => {
-                            loadMockExamComponent(item.mockExamId, index + 1);
-                          }}
-                          key={item.mockExamId}
-                          id={styles.mockExamscontainer}
-                        >
-                          <Image
-                            alt="exam-icon"
-                            width={60}
-                            height={60}
-                            src="/recruiter/exam-icon.svg"
-                          />
-                          <h1>Mock Exam {index + 1}</h1>
-                          <div id={styles.mockExamscontainerButtons}>
-                            {updateMockExamContainers ? (
+                        <>
+                          {removeMockExamContainers ? (
+                            <button
+                              onClick={() => {
+                                removeMockExamComponent();
+                              }}
+                              key={item.mockExamId}
+                              id={styles.mockExamscontainer}
+                            >
                               <Image
-                                alt="update-icon"
-                                width={20}
-                                height={20}
-                                src="/recruiter/update-icon.svg"
+                                alt="exam-icon"
+                                width={60}
+                                height={60}
+                                src="/recruiter/exam-icon.svg"
                               />
-                            ) : null}
-                            {removeMockExamContainers ? (
+                              <h1>Mock Exam {index + 1}</h1>
+                              <div id={styles.mockExamscontainerButtons}>
+                                <Image
+                                  alt="remove-icon"
+                                  width={25}
+                                  height={25}
+                                  src="/recruiter/remove-icon.svg"
+                                />
+                              </div>
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                loadMockExamComponent(
+                                  item.mockExamId,
+                                  index + 1
+                                );
+                              }}
+                              key={item.mockExamId}
+                              id={styles.mockExamscontainer}
+                            >
                               <Image
-                                alt="remove-icon"
-                                width={25}
-                                height={25}
-                                src="/recruiter/remove-icon.svg"
+                                alt="exam-icon"
+                                width={60}
+                                height={60}
+                                src="/recruiter/exam-icon.svg"
                               />
-                            ) : null}
-                          </div>
-                        </button>
+                              <h1>Mock Exam {index + 1}</h1>
+                              <div id={styles.mockExamscontainerButtons}>
+                                {updateMockExamContainers ? (
+                                  <Image
+                                    alt="update-icon"
+                                    width={25}
+                                    height={25}
+                                    src="/recruiter/update-icon.svg"
+                                  />
+                                ) : null}
+                              </div>
+                            </button>
+                          )}
+                        </>
                       );
                     })}
                   </div>
