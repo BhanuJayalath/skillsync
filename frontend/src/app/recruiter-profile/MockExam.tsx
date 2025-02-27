@@ -18,11 +18,9 @@ export default function MockExam({
 
   useEffect(() => {
     localStorage.setItem("1", JSON.stringify(loadMockTestQuestions));
-    // console.log("This loads ", loadMockTestQuestions);
   }, [loadMockTestQuestions]);
 
   function addQuestion() {
-    // console.log(loadMockTestQuestions);
     var temp = {
       QuestionId: Date.now(),
       Question: "",
@@ -30,6 +28,7 @@ export default function MockExam({
       Answer2: "",
       Answer3: "",
       Answer4: "",
+      correctAnswers: [Number],
     };
     setLoadMockTestQuestions({
       ...loadMockTestQuestions,
@@ -39,6 +38,27 @@ export default function MockExam({
           ...loadMockTestQuestions.mockExamContent.questionContent,
           temp,
         ],
+      },
+    });
+  }
+  function addCorrectAnswers(correctAnswer: Number, questionId: Number) {
+    const updatedQuestions =
+      loadMockTestQuestions.mockExamContent.questionContent.map(
+        (question: any) => {
+          if (question.QuestionId === questionId) {
+            return {
+              ...question,
+              correctAnswers: [correctAnswer],
+            };
+          }
+          return question;
+        }
+      );
+    setLoadMockTestQuestions({
+      ...loadMockTestQuestions,
+      mockExamContent: {
+        ...loadMockTestQuestions.mockExamContent,
+        questionContent: updatedQuestions,
       },
     });
   }
@@ -110,6 +130,7 @@ export default function MockExam({
               update={update}
               removeQuestion={removeQuestion}
               updateMockExamContainer={updateMockExamContainer}
+              addCorrectAnswers={addCorrectAnswers}
               // key={counter}
               // questionCounter={counter}
               // mockExamComponent={item}

@@ -18,7 +18,12 @@ export default function RecruiterProfile() {
         questionContent: any[];
       };
     }[]
-  >([{ mockExamId: 1, mockExamContent: { questionContent: [] } }]);
+  >([
+    {
+      mockExamId: 1,
+      mockExamContent: { questionContent: [] },
+    },
+  ]);
 
   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
   const [mockExamState, setMockExamState] = useState(false);
@@ -38,26 +43,21 @@ export default function RecruiterProfile() {
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
         response.data.map((item: any, index: number) => {
-          // console.log(item);
           tempArray.push(item);
           if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++) {
               const key: any = localStorage.key(i);
               let Item: any = localStorage.getItem(key);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
-              // console.log(Item.mockExamId);
               if (item.mockExamId === jsonParsedItem.mockExamId) {
                 tempArray[index] = jsonParsedItem;
-                // console.log(index);
               } else if (response.data.length - 1 === index) {
                 const lastElement = tempArray.find(
                   (item: any) => item.mockExamId === jsonParsedItem.mockExamId
                 );
-                // console.log(lastElement);
                 if (!lastElement) {
                   tempArray.push(jsonParsedItem);
                 }
-                // console.log(index);
               }
             }
           }
@@ -73,6 +73,7 @@ export default function RecruiterProfile() {
     loadMockTests.find((item: any) => {
       if (item.mockExamId === mockexamId) {
         setLoadMockTestQuestions(item);
+        setMockExamCount(mockExamCounter);
       }
     });
 
@@ -187,7 +188,6 @@ export default function RecruiterProfile() {
                   <div id={styles.mockExamscontainerHeader}>
                     <h1>Mock Exams</h1>
                     <button onClick={addMockExamContainers}>
-                      {" "}
                       <Image
                         alt="plus-icon"
                         width={23}
@@ -197,7 +197,7 @@ export default function RecruiterProfile() {
                     </button>
                     <button
                       onClick={() => {
-                        setUpdateMockExamContainers(true);
+                        setUpdateMockExamContainers(!updateMockExamContainers);
                         setRemoveMockExamContainers(false);
                       }}
                     >
@@ -211,7 +211,7 @@ export default function RecruiterProfile() {
                     </button>
                     <button
                       onClick={() => {
-                        setRemoveMockExamContainers(true);
+                        setRemoveMockExamContainers(!removeMockExamContainers);
                         setUpdateMockExamContainers(false);
                       }}
                     >
@@ -225,11 +225,12 @@ export default function RecruiterProfile() {
                     </button>
                   </div>
                   <div className={styles.mockExamscontainerSection}>
-                    {loadMockTests?.map((item: any) => {
-                      counter++;
-                      // console.log(counter);
+                    {loadMockTests?.map((item: any, index: number) => {
                       return (
-                        <div
+                        <button
+                          onClick={() => {
+                            loadMockExamComponent(item.mockExamId, index + 1);
+                          }}
                           key={item.mockExamId}
                           id={styles.mockExamscontainer}
                         >
@@ -239,40 +240,26 @@ export default function RecruiterProfile() {
                             height={60}
                             src="/recruiter/exam-icon.svg"
                           />
-                          <h1>Mock Exam {counter}</h1>
+                          <h1>Mock Exam {index + 1}</h1>
                           <div id={styles.mockExamscontainerButtons}>
                             {updateMockExamContainers ? (
-                              <button
-                                onClick={() => {
-                                  loadMockExamComponent(
-                                    item.mockExamId,
-                                    counter
-                                  );
-                                }}
-                              >
-                                <Image
-                                  alt="update-icon"
-                                  width={50}
-                                  height={50}
-                                  src="/recruiter/update-icon.svg"
-                                />
-                              </button>
+                              <Image
+                                alt="update-icon"
+                                width={20}
+                                height={20}
+                                src="/recruiter/update-icon.svg"
+                              />
                             ) : null}
                             {removeMockExamContainers ? (
-                              <button
-                                onClick={() => {
-                                }}
-                              >
-                                <Image
-                                  alt="remove-icon"
-                                  width={50}
-                                  height={50}
-                                  src="/recruiter/remove-icon.svg"
-                                />
-                              </button>
+                              <Image
+                                alt="remove-icon"
+                                width={25}
+                                height={25}
+                                src="/recruiter/remove-icon.svg"
+                              />
                             ) : null}
                           </div>
-                        </div>
+                        </button>
                       );
                     })}
                   </div>

@@ -9,19 +9,23 @@ export default function MockExamContainer({
   questionCounter,
   removeQuestion,
   updateMockExamContainer,
+  addCorrectAnswers,
 }: {
   MockTestQuestions: any;
   update: any;
   questionCounter: number;
   removeQuestion: any;
   updateMockExamContainer: any;
+  addCorrectAnswers: any;
 }) {
   const [question, setQuestion] = useState<string>();
   const [answer1, setAnswer1] = useState<string>();
   const [answer2, setAnswer2] = useState<string>();
   const [answer3, setAnswer3] = useState<string>();
   const [answer4, setAnswer4] = useState<string>();
+  const [selectedAnswer, setSelectedAnswer] = useState<Number>();
   const [removed, setRemoved] = useState(false);
+  const [readOnly, setReadOnly] = useState(false);
   const storage = {
     QuestionId: MockTestQuestions.QuestionId,
     Question: question,
@@ -31,11 +35,20 @@ export default function MockExamContainer({
     Answer4: answer4,
   };
   useEffect(() => {
+    console.log(MockTestQuestions.correctAnswer);
     setQuestion(MockTestQuestions.Question);
     setAnswer1(MockTestQuestions.Answer1);
     setAnswer2(MockTestQuestions.Answer2);
     setAnswer3(MockTestQuestions.Answer3);
     setAnswer4(MockTestQuestions.Answer4);
+    // setSelectedAnswer(
+    //   MockTestQuestions.correctAnswers[0]
+    //     ? MockTestQuestions.correctAnswers[0]
+    //     : null
+    // );
+    if (updateMockExamContainer == false) {
+      setReadOnly(true);
+    }
   }, [removed]);
   useEffect(() => {
     update(MockTestQuestions.QuestionId, storage);
@@ -43,7 +56,6 @@ export default function MockExamContainer({
 
   function saveQuestion(event: any) {
     setQuestion(event.target.value);
-    // console.log(event.target.value);
   }
 
   function saveAnswer1(event: any) {
@@ -66,16 +78,16 @@ export default function MockExamContainer({
     axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, storage, {
       headers: { "Content-Type": "application/json" },
     });
-    // localStorage.setItem(questionId, JSON.stringify(questionItem));
   }
   function remove(questionId: number) {
-    // localStorage.removeItem(questionId.toString());
-    // console.log(questionId);
     removeQuestion(questionId);
     setRemoved(!removed);
-    // updateLocalStorage();
   }
 
+  function handleCheckBoxChange(selection: Number) {
+    setSelectedAnswer(selection);
+    addCorrectAnswers(selection, MockTestQuestions.QuestionId);
+  }
   return (
     <div id={styles.mockExamSection}>
       <div id={styles.mockExamSectionBlock}>
@@ -104,23 +116,76 @@ export default function MockExamContainer({
           type="text"
           value={question}
           onChange={saveQuestion}
+          readOnly={readOnly}
         />
         <h2>Add your answers here</h2>
         <div id={styles.mockExamSectionAnswer}>
-          <input type="checkbox" />
-          <input type="text" value={answer1} onChange={saveAnswer1} />
+          <input
+            type="checkbox"
+            value={1}
+            checked={selectedAnswer === 1}
+            onChange={() => {
+              handleCheckBoxChange(1);
+            }}
+            disabled={readOnly}
+          />
+          <input
+            type="text"
+            value={answer1}
+            onChange={saveAnswer1}
+            readOnly={readOnly}
+          />
         </div>
         <div id={styles.mockExamSectionAnswer}>
-          <input type="checkbox" />
-          <input type="text" value={answer2} onChange={saveAnswer2} />
+          <input
+            type="checkbox"
+            value={2}
+            checked={selectedAnswer === 2}
+            onChange={() => {
+              handleCheckBoxChange(2);
+            }}
+            disabled={readOnly}
+          />
+          <input
+            type="text"
+            value={answer2}
+            onChange={saveAnswer2}
+            readOnly={readOnly}
+          />
         </div>
         <div id={styles.mockExamSectionAnswer}>
-          <input type="checkbox" />
-          <input type="text" value={answer3} onChange={saveAnswer3} />
+          <input
+            type="checkbox"
+            value={3}
+            checked={selectedAnswer === 3}
+            onChange={() => {
+              handleCheckBoxChange(3);
+            }}
+            disabled={readOnly}
+          />
+          <input
+            type="text"
+            value={answer3}
+            onChange={saveAnswer3}
+            readOnly={readOnly}
+          />
         </div>
         <div id={styles.mockExamSectionAnswer}>
-          <input type="checkbox" />
-          <input type="text" value={answer4} onChange={saveAnswer4} />
+          <input
+            type="checkbox"
+            value={4}
+            checked={selectedAnswer === 4}
+            onChange={() => {
+              handleCheckBoxChange(4);
+            }}
+            disabled={readOnly}
+          />
+          <input
+            type="text"
+            value={answer4}
+            onChange={saveAnswer4}
+            readOnly={readOnly}
+          />
         </div>
       </div>
     </div>
