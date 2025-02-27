@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./adminPage.module.css";
 
 interface Course {
     id: number;
@@ -21,17 +22,19 @@ export default function CoursesManagement() {
     };
 
     return (
-        <div className="courses-container">
+        <div className={styles.coursesSection}>
           <h2>Courses Management</h2>
 
-            <div className="courses-list">
+            <div className={styles.coursesList2}>
                 {courses.map((course) => (
-                    <div key={course.id} className="course-card">
-                        <h3>{course.title}</h3>
-                        <p>{course.description}</p>
-                        <p><strong>Price:</strong> {course.price}</p>
-                        <p><strong>Enrolled:</strong> {course.enrolled} students</p>
-                        <button className="delete-button" onClick={() => handleDeleteCourse(course.id)}>Delete</button>
+                    <div key={course.id} className={styles.courseItem2}>
+                        <h5 className={styles.courseName}>{course.title}</h5>
+                        <div>
+                            <p>{course.description}</p>
+                            <p><strong>Price:</strong> {course.price}</p>
+                            <p><strong>Enrolled:</strong> {course.enrolled} students</p>
+                        </div>
+                        <button className={styles.deleteButton} onClick={() => handleDeleteCourse(course.id)}>Delete</button>
                     </div>
                 ))}
             </div>
