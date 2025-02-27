@@ -12,7 +12,6 @@ export default function SignUpPage() {
   // signupType: "user" or "recruiter"
   const [signupType, setSignupType] = useState("user");
 
-  // For recruiters, we include an additional "company" field.
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -34,7 +33,7 @@ export default function SignUpPage() {
         redirectPath = "/userProfile";
       } else {
         endpoint = "/api/recruiters/sign-up";
-        redirectPath = "/recruiterProfile";
+        redirectPath = "/recruiter-profile";
       }
       const response = await axios.post(endpoint, user);
       console.log("Signup success", response.data);

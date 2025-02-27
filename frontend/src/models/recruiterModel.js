@@ -22,9 +22,9 @@ const userSchema = new mongoose.Schema({
         minlength: 6,
         maxlength: 1024
     },
-    companyname: {
+    company:{
         type: String,
-        required: [true,"Company name is required"],
+        required: [true,"Company is required"],
         minlength: 3,
         maxlength: 50
     },
