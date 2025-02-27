@@ -1,7 +1,8 @@
 /* page Container */
 .outerContainer{
     display: grid;
-    height: 100vh;
+    width: 100%;
+
 }
 
 .innerContainer {
@@ -118,6 +119,7 @@
   .coursesList {
     display: flex;
     gap: 10px;
+    padding-top: 10px;
   }
   
   .courseItem {
