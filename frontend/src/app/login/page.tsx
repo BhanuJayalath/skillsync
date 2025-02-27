@@ -24,16 +24,9 @@ const Login: React.FC = () => {
   };
 
   // ✅ Email & Password Login
-  const handleFormLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleLogin = async () => {
     setIsLoading(true);
-    setLoginError("");
-
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      setLoginError("Please enter a valid email address.");
-      setIsLoading(false);
-      return;
-    }
+    setLoginError(""); // Clear previous errors
 
     try {
       const response = await fetch("http://localhost:5001/api/auth/login", {
@@ -43,16 +36,28 @@ const Login: React.FC = () => {
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error);
-
-      localStorage.setItem("token", data.token);
-      alert("Login successful!");
-    } catch (error: any) {
-      console.error("Login Error:", error.message);
-      setLoginError(error.message || "Invalid email or password.");
+      if (response.ok) {
+        console.log("Login successful", data);
+        localStorage.setItem("token", data.token);
+      } else {
+        setLoginError(data.error || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      setLoginError("Something went wrong. Please try again.");
+      console.error("Login fetch error:", error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // ✅ Form Submission Handler
+  const handleFormLogin = (event: React.FormEvent) => {
+    event.preventDefault(); // Prevent page reload
+    if (!email || !password) {
+      setLoginError("Please enter both email and password.");
+      return;
+    }
+    handleLogin();
   };
 
   // ✅ Forgot Password (Placeholder - Backend API Needed)
@@ -62,7 +67,6 @@ const Login: React.FC = () => {
       return;
     }
     try {
-      // Placeholder - Implement password reset API later
       alert("Password reset functionality not implemented yet.");
     } catch (error: any) {
       console.error("Forgot Password Error:", error.message);
