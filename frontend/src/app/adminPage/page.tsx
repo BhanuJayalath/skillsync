@@ -1,6 +1,7 @@
 "use client"
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import CoursesManagement from './CourseManagment';
 import styles from './adminPage.module.css';   // Importing custom styles
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import {useState} from "react";
@@ -114,6 +115,12 @@ export default function Page(){
                                 ))}
                             </div>
                         </div>
+
+                        {/* Courses Management */}
+                        <div>
+                            <CoursesManagement/>
+                        </div>
+
 
 
                     </div>
