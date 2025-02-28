@@ -1,5 +1,5 @@
 import {connect} from "@/dbConfig/dbConfig";
-import User from "@/models/userModel";
+import User from "@/models/recruiterModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 
@@ -8,7 +8,7 @@ connect()
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json()
-        const {username, email, password} = reqBody
+        const {username, email, password, company} = reqBody
 
         console.log(reqBody);
 
@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
             username,
             email,
             password: hashedPassword,
+            company,
         })
 
         const savedUser = await newUser.save()

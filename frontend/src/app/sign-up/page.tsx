@@ -1,29 +1,43 @@
 "use client";
+
 import styles from "./sign-up.module.css";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
 export default function SignUpPage() {
   const router = useRouter();
-  const [user, setUser] = React.useState({
+  // signupType: "user" or "recruiter"
+  const [signupType, setSignupType] = useState("user");
+
+  const [user, setUser] = useState({
     username: "",
     email: "",
     password: "",
+    company: "", // only used for recruiters
   });
 
-  const [buttonDisabled, setButtonDisabled] = React.useState(true);
-  const [loading, setLoading] = React.useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent default form submission
     try {
       setLoading(true);
-      const response = await axios.post("/api/users/sign-up", user);
+      let endpoint = "";
+      let redirectPath = "";
+      if (signupType === "user") {
+        endpoint = "/api/users/sign-up";
+        redirectPath = "/userProfile";
+      } else {
+        endpoint = "/api/recruiters/sign-up";
+        redirectPath = "/recruiter-profile";
+      }
+      const response = await axios.post(endpoint, user);
       console.log("Signup success", response.data);
-      router.push("/userProfile"); // Navigate to user profile page after signup
+      router.push(redirectPath);
     } catch (error: any) {
       console.log("Signup failed", error.message);
       toast.error(error.message);
@@ -33,25 +47,38 @@ export default function SignUpPage() {
   };
 
   useEffect(() => {
-    if (user.email && user.password && user.username) {
-      setButtonDisabled(false);
+    if (signupType === "user") {
+      // For user signup, require username, email, and password.
+      if (user.username && user.email && user.password) {
+        setButtonDisabled(false);
+      } else {
+        setButtonDisabled(true);
+      }
     } else {
-      setButtonDisabled(true);
+      // For recruiter signup, also require company name.
+      if (user.username && user.email && user.password && user.company) {
+        setButtonDisabled(false);
+      } else {
+        setButtonDisabled(true);
+      }
     }
-  }, [user]);
+  }, [user, signupType]);
 
   return (
     <div className={styles.signupContainer}>
+      
+
       {/* Left Section */}
       <div className={styles.leftSection}>
         <div className={styles.imagePlaceholder}>
-          {/* Replace with your image */}
+          {/* Replace with your images */}
           <img src="../logo.png" alt="logo" />
           <img src="../SignUpPageImg.png" alt="Sign Up Img" />
         </div>
       </div>
 
       {/* Right Section */}
+      
       <div className={styles.rightSection}>
         <div className={styles.formContainer}>
           <h2 className={styles.title}>Set up your Account.</h2>
@@ -60,11 +87,28 @@ export default function SignUpPage() {
             and personalized tips to boost your confidence and land your dream
             job!
           </p>
+          {/* Tab Selector */}
+          <div className={styles.tabSelector}>
+            <button
+              className={`${styles.tabButton} ${signupType === "user" ? styles.activeTab : ""}`}
+              onClick={() => setSignupType("user")}
+            >
+              User Signup
+            </button>
+            <button
+              className={`${styles.tabButton} ${signupType === "recruiter" ? styles.activeTab : ""}`}
+              onClick={() => setSignupType("recruiter")}
+            >
+              Recruiter Signup
+            </button>
+          </div>
+
 
           {/* Form */}
           <form onSubmit={onSignUp}>
             {/* User Name */}
             <div className={styles.formGroup}>
+              
               <label htmlFor="username">User Name</label>
               <input
                 id="username"
@@ -104,6 +148,22 @@ export default function SignUpPage() {
                 />
               </div>
             </div>
+
+            {/* Company field for Recruiters */}
+            {signupType === "recruiter" && (
+              <div className={styles.formGroup}>
+                <label htmlFor="company">Company Name</label>
+                <input
+                  id="company"
+                  type="text"
+                  value={user.company}
+                  onChange={(e) =>
+                    setUser({ ...user, company: e.target.value })
+                  }
+                  placeholder="Company Name"
+                />
+              </div>
+            )}
 
             {/* Submit Button */}
             <button
