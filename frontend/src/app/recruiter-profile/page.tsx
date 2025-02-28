@@ -19,10 +19,6 @@ export default function RecruiterProfile() {
       };
     }[]
   >([
-    // {
-    //   mockExamId: Date.now(),
-    //   mockExamContent: { questionContent: [] },
-    // },
   ]);
 
   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
@@ -42,29 +38,40 @@ export default function RecruiterProfile() {
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
-        response.data.map((item: any, index: number) => {
-          tempArray.push(item);
+        if (response.data) {
+          response.data.map((item: any, index: number) => {
+            tempArray.push(item);
+            if (localStorage.length > 0) {
+              for (let i = 0; i < localStorage.length; i++) {
+                const key: any = localStorage.key(i);
+                let Item: any = localStorage.getItem(key);
+                let jsonParsedItem = Item ? JSON.parse(Item) : null;
+                if (item.mockExamId === jsonParsedItem.mockExamId) {
+                  tempArray[index] = jsonParsedItem;
+                } else if (response.data.length - 1 === index) {
+                  const lastElement = tempArray.find(
+                    (item: any) => item.mockExamId === jsonParsedItem.mockExamId
+                  );
+                  if (!lastElement) {
+                    tempArray.push(jsonParsedItem);
+                  }
+                }
+              }
+            }
+            setLoadMockTests(tempArray);
+            console.log(tempArray);
+          });
+        } else {
           if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++) {
               const key: any = localStorage.key(i);
               let Item: any = localStorage.getItem(key);
-              // console.log(Item);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
-              if (item.mockExamId === jsonParsedItem.mockExamId) {
-                tempArray[index] = jsonParsedItem;
-              } else if (response.data.length - 1 === index) {
-                const lastElement = tempArray.find(
-                  (item: any) => item.mockExamId === jsonParsedItem.mockExamId
-                );
-                if (!lastElement) {
-                  tempArray.push(jsonParsedItem);
-                }
-              }
+              tempArray.push(jsonParsedItem);
+              setLoadMockTests(tempArray);
             }
           }
-          setLoadMockTests(tempArray);
-          console.log(tempArray);
-        });
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
