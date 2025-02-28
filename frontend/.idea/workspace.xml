@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="adjust the user info alignments">
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add the media print to the global css and imported the global css for testing purposes">
+      <change beforePath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.schema.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,6 +97,7 @@
       <workItem from="1740320368795" duration="2065000" />
       <workItem from="1740397596116" duration="605000" />
       <workItem from="1740544719211" duration="2836000" />
+      <workItem from="1740746978733" duration="939000" />
     </task>
     <task id="LOCAL-00001" summary="created the job recommendation module and updated the relevant parts">
       <option name="closed" value="true" />
@@ -231,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740579624659</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="add the media print to the global css and imported the global css for testing purposes">
+      <option name="closed" value="true" />
+      <created>1740586315558</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1740586315558</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,6 +280,7 @@
     <MESSAGE value="adjust the user icon styles" />
     <MESSAGE value="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics" />
     <MESSAGE value="adjust the user info alignments" />
-    <option name="LAST_COMMIT_MESSAGE" value="adjust the user info alignments" />
+    <MESSAGE value="add the media print to the global css and imported the global css for testing purposes" />
+    <option name="LAST_COMMIT_MESSAGE" value="add the media print to the global css and imported the global css for testing purposes" />
   </component>
 </project>
