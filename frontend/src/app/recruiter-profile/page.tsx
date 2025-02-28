@@ -18,8 +18,7 @@ export default function RecruiterProfile() {
         questionContent: any[];
       };
     }[]
-  >([
-  ]);
+  >([]);
 
   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
   const [mockExamState, setMockExamState] = useState(false);
@@ -38,7 +37,7 @@ export default function RecruiterProfile() {
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
-        if (response.data) {
+        if (response.data.length != 0) {
           response.data.map((item: any, index: number) => {
             tempArray.push(item);
             if (localStorage.length > 0) {
@@ -69,6 +68,7 @@ export default function RecruiterProfile() {
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
               tempArray.push(jsonParsedItem);
               setLoadMockTests(tempArray);
+              console.log(tempArray);
             }
           }
         }
@@ -100,7 +100,9 @@ export default function RecruiterProfile() {
       },
     ]);
   }
-  function removeMockExamComponent() {}
+  function removeMockExamComponent(mockExamId: Number) {
+    axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}/${mockExamId}`);
+  }
   let counter = 0;
   return (
     <section className={styles.main}>
@@ -240,7 +242,7 @@ export default function RecruiterProfile() {
                           {removeMockExamContainers ? (
                             <button
                               onClick={() => {
-                                removeMockExamComponent();
+                                removeMockExamComponent(item.mockExamId);
                               }}
                               key={item.mockExamId}
                               id={styles.mockExamscontainer}

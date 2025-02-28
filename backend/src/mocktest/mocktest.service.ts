@@ -21,7 +21,7 @@ export class MocktestService {
   async update(id: Number, data: Partial<MockTest>) {
     return this.mockTestModel.findByIdAndUpdate(id, data, { new: true }).exec();
   }
-  async delete(id: Number) {
+  async delete(id: String) {
     return this.mockTestModel.findByIdAndDelete(id).exec();
   }
 }
