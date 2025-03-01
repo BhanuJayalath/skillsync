@@ -43,13 +43,21 @@ export default function UserProfile () {
         jobRole :[{
             jobName: 'Job Role '
         }],
-        experience : [1],
-        education : [1],
+        experience : [
+            {jobName : 'Full-stack developer', companyName:'codeLabs', startDate :'2021', endDate : 'Present', description : ''},
+        ],
+        education : [
+            {courseName : 'Full-stack developer', schoolName:'codeLabs', startDate :'2021', endDate : 'Present', description : ''},
+        ],
         skills : [1]
     });
-    // const handleClick = (): void => {
-    //     alert('Button clicked!');
-    // };
+    const handleSubmit = (): void => {
+        alert('Button clicked!');
+    };
+    // Generic change handler
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+        setUser((prev) => ({ ...prev, [field]: e.target.value }));
+    };
     useEffect(()=>{
         const fetchUserDetails = async () => {
             const response = await fetch('http://localhost:3001/getUser', {
@@ -199,13 +207,7 @@ export default function UserProfile () {
                                         </select>
                                     </div>
                                 </form>
-
-                                <div className={styles.emailSection}>
-                                    <h3>My Email Address</h3>
-                                    <p>{user.email}</p>
-                                    <p>1 month ago</p>
-                                    <button>+Add Email Address</button>
-                                </div>
+                                <div className={styles.userFooter}>go to settings to edit the user profile</div>
                             </section>
                             <section id="tab-1" className={styles.progress}>
                                 <h4>Dashboard Progress</h4>
@@ -354,7 +356,7 @@ export default function UserProfile () {
                                 <form className={styles.form}>
                                     <div>
                                         <label>Full Name</label>
-                                        <input placeholder="Your First Name"/>
+                                        <input onChange={(e) => handleChange(e, "userName")} placeholder="Your First Name"/>
                                     </div>
                                     <div>
                                         <label>Display Name</label>
@@ -384,13 +386,14 @@ export default function UserProfile () {
                                             <option>Time Zone</option>
                                         </select>
                                     </div>
+                                    <button type={"submit"}>+Add Email Address</button>
                                 </form>
 
-                                <div className={styles.emailSection}>
+                                <div className={styles.customSection} onSubmit={handleSubmit}>
                                     <h3>My Email Address</h3>
                                     <p>{user.email}</p>
                                     <p>1 month ago</p>
-                                    <button>+Add Email Address</button>
+                                    <button type={"submit"}>+Add Email Address</button>
                                 </div>
                             </section>
                         </section>
