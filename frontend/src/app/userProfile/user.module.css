@@ -261,14 +261,14 @@
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-.emailSection {
+.customSection {
     margin: 1em;
     padding: 1em;
     border: 1px solid #ddd;
     border-radius: 0.4em;
 }
 
-.emailSection button {
+.customSection button {
     margin-top: 1em;
     background: #3498db; /* Refined blue */
     color: white;
@@ -279,7 +279,7 @@
     transition: background-color 0.3s ease;
 }
 
-.emailSection button:hover {
+.customSection button:hover {
     background-color: #2980b9; /* Darker shade on hover */
 }
 
