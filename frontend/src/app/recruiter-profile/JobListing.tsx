@@ -9,18 +9,23 @@ import styles from "../assets/styles/recruiter.module.css";
 import MockExamContainer from "./MockExamContainer";
 
 import axios from "axios";
-export default function JobListing() {
+export default function JobListing({
+  setJobPostState,
+  jobPostState,
+}: {
+  setJobPostState: any;
+  jobPostState: any;
+}) {
   const [loadJobPosts, setLoadJobPosts] = useState<
     {
-      mockExamId: number;
-      mockExamContent: {
-        questionContent: any[];
-      };
+      jobId: number;
+      jobTitle: String;
+      requiredSkills: String[];
+      jobType: string[];
     }[]
   >([]);
 
   const [loadJobPostContent, setLoadJobPostContent] = useState([]);
-  const [jobPostState, setJobPostState] = useState(false);
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
   ]);
@@ -90,10 +95,10 @@ export default function JobListing() {
     setLoadJobPosts([
       ...loadJobPosts,
       {
-        mockExamId: Date.now(),
-        mockExamContent: {
-          questionContent: [],
-        },
+        jobId: Date.now(),
+        jobTitle: "",
+        requiredSkills: [],
+        jobType: [],
       },
     ]);
   }

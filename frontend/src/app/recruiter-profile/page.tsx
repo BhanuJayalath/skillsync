@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
 import JobListing from "./JobListing";
+import JobContent from "./JobContent";
 
 import axios from "axios";
 export default function RecruiterProfile() {
@@ -22,6 +23,7 @@ export default function RecruiterProfile() {
 
   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
   const [mockExamState, setMockExamState] = useState(false);
+  const [jobPostState, setJobPostState] = useState(false);
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
   ]);
@@ -196,7 +198,15 @@ export default function RecruiterProfile() {
             </div>
           </div>
           <div id={styles.contentContainer2}>
-            {mockExamState ? (
+            {jobPostState ? (
+              <JobContent
+                setLoadMockTestQuestions={setLoadMockTestQuestions}
+                loadMockTestQuestions={loadMockTestQuestions}
+                mockExamCount={mockExamCount}
+                updateMockExamContainer={updateMockExamContainers}
+                response={response}
+              />
+            ) : mockExamState ? (
               <MockExam
                 setLoadMockTestQuestions={setLoadMockTestQuestions}
                 loadMockTestQuestions={loadMockTestQuestions}
@@ -309,7 +319,10 @@ export default function RecruiterProfile() {
                     })}
                   </div>
                 </div>
-                <JobListing/>
+                <JobListing
+                  setJobPostState={setJobPostState}
+                  jobPostState={jobPostState}
+                />
               </>
             )}
           </div>
