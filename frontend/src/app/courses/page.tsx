@@ -7,22 +7,46 @@ import { Button } from "../components/ui/button";
 import { Search, BookOpen, Loader2 } from "lucide-react";
 import CourseCard from "./coursecard";
 
-const API_URL = "http://www.example.com/api/courses"; // Replace with your actual courses API endpoint
+const DEEPSEEK_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 export default function Page() {
   const [courses, setCourses] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  // State for sidebar tab selection
   const [activeTab, setActiveTab] = useState<number>(0);
 
-  const searchCourses = async (title: string) => {
+  const searchCourses = async (topic: string) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${API_URL}?search=${title}`);
+      const response = await fetch(DEEPSEEK_API_URL, {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer <OPENROUTER_API_KEY>",
+          "HTTP-Referer": "<YOUR_SITE_URL>", // Optional
+          "X-Title": "<YOUR_SITE_NAME>",      // Optional
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "deepseek/deepseek-r1:free",
+          messages: [
+            {
+              role: "user",
+              content: `Please provide a list of five recommended online courses for learning ${topic}. 
+              Output the result as a JSON array, where each object has the following fields: id, title, duration, image, category, instructor.`
+            }
+          ]
+        }),
+      });
       const data = await response.json();
-      setCourses(data?.courses || []);
+      const generatedText = data?.choices?.[0]?.message?.content;
+      let parsedCourses = [];
+      try {
+        parsedCourses = JSON.parse(generatedText);
+      } catch (err) {
+        console.error("Error parsing JSON:", err);
+        parsedCourses = [];
+      }
+      setCourses(parsedCourses);
     } catch (error) {
       console.error("Error fetching courses:", error);
       setCourses([]);
@@ -32,7 +56,8 @@ export default function Page() {
   };
 
   useEffect(() => {
-    searchCourses("React"); // default search term for courses
+    // Default search topic
+    searchCourses("HTML");
   }, []);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -168,7 +193,10 @@ export default function Page() {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-grow">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                <Search
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
                 <Input
                   type="text"
                   placeholder="Search courses..."
