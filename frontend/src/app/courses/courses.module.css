@@ -1,0 +1,93 @@
+/* Sidebar */
+.sidebar {
+    width: 15em; /* Slightly wider sidebar */
+    background-color: rgb(96, 166, 236);
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    color: #000000; /* White text on the sidebar */
+    transition: width 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+    box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow to separate from content */
+    z-index: 100; /* Ensure it's above other content */
+    overflow: hidden; /* Prevent content overflow during hover */
+}
+
+.sidebar:hover {
+    width: 16em; /*Expand on hover*/
+    box-shadow: 7px 0 7px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+}
+
+.logoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5em;
+    background-color: rgba(115, 80, 80, 0.1); /* Lighter background */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 0.5em; /* Add some padding */
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.5em; /* Larger logo text */
+    color: #050505;
+    text-transform: uppercase; /* Make logo text uppercase */
+    letter-spacing: 1px; /* Add letter spacing for visual appeal */
+}
+
+.nav {
+    margin-top: 0;
+}
+
+.nav ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Reset default margin */
+}
+
+.nav a {
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.75em 1.5em; /* More padding */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
+}
+
+.nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Lighter background on hover */
+    transform: translateX(5px); /* Slightly move on hover */
+}
+
+.nav li {
+    font-size: 1.1em;
+    cursor: pointer;
+    text-align: left; /* Align text to the left */
+    margin: 0; /* Remove default margins */
+    width: 100%; /* Full width for each list item */
+}
+
+.activeLink {
+    background-color: rgba(0, 0, 0, 0.2); /* Darker background for active link */
+    border-left: 3px solid #3498db; /* Highlight active link */
+}
+
+.navImage {
+    margin-right: 0.75em;
+    width: 24px; /* Standardize image sizes */
+    height: 24px;
+    color: black;
+    filter: brightness(0) invert(1); /* Ensure icons are always white */
+}
+
+/*Add a line under each of the elements*/
+.nav li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Add a subtle border */
+}
+
+.nav li:last-child {
+    border-bottom: none; /* Remove the border from the last item */
+}
