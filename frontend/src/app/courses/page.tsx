@@ -15,6 +15,19 @@ const Page = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
+  const searchCourses = async (title: string) => {
+    try {
+      setIsLoading(true)
+      const response = await fetch(`${API_URL}?search=${title}`)
+      const data = await response.json()
+      setCourses(data?.courses || [])
+    } catch (error) {
+      console.error("Error fetching courses:", error)
+      setCourses([])
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
 
   return (
