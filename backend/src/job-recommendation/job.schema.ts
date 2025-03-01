@@ -14,6 +14,9 @@ export class Job extends Document {
 
   @Prop({ type: [String] })
   jobType: string[];
+
+  @Prop({ type: String })
+  jobDescription: string;
 }
 
 export const JobSchema = SchemaFactory.createForClass(Job);
