@@ -18,7 +18,7 @@ export default function MockExam({
   var counter = 0;
 
   useEffect(() => {
-    localStorage.setItem("1", JSON.stringify(loadMockTestQuestions));
+    localStorage.setItem(loadMockTestQuestions.mockExamId, JSON.stringify(loadMockTestQuestions));
   }, [loadMockTestQuestions]);
 
   function addQuestion() {

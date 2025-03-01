@@ -15,13 +15,13 @@ export class MocktestService {
   async findAll() {
     return this.mockTestModel.find().exec();
   }
-  async findOne(id: Number) {
+  async findOne(id: number) {
     return this.mockTestModel.findById(id).exec();
   }
-  async update(id: Number, data: Partial<MockTest>) {
+  async update(id: number, data: Partial<MockTest>) {
     return this.mockTestModel.findByIdAndUpdate(id, data, { new: true }).exec();
   }
-  async delete(id: String) {
-    return this.mockTestModel.findByIdAndDelete(id).exec();
+  async delete(id: number) {
+    return this.mockTestModel.findOneAndDelete({ mockExamId: id }).exec();
   }
 }

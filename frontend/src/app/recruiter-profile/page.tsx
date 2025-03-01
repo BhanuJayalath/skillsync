@@ -31,6 +31,7 @@ export default function RecruiterProfile() {
     useState(false);
   const [removeMockExamContainers, setRemoveMockExamContainers] =
     useState(false);
+  const [remove, setRemove] = useState(false);
 
   useEffect(() => {
     const tempArray: any = [];
@@ -58,7 +59,7 @@ export default function RecruiterProfile() {
               }
             }
             setLoadMockTests(tempArray);
-            console.log(tempArray);
+            // console.log(tempArray);
           });
         } else {
           if (localStorage.length > 0) {
@@ -76,7 +77,7 @@ export default function RecruiterProfile() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [remove]);
 
   function loadMockExamComponent(mockexamId: number, mockExamCounter: number) {
     loadMockTests.find((item: any) => {
@@ -89,7 +90,6 @@ export default function RecruiterProfile() {
     setMockExamState(!mockExamState);
   }
   function addMockExamContainers() {
-    localStorage.clear();
     setLoadMockTests([
       ...loadMockTests,
       {
@@ -101,7 +101,17 @@ export default function RecruiterProfile() {
     ]);
   }
   function removeMockExamComponent(mockExamId: Number) {
-    axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}/${mockExamId}`);
+    if (localStorage.length > 0) {
+      localStorage.removeItem(mockExamId.toString());
+    }
+    axios
+      .delete(`${process.env.NEXT_PUBLIC_SAVE_URL}/${mockExamId}`)
+      .then((response) => {
+        setRemove(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   let counter = 0;
   return (
