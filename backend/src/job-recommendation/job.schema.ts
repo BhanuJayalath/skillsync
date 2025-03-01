@@ -9,6 +9,9 @@ export class Job extends Document {
   @Prop({ required: true })
   title: string;
 
+  @Prop({ required: true })
+  description: string; //bhanu
+
   @Prop({ type: [String] })
   requiredSkills: string[];
 

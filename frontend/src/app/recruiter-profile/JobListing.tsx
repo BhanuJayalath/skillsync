@@ -12,9 +12,15 @@ import axios from "axios";
 export default function JobListing({
   setJobPostState,
   jobPostState,
+  loadJobPostContent,
+  setLoadJobPostContent,
+  setJobCount,
 }: {
   setJobPostState: any;
   jobPostState: any;
+  loadJobPostContent: any;
+  setLoadJobPostContent: any;
+  setJobCount: any;
 }) {
   const [loadJobPosts, setLoadJobPosts] = useState<
     {
@@ -25,7 +31,6 @@ export default function JobListing({
     }[]
   >([]);
 
-  const [loadJobPostContent, setLoadJobPostContent] = useState([]);
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
   ]);
@@ -81,14 +86,19 @@ export default function JobListing({
       });
   }, [remove]);
 
-  function loadJobPostComponent(mockexamId: number, mockExamCounter: number) {
-    loadJobPosts.find((item: any) => {
-      if (item.mockExamId === mockexamId) {
-        setLoadJobPostContent(item);
-        setMockExamCount(mockExamCounter);
-      }
-    });
-
+  async function loadJobPostComponent(mockexamId: number, JobCounter: number) {
+    await axios
+      .get("http://localhost:3001/job-recommendation/all-jobs")
+      .then((response) => {
+        setLoadJobPostContent(response.data);
+      });
+    // loadJobPosts.find((item: any) => {
+    //   if (item.mockExamId === mockexamId) {
+    //     setLoadJobPostContent(item);
+    //     setMockExamCount(mockExamCounter);
+    //   }
+    // });
+    setJobCount(JobCounter);
     setJobPostState(!jobPostState);
   }
   function addJobPostContainers() {

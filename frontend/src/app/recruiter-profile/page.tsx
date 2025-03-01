@@ -22,13 +22,15 @@ export default function RecruiterProfile() {
   >([]);
 
   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
+  const [loadJobPostContent, setLoadJobPostContent] = useState([]);
   const [mockExamState, setMockExamState] = useState(false);
   const [jobPostState, setJobPostState] = useState(false);
+
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
   ]);
   const [mockExamCount, setMockExamCount] = useState(Number);
-
+  const [jobCount, setJobCount] = useState(Number);
   const [updateMockExamContainers, setUpdateMockExamContainers] =
     useState(false);
   const [removeMockExamContainers, setRemoveMockExamContainers] =
@@ -200,11 +202,8 @@ export default function RecruiterProfile() {
           <div id={styles.contentContainer2}>
             {jobPostState ? (
               <JobContent
-                setLoadMockTestQuestions={setLoadMockTestQuestions}
-                loadMockTestQuestions={loadMockTestQuestions}
-                mockExamCount={mockExamCount}
-                updateMockExamContainer={updateMockExamContainers}
-                response={response}
+                loadJobPostContent={loadJobPostContent}
+                jobCount={jobCount}
               />
             ) : mockExamState ? (
               <MockExam
@@ -320,8 +319,11 @@ export default function RecruiterProfile() {
                   </div>
                 </div>
                 <JobListing
+                  loadJobPostContent={loadJobPostContent}
+                  setLoadJobPostContent={setLoadJobPostContent}
                   setJobPostState={setJobPostState}
                   jobPostState={jobPostState}
+                  setJobCount={setJobCount}
                 />
               </>
             )}
