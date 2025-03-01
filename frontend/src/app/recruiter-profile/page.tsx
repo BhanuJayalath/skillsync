@@ -7,7 +7,7 @@ import ResultTab from "./ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
-import MockExamContainer from "./MockExamContainer";
+import JobListing from "./JobListing";
 
 import axios from "axios";
 export default function RecruiterProfile() {
@@ -32,7 +32,7 @@ export default function RecruiterProfile() {
   const [removeMockExamContainers, setRemoveMockExamContainers] =
     useState(false);
   const [remove, setRemove] = useState(false);
-  const [response,setResponse]=useState();
+  const [response, setResponse] = useState();
 
   useEffect(() => {
     const tempArray: any = [];
@@ -309,40 +309,7 @@ export default function RecruiterProfile() {
                     })}
                   </div>
                 </div>
-                <div id={styles.jobListing}>
-                  <h1 id={styles.jobListingcontainerHeader}>Job Listing</h1>
-                  <div className={styles.jobListingcontainerSection}>
-                    <div id={styles.jobListingcontainer}>
-                      <Image
-                        alt="job-search"
-                        width={60}
-                        height={60}
-                        src="/recruiter/job-search.svg"
-                      />
-                      <h1>Internship 01</h1>
-                    </div>
-                    <div id={styles.jobListingcontainer}>
-                      {" "}
-                      <Image
-                        alt="job-search"
-                        width={60}
-                        height={60}
-                        src="/recruiter/job-search.svg"
-                      />
-                      <h1>Internship 02</h1>
-                    </div>
-                    <div id={styles.jobListingcontainer}>
-                      {" "}
-                      <Image
-                        alt="job-search"
-                        width={60}
-                        height={60}
-                        src="/recruiter/job-search.svg"
-                      />
-                      <h1>Internship 03</h1>
-                    </div>
-                  </div>
-                </div>
+                <JobListing/>
               </>
             )}
           </div>
