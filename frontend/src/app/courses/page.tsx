@@ -29,6 +29,19 @@ const Page = () => {
     }
   }
 
+  useEffect(() => {
+    searchCourses("React") // default search term for courses
+  }, []) // Removed searchCourses from dependencies
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      searchCourses(searchTerm)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-white">
