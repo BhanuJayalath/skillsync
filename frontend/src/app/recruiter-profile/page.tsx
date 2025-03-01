@@ -32,12 +32,14 @@ export default function RecruiterProfile() {
   const [removeMockExamContainers, setRemoveMockExamContainers] =
     useState(false);
   const [remove, setRemove] = useState(false);
+  const [response,setResponse]=useState();
 
   useEffect(() => {
     const tempArray: any = [];
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
+        setResponse(response.data);
         if (response.data.length != 0) {
           response.data.map((item: any, index: number) => {
             tempArray.push(item);
@@ -59,7 +61,6 @@ export default function RecruiterProfile() {
               }
             }
             setLoadMockTests(tempArray);
-            // console.log(tempArray);
           });
         } else {
           if (localStorage.length > 0) {
@@ -69,7 +70,6 @@ export default function RecruiterProfile() {
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
               tempArray.push(jsonParsedItem);
               setLoadMockTests(tempArray);
-              console.log(tempArray);
             }
           }
         }
@@ -202,6 +202,7 @@ export default function RecruiterProfile() {
                 loadMockTestQuestions={loadMockTestQuestions}
                 mockExamCount={mockExamCount}
                 updateMockExamContainer={updateMockExamContainers}
+                response={response}
               />
             ) : (
               <>

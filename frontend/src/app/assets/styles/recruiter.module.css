@@ -215,16 +215,22 @@
   font-size: 20px;
   text-align: center;
 }
+#emptyMockExamSection,
 #mockExamSection {
   margin-bottom: 10px;
   width: 100%;
-  height: auto;
+  height: 100%;
+}
+#emptyMockExamSection{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #mockExamSectionBlock {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: auto;
+  height: 100%;
   padding: 20px;
   background-color: #d1e5f4;
   gap: 20px;

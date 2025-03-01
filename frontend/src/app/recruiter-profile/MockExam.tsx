@@ -9,16 +9,28 @@ export default function MockExam({
   setLoadMockTestQuestions,
   mockExamCount,
   updateMockExamContainer,
+  response,
 }: {
   setLoadMockTestQuestions: any;
   loadMockTestQuestions: any;
   mockExamCount: number;
   updateMockExamContainer: any;
+  response: any;
 }) {
   var counter = 0;
+  const [databaseExistingId, setDatabaseExistingId] = useState(false);
+  useEffect(() => {
+    const DatabaseExistingId = response.some(
+      (item: any) => item.mockExamId === loadMockTestQuestions.mockExamId
+    );
+    setDatabaseExistingId(DatabaseExistingId);
+  });
 
   useEffect(() => {
-    localStorage.setItem(loadMockTestQuestions.mockExamId, JSON.stringify(loadMockTestQuestions));
+    localStorage.setItem(
+      loadMockTestQuestions.mockExamId,
+      JSON.stringify(loadMockTestQuestions)
+    );
   }, [loadMockTestQuestions]);
 
   function addQuestion() {
@@ -43,7 +55,7 @@ export default function MockExam({
     });
   }
   function update(id: number, questionItem: any) {
-    console.log("trigger");
+    // console.log("trigger");
     const index =
       loadMockTestQuestions.mockExamContent.questionContent.findIndex(
         (item: any) => item.QuestionId == id
@@ -86,6 +98,16 @@ export default function MockExam({
       headers: { "Content-Type": "application/json" },
     });
   }
+  function updatetoDatabase() {
+    console.log(loadMockTestQuestions);
+    axios.patch(
+      `${process.env.NEXT_PUBLIC_SAVE_URL}/${loadMockTestQuestions.mockExamId}`,
+      loadMockTestQuestions,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
   var questionCounter = 0;
 
   return (
@@ -102,25 +124,34 @@ export default function MockExam({
                 src="/recruiter/plus-icon.svg"
               />
             </button>
-            <button onClick={save}>Save</button>
+            {databaseExistingId ? (
+              <button onClick={updatetoDatabase}>Update</button>
+            ) : (
+              <button onClick={save}>Save</button>
+            )}
           </>
         ) : null}
       </header>
-      {loadMockTestQuestions.mockExamContent.questionContent.map(
-        (item: any) => {
-          questionCounter++;
-          // console.log(item);
-          return (
-            <MockExamContainer
-              key={questionCounter}
-              MockTestQuestions={item}
-              questionCounter={questionCounter}
-              update={update}
-              removeQuestion={removeQuestion}
-              updateMockExamContainer={updateMockExamContainer}
-            />
-          );
-        }
+      {loadMockTestQuestions?.mockExamContent?.questionContent.length > 0 ? (
+        loadMockTestQuestions.mockExamContent.questionContent.map(
+          (item: any) => {
+            questionCounter++;
+            return (
+              <MockExamContainer
+                key={questionCounter}
+                MockTestQuestions={item}
+                questionCounter={questionCounter}
+                update={update}
+                removeQuestion={removeQuestion}
+                updateMockExamContainer={updateMockExamContainer}
+              />
+            );
+          }
+        )
+      ) : (
+        <div id={styles.emptyMockExamSection}>
+          <h1>Add your Questions Here</h1>
+        </div>
       )}
     </section>
   );

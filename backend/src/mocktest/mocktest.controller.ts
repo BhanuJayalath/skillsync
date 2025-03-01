@@ -27,14 +27,13 @@ export class MocktestController {
   findOne(@Param('id') id: number) {
     return this.mockTestService.findOne(id);
   }
-  @Patch(':id')
+  @Patch(':mockExamId')
   update(
-    @Param('id') id: number,
-    @Body() updateDto: Partial<{ mockExamId: Number; mockExamContent: any }>,
+    @Param('mockExamId') mockExamId: number,
+    @Body() updateDto: Partial<{ mockExamId: number; mockExamContent: any }>,
   ) {
-    return this.mockTestService.update(id, updateDto);
+    return this.mockTestService.update(mockExamId, updateDto);
   }
-
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.mockTestService.delete(id);

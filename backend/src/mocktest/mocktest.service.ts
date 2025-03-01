@@ -18,8 +18,10 @@ export class MocktestService {
   async findOne(id: number) {
     return this.mockTestModel.findById(id).exec();
   }
-  async update(id: number, data: Partial<MockTest>) {
-    return this.mockTestModel.findByIdAndUpdate(id, data, { new: true }).exec();
+  async update(mockExamId: number, data: Partial<MockTest>) {
+    return this.mockTestModel
+      .findOneAndUpdate({ mockExamId: mockExamId }, data, { new: true })
+      .exec();
   }
   async delete(id: number) {
     return this.mockTestModel.findOneAndDelete({ mockExamId: id }).exec();
