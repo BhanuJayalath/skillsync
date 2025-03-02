@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="created the Settings.tsx file">
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="moved the relevant codes from page.tsx and updated the Courses.tsx file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Courses.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Courses.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Overview.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Progress.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Progress.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Resume.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Resume.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
@@ -41,7 +37,7 @@
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -103,7 +99,7 @@
       <workItem from="1740746978733" duration="3736000" />
       <workItem from="1740810076697" duration="230000" />
       <workItem from="1740821582785" duration="17704000" />
-      <workItem from="1740894966002" duration="9435000" />
+      <workItem from="1740894966002" duration="15853000" />
     </task>
     <task id="LOCAL-00001" summary="created the job recommendation module and updated the relevant parts">
       <option name="closed" value="true" />
@@ -321,7 +317,47 @@
       <option name="project" value="LOCAL" />
       <updated>1740901738219</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="moved the relevant codes from page.tsx and updated the Settings.tsx file">
+      <option name="closed" value="true" />
+      <created>1740909438005</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1740909438005</updated>
+    </task>
+    <task id="LOCAL-00029" summary="moved the relevant codes from page.tsx and updated the Resume.tsx file">
+      <option name="closed" value="true" />
+      <created>1740909456208</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1740909456208</updated>
+    </task>
+    <task id="LOCAL-00030" summary="moved the relevant codes from page.tsx and updated the Progress.tsx file">
+      <option name="closed" value="true" />
+      <created>1740909469087</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1740909469087</updated>
+    </task>
+    <task id="LOCAL-00031" summary="moved the relevant codes from page.tsx and updated the Overview.tsx file">
+      <option name="closed" value="true" />
+      <created>1740909488679</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1740909488679</updated>
+    </task>
+    <task id="LOCAL-00032" summary="moved the relevant codes from page.tsx and updated the Courses.tsx file">
+      <option name="closed" value="true" />
+      <created>1740909501203</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1740909501203</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,11 +375,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="making a user profile editor section" />
-    <MESSAGE value="add styling to the cv section" />
-    <MESSAGE value="updated the tabs section and course items styles" />
-    <MESSAGE value="put all sections inside the tabs sections and add few courses for testing" />
-    <MESSAGE value="making the cv section downloadable" />
     <MESSAGE value="add a button to download the cv and change the structure" />
     <MESSAGE value="deleted the unnecessary files" />
     <MESSAGE value="add new icons" />
@@ -364,6 +395,11 @@
     <MESSAGE value="created the Progress.tsx file" />
     <MESSAGE value="created the Resume.tsx file" />
     <MESSAGE value="created the Settings.tsx file" />
-    <option name="LAST_COMMIT_MESSAGE" value="created the Settings.tsx file" />
+    <MESSAGE value="moved the relevant codes from page.tsx and updated the Settings.tsx file" />
+    <MESSAGE value="moved the relevant codes from page.tsx and updated the Resume.tsx file" />
+    <MESSAGE value="moved the relevant codes from page.tsx and updated the Progress.tsx file" />
+    <MESSAGE value="moved the relevant codes from page.tsx and updated the Overview.tsx file" />
+    <MESSAGE value="moved the relevant codes from page.tsx and updated the Courses.tsx file" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved the relevant codes from page.tsx and updated the Courses.tsx file" />
   </component>
 </project>
