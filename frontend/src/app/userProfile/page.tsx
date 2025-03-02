@@ -113,7 +113,20 @@ export default function UserProfile() {
             [field]: e.target.value
         }));
     };
-
+    // Update nested fields (experience, education)
+    const handleNestedChange = (
+        index: number,
+        field: string,
+        value: string,
+        section: "experience" | "education"
+    ) => {
+        setUser((prev) => ({
+            ...prev,
+            [section]: prev[section].map((item, i) =>
+                i === index ? {...item, [field]: value} : item
+            ),
+        }));
+    };
 
 
 
