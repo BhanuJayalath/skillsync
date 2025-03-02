@@ -82,8 +82,10 @@ export default function CoursesManagement() {
                             <p><strong>Price:</strong> {course.price}</p>
                             <p><strong>Enrolled:</strong> {course.enrolled} students</p>
                         </div>
-                        <button className={styles.editButtonCourse} onClick={() => handleEditCourse(course)}>Edit</button>
-                        <button className={styles.deleteButton} onClick={() => handleDeleteCourse(course.id)}>Delete</button>
+                        <div>
+                            <button className={styles.editButtonCourse} onClick={() => handleEditCourse(course)}>Edit</button>
+                            <button className={styles.deleteButton} onClick={() => handleDeleteCourse(course.id)}>Delete</button>
+                        </div>
                     </div>
                 ))}
             </div>
