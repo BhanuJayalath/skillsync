@@ -104,7 +104,15 @@ export default function UserProfile() {
             experience: updatedExperience
         }));
     };
-
+    // Change handler
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement>, field: string
+    ) => {
+        setUser((prev) => ({
+            ...prev,
+            [field]: e.target.value
+        }));
+    };
 
 
 
