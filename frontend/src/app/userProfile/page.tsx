@@ -68,7 +68,15 @@ export default function UserProfile() {
         ],
         skills: ['skill-1', 'skill-2', 'skill-3']
     });
-
+    // Education Handlers
+    const addEducation = (
+        e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setUser(prevState => ({
+            ...prevState,
+            education: [...prevState.education, { courseName: '', schoolName: '', startDate: '', endDate: '', description: '' }]
+        }));
+    };
 
 
 
