@@ -102,11 +102,12 @@ export default function JobListing({
     setJobPostState(!jobPostState);
   }
   function addJobPostContainers() {
-    setLoadJobPosts([
-      ...loadJobPosts,
+    setLoadJobPostContent([
+      ...loadJobPostContent,
       {
         jobId: Date.now(),
-        jobTitle: "",
+        title: "",
+        description: "",
         requiredSkills: [],
         jobType: [],
       },

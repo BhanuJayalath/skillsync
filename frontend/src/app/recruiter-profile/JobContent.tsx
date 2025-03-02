@@ -6,11 +6,77 @@ import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 export default function JobContent({
   loadJobPostContent,
+  updateJobPostContent,
   jobCount,
 }: {
   loadJobPostContent: any;
+  updateJobPostContent: any;
   jobCount: any;
 }) {
+    const [jobTitile, setJobTitle] = useState<string>();
+    const [jobDescription, setJobDescription] = useState<string>();
+    const [answer2, setAnswer2] = useState<string>();
+    const [answer3, setAnswer3] = useState<string>();
+    const [answer4, setAnswer4] = useState<string>();
+    const [selectedAnswer, setSelectedAnswer] = useState<Number>();
+    const [removed, setRemoved] = useState(false);
+    const [readOnly, setReadOnly] = useState(false);
+    const storage = {
+      QuestionId: MockTestQuestions.QuestionId,
+      Question: question,
+      Answer1: answer1,
+      Answer2: answer2,
+      Answer3: answer3,
+      Answer4: answer4,
+      correctAnswer: selectedAnswer,
+    };
+    useEffect(() => {
+      console.log(MockTestQuestions);
+      setQuestion(MockTestQuestions.Question);
+      setAnswer1(MockTestQuestions.Answer1);
+      setAnswer2(MockTestQuestions.Answer2);
+      setAnswer3(MockTestQuestions.Answer3);
+      setAnswer4(MockTestQuestions.Answer4);
+      setSelectedAnswer(
+        MockTestQuestions.correctAnswer ? MockTestQuestions.correctAnswer : null
+      );
+      if (updateMockExamContainer == false) {
+        setReadOnly(true);
+      }
+    }, [removed]);
+    useEffect(() => {
+      update(MockTestQuestions.QuestionId, storage);
+    }, [question, answer1, answer2, answer3, answer4, selectedAnswer]);
+
+    function saveQuestion(event: any) {
+      setQuestion(event.target.value);
+    }
+
+    function saveAnswer1(event: any) {
+      setAnswer1(event.target.value);
+    }
+
+    function saveAnswer2(event: any) {
+      setAnswer2(event.target.value);
+    }
+
+    function saveAnswer3(event: any) {
+      setAnswer3(event.target.value);
+    }
+
+    function saveAnswer4(event: any) {
+      setAnswer4(event.target.value);
+    }
+
+    function remove(questionId: number) {
+      removeQuestion(questionId);
+      setRemoved(!removed);
+    }
+
+    function handleCheckBoxChange(selection: Number) {
+      setSelectedAnswer(selection);
+      // addCorrectAnswer(selection, MockTestQuestions.QuestionId);
+    }
   var counter = 0;
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   // useEffect(() => {
@@ -27,27 +93,6 @@ export default function JobContent({
     );
   }, [loadJobPostContent]);
 
-  // function addQuestion() {
-  //   var temp = {
-  //     QuestionId: Date.now(),
-  //     Question: "",
-  //     Answer1: "",
-  //     Answer2: "",
-  //     Answer3: "",
-  //     Answer4: "",
-  //     correctAnswer: Number,
-  //   };
-  //   setLoadMockTestQuestions({
-  //     ...loadMockTestQuestions,
-  //     mockExamContent: {
-  //       ...loadMockTestQuestions.mockExamContent,
-  //       questionContent: [
-  //         ...loadMockTestQuestions.mockExamContent.questionContent,
-  //         temp,
-  //       ],
-  //     },
-  //   });
-  // }
   // function update(id: number, questionItem: any) {
   //   // console.log("trigger");
   //   const index =
@@ -67,26 +112,6 @@ export default function JobContent({
   //   });
   // }
 
-  // function removeQuestion(questionId: number) {
-  //   const index =
-  //     loadMockTestQuestions.mockExamContent.questionContent.findIndex(
-  //       (item: any) => item.QuestionId == questionId
-  //     );
-
-  //   setLoadMockTestQuestions((prev: any) => {
-  //     const prevQuestionItems = [...prev.mockExamContent.questionContent];
-  //     if (index >= 0) {
-  //       prevQuestionItems.splice(index, 1);
-  //     }
-  //     return {
-  //       ...prev,
-  //       mockExamContent: {
-  //         ...prev.mockExamContent,
-  //         questionContent: prevQuestionItems,
-  //       },
-  //     };
-  //   });
-  // }
   // function save() {
   //   axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, loadMockTestQuestions, {
   //     headers: { "Content-Type": "application/json" },
@@ -108,9 +133,9 @@ export default function JobContent({
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
         <h1>Job Post {jobCount}</h1>
-        {/* {updateMockExamContainer ? (
+        {/* {updateJobPostContent ? (
           <>
-            <button onClick={addQuestion}>
+            <button onClick={addJobPost}>
               <Image
                 alt="plus-icon"
                 width={25}
@@ -126,27 +151,116 @@ export default function JobContent({
           </>
         ) : null} */}
       </header>
-      {/* {loadMockTestQuestions?.mockExamContent?.questionContent.length > 0 ? (
-        loadMockTestQuestions.mockExamContent.questionContent.map(
-          (item: any) => {
-            questionCounter++;
-            return (
-              <MockExamContainer
-                key={questionCounter}
-                MockTestQuestions={item}
-                questionCounter={questionCounter}
-                update={update}
-                removeQuestion={removeQuestion}
-                updateMockExamContainer={updateMockExamContainer}
-              />
-            );
-          }
-        )
+      {loadJobPostContent.length > 0 ? (
+        loadJobPostContent.map((item: any) => {
+          return (
+            <div id={styles.mockExamSection}>
+              <div id={styles.mockExamSectionBlock}>
+                <header>
+                  Question {questionCounter}
+                  <div id={styles.mockExamSectionSaveandClose}>
+                    {/* {updateMockExamContainer ? (
+                        <button
+                          onClick={() => {
+                            remove(MockTestQuestions.QuestionId);
+                          }}
+                        >
+                          <Image
+                            alt="remove-icon"
+                            width={25}
+                            height={25}
+                            src="/recruiter/remove-icon.svg"
+                          />
+                        </button>
+                      ) : null} */}
+                  </div>
+                </header>
+                <h2>Add your question here</h2>
+                {/* <input
+                    id={styles.mockExamSectionQuestion}
+                    type="text"
+                    value={question}
+                    onChange={saveQuestion}
+                    readOnly={readOnly}
+                  /> */}
+                <h2>Add your answers here</h2>
+                <div id={styles.mockExamSectionAnswer}>
+                  {/* <input
+                      type="checkbox"
+                      value={1}
+                      checked={selectedAnswer === 1}
+                      onChange={() => {
+                        handleCheckBoxChange(1);
+                      }}
+                      disabled={readOnly}
+                    /> */}
+                  {/* <input
+                      type="text"
+                      value={answer1}
+                      onChange={saveAnswer1}
+                      readOnly={readOnly}
+                    /> */}
+                </div>
+                <div id={styles.mockExamSectionAnswer}>
+                  {/* <input
+                      type="checkbox"
+                      value={2}
+                      checked={selectedAnswer === 2}
+                      onChange={() => {
+                        handleCheckBoxChange(2);
+                      }}
+                      disabled={readOnly}
+                    /> */}
+                  {/* <input
+                      type="text"
+                      value={answer2}
+                      onChange={saveAnswer2}
+                      readOnly={readOnly}
+                    /> */}
+                </div>
+                <div id={styles.mockExamSectionAnswer}>
+                  {/* <input
+                      type="checkbox"
+                      value={3}
+                      checked={selectedAnswer === 3}
+                      onChange={() => {
+                        handleCheckBoxChange(3);
+                      }}
+                      disabled={readOnly}
+                    /> */}
+                  {/* <input
+                      type="text"
+                      value={answer3}
+                      onChange={saveAnswer3}
+                      readOnly={readOnly}
+                    /> */}
+                </div>
+                <div id={styles.mockExamSectionAnswer}>
+                  {/* <input
+                      type="checkbox"
+                      value={4}
+                      checked={selectedAnswer === 4}
+                      onChange={() => {
+                        handleCheckBoxChange(4);
+                      }}
+                      disabled={readOnly}
+                    /> */}
+                  {/* <input
+                      type="text"
+                      value={answer4}
+                      onChange={saveAnswer4}
+                      readOnly={readOnly}
+                    /> */}
+                </div>
+              </div>
+            </div>
+          );
+        })
       ) : (
         <div id={styles.emptyMockExamSection}>
           <h1>Add your Questions Here</h1>
         </div>
-      )} */}
+      )}
     </section>
   );
 }

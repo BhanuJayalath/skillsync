@@ -22,7 +22,15 @@ export default function RecruiterProfile() {
   >([]);
 
   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
-  const [loadJobPostContent, setLoadJobPostContent] = useState([]);
+  const [loadJobPostContent, setLoadJobPostContent] = useState<
+    {
+      jobId: number;
+      title: String;
+      description: String;
+      requiredSkills: [];
+      jobType: [];
+    }[]
+  >([]);
   const [mockExamState, setMockExamState] = useState(false);
   const [jobPostState, setJobPostState] = useState(false);
 
@@ -33,6 +41,7 @@ export default function RecruiterProfile() {
   const [jobCount, setJobCount] = useState(Number);
   const [updateMockExamContainers, setUpdateMockExamContainers] =
     useState(false);
+  const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
   const [removeMockExamContainers, setRemoveMockExamContainers] =
     useState(false);
   const [remove, setRemove] = useState(false);
@@ -203,6 +212,7 @@ export default function RecruiterProfile() {
             {jobPostState ? (
               <JobContent
                 loadJobPostContent={loadJobPostContent}
+                updateJobPostContent={updateJobPostContent}
                 jobCount={jobCount}
               />
             ) : mockExamState ? (
