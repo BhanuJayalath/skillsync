@@ -12,6 +12,7 @@ interface User {
     education: Education[];
     experience: Experience[];
 }
+
 interface Education {
     courseName: string;
     schoolName: string;
@@ -19,9 +20,11 @@ interface Education {
     endDate: string;
     description: string;
 }
+
 interface jobRole {
     jobName: string;
 }
+
 interface Experience {
     jobName: string;
     companyName: string;
@@ -36,9 +39,9 @@ interface ResumeProps {
     removeExperience: (index: number) => void;
 }
 
-const Resume = ({ user, removeEducation, removeExperience }: ResumeProps) => {
+const Resume = ({user, removeEducation, removeExperience}: ResumeProps) => {
     return (
-        <section  className={styles.cvSection}>
+        <section className={styles.cvSection}>
             <div className={styles.contactInfo}>
                 <h1 className={styles.name}>{user.fullName}</h1>
                 <p className={styles.jobTitle}>{user.jobRole[0].jobName}</p>
