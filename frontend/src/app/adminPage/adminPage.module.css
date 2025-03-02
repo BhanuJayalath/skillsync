@@ -185,6 +185,16 @@
     cursor: pointer; 
   }
 
+  .editButtonCourse{
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #09ba18;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+  }
+
   /* Add Course Form */
 .addCourseForm {
   display: flex;
