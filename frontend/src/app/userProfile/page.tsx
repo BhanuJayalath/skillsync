@@ -86,7 +86,15 @@ export default function UserProfile() {
             experience: [...prevState.experience, { jobName: '', companyName: '', startDate: '', endDate: '', description: '' }]
         }));
     };
+    const removeEducation = (index: number) => {
+        const updatedEducation = [...user.education];
+        updatedEducation.splice(index, 1);
 
+        setUser(prevState => ({
+            ...prevState,
+            education: updatedEducation
+        }));
+    };
 
 
 
