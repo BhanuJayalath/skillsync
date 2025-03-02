@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="updated the styles for the forms">
-      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job.schema.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/userProfile/resume.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/userProfile/settings.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +99,8 @@
       <workItem from="1740544719211" duration="2836000" />
       <workItem from="1740746978733" duration="3736000" />
       <workItem from="1740810076697" duration="230000" />
-      <workItem from="1740821582785" duration="3787000" />
+      <workItem from="1740821582785" duration="17704000" />
+      <workItem from="1740894966002" duration="1898000" />
     </task>
     <task id="LOCAL-00001" summary="created the job recommendation module and updated the relevant parts">
       <option name="closed" value="true" />
