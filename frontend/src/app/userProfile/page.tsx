@@ -128,7 +128,14 @@ export default function UserProfile() {
         }));
     };
 
-
+    // Change handler for skills array
+    // const handleSkillsChange = (index: number, value: string) => {
+    //     setUser((prev) => {
+    //         const updatedSkills = [...prev.skills];
+    //         updatedSkills[index] = value;
+    //         return { ...prev, skills: updatedSkills };
+    //     });
+    // };
 
     useEffect(() => {
         const fetchUserDetails = async () => {
