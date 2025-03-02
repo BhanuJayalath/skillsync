@@ -77,7 +77,15 @@ export default function UserProfile() {
             education: [...prevState.education, { courseName: '', schoolName: '', startDate: '', endDate: '', description: '' }]
         }));
     };
-
+    // Experience Handlers
+    const addExperience = (
+        e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setUser(prevState => ({
+            ...prevState,
+            experience: [...prevState.experience, { jobName: '', companyName: '', startDate: '', endDate: '', description: '' }]
+        }));
+    };
 
 
 
