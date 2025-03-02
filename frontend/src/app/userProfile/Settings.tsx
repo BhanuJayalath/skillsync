@@ -42,9 +42,11 @@ interface SettingsProps {
     handleChange: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
     handleNestedChange: (index: number, field: string, value: string, section: "experience" | "education") => void;
     handleSubmit: () => Promise<void>;
+    addEducation: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    addExperience: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Settings = ({ user, handleSubmit, handleChange, handleNestedChange }: SettingsProps) => {
+const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience }: SettingsProps) => {
     return (
         <section className={styles.userInfo}>
             <div className={styles.userDetails}>
@@ -165,10 +167,10 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange }: Sett
                             </div>
                         </div>
                     ))}
-                    <button>Save</button>
+                    <button onClick={addExperience}>Save</button>
                 </div>
 
-                {/* Education Section - Similar Structure */}
+                {/* Education Section */}
                 <div className={styles.formSection}>
                     <h3>Education</h3>
                     {user.education.map((edu, index) => (
@@ -210,7 +212,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange }: Sett
                             />
                         </div>
                     ))}
-                    <button>Save</button>
+                    <button onClick={addEducation}>Save</button>
                 </div>
                 {/* Skills Section */}
                 {/*<div className={styles.formSection}>*/}
