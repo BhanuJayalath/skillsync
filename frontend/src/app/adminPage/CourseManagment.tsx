@@ -35,7 +35,7 @@ export default function CoursesManagement() {
         <div className={styles.coursesSection}>
           <h2>Courses Management</h2>
 
-            <div className="add-course-form">
+            <div className={styles.addCourseForm}>
                 <input type="text" placeholder="Title" value={newCourse.title} onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })} />
                 <input type="text" placeholder="Description" value={newCourse.description} onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })} />
                 <input type="text" placeholder="Price" value={newCourse.price} onChange={(e) => setNewCourse({ ...newCourse, price: e.target.value })} />

@@ -184,3 +184,33 @@
     border-radius: 5px;
     cursor: pointer; 
   }
+
+  /* Add Course Form */
+.addCourseForm {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px dashed #0574a394;
+}
+
+.addCourseForm input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.addCourseForm button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.addCourseForm button:hover {
+  background-color: #0056b3;
+}
