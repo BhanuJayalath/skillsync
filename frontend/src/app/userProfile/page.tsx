@@ -95,7 +95,15 @@ export default function UserProfile() {
             education: updatedEducation
         }));
     };
+    const removeExperience = (index: number) => {
+        const updatedExperience = [...user.experience];
+        updatedExperience.splice(index, 1);
 
+        setUser(prevState => ({
+            ...prevState,
+            experience: updatedExperience
+        }));
+    };
 
 
 

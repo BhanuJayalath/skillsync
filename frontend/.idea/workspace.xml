@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="moved the relevant codes from page.tsx and updated the Courses.tsx file">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" afterDir="false" />
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add styling to the settings form section">
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +96,7 @@
       <workItem from="1740746978733" duration="3736000" />
       <workItem from="1740810076697" duration="230000" />
       <workItem from="1740821582785" duration="17704000" />
-      <workItem from="1740894966002" duration="15853000" />
+      <workItem from="1740894966002" duration="16302000" />
     </task>
     <task id="LOCAL-00001" summary="created the job recommendation module and updated the relevant parts">
       <option name="closed" value="true" />
@@ -357,7 +354,23 @@
       <option name="project" value="LOCAL" />
       <updated>1740909501203</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="updated the Settings.tsx file">
+      <option name="closed" value="true" />
+      <created>1740917168957</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917168957</updated>
+    </task>
+    <task id="LOCAL-00034" summary="add styling to the settings form section">
+      <option name="closed" value="true" />
+      <created>1740917274283</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917274283</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -375,8 +388,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add a button to download the cv and change the structure" />
-    <MESSAGE value="deleted the unnecessary files" />
     <MESSAGE value="add new icons" />
     <MESSAGE value="updated the cv section styles" />
     <MESSAGE value="add a settings section to the nav bar and add content to the cv section" />
@@ -400,6 +411,8 @@
     <MESSAGE value="moved the relevant codes from page.tsx and updated the Progress.tsx file" />
     <MESSAGE value="moved the relevant codes from page.tsx and updated the Overview.tsx file" />
     <MESSAGE value="moved the relevant codes from page.tsx and updated the Courses.tsx file" />
-    <option name="LAST_COMMIT_MESSAGE" value="moved the relevant codes from page.tsx and updated the Courses.tsx file" />
+    <MESSAGE value="updated the Settings.tsx file" />
+    <MESSAGE value="add styling to the settings form section" />
+    <option name="LAST_COMMIT_MESSAGE" value="add styling to the settings form section" />
   </component>
 </project>
