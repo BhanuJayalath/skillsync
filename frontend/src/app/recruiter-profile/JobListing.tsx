@@ -42,12 +42,12 @@ export default function JobListing({
   const [remove, setRemove] = useState(false);
   const [response, setResponse] = useState();
 
-  useEffect(() => {
+
+  async function loadJobPostComponent(mockexamId: number, JobCounter: number) {
     const tempArray: any = [];
-    axios
-      .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
+    await axios
+      .get("http://localhost:3001/job-recommendation/all-jobs")
       .then((response) => {
-        setResponse(response.data);
         if (response.data.length != 0) {
           response.data.map((item: any, index: number) => {
             tempArray.push(item);
@@ -56,11 +56,11 @@ export default function JobListing({
                 const key: any = localStorage.key(i);
                 let Item: any = localStorage.getItem(key);
                 let jsonParsedItem = Item ? JSON.parse(Item) : null;
-                if (item.mockExamId === jsonParsedItem.mockExamId) {
+                if (item.jobId === jsonParsedItem.jobId) {
                   tempArray[index] = jsonParsedItem;
                 } else if (response.data.length - 1 === index) {
                   const lastElement = tempArray.find(
-                    (item: any) => item.mockExamId === jsonParsedItem.mockExamId
+                    (item: any) => item.jobId === jsonParsedItem.jobId
                   );
                   if (!lastElement) {
                     tempArray.push(jsonParsedItem);
@@ -68,7 +68,7 @@ export default function JobListing({
                 }
               }
             }
-            setLoadJobPosts(tempArray);
+            setLoadJobPostContent(tempArray);
           });
         } else {
           if (localStorage.length > 0) {
@@ -77,21 +77,11 @@ export default function JobListing({
               let Item: any = localStorage.getItem(key);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
               tempArray.push(jsonParsedItem);
-              setLoadJobPosts(tempArray);
+              setLoadJobPostContent(tempArray);
             }
           }
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [remove]);
-
-  async function loadJobPostComponent(mockexamId: number, JobCounter: number) {
-    await axios
-      .get("http://localhost:3001/job-recommendation/all-jobs")
-      .then((response) => {
-        setLoadJobPostContent(response.data);
+        // setLoadJobPostContent(response.data);
       });
     // loadJobPosts.find((item: any) => {
     //   if (item.mockExamId === mockexamId) {
@@ -170,7 +160,7 @@ export default function JobListing({
         </button>
       </div>
       <div className={styles.mockExamscontainerSection}>
-        {loadJobPosts?.map((item: any, index: number) => {
+        {loadJobPostContent?.map((item: any, index: number) => {
           return (
             <>
               {removeJobPostContainers ? (

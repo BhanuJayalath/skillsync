@@ -29,10 +29,10 @@ export default function JobContent({
     jobType: jobType,
   };
   useEffect(() => {
-    setJobTitle(loadJobPostContent.jobTitle);
-    setJobDescription(loadJobPostContent.jobDescription);
-    setRequiredSkills(loadJobPostContent.requiredSkills);
-    setJobType(loadJobPostContent.jobType);
+    setJobTitle(loadJobPostContent[0].jobTitle);
+    setJobDescription(loadJobPostContent[0].jobDescription);
+    setRequiredSkills(loadJobPostContent[0].requiredSkills);
+    setJobType(loadJobPostContent[0].jobType);
 
     // if (updateMockExamContainer == false) {
     //   setReadOnly(true);
@@ -52,15 +52,9 @@ export default function JobContent({
 
   function saveRequiredSkills(event: any) {
     event.preventDefault();
-    if (Array.isArray(requiredSkills)) {
-      setRequiredSkills((prevSkills) => {
-        console.log("Previous skills inside update:", prevSkills); // Log inside the update function
-        return [...prevSkills, requiredSkillsValue]; // Add the new skill to the array
-      });
-      setRequiredSkillsValue(""); // Clear the input after submission
-    } else {
-      console.error("requiredSkills is not an array");
-    }
+    console.log(requiredSkills);
+    setRequiredSkills([...requiredSkills, requiredSkillsValue]);
+    setRequiredSkillsValue("");
   }
 
   function saveJobType(event: any) {
@@ -84,13 +78,9 @@ export default function JobContent({
   //   );
   //   setDatabaseExistingId(DatabaseExistingId);
   // });
-
   useEffect(() => {
-    localStorage.setItem(
-      loadJobPostContent[0].jobId,
-      JSON.stringify(loadJobPostContent)
-    );
-  }, [loadJobPostContent]);
+    localStorage.setItem(loadJobPostContent[0].jobId, JSON.stringify(storage));
+  }, [storage]);
 
   // function update(id: number, questionItem: any) {
   //   // console.log("trigger");
@@ -126,6 +116,14 @@ export default function JobContent({
   //     }
   //   );
   // }
+
+  function removeSkill(skillIndex: number) {
+    const updatedSkills = [
+      ...requiredSkills.slice(0, skillIndex),
+      ...requiredSkills.slice(skillIndex + 1),
+    ];
+    setRequiredSkills(updatedSkills);
+  }
   var questionCounter = 0;
 
   return (
@@ -201,6 +199,20 @@ export default function JobContent({
                     />
                     <button type="submit">Add</button>
                   </form>
+                  {requiredSkills.map((item: any, index: number) => {
+                    return (
+                      <div key={index}>
+                        <label>{item}</label>
+                        <button
+                          onClick={() => {
+                            removeSkill(index);
+                          }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
                 <h2>Add Job Type</h2>
                 <div id={styles.mockExamSectionAnswer}>
