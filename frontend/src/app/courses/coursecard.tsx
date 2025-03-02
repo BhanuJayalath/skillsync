@@ -1,23 +1,21 @@
-import Image from "next/image"
-import { Card, CardContent } from "../components/ui/card"
-import { Badge } from "../components/ui/badge"
-import { Clock } from "lucide-react"
+import Image from "next/image";
+import { Card, CardContent } from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
+import { Clock } from "lucide-react";
 
 interface CourseProps {
   course: {
-    id: string
-    title: string
-    instructor: string
-    image?: string
-    duration?: string
-    category?: string
-    // Keep other properties for compatibility
-    description?: string
-    students?: number
-    rating?: number
-    level?: string
-    price?: number
-  }
+    id: string;
+    title: string;
+    instructor: string;
+    duration?: string;
+    category?: string;
+    description?: string;
+    students?: number;
+    rating?: number;
+    level?: string;
+    price?: number;
+  };
 }
 
 const CourseCard = ({ course }: CourseProps) => {
@@ -34,10 +32,10 @@ const CourseCard = ({ course }: CourseProps) => {
           </div>
         )}
 
-        {/* Course image */}
+        {/* Course image - using the public folder path */}
         <div className="relative h-48 w-full">
           <Image
-            src={course.image || "/placeholder.svg?height=192&width=384"}
+            src="/courses/course1.png"
             alt={course.title}
             fill
             className="object-cover"
@@ -49,7 +47,9 @@ const CourseCard = ({ course }: CourseProps) => {
         {/* Category */}
         {course.category && (
           <div className="mb-2">
-            <span className="text-xs font-medium text-primary uppercase tracking-wider">{course.category}</span>
+            <span className="text-xs font-medium text-primary uppercase tracking-wider">
+              {course.category}
+            </span>
           </div>
         )}
 
@@ -60,8 +60,7 @@ const CourseCard = ({ course }: CourseProps) => {
         <p className="text-sm text-gray-500">{course.instructor}</p>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default CourseCard
-
+export default CourseCard;

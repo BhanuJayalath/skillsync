@@ -21,9 +21,8 @@ export default function Page() {
       const response = await fetch(DEEPSEEK_API_URL, {
         method: "POST",
         headers: {
-          "Authorization": "Bearer <OPENROUTER_API_KEY>",
-          "HTTP-Referer": "<YOUR_SITE_URL>", // Optional
-          "X-Title": "<YOUR_SITE_NAME>",      // Optional
+          "Authorization":
+            "Bearer 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",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -31,19 +30,41 @@ export default function Page() {
           messages: [
             {
               role: "user",
-              content: `Please provide a list of five recommended online courses for learning ${topic}. 
-              Output the result as a JSON array, where each object has the following fields: id, title, duration, image, category, instructor.`
-            }
-          ]
+              content: `Please provide a list of ten recommended online courses for learning ${topic}. 
+Output the result as a JSON array, where each object has the following fields: id, title, duration, image, category, instructor.`,
+            },
+          ],
         }),
       });
+
       const data = await response.json();
       const generatedText = data?.choices?.[0]?.message?.content;
+      let cleanedText = generatedText ? generatedText.trim() : "";
+
+      // Remove markdown code fences if present
+      if (cleanedText.startsWith("```json")) {
+        cleanedText = cleanedText.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+      } else if (cleanedText.startsWith("```")) {
+        cleanedText = cleanedText.replace(/^```\w*\s*/, "").replace(/\s*```$/, "");
+      }
+
+      // Log the cleaned text to help with debugging
+      console.log("Cleaned text from DeepSeek:", cleanedText);
+
+      // If cleanedText doesn't start with '[' then try to extract the JSON array
+      if (!cleanedText.startsWith("[")) {
+        const jsonMatch = cleanedText.match(/\[([\s\S]*)\]/);
+        if (jsonMatch && jsonMatch[0]) {
+          cleanedText = jsonMatch[0];
+          console.log("Extracted JSON array:", cleanedText);
+        }
+      }
+
       let parsedCourses = [];
       try {
-        parsedCourses = JSON.parse(generatedText);
+        parsedCourses = JSON.parse(cleanedText);
       } catch (err) {
-        console.error("Error parsing JSON:", err);
+        console.error("Error parsing JSON:", err, "Cleaned text:", cleanedText);
         parsedCourses = [];
       }
       setCourses(parsedCourses);
@@ -56,7 +77,6 @@ export default function Page() {
   };
 
   useEffect(() => {
-    // Default search topic
     searchCourses("HTML");
   }, []);
 
@@ -91,12 +111,7 @@ export default function Page() {
               }`}
               onClick={() => setActiveTab(0)}
             >
-              <Image
-                src="/user/homeIcon.svg"
-                alt="homeIcon"
-                width={40}
-                height={40}
-              />
+              <Image src="/user/homeIcon.svg" alt="homeIcon" width={40} height={40} />
               <span>Home</span>
             </li>
             <li
@@ -105,12 +120,7 @@ export default function Page() {
               }`}
               onClick={() => setActiveTab(1)}
             >
-              <Image
-                src="/user/overviewIcon.svg"
-                alt="OverviewIcon"
-                width={40}
-                height={40}
-              />
+              <Image src="/user/overviewIcon.svg" alt="OverviewIcon" width={40} height={40} />
               <span>Overview</span>
             </li>
             <li
@@ -119,12 +129,7 @@ export default function Page() {
               }`}
               onClick={() => setActiveTab(2)}
             >
-              <Image
-                src="/user/progressIcon.svg"
-                alt="progressIcon"
-                width={40}
-                height={40}
-              />
+              <Image src="/user/progressIcon.svg" alt="progressIcon" width={40} height={40} />
               <span>Progress</span>
             </li>
             <li
@@ -133,12 +138,7 @@ export default function Page() {
               }`}
               onClick={() => setActiveTab(3)}
             >
-              <Image
-                src="/user/courseIcon.svg"
-                alt="courseIcon"
-                width={40}
-                height={40}
-              />
+              <Image src="/user/courseIcon.svg" alt="courseIcon" width={40} height={40} />
               <span>Courses</span>
             </li>
             <li
@@ -147,12 +147,7 @@ export default function Page() {
               }`}
               onClick={() => setActiveTab(4)}
             >
-              <Image
-                src="/user/cvIcon.svg"
-                alt="cvIcon"
-                width={30}
-                height={30}
-              />
+              <Image src="/user/cvIcon.svg" alt="cvIcon" width={30} height={30} />
               <span>Resume</span>
             </li>
             <li
@@ -161,12 +156,7 @@ export default function Page() {
               }`}
               onClick={() => setActiveTab(5)}
             >
-              <Image
-                src="/user/settingsIcon.svg"
-                alt="settingsIcon"
-                width={30}
-                height={30}
-              />
+              <Image src="/user/settingsIcon.svg" alt="settingsIcon" width={30} height={30} />
               <span>Settings</span>
             </li>
           </ul>
@@ -182,8 +172,7 @@ export default function Page() {
               Discover Your Next Course
             </h1>
             <p className="text-xl max-w-2xl mx-auto">
-              Expand your knowledge with our extensive library of high-quality
-              courses
+              Expand your knowledge with our extensive library of high-quality courses
             </p>
           </div>
         </div>
@@ -208,7 +197,7 @@ export default function Page() {
               </div>
               <Button
                 onClick={() => searchCourses(searchTerm)}
-                className="bg-primary hover:bg-primary/90 text-white"
+                className="bg-primary hover:bg-primary/90 text-black"
                 disabled={isLoading}
               >
                 {isLoading ? (
