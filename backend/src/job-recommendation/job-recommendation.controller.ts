@@ -38,8 +38,8 @@ export class JobRecommendationController {
     @Body()
     jobData: {
       jobId: string;
-      title: string;
-      description: string;
+      jobTitle: string;
+      jobDescription: string;
       requiredSkills: string[];
       jobType: string[];
     },

@@ -25,10 +25,10 @@ export default function JobListing({
   const [loadJobPosts, setLoadJobPosts] = useState<
     {
       jobId: number;
-      title: String;
-      description:String;
+      jobTitle: String;
+      jobDescription: String;
       requiredSkills: String[];
-      type: string[];
+      jobType: string[];
     }[]
   >([]);
 

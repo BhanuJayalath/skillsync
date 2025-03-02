@@ -13,60 +13,69 @@ export default function JobContent({
   updateJobPostContent: any;
   jobCount: any;
 }) {
-    const [jobTitle, setJobTitle] = useState<string>();
-    const [jobDescription, setJobDescription] = useState<string>();
-    const [requiredSkills, setRequiredSkills] = useState<string[]>();
-    const [jobType, setJobType] = useState<string>();
-    const [selectedAnswer, setSelectedAnswer] = useState<Number>();
-    const [removed, setRemoved] = useState(false);
-    const [readOnly, setReadOnly] = useState(false);
-    const storage = {
-      jobId: loadJobPostContent.jobId,
-      jobTitle: jobTitle,
-      jobDescription: jobDescription,
-      requiredSkills :requiredSkills,
-      jobType: jobType,
-    };
-    useEffect(() => {
-      setJobTitle(loadJobPostContent.jobTitle);
-      setJobDescription(loadJobPostContent.jobDescription);
-      setRequiredSkills(loadJobPostContent.requiredSkills);
-      setJobType(loadJobPostContent.jobType);
+  const [jobTitle, setJobTitle] = useState<string>();
+  const [jobDescription, setJobDescription] = useState<string>();
+  const [requiredSkills, setRequiredSkills] = useState<string[]>([]);
+  const [requiredSkillsValue, setRequiredSkillsValue] = useState<string>("");
+  const [jobType, setJobType] = useState<string>();
+  const [selectedAnswer, setSelectedAnswer] = useState<Number>();
+  const [removed, setRemoved] = useState(false);
+  const [readOnly, setReadOnly] = useState(false);
+  const storage = {
+    jobId: loadJobPostContent.jobId,
+    jobTitle: jobTitle,
+    jobDescription: jobDescription,
+    requiredSkills: requiredSkills,
+    jobType: jobType,
+  };
+  useEffect(() => {
+    setJobTitle(loadJobPostContent.jobTitle);
+    setJobDescription(loadJobPostContent.jobDescription);
+    setRequiredSkills(loadJobPostContent.requiredSkills);
+    setJobType(loadJobPostContent.jobType);
 
-      // if (updateMockExamContainer == false) {
-      //   setReadOnly(true);
-      // }
-    }, [removed]);
-    // useEffect(() => {
-    //   update(MockTestQuestions.QuestionId, storage);
-    // }, [question, answer1, answer2, answer3, answer4, selectedAnswer]);
-
-    function saveJobTitle(event: any) {
-      setJobTitle(event.target.value);
-    }
-
-    function saveJobDescription(event: any) {
-      setJobDescription(event.target.value);
-    }
-
-    function saveRequiredSkills(event: any) {
-      setRequiredSkills(event.target.value);
-    }
-
-    function saveJobType(event: any) {
-      setJobType(event.target.value);
-    }
-
-
-    // function remove(questionId: number) {
-    //   removeQuestion(questionId);
-    //   setRemoved(!removed);
+    // if (updateMockExamContainer == false) {
+    //   setReadOnly(true);
     // }
+  }, [removed]);
+  // useEffect(() => {
+  //   update(MockTestQuestions.QuestionId, storage);
+  // }, [question, answer1, answer2, answer3, answer4, selectedAnswer]);
 
-    function handleCheckBoxChange(selection: Number) {
-      setSelectedAnswer(selection);
-      // addCorrectAnswer(selection, MockTestQuestions.QuestionId);
+  function saveJobTitle(event: any) {
+    setJobTitle(event.target.value);
+  }
+
+  function saveJobDescription(event: any) {
+    setJobDescription(event.target.value);
+  }
+
+  function saveRequiredSkills(event: any) {
+    event.preventDefault();
+    if (Array.isArray(requiredSkills)) {
+      setRequiredSkills((prevSkills) => {
+        console.log("Previous skills inside update:", prevSkills); // Log inside the update function
+        return [...prevSkills, requiredSkillsValue]; // Add the new skill to the array
+      });
+      setRequiredSkillsValue(""); // Clear the input after submission
+    } else {
+      console.error("requiredSkills is not an array");
     }
+  }
+
+  function saveJobType(event: any) {
+    setJobType(event.target.value);
+  }
+
+  // function remove(questionId: number) {
+  //   removeQuestion(questionId);
+  //   setRemoved(!removed);
+  // }
+
+  function handleCheckBoxChange(selection: Number) {
+    setSelectedAnswer(selection);
+    // addCorrectAnswer(selection, MockTestQuestions.QuestionId);
+  }
   var counter = 0;
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   // useEffect(() => {
@@ -147,7 +156,6 @@ export default function JobContent({
             <div id={styles.mockExamSection}>
               <div id={styles.mockExamSectionBlock}>
                 <header>
-    
                   <div id={styles.mockExamSectionSaveandClose}>
                     {/* {updateMockExamContainer ? (
                         <button
@@ -184,12 +192,15 @@ export default function JobContent({
                 </div>
                 <h2>Add Required Skills</h2>
                 <div id={styles.mockExamSectionAnswer}>
-                  <input
-                    type="text"
-                    value={requiredSkills}
-                    onChange={saveRequiredSkills}
-                    readOnly={readOnly}
-                  />
+                  <form onSubmit={saveRequiredSkills}>
+                    <input
+                      type="text"
+                      value={requiredSkillsValue}
+                      onChange={(e) => setRequiredSkillsValue(e.target.value)}
+                      // readOnly={readOnly}
+                    />
+                    <button type="submit">Add</button>
+                  </form>
                 </div>
                 <h2>Add Job Type</h2>
                 <div id={styles.mockExamSectionAnswer}>

@@ -7,10 +7,10 @@ export class Job extends Document {
   jobId: string;
 
   @Prop({ required: true })
-  title: string;
+  jobTitle: string;
 
   @Prop({ required: true })
-  description: string; //bhanu
+  jobDescription: string; //bhanu
 
   @Prop({ type: [String] })
   requiredSkills: string[];

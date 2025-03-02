@@ -61,8 +61,8 @@ export class JobRecommendationService {
   //------------------------------------------------------------------------------bhanu
   async createJob(jobData: {
     jobId: string;
-    title: string;
-    description: string;
+    jobTitle: string;
+    jobDescription: string;
     requiredSkills: string[];
     jobType: string[];
   }) {
