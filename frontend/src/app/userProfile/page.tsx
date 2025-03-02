@@ -265,7 +265,13 @@ export default function UserProfile() {
                         </div>
                     </header>
                     <div className={styles.contentWrapper}>
-
+                        <section className={styles.tabsSection}>
+                            {activeTab === 0 && <Overview user={user} />}
+                            {activeTab === 1 && <Progress user={user} />}
+                            {activeTab === 2 && <Courses user={user} />}
+                            {activeTab === 3 && <Resume user={user}  removeEducation={removeEducation} removeExperience={removeExperience}/>}
+                            {activeTab === 4 && <Settings user={user} handleSubmit={handleSubmit} handleChange={handleChange} handleNestedChange={handleNestedChange} addEducation={addEducation} addExperience={addExperience}/>}
+                        </section>
                     </div>
                 </main>
             </div>

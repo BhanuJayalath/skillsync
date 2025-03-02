@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add styling to the settings form section">
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="created handleSubmit function for the settings">
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Resume.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Resume.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -96,7 +97,7 @@
       <workItem from="1740746978733" duration="3736000" />
       <workItem from="1740810076697" duration="230000" />
       <workItem from="1740821582785" duration="17704000" />
-      <workItem from="1740894966002" duration="16302000" />
+      <workItem from="1740894966002" duration="16986000" />
     </task>
     <task id="LOCAL-00001" summary="created the job recommendation module and updated the relevant parts">
       <option name="closed" value="true" />
@@ -370,7 +371,87 @@
       <option name="project" value="LOCAL" />
       <updated>1740917274283</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="commented the page html section to create multiple components">
+      <option name="closed" value="true" />
+      <created>1740917747068</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917747068</updated>
+    </task>
+    <task id="LOCAL-00036" summary="imported the components">
+      <option name="closed" value="true" />
+      <created>1740917784119</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917784119</updated>
+    </task>
+    <task id="LOCAL-00037" summary="created addEducation function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917822475</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917822475</updated>
+    </task>
+    <task id="LOCAL-00038" summary="created addExperience function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917845260</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917845260</updated>
+    </task>
+    <task id="LOCAL-00039" summary="created removeEducation function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917865331</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917865331</updated>
+    </task>
+    <task id="LOCAL-00040" summary="created removeExperience function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917885279</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917885279</updated>
+    </task>
+    <task id="LOCAL-00041" summary="created handleChange function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917904338</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917904338</updated>
+    </task>
+    <task id="LOCAL-00042" summary="created handleNestedChange function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917923049</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917923049</updated>
+    </task>
+    <task id="LOCAL-00043" summary="created handleSkillsChange function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917952436</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917952436</updated>
+    </task>
+    <task id="LOCAL-00044" summary="created handleSubmit function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917971789</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917971789</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -388,16 +469,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add new icons" />
-    <MESSAGE value="updated the cv section styles" />
-    <MESSAGE value="add a settings section to the nav bar and add content to the cv section" />
-    <MESSAGE value="fix the errors in module.ts" />
-    <MESSAGE value="add a user icon" />
-    <MESSAGE value="adjust the user icon styles" />
-    <MESSAGE value="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics" />
-    <MESSAGE value="adjust the user info alignments" />
-    <MESSAGE value="add the media print to the global css and imported the global css for testing purposes" />
-    <MESSAGE value="moving the profile edit section to settings" />
     <MESSAGE value="edited the user info section footer styling" />
     <MESSAGE value="created a handle change and handle submit functions and updated the user use-state also created separate forms" />
     <MESSAGE value="updated the styles for the forms" />
@@ -413,6 +484,16 @@
     <MESSAGE value="moved the relevant codes from page.tsx and updated the Courses.tsx file" />
     <MESSAGE value="updated the Settings.tsx file" />
     <MESSAGE value="add styling to the settings form section" />
-    <option name="LAST_COMMIT_MESSAGE" value="add styling to the settings form section" />
+    <MESSAGE value="commented the page html section to create multiple components" />
+    <MESSAGE value="imported the components" />
+    <MESSAGE value="created addEducation function for the settings" />
+    <MESSAGE value="created addExperience function for the settings" />
+    <MESSAGE value="created removeEducation function for the settings" />
+    <MESSAGE value="created removeExperience function for the settings" />
+    <MESSAGE value="created handleChange function for the settings" />
+    <MESSAGE value="created handleNestedChange function for the settings" />
+    <MESSAGE value="created handleSkillsChange function for the settings" />
+    <MESSAGE value="created handleSubmit function for the settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="created handleSubmit function for the settings" />
   </component>
 </project>
