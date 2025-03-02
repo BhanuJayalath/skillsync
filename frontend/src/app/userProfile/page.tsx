@@ -5,7 +5,11 @@ import React, {useEffect, useState} from 'react';   // Importing useState hook f
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from './user.module.css';   // Importing custom styles
 import '../globals.css';
-
+import Overview from "@/app/userProfile/Overview";
+import Progress from "@/app/userProfile/Progress";
+import Courses from "@/app/userProfile/Courses";
+import Resume from "@/app/userProfile/Resume";
+import Settings from "@/app/userProfile/Settings";
 
 
 export default function UserProfile() {
