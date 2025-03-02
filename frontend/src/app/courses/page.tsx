@@ -48,24 +48,28 @@ Output the result as a JSON array, where each object has the following fields: i
         cleanedText = cleanedText.replace(/^```\w*\s*/, "").replace(/\s*```$/, "");
       }
 
-      // Log the cleaned text to help with debugging
       console.log("Cleaned text from DeepSeek:", cleanedText);
-
-      // If cleanedText doesn't start with '[' then try to extract the JSON array
-      if (!cleanedText.startsWith("[")) {
-        const jsonMatch = cleanedText.match(/\[([\s\S]*)\]/);
-        if (jsonMatch && jsonMatch[0]) {
-          cleanedText = jsonMatch[0];
-          console.log("Extracted JSON array:", cleanedText);
-        }
-      }
 
       let parsedCourses = [];
       try {
         parsedCourses = JSON.parse(cleanedText);
       } catch (err) {
         console.error("Error parsing JSON:", err, "Cleaned text:", cleanedText);
-        parsedCourses = [];
+        // Fallback: try to extract a JSON array from the string by finding the first '[' and last ']'
+        const start = cleanedText.indexOf("[");
+        const end = cleanedText.lastIndexOf("]");
+        if (start !== -1 && end !== -1 && end > start) {
+          const jsonArrayText = cleanedText.substring(start, end + 1);
+          console.log("Extracted JSON array:", jsonArrayText);
+          try {
+            parsedCourses = JSON.parse(jsonArrayText);
+          } catch (innerErr) {
+            console.error("Error parsing extracted JSON:", innerErr);
+            parsedCourses = [];
+          }
+        } else {
+          parsedCourses = [];
+        }
       }
       setCourses(parsedCourses);
     } catch (error) {
