@@ -136,7 +136,38 @@ export default function UserProfile() {
     //         return { ...prev, skills: updatedSkills };
     //     });
     // };
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/api/update-user-general", {
+                method: "PATCH",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    id: user.id,
+                    email: user.email,
+                    number: user.number,
+                    userName: user.userName,
+                    fullName: user.fullName,
+                    gitHub: user.gitHub,
+                    linkedIn: user.linkedIn,
+                    gender: user.gender,
+                    language: user.language,
+                    city: user.city,
+                    country: user.country,
+                    experience: user.experience,
+                    education: user.education,
+                    skills: user.skills,
+                }),
+            });
 
+            if (!response.ok) {
+                console.log("Failed to update user data!");
+            } else {
+                console.log("User general data updated!");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
     useEffect(() => {
         const fetchUserDetails = async () => {
             const response = await fetch('http://localhost:3001/getUser', {
