@@ -64,7 +64,7 @@ export class JobRecommendationService {
     jobTitle: string;
     jobDescription: string;
     requiredSkills: string[];
-    jobType: string[];
+    jobType: string;
   }) {
     const newJob = new this.jobModel(jobData);
     return newJob.save();

@@ -47,6 +47,7 @@ export default function JobListing({
   const tempArray: any = [];
 
   useEffect(() => {
+    console.log(loadJobPosts);
     axios
       .get("http://localhost:3001/job-recommendation/all-jobs")
       .then((response) => {
@@ -180,59 +181,42 @@ export default function JobListing({
       <div className={styles.mockExamscontainerSection}>
         {loadJobPosts?.map((item: any, index: number) => {
           return (
-            <>
-              {removeJobPostContainers ? (
-                <button
-                  onClick={() => {
-                    removeJobPostComponent(item.mockExamId);
-                  }}
-                  key={item.mockExamId}
-                  id={styles.mockExamscontainer}
-                >
+            <button
+              key={index} // Ensure key is directly on the button element
+              onClick={() => {
+                if (removeJobPostContainers) {
+                  removeJobPostComponent(item.jobId); // Use jobId here instead of mockExamId
+                } else {
+                  loadJobPostComponent(item.jobId, index + 1);
+                }
+              }}
+              id={styles.mockExamscontainer}
+            >
+              <Image
+                alt="exam-icon"
+                width={60}
+                height={60}
+                src="/recruiter/exam-icon.svg"
+              />
+              <h1>Job Post {index + 1}</h1>
+              <div id={styles.mockExamscontainerButtons}>
+                {removeJobPostContainers ? (
                   <Image
-                    alt="exam-icon"
-                    width={60}
-                    height={60}
-                    src="/recruiter/exam-icon.svg"
+                    alt="remove-icon"
+                    width={25}
+                    height={25}
+                    src="/recruiter/remove-icon.svg"
                   />
-                  <h1>Job Post {index + 1}</h1>
-                  <div id={styles.mockExamscontainerButtons}>
-                    <Image
-                      alt="remove-icon"
-                      width={25}
-                      height={25}
-                      src="/recruiter/remove-icon.svg"
-                    />
-                  </div>
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    loadJobPostComponent(item.jobId, index + 1);
-                  }}
-                  key={item.mockExamId}
-                  id={styles.mockExamscontainer}
-                >
+                ) : updateJobPostContent ? (
                   <Image
-                    alt="exam-icon"
-                    width={60}
-                    height={60}
-                    src="/recruiter/exam-icon.svg"
+                    alt="update-icon"
+                    width={25}
+                    height={25}
+                    src="/recruiter/update-icon.svg"
                   />
-                  <h1>Job Post {index + 1}</h1>
-                  <div id={styles.mockExamscontainerButtons}>
-                    {updateJobPostContent ? (
-                      <Image
-                        alt="update-icon"
-                        width={25}
-                        height={25}
-                        src="/recruiter/update-icon.svg"
-                      />
-                    ) : null}
-                  </div>
-                </button>
-              )}
-            </>
+                ) : null}
+              </div>
+            </button>
           );
         })}
       </div>

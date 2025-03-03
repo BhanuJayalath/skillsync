@@ -8,6 +8,7 @@ import {
   Body,
   Param,
   Query,
+  Patch,
 } from '@nestjs/common'; //bhanu
 import { JobRecommendationService } from './job-recommendation.service';
 import { Job } from './job.schema'; //bhanu
@@ -41,7 +42,7 @@ export class JobRecommendationController {
       jobTitle: string;
       jobDescription: string;
       requiredSkills: string[];
-      jobType: string[];
+      jobType: string;
     },
   ) {
     return this.jobService.createJob(jobData);
@@ -57,11 +58,13 @@ export class JobRecommendationController {
   }
 
   // **UPDATE a job by ID**
-  @Put(':jobId')
+  @Patch(':jobId')
   async updateJob(
     @Param('jobId') jobId: string,
     @Body() updateData: Partial<Job>,
   ): Promise<Job> {
+    console.log('Received PATCH request for jobId:', jobId);
+    console.log('Update data:', updateData);
     return this.jobService.updateJob(jobId, updateData);
   }
 

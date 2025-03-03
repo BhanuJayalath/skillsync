@@ -15,8 +15,8 @@ export class Job extends Document {
   @Prop({ type: [String] })
   requiredSkills: string[];
 
-  @Prop({ type: [String] })
-  jobType: string[];
+  @Prop({ required: true })
+  jobType: string;
 }
 
 export const JobSchema = SchemaFactory.createForClass(Job);

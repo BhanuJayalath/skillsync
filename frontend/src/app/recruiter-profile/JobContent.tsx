@@ -37,16 +37,17 @@ export default function JobContent({
     setRequiredSkills(loadJobPostContent.requiredSkills);
     setJobType(loadJobPostContent.jobType);
 
-    // if (updateMockExamContainer == false) {
-    //   setReadOnly(true);
-    // }
+    if (updateJobPostContent == false) {
+      setReadOnly(true);
+    }
   }, [removed]);
   useEffect(() => {
-    const DatabaseExistingId = jobPostResponse.some(
-      (item: any) => item.jobId === loadJobPostContent.jobId
-    );
-    console.log(DatabaseExistingId);
-    setDatabaseExistingId(DatabaseExistingId);
+    if (jobPostResponse) {
+      const DatabaseExistingId = jobPostResponse.some(
+        (item: any) => item.jobId === loadJobPostContent.jobId
+      );
+      setDatabaseExistingId(DatabaseExistingId);
+    }
   }, []);
 
   function saveJobTitle(event: any) {
@@ -113,16 +114,22 @@ export default function JobContent({
   //     headers: { "Content-Type": "application/json" },
   //   });
   // }
-  // function updatetoDatabase() {
-  //   console.log(loadMockTestQuestions);
-  //   axios.patch(
-  //     `${process.env.NEXT_PUBLIC_SAVE_URL}/${loadMockTestQuestions.mockExamId}`,
-  //     loadMockTestQuestions,
-  //     {
-  //       headers: { "Content-Type": "application/json" },
-  //     }
-  //   );
-  // }
+  function updatetoDatabase() {
+    // console.log(`${process.env.NEXT_PUBLIC_JOBS}/${loadJobPostContent.jobId}`);
+
+    axios.patch(
+      `${process.env.NEXT_PUBLIC_UPDATE_JOBS}/${loadJobPostContent.jobId}`,
+      storage,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+  function saveToDatabase() {
+    axios.post(`${process.env.NEXT_PUBLIC_CREATE_JOBS}`, storage, {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 
   function removeSkill(skillIndex: number) {
     const updatedSkills = [
@@ -140,21 +147,9 @@ export default function JobContent({
         <div id={styles.mockExamSectionSaveandClose}>
           {updateJobPostContent &&
             (databaseExistingId ? (
-              <button
-                onClick={() => {
-                  // remove(M.QuestionId);
-                }}
-              >
-                Update
-              </button>
+              <button onClick={updatetoDatabase}>Update</button>
             ) : (
-              <button
-                onClick={() => {
-                  // remove(M.QuestionId);
-                }}
-              >
-                Save
-              </button>
+              <button onClick={saveToDatabase}>Save</button>
             ))}
         </div>
       </header>
@@ -185,15 +180,18 @@ export default function JobContent({
                   type="text"
                   value={requiredSkillsValue}
                   onChange={(e) => setRequiredSkillsValue(e.target.value)}
-                  // readOnly={readOnly}
+                  readOnly={readOnly}
                 />
-                <button type="submit">Add</button>
+                <button disabled={readOnly} type="submit">
+                  Add
+                </button>
               </form>
               {requiredSkills.map((item: any, index: number) => {
                 return (
                   <div key={index}>
                     <label>{item}</label>
                     <button
+                      disabled={readOnly}
                       onClick={() => {
                         removeSkill(index);
                       }}
