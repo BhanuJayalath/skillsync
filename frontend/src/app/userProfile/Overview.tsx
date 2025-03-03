@@ -6,6 +6,14 @@ interface User {
     userName: string;
     avatar: string;
     email: string;
+    jobRole: JobRole[];
+    number: string;
+    linkedIn: string;
+    gitHub: string;
+}
+
+interface JobRole{
+    jobName:string;
 }
 
 const Overview = ({ user }: { user: User }) => {
@@ -27,41 +35,12 @@ const Overview = ({ user }: { user: User }) => {
                 </div>
                 <button className={styles.editButton}>Edit</button>
             </div>
-            {/*form section*/}
-            <form className={styles.form}>
-                <div>
-                    <label>Full Name</label>
-                    <input placeholder="Your First Name"/>
-                </div>
-                <div>
-                    <label>Display Name</label>
-                    <input placeholder="Your Display Name"/>
-                </div>
-                <div>
-                    <label>Gender</label>
-                    <select>
-                        <option>Your Gender</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Country</label>
-                    <select>
-                        <option>Your Country</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Language</label>
-                    <select>
-                        <option>Languages</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Time Zone</label>
-                    <select>
-                        <option>Time Zone</option>
-                    </select>
-                </div>
-            </form>
+            <div>
+                <p>Job Role: {user.jobRole[0].jobName}</p>
+                <p>Contact: {user.number}</p>
+                <p>LinkedIn: {user.linkedIn}</p>
+                <p>Github: {user.gitHub}</p>
+            </div>
             <div className={styles.userFooter}>go to settings to edit the user profile</div>
         </section>
     );
