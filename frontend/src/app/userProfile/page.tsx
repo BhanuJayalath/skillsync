@@ -106,7 +106,7 @@ export default function UserProfile() {
     };
     // Change handler
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement>, field: string
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string
     ) => {
         setUser((prev) => ({
             ...prev,
