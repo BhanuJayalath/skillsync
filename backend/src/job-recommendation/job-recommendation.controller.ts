@@ -63,8 +63,6 @@ export class JobRecommendationController {
     @Param('jobId') jobId: string,
     @Body() updateData: Partial<Job>,
   ): Promise<Job> {
-    console.log('Received PATCH request for jobId:', jobId);
-    console.log('Update data:', updateData);
     return this.jobService.updateJob(jobId, updateData);
   }
 

@@ -69,53 +69,13 @@ export default function JobContent({
     setJobType(event.target.value);
   }
 
-  // function remove(questionId: number) {
-  //   removeQuestion(questionId);
-  //   setRemoved(!removed);
-  // }
 
-  function handleCheckBoxChange(selection: Number) {
-    setSelectedAnswer(selection);
-    // addCorrectAnswer(selection, MockTestQuestions.QuestionId);
-  }
   var counter = 0;
-  // useEffect(() => {
-  //   const DatabaseExistingId = response.some(
-  //     (item: any) => item.mockExamId === loadMockTestQuestions.mockExamId
-  //   );
-  //   setDatabaseExistingId(DatabaseExistingId);
-  // });
   useEffect(() => {
-    // console.log(updateJobPostContent);
     localStorage.setItem(loadJobPostContent.jobId, JSON.stringify(storage));
   }, [storage]);
 
-  // function update(id: number, questionItem: any) {
-  //   // console.log("trigger");
-  //   const index =
-  //     loadMockTestQuestions.mockExamContent.questionContent.findIndex(
-  //       (item: any) => item.QuestionId == id
-  //     );
-  //   setLoadMockTestQuestions((prev: any) => {
-  //     const updateQuestionItems = [...prev.mockExamContent.questionContent];
-  //     updateQuestionItems[index] = questionItem;
-  //     return {
-  //       ...prev,
-  //       mockExamContent: {
-  //         ...prev.mockExamContent,
-  //         questionContent: updateQuestionItems,
-  //       },
-  //     };
-  //   });
-  // }
-
-  // function save() {
-  //   axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, loadMockTestQuestions, {
-  //     headers: { "Content-Type": "application/json" },
-  //   });
-  // }
   function updatetoDatabase() {
-    // console.log(`${process.env.NEXT_PUBLIC_JOBS}/${loadJobPostContent.jobId}`);
 
     axios.patch(
       `${process.env.NEXT_PUBLIC_UPDATE_JOBS}/${loadJobPostContent.jobId}`,

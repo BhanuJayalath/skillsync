@@ -51,35 +51,28 @@ export default function JobListing({
     axios
       .get("http://localhost:3001/job-recommendation/all-jobs")
       .then((response) => {
-        // console.log(response.data);
         if (response.data.length != 0) {
           response.data.map((item: any, index: number) => {
-            // console.log(item.jobId);
             tempArray.push(item);
             if (localStorage.length > 0) {
               for (let i = 0; i < localStorage.length; i++) {
                 const key: any = localStorage.key(i);
-                // console.log(key);
                 let Item: any = localStorage.getItem(key);
                 let jsonParsedItem = Item ? JSON.parse(Item) : null;
-                // console.log(jsonParsedItem);
                 if (item.jobId === jsonParsedItem.jobId) {
                   tempArray[index] = jsonParsedItem;
-                  // console.log("1st", tempArray);
                 } else if (response.data.length - 1 === index) {
                   const lastElement = tempArray.find(
                     (item: any) => item.jobId === jsonParsedItem.jobId
                   );
                   if (!lastElement) {
                     tempArray.push(jsonParsedItem);
-                    // console.log("2nd", tempArray);
                   }
                 }
               }
             }
             setLoadJobPosts(tempArray);
             setJobPostResponse(response.data);
-            // console.log("3rd", tempArray);
           });
         } else {
           if (localStorage.length > 0) {
@@ -92,21 +85,11 @@ export default function JobListing({
             }
           }
         }
-        // console.log(tempArray);
       });
-    // loadJobPosts.find((item: any) => {
-    //   if (item.mockExamId === mockexamId) {
-    //     setLoadJobPostContent(item);
-    //     setMockExamCount(mockExamCounter);
-    //   }
-    // });
-    // setJobCount(JobCounter);
-    // setJobPostState(!jobPostState);
-  }, []);
+  }, [remove]);
 
   function loadJobPostComponent(jobId: string, JobCounter: number) {
     const jobPost = loadJobPosts.find((item: any) => item.jobId === jobId);
-    // console.log(jobPost);
     setLoadJobPostContent(jobPost);
     setJobCount(JobCounter);
     setJobPostState(true);
@@ -123,18 +106,17 @@ export default function JobListing({
       },
     ]);
   }
-  function removeJobPostComponent(mockExamId: Number) {
+  function removeJobPostComponent(jobId: string) {
     if (localStorage.length > 0) {
-      localStorage.removeItem(mockExamId.toString());
+      localStorage.removeItem(jobId);
     }
     axios
-      .delete(`${process.env.NEXT_PUBLIC_SAVE_URL}/${mockExamId}`)
-      .then((response) => {
-        setRemove(true);
-      })
+      .delete(`${process.env.NEXT_PUBLIC_UPDATE_JOBS}/${jobId}`)
+      .then((response) => {})
       .catch((error) => {
         console.log(error);
       });
+    setRemove(true);
   }
   let counter = 0;
   return (
