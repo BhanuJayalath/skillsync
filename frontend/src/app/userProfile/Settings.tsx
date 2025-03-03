@@ -75,7 +75,21 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             .catch(error => console.error('Error fetching countries:', error));
     }, []);
 
+    // Fetch cities when a country is selected
+    useEffect(() => {
+        if (!user.country) return;
 
+        fetch('https://countriesnow.space/api/v0.1/countries/cities', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ country: user.country }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                setCities(data.data || []);
+            })
+            .catch(error => console.error('Error fetching cities:', error));
+    }, [user.country]);
     return (
         <section className={styles.userInfo}>
             <div className={styles.userDetails}>
