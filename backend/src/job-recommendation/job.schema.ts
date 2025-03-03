@@ -7,13 +7,16 @@ export class Job extends Document {
   jobId: string;
 
   @Prop({ required: true })
-  title: string;
+  jobTitle: string;
+
+  @Prop({ required: true })
+  jobDescription: string; //bhanu
 
   @Prop({ type: [String] })
   requiredSkills: string[];
 
-  @Prop({ type: [String] })
-  jobType: string[];
+  @Prop({ required: true })
+  jobType: string;
 }
 
 export const JobSchema = SchemaFactory.createForClass(Job);

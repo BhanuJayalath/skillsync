@@ -8,6 +8,7 @@ import { RecruiterModule } from './recruiter/recruiter.module';
 import { MocktestModule } from './mocktest/mocktest.module';
 @Module({
   imports: [
+
     RecruiterModule,
     MocktestModule,
     UserProfileModule,
