@@ -29,10 +29,10 @@ export default function JobContent({
     jobType: jobType,
   };
   useEffect(() => {
-    setJobTitle(loadJobPostContent[0].jobTitle);
-    setJobDescription(loadJobPostContent[0].jobDescription);
-    setRequiredSkills(loadJobPostContent[0].requiredSkills);
-    setJobType(loadJobPostContent[0].jobType);
+    setJobTitle(loadJobPostContent.jobTitle);
+    setJobDescription(loadJobPostContent.jobDescription);
+    setRequiredSkills(loadJobPostContent.requiredSkills);
+    setJobType(loadJobPostContent.jobType);
 
     // if (updateMockExamContainer == false) {
     //   setReadOnly(true);
@@ -79,7 +79,8 @@ export default function JobContent({
   //   setDatabaseExistingId(DatabaseExistingId);
   // });
   useEffect(() => {
-    localStorage.setItem(loadJobPostContent[0].jobId, JSON.stringify(storage));
+    console.log(loadJobPostContent.jobId);
+    localStorage.setItem(loadJobPostContent.jobId, JSON.stringify(storage));
   }, [storage]);
 
   // function update(id: number, questionItem: any) {
@@ -148,14 +149,12 @@ export default function JobContent({
           </>
         ) : null} */}
       </header>
-      {loadJobPostContent.length > 0 ? (
-        loadJobPostContent.map((item: any) => {
-          return (
-            <div id={styles.mockExamSection}>
-              <div id={styles.mockExamSectionBlock}>
-                <header>
-                  <div id={styles.mockExamSectionSaveandClose}>
-                    {/* {updateMockExamContainer ? (
+      {loadJobPostContent ? (
+        <div id={styles.mockExamSection}>
+          <div id={styles.mockExamSectionBlock}>
+            <header>
+              <div id={styles.mockExamSectionSaveandClose}>
+                {/* {updateMockExamContainer ? (
                         <button
                           onClick={() => {
                             remove(MockTestQuestions.QuestionId);
@@ -169,64 +168,62 @@ export default function JobContent({
                           />
                         </button>
                       ) : null} */}
-                  </div>
-                </header>
-                <h2>Add Job Title</h2>
-                <input
-                  id={styles.mockExamSectionQuestion}
-                  type="text"
-                  value={jobTitle}
-                  onChange={saveJobTitle}
-                  readOnly={readOnly}
-                />
-                <h2>Add Job Description</h2>
-                <div id={styles.mockExamSectionAnswer}>
-                  <input
-                    type="text"
-                    value={jobDescription}
-                    onChange={saveJobDescription}
-                    readOnly={readOnly}
-                  />
-                </div>
-                <h2>Add Required Skills</h2>
-                <div id={styles.mockExamSectionAnswer}>
-                  <form onSubmit={saveRequiredSkills}>
-                    <input
-                      type="text"
-                      value={requiredSkillsValue}
-                      onChange={(e) => setRequiredSkillsValue(e.target.value)}
-                      // readOnly={readOnly}
-                    />
-                    <button type="submit">Add</button>
-                  </form>
-                  {requiredSkills.map((item: any, index: number) => {
-                    return (
-                      <div key={index}>
-                        <label>{item}</label>
-                        <button
-                          onClick={() => {
-                            removeSkill(index);
-                          }}
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-                <h2>Add Job Type</h2>
-                <div id={styles.mockExamSectionAnswer}>
-                  <input
-                    type="text"
-                    value={jobType}
-                    onChange={saveJobType}
-                    readOnly={readOnly}
-                  />
-                </div>
               </div>
+            </header>
+            <h2>Add Job Title</h2>
+            <input
+              id={styles.mockExamSectionQuestion}
+              type="text"
+              value={jobTitle}
+              onChange={saveJobTitle}
+              readOnly={readOnly}
+            />
+            <h2>Add Job Description</h2>
+            <div id={styles.mockExamSectionAnswer}>
+              <input
+                type="text"
+                value={jobDescription}
+                onChange={saveJobDescription}
+                readOnly={readOnly}
+              />
             </div>
-          );
-        })
+            <h2>Add Required Skills</h2>
+            <div id={styles.mockExamSectionAnswer}>
+              <form onSubmit={saveRequiredSkills}>
+                <input
+                  type="text"
+                  value={requiredSkillsValue}
+                  onChange={(e) => setRequiredSkillsValue(e.target.value)}
+                  // readOnly={readOnly}
+                />
+                <button type="submit">Add</button>
+              </form>
+              {requiredSkills.map((item: any, index: number) => {
+                return (
+                  <div key={index}>
+                    <label>{item}</label>
+                    <button
+                      onClick={() => {
+                        removeSkill(index);
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+            <h2>Add Job Type</h2>
+            <div id={styles.mockExamSectionAnswer}>
+              <input
+                type="text"
+                value={jobType}
+                onChange={saveJobType}
+                readOnly={readOnly}
+              />
+            </div>
+          </div>
+        </div>
       ) : (
         <div id={styles.emptyMockExamSection}>
           <h1>Add your Job Post Here</h1>

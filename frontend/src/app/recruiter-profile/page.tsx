@@ -24,9 +24,9 @@ export default function RecruiterProfile() {
   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
   const [loadJobPostContent, setLoadJobPostContent] = useState<
     {
-      jobId: number;
-      title: String;
-      description: String;
+      jobId: String;
+      jobTitle: String;
+      jobDescription: String;
       requiredSkills: [];
       jobType: [];
     }[]
@@ -46,6 +46,10 @@ export default function RecruiterProfile() {
     useState(false);
   const [remove, setRemove] = useState(false);
   const [response, setResponse] = useState();
+
+  useEffect(() => {
+    console.log(loadJobPostContent);
+  }, [loadJobPostContent]);
 
   useEffect(() => {
     const tempArray: any = [];

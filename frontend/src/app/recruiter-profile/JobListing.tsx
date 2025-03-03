@@ -24,7 +24,7 @@ export default function JobListing({
 }) {
   const [loadJobPosts, setLoadJobPosts] = useState<
     {
-      jobId: number;
+      jobId: String;
       jobTitle: String;
       jobDescription: String;
       requiredSkills: String[];
@@ -41,34 +41,40 @@ export default function JobListing({
   const [removeJobPostContainers, setRemoveJobPostContainers] = useState(false);
   const [remove, setRemove] = useState(false);
   const [response, setResponse] = useState();
+  const tempArray: any = [];
 
-
-  async function loadJobPostComponent(mockexamId: number, JobCounter: number) {
-    const tempArray: any = [];
-    await axios
+  useEffect(() => {
+    axios
       .get("http://localhost:3001/job-recommendation/all-jobs")
       .then((response) => {
+        // console.log(response.data);
         if (response.data.length != 0) {
           response.data.map((item: any, index: number) => {
+            // console.log(item.jobId);
             tempArray.push(item);
             if (localStorage.length > 0) {
               for (let i = 0; i < localStorage.length; i++) {
                 const key: any = localStorage.key(i);
+                // console.log(key);
                 let Item: any = localStorage.getItem(key);
                 let jsonParsedItem = Item ? JSON.parse(Item) : null;
+                console.log(jsonParsedItem);
                 if (item.jobId === jsonParsedItem.jobId) {
                   tempArray[index] = jsonParsedItem;
+                  // console.log("1st", tempArray);
                 } else if (response.data.length - 1 === index) {
                   const lastElement = tempArray.find(
                     (item: any) => item.jobId === jsonParsedItem.jobId
                   );
                   if (!lastElement) {
                     tempArray.push(jsonParsedItem);
+                    // console.log("2nd", tempArray);
                   }
                 }
               }
             }
-            setLoadJobPostContent(tempArray);
+            setLoadJobPosts(tempArray);
+            // console.log("3rd", tempArray);
           });
         } else {
           if (localStorage.length > 0) {
@@ -77,11 +83,11 @@ export default function JobListing({
               let Item: any = localStorage.getItem(key);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
               tempArray.push(jsonParsedItem);
-              setLoadJobPostContent(tempArray);
+              setLoadJobPosts(tempArray);
             }
           }
         }
-        // setLoadJobPostContent(response.data);
+        // console.log(tempArray);
       });
     // loadJobPosts.find((item: any) => {
     //   if (item.mockExamId === mockexamId) {
@@ -89,16 +95,23 @@ export default function JobListing({
     //     setMockExamCount(mockExamCounter);
     //   }
     // });
-    setJobCount(JobCounter);
-    setJobPostState(!jobPostState);
+    // setJobCount(JobCounter);
+    // setJobPostState(!jobPostState);
+  }, []);
+
+  function loadJobPostComponent(jobId: string, JobCounter: number) {
+    const jobPost = loadJobPosts.find((item: any) => item.jobId === jobId);
+    // console.log(jobPost);
+    setLoadJobPostContent(jobPost);
+    setJobPostState(true);
   }
   function addJobPostContainers() {
-    setLoadJobPostContent([
-      ...loadJobPostContent,
+    setLoadJobPosts([
+      ...loadJobPosts,
       {
-        jobId: Date.now(),
-        title: "",
-        description: "",
+        jobId: "job" + Date.now(),
+        jobTitle: "",
+        jobDescription: "",
         requiredSkills: [],
         jobType: [],
       },
@@ -160,7 +173,7 @@ export default function JobListing({
         </button>
       </div>
       <div className={styles.mockExamscontainerSection}>
-        {loadJobPostContent?.map((item: any, index: number) => {
+        {loadJobPosts?.map((item: any, index: number) => {
           return (
             <>
               {removeJobPostContainers ? (
@@ -190,7 +203,7 @@ export default function JobListing({
               ) : (
                 <button
                   onClick={() => {
-                    loadJobPostComponent(item.mockExamId, index + 1);
+                    loadJobPostComponent(item.jobId, index + 1);
                   }}
                   key={item.mockExamId}
                   id={styles.mockExamscontainer}
