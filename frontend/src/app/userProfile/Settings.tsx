@@ -80,6 +80,24 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     useEffect(() => {
         const apiUrl = process.env.NEXT_PUBLIC_CV_DESCRIPTION_API_URL;
         const apiKey = process.env.NEXT_PUBLIC_CV_DESCRIPTION_API_KEY;
+        const prompt = `Generate a professional CV summary using only the provided details. 
+        Strictly return a JSON object with a brief explanation, comments, or additional text.
+
+        Details:
+        ${user.experience.length > 0 ? `Experience: ${user.experience.map(exp => 
+            `${exp.jobName} at ${exp.companyName} (${exp.startDate} - ${exp.endDate})`).join('. ')}.` : ''}
+        ${user.education.length > 0 ? `Education: ${user.education.map(edu => 
+            `${edu.courseName} from ${edu.schoolName} (${edu.startDate} - ${edu.endDate})`).join('. ')}.` : ''}
+        ${user.skills.length > 0 ? `Skills: ${user.skills.join(', ')}.` : ''}
+
+        Ensure the summary is concise, professional, and natural. 
+        No placeholders or missing information should be mentioned.
+
+        Return only this JSON object with no additional text:
+        {
+          "summary": "Your generated summary here"
+        }`;
+
 
     }, []);
 
