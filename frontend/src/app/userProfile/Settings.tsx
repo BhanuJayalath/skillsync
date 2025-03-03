@@ -141,7 +141,17 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                         <option value={user.gender}>Female</option>
                     </select>
                 </div>
-
+                <div>
+                    <label>Country</label>
+                    <select id="country" onChange={(e) => handleChange(e, "country")}>
+                        <option value="">Select Country</option>
+                        {countries.map((country, index) => (
+                            <option key={index} value={country.name}>
+                                {country.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
 
             </form>
