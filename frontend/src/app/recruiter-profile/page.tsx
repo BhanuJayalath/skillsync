@@ -72,17 +72,8 @@ export default function RecruiterProfile() {
                 } else if (jsonParsedItem.mockExamId) {
                   tempArray.push(jsonParsedItem);
                 }
-                // else if (response.data.length - 1 === index) {
-                //   const lastElement = tempArray.find(
-                //     (item: any) => item.mockExamId === jsonParsedItem.mockExamId
-                //   );
-                //   if (!lastElement) {
-                //     tempArray.push(jsonParsedItem);
-                //   }
-                // }
               }
             }
-            // console.log(tempArray);
             setLoadMockTests(tempArray);
           });
         } else {

@@ -69,14 +69,12 @@ export default function JobContent({
     setJobType(event.target.value);
   }
 
-
   var counter = 0;
   useEffect(() => {
     localStorage.setItem(loadJobPostContent.jobId, JSON.stringify(storage));
   }, [storage]);
 
   function updatetoDatabase() {
-
     axios.patch(
       `${process.env.NEXT_PUBLIC_UPDATE_JOBS}/${loadJobPostContent.jobId}`,
       storage,
@@ -146,21 +144,23 @@ export default function JobContent({
                   Add
                 </button>
               </form>
-              {requiredSkills.map((item: any, index: number) => {
-                return (
-                  <div key={index}>
-                    <label>{item}</label>
-                    <button
-                      disabled={readOnly}
-                      onClick={() => {
-                        removeSkill(index);
-                      }}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                );
-              })}
+              <div id={styles.jobPostSkill}>
+                {requiredSkills.map((item: any, index: number) => {
+                  return (
+                    <div id={styles.jobPostSkillLabel} key={index}>
+                      <label>{item}</label>
+                      <button
+                        disabled={readOnly}
+                        onClick={() => {
+                          removeSkill(index);
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
             <h2>Add Job Type</h2>
             <div id={styles.mockExamSectionAnswer}>

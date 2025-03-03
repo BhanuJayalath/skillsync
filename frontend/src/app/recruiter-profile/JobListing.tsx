@@ -64,14 +64,6 @@ export default function JobListing({
                 } else if (jsonParsedItem.jobId) {
                   tempArray.push(jsonParsedItem);
                 }
-                // else if (response.data.length - 1 === index) {
-                //   const lastElement = tempArray.find(
-                //     (item: any) => item.jobId === jsonParsedItem.jobId
-                //   );
-                //   if (!lastElement) {
-                //     tempArray.push(jsonParsedItem);
-                //   }
-                // }
               }
             }
             setLoadJobPosts(tempArray);
