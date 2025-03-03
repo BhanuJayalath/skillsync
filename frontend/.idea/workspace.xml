@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="updated the Resume.tsx">
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="updated the type of the handleChange function to have both input elements and select elements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Overview.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Resume.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Resume.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
     </list>
@@ -100,54 +100,7 @@
       <workItem from="1740810076697" duration="230000" />
       <workItem from="1740821582785" duration="17704000" />
       <workItem from="1740894966002" duration="27230000" />
-    </task>
-    <task id="LOCAL-00001" summary="created the job recommendation module and updated the relevant parts">
-      <option name="closed" value="true" />
-      <created>1740313798620</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1740313798620</updated>
-    </task>
-    <task id="LOCAL-00002" summary="add more styles and animation to the user profile">
-      <option name="closed" value="true" />
-      <created>1740313987972</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1740313987972</updated>
-    </task>
-    <task id="LOCAL-00003" summary="making a user profile editor section">
-      <option name="closed" value="true" />
-      <created>1740551861425</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1740551861425</updated>
-    </task>
-    <task id="LOCAL-00004" summary="add styling to the cv section">
-      <option name="closed" value="true" />
-      <created>1740568213626</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1740568213626</updated>
-    </task>
-    <task id="LOCAL-00005" summary="updated the tabs section and course items styles">
-      <option name="closed" value="true" />
-      <created>1740570598762</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1740570598762</updated>
-    </task>
-    <task id="LOCAL-00006" summary="put all sections inside the tabs sections and add few courses for testing">
-      <option name="closed" value="true" />
-      <created>1740570728197</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1740570728197</updated>
+      <workItem from="1740965701512" duration="13960000" />
     </task>
     <task id="LOCAL-00007" summary="making the cv section downloadable">
       <option name="closed" value="true" />
@@ -477,7 +430,71 @@
       <option name="project" value="LOCAL" />
       <updated>1740918317264</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="add relevant use states to the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966019288</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966019288</updated>
+    </task>
+    <task id="LOCAL-00049" summary="add useEffect to fetch the countries in the form section of the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966077974</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966077974</updated>
+    </task>
+    <task id="LOCAL-00050" summary="add useEffect to fetch the cities in the form section of the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966107207</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966107210</updated>
+    </task>
+    <task id="LOCAL-00051" summary="add the selectElement for country in the form section of the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966330658</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966330658</updated>
+    </task>
+    <task id="LOCAL-00052" summary="add the selectElement for language in the form section of the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966349239</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966349239</updated>
+    </task>
+    <task id="LOCAL-00053" summary="add the selectElement for city in the form section of the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966364966</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966364968</updated>
+    </task>
+    <task id="LOCAL-00054" summary="updated the Overview.tsx to display the relevant user info">
+      <option name="closed" value="true" />
+      <created>1740966441830</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966441830</updated>
+    </task>
+    <task id="LOCAL-00055" summary="updated the type of the handleChange function to have both input elements and select elements">
+      <option name="closed" value="true" />
+      <created>1740966504694</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966504694</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -495,14 +512,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="created the courses.tsx" />
-    <MESSAGE value="created the Overview.tsx file" />
-    <MESSAGE value="created the Progress.tsx file" />
-    <MESSAGE value="created the Resume.tsx file" />
-    <MESSAGE value="created the Settings.tsx file" />
-    <MESSAGE value="moved the relevant codes from page.tsx and updated the Settings.tsx file" />
-    <MESSAGE value="moved the relevant codes from page.tsx and updated the Resume.tsx file" />
-    <MESSAGE value="moved the relevant codes from page.tsx and updated the Progress.tsx file" />
     <MESSAGE value="moved the relevant codes from page.tsx and updated the Overview.tsx file" />
     <MESSAGE value="moved the relevant codes from page.tsx and updated the Courses.tsx file" />
     <MESSAGE value="updated the Settings.tsx file" />
@@ -520,6 +529,14 @@
     <MESSAGE value="add the components to the tabs section and passing the relevant props for each component" />
     <MESSAGE value="deleted the unnecessary commented codes" />
     <MESSAGE value="updated the Resume.tsx" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated the Resume.tsx" />
+    <MESSAGE value="add relevant use states to the Settings.tsx" />
+    <MESSAGE value="add useEffect to fetch the countries in the form section of the Settings.tsx" />
+    <MESSAGE value="add useEffect to fetch the cities in the form section of the Settings.tsx" />
+    <MESSAGE value="add the selectElement for country in the form section of the Settings.tsx" />
+    <MESSAGE value="add the selectElement for language in the form section of the Settings.tsx" />
+    <MESSAGE value="add the selectElement for city in the form section of the Settings.tsx" />
+    <MESSAGE value="updated the Overview.tsx to display the relevant user info" />
+    <MESSAGE value="updated the type of the handleChange function to have both input elements and select elements" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated the type of the handleChange function to have both input elements and select elements" />
   </component>
 </project>

@@ -14,6 +14,7 @@ interface User {
     language: string;
     gender: string;
     country: string;
+    cvSummary: string;
     jobRole: jobRole[];
     skills: string[];
     education: Education[];
@@ -39,7 +40,7 @@ interface Experience {
 
 interface SettingsProps {
     user: User;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => void;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, field: string) => void;
     handleNestedChange: (index: number, field: string, value: string, section: "experience" | "education") => void;
     handleSubmit: () => Promise<void>;
     addEducation: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -50,6 +51,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const [countries, setCountries] = useState<{ name: string }[]>([]);
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
+    const [summary, setSummary] = useState("");
 
     // Fetch countries and languages
     useEffect(() => {
@@ -74,6 +76,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             })
             .catch(error => console.error('Error fetching countries:', error));
     }, []);
+
 
     // Fetch cities when a country is selected
     useEffect(() => {
@@ -177,6 +180,18 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             </form>
             <form className={styles.form2}>
                 <div className={styles.formSection}>
+                    <div className={styles.formGroup}>
+                        <label>CV Description</label>
+                        <textarea
+                            value={summary}
+                            onChange={(e) => {
+                                setSummary(e.target.value);
+                                handleChange(e, "cvSummary");
+                            }}
+                        />
+                    </div>
+                </div>
+                <div className={styles.formSection}>
                     <h3>Experience</h3>
                     {user.experience.map((exp, index) => (
                         <div key={index} className={styles.formGroup}>
@@ -273,21 +288,6 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     ))}
                     <button onClick={addEducation}>New</button>
                 </div>
-                {/* Skills Section */}
-                {/*<div className={styles.formSection}>*/}
-                {/*    <h3>Skills</h3>*/}
-                {/*    {user.skills.map((skill, index) => (*/}
-                {/*        <div key={index} className={styles.formGroup}>*/}
-                {/*            <label htmlFor={`skill-${index}`}>Skill {index + 1}</label>*/}
-                {/*            <input*/}
-                {/*                type="text"*/}
-                {/*                id={`skill-${index}`}*/}
-                {/*                value={skill}*/}
-                {/*                onChange={(e) => handleSkillsChange(index, e.target.value)}*/}
-                {/*            />*/}
-                {/*        </div>*/}
-                {/*    ))}*/}
-                {/*</div>*/}
             </form>
         </section>
     );
