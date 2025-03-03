@@ -21,24 +21,24 @@ export default function ContactPage() {
           <div className={styles.contactGrid}>
             {/* Contact Form */}
             <div className={styles.formCard}>
-              <form className={styles.form}>
+              <form className={styles.form} action="https://formsubmit.co/skillsyncofc@gmail.com" method="POST">
                 <div className={styles.formGrid}>
                   <div className={styles.formGroup}>
                     <label htmlFor="first-name" className={styles.label}>First name</label>
-                    <input id="first-name" type="text" placeholder="Enter your first name" className={styles.input} />
+                    <input id="first-name" type="text" name="first-name" placeholder="Enter your first name" className={styles.input} />
                   </div>
                   <div className={styles.formGroup}>
                     <label htmlFor="last-name" className={styles.label}>Last name</label>
-                    <input id="last-name" type="text" placeholder="Enter your last name" className={styles.input} />
+                    <input id="last-name" type="text" name="last-name" placeholder="Enter your last name" className={styles.input} />
                   </div>
                 </div>
                 <div className={styles.formGroup}>
                   <label htmlFor="email" className={styles.label}>Email</label>
-                  <input id="email" type="email" placeholder="Enter your email" className={styles.input} />
+                  <input id="email" type="email" name="email" placeholder="Enter your email" className={styles.input} />
                 </div>
                 <div className={styles.formGroup}>
                   <label htmlFor="message" className={styles.label}>Message</label>
-                  <textarea id="message" placeholder="Enter your message" className={styles.textarea}></textarea>
+                  <textarea id="message"name="message" placeholder="Enter your message" className={styles.textarea}></textarea>
                 </div>
                 <button type="submit" className={styles.submitButton}>Send Message</button>
               </form>
