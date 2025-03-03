@@ -3,12 +3,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
 import { User, UserSchema } from './models/user.schema';
 import { GoogleStrategy } from './strategies/google.strategy';
-import { FacebookStrategy } from './strategies/facebook.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
@@ -29,7 +27,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
   providers: [
     AuthService,
     GoogleStrategy, // ✅ Register Google authentication strategy
-    FacebookStrategy, // ✅ Register Facebook authentication strategy
     JwtStrategy, // ✅ Register JWT authentication strategy
   ],
   exports: [
