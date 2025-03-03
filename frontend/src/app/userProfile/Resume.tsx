@@ -7,6 +7,7 @@ interface User {
     number: string;
     city: string;
     country: string;
+    cvSummary: string;
     jobRole: jobRole[];
     skills: string[];
     education: Education[];
@@ -49,6 +50,12 @@ const Resume = ({user, removeEducation, removeExperience}: ResumeProps) => {
                     <p>Email: {user.email}</p>
                     <p>Phone: {user.number}</p>
                     <p>Location: {user.city}, {user.country}</p>
+                </div>
+            </div>
+            <div id="summrySection" className={styles.experience}>
+                <h2 className={styles.sectionTitle}>Summary</h2>
+                <div className={styles.job}>
+                    <p className={styles.jobResponsibilities}>{user.cvSummary}</p>
                 </div>
             </div>
             <div id="experienceSection" className={styles.experience}>
