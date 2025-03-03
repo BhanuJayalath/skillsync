@@ -98,6 +98,37 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
           "summary": "Your generated summary here"
         }`;
 
+        fetch(`${apiUrl}`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${apiKey}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "model": "deepseek/deepseek-r1-distill-llama-70b:free",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ]
+            })
+        })
+            .then(response => {
+                console.log("Response Status:", response.status);
+                return response.json();
+            }) // Convert response to JSON
+            .then(data => {
+                // Extract and log the AI's response
+                const summary = data.choices?.[0]?.message?.content.match(/{[\s\S]*}/) || "No response";
+                console.log("AI Response:", summary);
+                const jsonSummary = summary
+                    ? JSON.parse(summary[0])
+                    : { summary: "error occurred" };
+                const filteredSummary = jsonSummary.summary.replace(/\*\*(.*?)\*\*/g, '$1');
+                setSummary(filteredSummary);
+            })
+            .catch(error => console.error("Error:", error));
 
     }, []);
 
