@@ -77,6 +77,11 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             .catch(error => console.error('Error fetching countries:', error));
     }, []);
 
+    useEffect(() => {
+        const apiUrl = process.env.NEXT_PUBLIC_CV_DESCRIPTION_API_URL;
+        const apiKey = process.env.NEXT_PUBLIC_CV_DESCRIPTION_API_KEY;
+
+    }, []);
 
     // Fetch cities when a country is selected
     useEffect(() => {
