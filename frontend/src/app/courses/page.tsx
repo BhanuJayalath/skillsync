@@ -17,12 +17,14 @@ export default function Page() {
 
   const searchCourses = async (topic: string) => {
     try {
+      // Log the API Key to ensure it's being read properly
+      console.log("API Key:", process.env.OPENROUTER_API_KEY);
+
       setIsLoading(true);
       const response = await fetch(DEEPSEEK_API_URL, {
         method: "POST",
         headers: {
-          "Authorization":
-            "Bearer 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",
+          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -30,14 +32,20 @@ export default function Page() {
           messages: [
             {
               role: "user",
-              content: `Please provide a list of ten recommended online courses for learning ${topic}. 
-Output the result as a JSON array, where each object has the following fields: id, title, duration, image, category, instructor.`,
+              content: `Please output only a JSON array of exactly 10 online course objects for learning ${topic}, with no additional commentary. Each object must include exactly the following fields: id, title, duration, category, instructor, link.`,
             },
           ],
         }),
       });
 
+      if (response.status === 401) {
+        console.error("Unauthorized: Check your API key in the .env.local file.");
+        setCourses([]);
+        return;
+      }
+
       const data = await response.json();
+      console.log("Full API response:", data);
       const generatedText = data?.choices?.[0]?.message?.content;
       let cleanedText = generatedText ? generatedText.trim() : "";
 
@@ -50,12 +58,19 @@ Output the result as a JSON array, where each object has the following fields: i
 
       console.log("Cleaned text from DeepSeek:", cleanedText);
 
+      // If cleanedText is empty, log a warning and exit early.
+      if (!cleanedText) {
+        console.warn("No content returned from DeepSeek.");
+        setCourses([]);
+        return;
+      }
+
       let parsedCourses = [];
       try {
         parsedCourses = JSON.parse(cleanedText);
       } catch (err) {
         console.error("Error parsing JSON:", err, "Cleaned text:", cleanedText);
-        // Fallback: try to extract a JSON array from the string by finding the first '[' and last ']'
+        // Fallback: extract substring between the first '[' and last ']'
         const start = cleanedText.indexOf("[");
         const end = cleanedText.lastIndexOf("]");
         if (start !== -1 && end !== -1 && end > start) {
@@ -99,65 +114,47 @@ Output the result as a JSON array, where each object has the following fields: i
       {/* Sidebar */}
       <aside className="w-64 bg-gray-100 p-4 hidden md:block">
         <div className="mb-8 flex items-center justify-center">
-          <Image
-            src="/logo.png"
-            alt="Logo"
-            width={150}
-            height={50}
-            className="object-contain"
-          />
+          <Image src="/logo.png" alt="Logo" width={150} height={50} className="object-contain" />
         </div>
         <nav>
           <ul className="space-y-4">
             <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 0 ? "text-blue-600 font-semibold" : ""
-              }`}
+              className={`flex items-center gap-2 cursor-pointer ${activeTab === 0 ? "text-blue-600 font-semibold" : ""}`}
               onClick={() => setActiveTab(0)}
             >
               <Image src="/user/homeIcon.svg" alt="homeIcon" width={40} height={40} />
               <span>Home</span>
             </li>
             <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 1 ? "text-blue-600 font-semibold" : ""
-              }`}
+              className={`flex items-center gap-2 cursor-pointer ${activeTab === 1 ? "text-blue-600 font-semibold" : ""}`}
               onClick={() => setActiveTab(1)}
             >
               <Image src="/user/overviewIcon.svg" alt="OverviewIcon" width={40} height={40} />
               <span>Overview</span>
             </li>
             <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 2 ? "text-blue-600 font-semibold" : ""
-              }`}
+              className={`flex items-center gap-2 cursor-pointer ${activeTab === 2 ? "text-blue-600 font-semibold" : ""}`}
               onClick={() => setActiveTab(2)}
             >
               <Image src="/user/progressIcon.svg" alt="progressIcon" width={40} height={40} />
               <span>Progress</span>
             </li>
             <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 3 ? "text-blue-600 font-semibold" : ""
-              }`}
+              className={`flex items-center gap-2 cursor-pointer ${activeTab === 3 ? "text-blue-600 font-semibold" : ""}`}
               onClick={() => setActiveTab(3)}
             >
               <Image src="/user/courseIcon.svg" alt="courseIcon" width={40} height={40} />
               <span>Courses</span>
             </li>
             <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 4 ? "text-blue-600 font-semibold" : ""
-              }`}
+              className={`flex items-center gap-2 cursor-pointer ${activeTab === 4 ? "text-blue-600 font-semibold" : ""}`}
               onClick={() => setActiveTab(4)}
             >
               <Image src="/user/cvIcon.svg" alt="cvIcon" width={30} height={30} />
               <span>Resume</span>
             </li>
             <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 5 ? "text-blue-600 font-semibold" : ""
-              }`}
+              className={`flex items-center gap-2 cursor-pointer ${activeTab === 5 ? "text-blue-600 font-semibold" : ""}`}
               onClick={() => setActiveTab(5)}
             >
               <Image src="/user/settingsIcon.svg" alt="settingsIcon" width={30} height={30} />
@@ -186,10 +183,7 @@ Output the result as a JSON array, where each object has the following fields: i
           <div className="bg-white rounded-lg shadow-lg p-6">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-grow">
-                <Search
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                  size={20}
-                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <Input
                   type="text"
                   placeholder="Search courses..."
@@ -199,11 +193,7 @@ Output the result as a JSON array, where each object has the following fields: i
                   className="pl-10 border-gray-200 focus:border-primary focus:ring-primary"
                 />
               </div>
-              <Button
-                onClick={() => searchCourses(searchTerm)}
-                className="bg-primary hover:bg-primary/90 text-black"
-                disabled={isLoading}
-              >
+              <Button onClick={() => searchCourses(searchTerm)} className="bg-primary hover:bg-primary/90 text-black" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

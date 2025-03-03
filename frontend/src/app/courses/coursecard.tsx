@@ -11,11 +11,6 @@ interface CourseProps {
     instructor: string;
     duration?: string;
     category?: string;
-    description?: string;
-    students?: number;
-    rating?: number;
-    level?: string;
-    price?: number;
     link?: string; // URL for redirection
   };
 }
