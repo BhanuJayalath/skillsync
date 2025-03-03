@@ -1,6 +1,6 @@
 import styles from "@/app/userProfile/user.module.css";
 import Image from "next/image";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 interface User {
     fullName: string;
@@ -39,7 +39,7 @@ interface Experience {
 
 interface SettingsProps {
     user: User;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => void;
     handleNestedChange: (index: number, field: string, value: string, section: "experience" | "education") => void;
     handleSubmit: () => Promise<void>;
     addEducation: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -47,6 +47,13 @@ interface SettingsProps {
 }
 
 const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience }: SettingsProps) => {
+    const [countries, setCountries] = useState<{ name: string }[]>([]);
+    const [languages, setLanguages] = useState<string[]>([]);
+    const [cities, setCities] = useState<string[]>([]);
+
+
+
+
     return (
         <section className={styles.userInfo}>
             <div className={styles.userDetails}>
@@ -62,7 +69,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
                 </div>
-                <button className={styles.editButton} onClick={handleSubmit}>Edit</button>
+                <button className={styles.editButton} onClick={handleSubmit}>Save</button>
             </div>
             {/*form section*/}
             <form className={styles.form}>
@@ -93,28 +100,14 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                 <div>
                     <label>Gender</label>
                     <select>
-                        <option>Male</option>
-                        <option>Female</option>
+                        <option value="">Select Gender</option>
+                        <option value={user.gender}>Male</option>
+                        <option value={user.gender}>Female</option>
                     </select>
                 </div>
-                <div>
-                    <label>Country</label>
-                    <select>
-                        <option>Your Country</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Language</label>
-                    <select>
-                        <option>Languages</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Time Zone</label>
-                    <select>
-                        <option>Time Zone</option>
-                    </select>
-                </div>
+
+
+
             </form>
             <form className={styles.form2}>
                 <div className={styles.formSection}>
@@ -167,7 +160,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             </div>
                         </div>
                     ))}
-                    <button onClick={addExperience}>Save</button>
+                    <button onClick={addExperience}>New</button>
                 </div>
 
                 {/* Education Section */}
@@ -212,7 +205,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             />
                         </div>
                     ))}
-                    <button onClick={addEducation}>Save</button>
+                    <button onClick={addEducation}>New</button>
                 </div>
                 {/* Skills Section */}
                 {/*<div className={styles.formSection}>*/}
