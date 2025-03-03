@@ -1,9 +1,9 @@
-"use client"; 
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link"; 
+import Link from "next/link";
 import logo from "../assets/images/logo.png";
-import image from "../assets/images/Illustration.svg";
+import illustration from "../assets/images/Illustration.svg";
 import styles from "../assets/styles/login.module.css";
 
 const Login: React.FC = () => {
@@ -11,40 +11,67 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
-  
-  const handleSocialLogin = (provider: string) => {
-    setIsLoading(true);
-    setLoginError("");
-
-    
-    setTimeout(() => {
-      setIsLoading(false);
-      alert(`Mock Login with ${provider} successful!`);
-    }, 1500);
+  // ✅ Google Login (Redirects to Backend)
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5001/api/auth/google";
   };
 
-  
-  const handleFormLogin = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsLoading(true);
-    setLoginError("");
+  // ✅ Facebook Login (Redirects to Backend)
+  const handleFacebookLogin = () => {
+    window.location.href = "http://localhost:5001/api/auth/facebook";
+  };
 
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      setLoginError("Please enter a valid email address.");
+  // ✅ Email & Password Login
+  const handleLogin = async () => {
+    setIsLoading(true);
+    setLoginError(""); // Clear previous errors
+
+    try {
+      const response = await fetch("http://localhost:5001/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Login successful", data);
+        localStorage.setItem("token", data.token);
+      } else {
+        setLoginError(data.error || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      setLoginError("Something went wrong. Please try again.");
+      console.error("Login fetch error:", error);
+    } finally {
       setIsLoading(false);
+    }
+  };
+
+  // ✅ Form Submission Handler
+  const handleFormLogin = (event: React.FormEvent) => {
+    event.preventDefault(); // Prevent page reload
+    if (!email || !password) {
+      setLoginError("Please enter both email and password.");
       return;
     }
+    handleLogin();
+  };
 
-    
-    setTimeout(() => {
-      setIsLoading(false);
-      if (email === "test@example.com" && password === "password") {
-        alert("Mock Login successful! (Backend not implemented yet)");
-      } else {
-        setLoginError("Invalid email or password.");
-      }
-    }, 1500);
+  // ✅ Forgot Password (Placeholder - Backend API Needed)
+  const handleForgotPassword = async () => {
+    if (!email) {
+      setLoginError("Enter your email to reset password.");
+      return;
+    }
+    try {
+      alert("Password reset functionality not implemented yet.");
+    } catch (error: any) {
+      console.error("Forgot Password Error:", error.message);
+      setLoginError("Failed to send password reset email.");
+    }
   };
 
   return (
@@ -52,20 +79,8 @@ const Login: React.FC = () => {
       {/* Left Section */}
       <div className={styles.leftSection}>
         <div className={styles.imageContainer}>
-          <Image
-            src={logo}
-            alt="Logo"
-            className={styles.logoOverlay}
-            width={160}
-            height={40}
-          />
-          <Image
-            src={image}
-            alt="Illustration"
-            className={styles.backgroundImage}
-            width={400}
-            height={400}
-          />
+          <Image src={logo} alt="Logo" width={160} height={40} />
+          <Image src={illustration} alt="Illustration" width={400} height={400} />
         </div>
       </div>
 
@@ -75,42 +90,32 @@ const Login: React.FC = () => {
           <h4 className={styles.welcomeText}>Welcome to</h4>
           <h1 className={styles.appName}>SkillSync</h1>
 
-          {/* Social Buttons */}
-          <button
-            className={`${styles.socialBtn} ${styles.googleBtn}`}
-            onClick={() => handleSocialLogin("Google")}
-            disabled={isLoading}
-          >
-            Login with Google
+          {/* Social Login Buttons */}
+          <button className={`${styles.socialBtn} ${styles.googleBtn}`} onClick={handleGoogleLogin} disabled={isLoading}>
+            {isLoading ? "Signing in..." : "Login with Google"}
           </button>
-          <button
-            className={`${styles.socialBtn} ${styles.facebookBtn}`}
-            onClick={() => handleSocialLogin("Facebook")}
-            disabled={isLoading}
-          >
-            Login with Facebook
+          <button className={`${styles.socialBtn} ${styles.facebookBtn}`} onClick={handleFacebookLogin} disabled={isLoading}>
+            {isLoading ? "Signing in..." : "Login with Facebook"}
           </button>
 
           {/* Divider */}
-          <div className={styles.divider}>
-            <span>OR</span>
-          </div>
+          <div className={styles.divider}><span>OR</span></div>
 
-          {/* Login Form */}
+          {/* Email & Password Login Form */}
           <form onSubmit={handleFormLogin}>
-            <input
-              type="email"
-              placeholder="example@gmail.com"
-              className={styles.inputBox}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+            <input 
+              type="email" 
+              placeholder="example@gmail.com" 
+              className={styles.inputBox} 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
             />
-            <input
-              type="password"
-              placeholder="**********"
-              className={styles.inputBox}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+            <input 
+              type="password" 
+              placeholder="**********" 
+              className={styles.inputBox} 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
             />
 
             {/* Error Message */}
@@ -119,11 +124,11 @@ const Login: React.FC = () => {
             {/* Options */}
             <div className={styles.options}>
               <label>
-                <input type="checkbox" /> Remember me
+                <input type="checkbox" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} /> Remember me
               </label>
-              <a href="#" className={styles.forgotPassword}>
+              <button type="button" className={styles.forgotPassword} onClick={handleForgotPassword}>
                 Forgot Password?
-              </a>
+              </button>
             </div>
 
             {/* Login Button */}
@@ -132,10 +137,9 @@ const Login: React.FC = () => {
             </button>
           </form>
 
+          {/* Register Link */}
           <p className={styles.registerLink}>
-            <br></br>
-            Don't have an account?{" "}
-            <Link href="/sign-up">Register</Link>
+            Don't have an account? <Link href="/sign-up">Register</Link>
           </p>
         </div>
       </div>
