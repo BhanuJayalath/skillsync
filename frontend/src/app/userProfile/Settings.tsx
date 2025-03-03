@@ -163,7 +163,17 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                         ))}
                     </select>
                 </div>
-
+                <div>
+                    <label>City</label>
+                    <select id="city" onChange={(e) => handleChange(e, "city")}>
+                        <option value="">Select City</option>
+                        {cities.map((city, index) => (
+                            <option key={index} value={city}>
+                                {city}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </form>
             <form className={styles.form2}>
                 <div className={styles.formSection}>
