@@ -30,10 +30,9 @@ const ServiceModal = ({ isOpen, onClose, title, description, icon }: ServiceModa
           <p>{description}</p>
         </div>
         <div className={styles.modalFooter}>
-          <button className="btn btn-dark" onClick={onClose}>
-            Close
-          </button>
-          <button className="btn btn-primary">Get Started</button>
+          <a href="/login">
+          <button className="btn btn-dark">Get Started</button>
+          </a>
         </div>
       </div>
     </div>

@@ -29,7 +29,7 @@ const LandingPage = () => {
       name: "Grow Your Skills",
       icon: "https://img.icons8.com/ios/50/persuasion-skills.png",
       description:
-        "Enhance your professional capabilities with our curated courses and workshops. Our skill development program is designed to keep you updated with the latest industry trends and technologies. Learn at your own pace with expert-led sessions and practical exercises that will help you stand out in today's competitive job market.",
+        "Enhance your professional capabilities with our curated courses and tests. Our skill development program is designed to keep you updated with the latest industry trends and technologies. Learn at your own pace with expert-led sessions and practical exercises that will help you stand out in today's competitive job market.",
     },
     {
       name: "Improve Resume",
@@ -49,17 +49,17 @@ const LandingPage = () => {
     {
       id: 1,
       text: "Thank You for your service. I am very pleased with the result. I have seen exponential growth in my business and it's all thanks to your amazing service.",
-      name: "Customer 1",
+      name: "User",
     },
     {
       id: 2,
       text: "Thank You for your service. I am very pleased with the result. I have seen exponential growth in my business and it's all thanks to your amazing service.",
-      name: "Customer 2",
+      name: "User",
     },
     {
       id: 3,
       text: "Thank You for your service. I am very pleased with the result. I have seen exponential growth in my business and it's all thanks to your amazing service.",
-      name: "Customer 3",
+      name: "User",
     },
   ]
 
