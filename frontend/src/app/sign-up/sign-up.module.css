@@ -36,6 +36,38 @@
     padding: 2rem;
   }
   
+  .tabSelector {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tabButton {
+    background: #f9f9f9;
+    color: #333;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .tabButton:hover {
+    background: #ececec;
+  }
+  
+  .activeTab {
+    background: #ff9f40;
+    color: #fff;
+    border-color: #ff9f40;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+
+
   .formContainer {
     background: #ffffff;
     color: #000;

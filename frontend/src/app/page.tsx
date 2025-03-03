@@ -63,12 +63,12 @@ const LandingPage = () => {
       </section>
 
       {/* Partner Logos */}
-      <section>
-        <div className={`${styles.partners} container3 my-5`}>
+      <section className={styles.partners}>
+        <div className="container-fluid">
           <div className="row justify-content-center align-items-center">
             {["Google", "Trello", "Monday", "LinkedIn", "TopJobs"].map(
               (partner) => (
-                <div key={partner} className="col-6 col-md-2 text-center">
+                <div key={partner} className="col-6 col-md-2 text-center mb-3">
                   <Image
                     src={`/${partner.toLowerCase()}.jpg`}
                     alt={partner}
@@ -96,20 +96,24 @@ const LandingPage = () => {
           </h3>
 
           <div className="row">
-            {["Grow Your Skills", "Improve Resume", "AI-Driven Interviews"].map(
-              (service) => (
-                <div key={service} className="col-md-4 mb-4">
-                  <div className={styles.serviceCard}>
-                    <div className={styles.serviceIcon}></div>
-                    <h4>{service}</h4>
-                    <a href="#" className={styles.learnMore}>
-                      Learn More →
-                    </a>
-                  </div>
+          {[
+            { name: "Grow Your Skills", icon: "https://img.icons8.com/ios/50/persuasion-skills.png" },
+            { name: "Improve Resume", icon: "https://img.icons8.com/ios/50/parse-from-clipboard.png" },
+            { name: "AI-Driven Interviews", icon: "https://img.icons8.com/ios/50/interview.png" }
+          ].map((service) => (
+            <div key={service.name} className="col-md-4 mb-4">
+              <div className={styles.serviceCard}>
+                <div className={styles.serviceIcon}>
+                  <img src={service.icon} alt={service.name} width={50} height={50} />
                 </div>
-              )
-            )}
-          </div>
+                <h4>{service.name}</h4>
+                  <a href={service.name === "AI-Driven Interviews" ? "/mock-interview" : "#"} className={styles.learnMore}>
+                    Learn More →
+                  </a>
+              </div>
+            </div>
+          ))}
+        </div>
         </section>
 
         {/* Testimonials Section */}
@@ -128,7 +132,7 @@ const LandingPage = () => {
                   <p>{testimonial.text}</p>
                   <div className={styles.testimonialAuthor}>
                     <Image
-                      src={`/avatar-${testimonial.id}.jpg`}
+                      src="https://img.icons8.com/dotty/80/user.png" // Updated image URL
                       alt={testimonial.name}
                       width={50}
                       height={50}
@@ -154,12 +158,13 @@ const LandingPage = () => {
             Please Drop Your Email Below To Get Daily Updates About What We Do
           </p>
 
+          <div className="container mt-5">
           <div className="row justify-content-center">
-            <div className="col-md-6">
-              <div className="input-group mb-3">
+            <div className="col-md-8 col-lg-6">
+              <div className={`${styles.subscribeInputGroup} input-group mb-3`}>
                 <input
                   type="email"
-                  className="form-control"
+                  className={`${styles.emailInput} form-control`}
                   placeholder="Enter Your Email Address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -168,6 +173,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
+        </div>
         </section>
       </div>
 

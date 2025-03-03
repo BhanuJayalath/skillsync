@@ -6,7 +6,7 @@ import {
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import Image from "next/image";
-import styles from "../assets/styles/landing.module.css";
+import styles from "../assets/styles/footer.module.css";
 
 const Footer = () => {
   return (
@@ -21,16 +21,16 @@ const Footer = () => {
               to Improve Your Skill-Set
             </p>
             <div className={styles.socialIcons}>
-              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.facebook.com/share/1699G8Mvin/" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faFacebook} />
               </a>
-              <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+              {/* <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faTwitter}  />
-              </a>
-              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+              </a> */}
+              <a href="https://www.linkedin.com/company/105059551" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faLinkedin} />
               </a>
-              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.instagram.com/skillsync_ofc?igsh=cWZ1M2l5aTZwdWVz" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faInstagram}  />
               </a>
             </div>
@@ -55,7 +55,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="text-center mt-4">
-          <p>©Copyright Design SkillSync 2024</p>
+          <p>©Copyright Design SkillSync 2025</p>
         </div>
       </div>
     </footer>
