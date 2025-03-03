@@ -7,6 +7,13 @@ import styles from "./assets/styles/landing.module.css"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import ServiceModal from "./components/ServiceModal"
+import dynamic from "next/dynamic"
+
+// Dynamically import ChatBot with no SSR
+const ChatBot = dynamic(() => import("./components/ChatBot"), {
+  ssr: false,
+  loading: () => null,
+})
 
 interface Testimonial {
   id: number
@@ -74,6 +81,9 @@ const LandingPage = () => {
   return (
     <div className={styles.container1}>
       <Navbar />
+
+      {/* Add ChatBot component */}
+      <ChatBot />
 
       {/* Hero Section */}
       <section className={`${styles.hero} container mt-5`}>
