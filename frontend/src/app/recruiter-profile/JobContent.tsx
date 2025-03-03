@@ -8,10 +8,12 @@ export default function JobContent({
   loadJobPostContent,
   updateJobPostContent,
   jobCount,
+  jobPostResponse,
 }: {
   loadJobPostContent: any;
   updateJobPostContent: any;
   jobCount: any;
+  jobPostResponse: any;
 }) {
   const [jobTitle, setJobTitle] = useState<string>();
   const [jobDescription, setJobDescription] = useState<string>();
@@ -21,6 +23,7 @@ export default function JobContent({
   const [selectedAnswer, setSelectedAnswer] = useState<Number>();
   const [removed, setRemoved] = useState(false);
   const [readOnly, setReadOnly] = useState(false);
+  const [databaseExistingId, setDatabaseExistingId] = useState(false);
   const storage = {
     jobId: loadJobPostContent.jobId,
     jobTitle: jobTitle,
@@ -38,9 +41,13 @@ export default function JobContent({
     //   setReadOnly(true);
     // }
   }, [removed]);
-  // useEffect(() => {
-  //   update(MockTestQuestions.QuestionId, storage);
-  // }, [question, answer1, answer2, answer3, answer4, selectedAnswer]);
+  useEffect(() => {
+    const DatabaseExistingId = jobPostResponse.some(
+      (item: any) => item.jobId === loadJobPostContent.jobId
+    );
+    console.log(DatabaseExistingId);
+    setDatabaseExistingId(DatabaseExistingId);
+  }, []);
 
   function saveJobTitle(event: any) {
     setJobTitle(event.target.value);
@@ -71,7 +78,6 @@ export default function JobContent({
     // addCorrectAnswer(selection, MockTestQuestions.QuestionId);
   }
   var counter = 0;
-  const [databaseExistingId, setDatabaseExistingId] = useState(false);
   // useEffect(() => {
   //   const DatabaseExistingId = response.some(
   //     (item: any) => item.mockExamId === loadMockTestQuestions.mockExamId
@@ -79,7 +85,7 @@ export default function JobContent({
   //   setDatabaseExistingId(DatabaseExistingId);
   // });
   useEffect(() => {
-    console.log(loadJobPostContent.jobId);
+    // console.log(updateJobPostContent);
     localStorage.setItem(loadJobPostContent.jobId, JSON.stringify(storage));
   }, [storage]);
 
@@ -131,45 +137,30 @@ export default function JobContent({
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
         <h1>Job Post {jobCount}</h1>
-        {/* {updateJobPostContent ? (
-          <>
-            <button onClick={addJobPost}>
-              <Image
-                alt="plus-icon"
-                width={25}
-                height={25}
-                src="/recruiter/plus-icon.svg"
-              />
-            </button>
-            {databaseExistingId ? (
-              <button onClick={updatetoDatabase}>Update</button>
+        <div id={styles.mockExamSectionSaveandClose}>
+          {updateJobPostContent &&
+            (databaseExistingId ? (
+              <button
+                onClick={() => {
+                  // remove(M.QuestionId);
+                }}
+              >
+                Update
+              </button>
             ) : (
-              <button onClick={save}>Save</button>
-            )}
-          </>
-        ) : null} */}
+              <button
+                onClick={() => {
+                  // remove(M.QuestionId);
+                }}
+              >
+                Save
+              </button>
+            ))}
+        </div>
       </header>
       {loadJobPostContent ? (
         <div id={styles.mockExamSection}>
           <div id={styles.mockExamSectionBlock}>
-            <header>
-              <div id={styles.mockExamSectionSaveandClose}>
-                {/* {updateMockExamContainer ? (
-                        <button
-                          onClick={() => {
-                            remove(MockTestQuestions.QuestionId);
-                          }}
-                        >
-                          <Image
-                            alt="remove-icon"
-                            width={25}
-                            height={25}
-                            src="/recruiter/remove-icon.svg"
-                          />
-                        </button>
-                      ) : null} */}
-              </div>
-            </header>
             <h2>Add Job Title</h2>
             <input
               id={styles.mockExamSectionQuestion}

@@ -46,6 +46,7 @@ export default function RecruiterProfile() {
     useState(false);
   const [remove, setRemove] = useState(false);
   const [response, setResponse] = useState();
+    const [jobPostResponse, setJobPostResponse] = useState();
 
   useEffect(() => {
     console.log(loadJobPostContent);
@@ -217,6 +218,7 @@ export default function RecruiterProfile() {
               <JobContent
                 loadJobPostContent={loadJobPostContent}
                 updateJobPostContent={updateJobPostContent}
+                jobPostResponse={jobPostResponse}
                 jobCount={jobCount}
               />
             ) : mockExamState ? (
@@ -335,9 +337,12 @@ export default function RecruiterProfile() {
                 <JobListing
                   loadJobPostContent={loadJobPostContent}
                   setLoadJobPostContent={setLoadJobPostContent}
+                  setUpdateJobPostContent={setUpdateJobPostContent}
+                  updateJobPostContent={updateJobPostContent}
                   setJobPostState={setJobPostState}
                   jobPostState={jobPostState}
                   setJobCount={setJobCount}
+                  setJobPostResponse={setJobPostResponse}
                 />
               </>
             )}

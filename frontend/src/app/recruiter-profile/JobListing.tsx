@@ -15,12 +15,18 @@ export default function JobListing({
   loadJobPostContent,
   setLoadJobPostContent,
   setJobCount,
+  setUpdateJobPostContent,
+  updateJobPostContent,
+  setJobPostResponse,
 }: {
   setJobPostState: any;
   jobPostState: any;
   loadJobPostContent: any;
   setLoadJobPostContent: any;
   setJobCount: any;
+  setUpdateJobPostContent: any;
+  updateJobPostContent: any;
+  setJobPostResponse: any;
 }) {
   const [loadJobPosts, setLoadJobPosts] = useState<
     {
@@ -36,11 +42,8 @@ export default function JobListing({
     Date.now(),
   ]);
   const [mockExamCount, setMockExamCount] = useState(Number);
-
-  const [updateJobPostContainers, setUpdateJobPostContainers] = useState(false);
   const [removeJobPostContainers, setRemoveJobPostContainers] = useState(false);
   const [remove, setRemove] = useState(false);
-  const [response, setResponse] = useState();
   const tempArray: any = [];
 
   useEffect(() => {
@@ -58,7 +61,7 @@ export default function JobListing({
                 // console.log(key);
                 let Item: any = localStorage.getItem(key);
                 let jsonParsedItem = Item ? JSON.parse(Item) : null;
-                console.log(jsonParsedItem);
+                // console.log(jsonParsedItem);
                 if (item.jobId === jsonParsedItem.jobId) {
                   tempArray[index] = jsonParsedItem;
                   // console.log("1st", tempArray);
@@ -74,6 +77,7 @@ export default function JobListing({
               }
             }
             setLoadJobPosts(tempArray);
+            setJobPostResponse(response.data);
             // console.log("3rd", tempArray);
           });
         } else {
@@ -103,6 +107,7 @@ export default function JobListing({
     const jobPost = loadJobPosts.find((item: any) => item.jobId === jobId);
     // console.log(jobPost);
     setLoadJobPostContent(jobPost);
+    setJobCount(JobCounter);
     setJobPostState(true);
   }
   function addJobPostContainers() {
@@ -145,7 +150,7 @@ export default function JobListing({
         </button>
         <button
           onClick={() => {
-            setUpdateJobPostContainers(!updateJobPostContainers);
+            setUpdateJobPostContent(!updateJobPostContent);
             setRemoveJobPostContainers(false);
           }}
         >
@@ -160,7 +165,7 @@ export default function JobListing({
         <button
           onClick={() => {
             setRemoveJobPostContainers(!removeJobPostContainers);
-            setUpdateJobPostContainers(false);
+            setUpdateJobPostContent(false);
           }}
         >
           {" "}
@@ -216,7 +221,7 @@ export default function JobListing({
                   />
                   <h1>Job Post {index + 1}</h1>
                   <div id={styles.mockExamscontainerButtons}>
-                    {updateJobPostContainers ? (
+                    {updateJobPostContent ? (
                       <Image
                         alt="update-icon"
                         width={25}
