@@ -61,14 +61,17 @@ export default function JobListing({
                 let jsonParsedItem = Item ? JSON.parse(Item) : null;
                 if (item.jobId === jsonParsedItem.jobId) {
                   tempArray[index] = jsonParsedItem;
-                } else if (response.data.length - 1 === index) {
-                  const lastElement = tempArray.find(
-                    (item: any) => item.jobId === jsonParsedItem.jobId
-                  );
-                  if (!lastElement) {
-                    tempArray.push(jsonParsedItem);
-                  }
+                } else if (jsonParsedItem.jobId) {
+                  tempArray.push(jsonParsedItem);
                 }
+                // else if (response.data.length - 1 === index) {
+                //   const lastElement = tempArray.find(
+                //     (item: any) => item.jobId === jsonParsedItem.jobId
+                //   );
+                //   if (!lastElement) {
+                //     tempArray.push(jsonParsedItem);
+                //   }
+                // }
               }
             }
             setLoadJobPosts(tempArray);

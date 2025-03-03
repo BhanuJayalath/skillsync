@@ -15,15 +15,15 @@ export class MocktestService {
   async findAll() {
     return this.mockTestModel.find().exec();
   }
-  async findOne(id: number) {
+  async findOne(id: string) {
     return this.mockTestModel.findById(id).exec();
   }
-  async update(mockExamId: number, data: Partial<MockTest>) {
+  async update(mockExamId: string, data: Partial<MockTest>) {
     return this.mockTestModel
       .findOneAndUpdate({ mockExamId: mockExamId }, data, { new: true })
       .exec();
   }
-  async delete(id: number) {
+  async delete(id: string) {
     return this.mockTestModel.findOneAndDelete({ mockExamId: id }).exec();
   }
 }

@@ -6,7 +6,7 @@ export type MockTestDocument = MockTest & Document;
 @Schema({ collection: 'mocktest' })
 export class MockTest {
   @Prop({ required: true })
-  mockExamId: Number;
+  mockExamId: String;
 
   @Prop({
     type: {

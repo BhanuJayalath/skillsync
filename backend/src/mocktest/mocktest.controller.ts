@@ -6,7 +6,6 @@ import {
   Param,
   Patch,
   Delete,
-  ParseIntPipe,
 } from '@nestjs/common';
 import { MocktestService } from './mocktest.service';
 
@@ -24,18 +23,18 @@ export class MocktestController {
     return this.mockTestService.findAll();
   }
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {
     return this.mockTestService.findOne(id);
   }
   @Patch(':mockExamId')
   update(
-    @Param('mockExamId') mockExamId: number,
-    @Body() updateDto: Partial<{ mockExamId: number; mockExamContent: any }>,
+    @Param('mockExamId') mockExamId: string,
+    @Body() updateDto: Partial<{ mockExamId: string; mockExamContent: any }>,
   ) {
     return this.mockTestService.update(mockExamId, updateDto);
   }
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
+  delete(@Param('id') id: string) {
     return this.mockTestService.delete(id);
   }
 }
