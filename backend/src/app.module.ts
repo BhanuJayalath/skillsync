@@ -8,10 +8,11 @@ import { RecruiterModule } from './recruiter/recruiter.module';
 import { MocktestModule } from './mocktest/mocktest.module';
 @Module({
   imports: [
-    UserProfileModule,
-    JobRecommendationModule,
+
     RecruiterModule,
     MocktestModule,
+    UserProfileModule,
+    JobRecommendationModule,
   ],
   controllers: [AppController, UserProfileController],
   providers: [AppService],

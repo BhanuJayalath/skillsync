@@ -4,6 +4,8 @@ import Footer from "@/app/components/Footer";   // Importing Footer component
 import React, {useEffect, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from './user.module.css';   // Importing custom styles
+import '../globals.css';
+
 
 
 export default function UserProfile () {
@@ -19,7 +21,7 @@ export default function UserProfile () {
         number : '(+94)12 345 6789', // number
         userName: "UserName",  // User's display name
         fullName:"Drake Winston", // User's full name
-        avatar:"",  //profile picture
+        avatar:null,  //profile picture
         gender:"Gender",  // User's gender
         language:"Language",     //language
         city :'City',    //city
@@ -28,7 +30,10 @@ export default function UserProfile () {
         courses : [
             { code: 'CS101', name: 'Introduction to Computer Science', result: 'A', mark : '95' },
             { code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark : '67' },
-            { code: 'CS103', name: 'Database Systems', result: 'A-', mark : '74' }
+            { code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark : '67' },
+            { code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark : '67' },
+            { code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark : '67' },
+            { code: 'CS103', name: 'Data Structures and Algorithms', result: 'A-', mark : '74' }
         ],
         tests : [
             {testId : '250106', testLevel:'Basic', mark :'58', xAxis : '20'},
@@ -42,6 +47,9 @@ export default function UserProfile () {
         education : [1],
         skills : [1]
     });
+    // const handleClick = (): void => {
+    //     alert('Button clicked!');
+    // };
     useEffect(()=>{
         const fetchUserDetails = async () => {
             const response = await fetch('http://localhost:3001/getUser', {
@@ -63,12 +71,10 @@ export default function UserProfile () {
                 console.log('Failed to fetch user details');
             }
         };
-
         fetchUserDetails();
-
         //checking the availability of the window
         if(typeof window !== 'undefined'){
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 4; i++) {
                 const section = document.querySelector<HTMLDivElement>(`#tab-${i}`);
                 if (section) {
                     section.style.display = i === activeTab ? 'block' : 'none';
@@ -99,25 +105,36 @@ export default function UserProfile () {
                     <nav className={styles.nav}>
                         <ul>
                             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                            <li><a href="/"><Image src={"/user/homeIcon.png"} alt="homeIcon"
+                            <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
                                                    width={40} height={0} className={styles.navImage}/> Home</a></li>
                             <li
-                                onClick={()=> setActiveTab(0)}
+                                onClick={() => setActiveTab(0)}
                                 className={activeTab === 0 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/progressChart.png"} alt="progressChart"
-                                                   width={40} height={0} className={styles.navImage}/> Progress</a></li>
+                            ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
+                                                width={40} height={0} className={styles.navImage}/> Overview</a></li>
                             <li
-                                onClick={()=> setActiveTab(1)}
+                                onClick={() => setActiveTab(1)}
                                 className={activeTab === 1 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/courses.png"} alt="courses"
-                                                   width={50} height={0} className={styles.navImage}/> Courses</a></li>
+                            ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
+                                                width={40} height={0} className={styles.navImage}/> Progress</a></li>
                             <li
-                                onClick={()=> setActiveTab(2)}
+                                onClick={() => setActiveTab(2)}
                                 className={activeTab === 2 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/cvIcon.png"} alt="CV_Icon"
-                                                   width={30} height={0} className={styles.navImage}/> Resume</a></li>
+                            ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
+                                                width={50} height={0} className={styles.navImage}/> Courses</a></li>
+                            <li
+                                onClick={() => setActiveTab(3)}
+                                className={activeTab === 3 ? styles.activeLink : ''}
+                            ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
+                                                width={30} height={0} className={styles.navImage}/> Resume</a></li>
+                            <li
+                                onClick={() => setActiveTab(4)}
+                                className={activeTab === 4 ? styles.activeLink : ''}
+                            ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
+                                                width={30} height={0} className={styles.navImage}/> Settings</a></li>
                         </ul>
                     </nav>
+
                 </aside>
                 {/* Main Content */}
                 <main className={styles.mainContent}>
@@ -128,65 +145,69 @@ export default function UserProfile () {
                         </div>
                     </header>
                     <div className={styles.contentWrapper}>
-                        {/* User Info Section */}
-                        <section className={styles.userInfo}>
-                            <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
-                            <div className={styles.userDetails}>
-                                <div className={styles.profilePic}>
-                                    <span>👤{user.avatar}</span>
+                        <section className={styles.tabsSection}>
+                            {/* User Info Section */}
+                            <section id="tab-0" className={styles.userInfo}>
+                                <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
+                                <div className={styles.userDetails}>
+                                    <div className={styles.profilePic}>
+                                        {user.avatar ? (
+                                            <span className={styles.userAvatar}>{user.avatar}</span>
+                                        ) : (
+                                            <span><Image src={"/user/userIcon.svg"} alt="userIcon"
+                                                         width={100} height={0} className={styles.userAvatar}/></span>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <strong>{user.userName}</strong>
+                                        <p>{user.email}</p>
+                                    </div>
+                                    <button className={styles.editButton}>Edit</button>
                                 </div>
-                                <div>
-                                    <strong>{user.userName}</strong>
-                                    <p>{user.email}</p>
-                                </div>
-                                <button className={styles.editButton}>Edit</button>
-                            </div>
-                            {/*form section*/}
-                            <form className={styles.form}>
-                                <div>
-                                    <label>Full Name</label>
-                                    <input placeholder="Your First Name"/>
-                                </div>
-                                <div>
-                                    <label>Display Name</label>
-                                    <input placeholder="Your Display Name"/>
-                                </div>
-                                <div>
-                                    <label>Gender</label>
-                                    <select>
-                                        <option>Your Gender</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Country</label>
-                                    <select>
-                                        <option>Your Country</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Language</label>
-                                    <select>
-                                        <option>Languages</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label>Time Zone</label>
-                                    <select>
-                                        <option>Time Zone</option>
-                                    </select>
-                                </div>
-                            </form>
+                                {/*form section*/}
+                                <form className={styles.form}>
+                                    <div>
+                                        <label>Full Name</label>
+                                        <input placeholder="Your First Name"/>
+                                    </div>
+                                    <div>
+                                        <label>Display Name</label>
+                                        <input placeholder="Your Display Name"/>
+                                    </div>
+                                    <div>
+                                        <label>Gender</label>
+                                        <select>
+                                            <option>Your Gender</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Country</label>
+                                        <select>
+                                            <option>Your Country</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Language</label>
+                                        <select>
+                                            <option>Languages</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label>Time Zone</label>
+                                        <select>
+                                            <option>Time Zone</option>
+                                        </select>
+                                    </div>
+                                </form>
 
-                            <div className={styles.emailSection}>
-                                <h3>My Email Address</h3>
-                                <p>{user.email}</p>
-                                <p>1 month ago</p>
-                                <button>+Add Email Address</button>
-                            </div>
-                        </section>
-                        {/* Courses and Progress */}
-                        <section className={styles.dashboard}>
-                            <section id="tab-0" className={styles.progress}>
+                                <div className={styles.emailSection}>
+                                    <h3>My Email Address</h3>
+                                    <p>{user.email}</p>
+                                    <p>1 month ago</p>
+                                    <button>+Add Email Address</button>
+                                </div>
+                            </section>
+                            <section id="tab-1" className={styles.progress}>
                                 <h4>Dashboard Progress</h4>
                                 <div className={styles.chart}>
                                     <svg viewBox="-15 -10 300 125">
@@ -232,7 +253,7 @@ export default function UserProfile () {
                                     </ul>
                                 </div>
                             </section>
-                            <section id="tab-1" className={styles.courses}>
+                            <section id="tab-2" className={styles.courses}>
                                 <ul className={styles.courseList}>
                                     {user.courses.map((course, index) => (
                                         <li key={index} className={styles.courseItem}>
@@ -246,7 +267,7 @@ export default function UserProfile () {
                                     ))}
                                 </ul>
                             </section>
-                            <section id="tab-2" className={styles.cvSection}>
+                            <section id="tab-3" className={styles.cvSection}>
                                 <div className={styles.contactInfo}>
                                     <h1 className={styles.name}>{user.fullName}</h1>
                                     <p className={styles.jobTitle}>{user.jobRole[0].jobName}</p>
@@ -266,7 +287,8 @@ export default function UserProfile () {
                                                     <p className={styles.companyName}>Tech Company</p>
                                                     <p className={styles.jobDates}>Jan 2020 - Present</p>
                                                     <ul className={styles.jobResponsibilities}>
-                                                        <li>Developed and maintained web applications using React and
+                                                        <li>Developed and maintained web applications using React
+                                                            and
                                                             Node.js
                                                         </li>
                                                         <li>Collaborated with cross-functional teams to design
@@ -286,7 +308,8 @@ export default function UserProfile () {
                                         {user.education.map((education, index) => (
                                             <li key={index} className={styles.eduItem}>
                                                 <div className={styles.degree}>
-                                                    <h3 className={styles.degreeTitle}>Bachelor of Science in Computer
+                                                    <h3 className={styles.degreeTitle}>Bachelor of Science in
+                                                        Computer
                                                         Science</h3>
                                                     <p className={styles.schoolName}>University of XYZ</p>
                                                     <p className={styles.graduationYear}>Graduated: 2019</p>
@@ -295,7 +318,6 @@ export default function UserProfile () {
                                         ))}
                                     </ul>
                                 </div>
-
                                 <div id="skillSection" className={styles.skills}>
                                     <h2 className={styles.sectionTitle}>Skills</h2>
                                     <ul className={styles.skillList}>
@@ -304,8 +326,13 @@ export default function UserProfile () {
                                         ))}
                                     </ul>
                                 </div>
+                                <button onClick={() => {
+                                    if (typeof window !== 'undefined') {
+                                        window.print();
+                                    }
+                                }}>Print Preview / Save as PDF
+                                </button>
                             </section>
-
                         </section>
                     </div>
                 </main>

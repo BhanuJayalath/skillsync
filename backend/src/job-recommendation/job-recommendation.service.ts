@@ -17,16 +17,19 @@ export class JobRecommendationService {
 
     const prompt = `
   I have the following skills: ${skills}.
-  Based on these skills, please provide a JSON object containing exactly relevant job titles from the following jobRoles: ${jobRoles}.
-  Format it exactly like this:
+  Based on these skills, please analyze which job roles are relevant to me. Carefully compare the skills I provided with each job title in the following list of job roles: ${jobRoles}.
+  Please return only the job titles that require or are strongly relevant to the skills I listed.
+  Provide the result as a JSON object formatted exactly like this:
   {
     "jobs": ["Job Title 1", "Job Title 2", "Job Title 3"]
   }
-  Only provide the JSON object in this format with no extra explanation, comments, or additional text. If no jobs are relevant, return an empty array like this:
+  If none of the job roles are relevant, return:
   {
     "jobs": []
   }
+  Only return the JSON object with no extra explanation, comments, or additional text.
 `;
+
 
     try {
       const response = await fetch(`${apiUrl}/chat/completions`, {
