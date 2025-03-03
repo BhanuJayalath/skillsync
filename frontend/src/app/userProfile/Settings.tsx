@@ -152,7 +152,17 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                         ))}
                     </select>
                 </div>
-
+                <div>
+                    <label>Language</label>
+                    <select id="language" onChange={(e) => handleChange(e, "language")}>
+                        <option value="">Select Language</option>
+                        {languages.map((language, index) => (
+                            <option key={index} value={user.language}>
+                                {language}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
             </form>
             <form className={styles.form2}>
