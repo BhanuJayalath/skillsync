@@ -40,6 +40,7 @@ export default function ContactPage() {
                   <label htmlFor="message" className={styles.label}>Message</label>
                   <textarea id="message"name="message" placeholder="Enter your message" className={styles.textarea}></textarea>
                 </div>
+                <input type="hidden" name="_captcha" value="false"></input>
                 <button type="submit" className={styles.submitButton}>Send Message</button>
               </form>
             </div>
@@ -53,21 +54,21 @@ export default function ContactPage() {
                     <MapPin className={styles.infoIcon} />
                     <div>
                       <p className={styles.infoLabel}>Our Location</p>
-                      <p className={styles.infoText}>CS123, Skillsync, Colombo 4</p>
+                      <p className={styles.infoText}>435 Galle Rd, Colombo 03, Sri Lanka.</p>
                     </div>
                   </div>
                   <div className={styles.infoItem}>
                     <Phone className={styles.infoIcon} />
                     <div>
                       <p className={styles.infoLabel}>Phone Number</p>
-                      <p className={styles.infoText}>+94 11 234 5678</p>
+                      <p className={styles.infoText}>+94 78 735 0154</p>
                     </div>
                   </div>
                   <div className={styles.infoItem}>
                     <Mail className={styles.infoIcon} />
                     <div>
                       <p className={styles.infoLabel}>Email Address</p>
-                      <p className={styles.infoText}>contact@skillsync.com</p>
+                      <p className={styles.infoText}>skillsyncofc@gmail.com</p>
                     </div>
                   </div>
                 </div>
