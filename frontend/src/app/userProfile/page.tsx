@@ -27,6 +27,7 @@ export default function UserProfile() {
         gitHub: "github",
         linkedIn: "linkedin",
         fullName: "Drake Winston", // User's full name
+        cvSummary: "",
         avatar: "",  //profile picture
         gender: "Gender",  // User's gender
         language: "Language",     //language
@@ -66,7 +67,7 @@ export default function UserProfile() {
                 description: ''
             },
         ],
-        skills: ['skill-1', 'skill-2', 'skill-3']
+        skills: ['typeScript', 'javaScript', 'HTML']
     });
     // Education Handlers
     const addEducation = (
@@ -106,7 +107,7 @@ export default function UserProfile() {
     };
     // Change handler
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, field: string
     ) => {
         setUser((prev) => ({
             ...prev,
