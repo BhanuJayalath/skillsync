@@ -51,7 +51,29 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
 
+    // Fetch countries and languages
+    useEffect(() => {
+        fetch('https://restcountries.com/v3.1/all')
+            .then(response => response.json())
+            .then(data => {
+                const countryList = data.map((country: any) => ({
+                    name: country.name.common,
+                }));
 
+                const languageSet = new Set<string>();
+                data.forEach((country: any) => {
+                    if (country.languages) {
+                        Object.values(country.languages).forEach((lang: any) =>
+                            languageSet.add(lang)
+                        );
+                    }
+                });
+
+                setCountries(countryList);
+                setLanguages(Array.from(languageSet));
+            })
+            .catch(error => console.error('Error fetching countries:', error));
+    }, []);
 
 
     return (
