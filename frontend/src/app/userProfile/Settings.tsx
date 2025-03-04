@@ -148,8 +148,8 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             .catch(error => console.error('Error fetching cities:', error));
     }, [user.country]);
 
-    const [imageUrl, setImageUrl] = useState<string | null>(null);
-    const [imageFile, setImageFile] = useState<File | null>(null);
+    // const [imageUrl, setImageUrl] = useState<string | null>(null);
+    // const [imageFile, setImageFile] = useState<File | null>(null);
 
     // // Handle image selection
     // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
