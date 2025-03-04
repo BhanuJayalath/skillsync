@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import styles from "../adminPage.module.css"
+import styles from "./signInForAdmin.module.css";
 import { useRouter } from "next/navigation";
 
 export default function SignInForAdmin() {
