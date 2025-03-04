@@ -34,7 +34,6 @@ const Overview = ({ user }: { user: User }) => {
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
                 </div>
-                <button className={styles.editButton}>Edit</button>
             </div>
             <div>
                 <p>Job Role: {user.jobRole[0].jobName}</p>
