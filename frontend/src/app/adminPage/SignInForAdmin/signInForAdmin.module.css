@@ -27,7 +27,7 @@
     margin-top: 10px;
 }
 
-button:hover {
+.signinContainer button:hover {
     background-color: #0056b3;
 }
 
@@ -36,7 +36,6 @@ button:hover {
     font-size: larger;
     font-weight: bold;
 }
-
 
 .errorMessage {
     color: red;
