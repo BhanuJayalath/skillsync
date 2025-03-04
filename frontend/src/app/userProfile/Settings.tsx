@@ -169,7 +169,10 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
         });
         setBlob(newBlob);
     }
-
+    useEffect(() => {
+        handleAvatar(blob?.url || "");
+    }, [blob?.url]);
+    console.log(user.avatar);
     return (
         <section className={styles.userInfo}>
             <div className={styles.userDetails}>
