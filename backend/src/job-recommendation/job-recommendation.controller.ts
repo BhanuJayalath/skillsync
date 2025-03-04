@@ -1,13 +1,10 @@
-// import { Body, Controller, Post } from '@nestjs/common';
 import {
   Controller,
   Get,
   Post,
-  Put,
   Delete,
   Body,
   Param,
-  Query,
   Patch,
 } from '@nestjs/common'; //bhanu
 import { JobRecommendationService } from './job-recommendation.service';
@@ -56,7 +53,6 @@ export class JobRecommendationController {
   async getJobById(@Param('jobId') jobId: string): Promise<Job> {
     return this.jobService.getJobById(jobId);
   }
-
   // **UPDATE a job by ID**
   @Patch(':jobId')
   async updateJob(
