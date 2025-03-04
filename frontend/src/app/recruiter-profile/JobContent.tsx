@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import MockExamContainer from "./MockExamContainer";
+import MockExamContainer from "./QuestionContent";
 import axios from "axios";
 import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";

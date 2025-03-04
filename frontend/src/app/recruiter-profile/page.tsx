@@ -1,7 +1,4 @@
 "use client";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import MockExam from "./MockExam";
 import Tab from "./Tab";
 import ResultTab from "./ResultTab";
 import Image from "next/image";
@@ -9,8 +6,11 @@ import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
 import JobListing from "./JobListing";
 import JobContent from "./JobContent";
+import TestContent from "./TestContent";
 
 import axios from "axios";
+import TestListing from "./TestListing";
+
 export default function RecruiterProfile() {
   const [loadMockTests, setLoadMockTests] = useState<
     {
@@ -218,7 +218,7 @@ export default function RecruiterProfile() {
                 jobCount={jobCount}
               />
             ) : mockExamState ? (
-              <MockExam
+              <TestContent
                 setLoadMockTestQuestions={setLoadMockTestQuestions}
                 loadMockTestQuestions={loadMockTestQuestions}
                 mockExamCount={mockExamCount}
@@ -227,7 +227,23 @@ export default function RecruiterProfile() {
               />
             ) : (
               <>
-                <div id={styles.mockExams}>
+                <TestListing
+                  loadMockTests={loadMockTests}
+                  setLoadMockTests={setLoadMockTests}
+                  updateMockExamContainers={updateMockExamContainers}
+                  setUpdateMockExamContainers={setUpdateMockExamContainers}
+                  removeMockExamContainers={removeMockExamContainers}
+                  setRemoveMockExamContainers={setRemoveMockExamContainers}
+                  mockExamState={mockExamState}
+                  setMockExamState={setMockExamState}
+                  setLoadMockTestQuestions={setLoadMockTestQuestions}
+                  setMockExamCount={setMockExamCount}
+                  remove={remove}
+                  setRemove={setRemove}
+                  response={response}
+                  setResponse={setResponse}
+                />
+                {/* <div id={styles.mockExams}>
                   <div id={styles.mockExamscontainerHeader}>
                     <h1>Mock Exams</h1>
                     <button onClick={addMockExamContainers}>
@@ -309,7 +325,7 @@ export default function RecruiterProfile() {
                       );
                     })}
                   </div>
-                </div>
+                </div> */}
                 <JobListing
                   loadJobPostContent={loadJobPostContent}
                   setLoadJobPostContent={setLoadJobPostContent}

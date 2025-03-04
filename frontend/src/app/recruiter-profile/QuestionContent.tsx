@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
-export default function MockExamContainer({
+export default function QuestionContent({
   MockTestQuestions,
   update,
   questionCounter,

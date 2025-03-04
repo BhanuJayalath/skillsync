@@ -1,12 +1,12 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import MockExam from "./MockExam";
+import MockExam from "./TestContent";
 import Tab from "./Tab";
 import ResultTab from "./ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
-import MockExamContainer from "./MockExamContainer";
+import MockExamContainer from "./QuestionContent";
 
 import axios from "axios";
 export default function JobListing({

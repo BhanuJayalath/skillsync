@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import MockExamContainer from "./MockExamContainer";
+import MockExamContainer from "./QuestionContent";
 import axios from "axios";
 import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
-export default function MockExam({
+import QuestionContent from "./QuestionContent";
+export default function TestContent({
   loadMockTestQuestions,
   setLoadMockTestQuestions,
   mockExamCount,
@@ -137,7 +138,7 @@ export default function MockExam({
           (item: any) => {
             questionCounter++;
             return (
-              <MockExamContainer
+              <QuestionContent
                 key={questionCounter}
                 MockTestQuestions={item}
                 questionCounter={questionCounter}

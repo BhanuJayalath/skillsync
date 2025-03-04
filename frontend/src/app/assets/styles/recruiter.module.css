@@ -5,6 +5,7 @@
   z-index: -1;
   height: auto;
   width: 100%;
+  color: white;
 }
 .navigation {
   display: flex;
