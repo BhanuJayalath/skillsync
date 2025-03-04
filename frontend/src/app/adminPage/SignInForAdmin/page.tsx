@@ -27,7 +27,7 @@ export default function SignInForAdmin() {
 
         if (username === adminUserName && password === adminPassword){
             localStorage.setItem("isAuthenticated", "true");
-            router.push("/page");
+            router.push("/adminPage");
         } else {
             setError("Invalid username or password");
         }

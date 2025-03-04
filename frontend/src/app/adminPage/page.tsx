@@ -15,10 +15,14 @@ export default function Page(){
     useEffect(() => {
         setIsClient(true);
         if (localStorage.getItem("isAuthenticated") !== "true") {
-            router.push("/SignInForAdmin"); // Redirect if not logged in
+            router.push("adminPage/SignInForAdmin"); // Redirect if not logged in
         }
     }, [router]);
 
+    const handleLogout = () => {
+        localStorage.removeItem("isAuthenticated");
+        router.push("adminPage/SignInForAdmin"); // Redirect to sign-in page
+    };
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -56,6 +60,7 @@ export default function Page(){
                             <li><a href="#">Analytics</a></li>
                             <li><a href="#">Settings</a></li>
                         </ul>
+                        <button onClick={handleLogout}>Logout</button>
                     </nav>
                 </aside>
 
@@ -139,6 +144,7 @@ export default function Page(){
                     </div>
                 </div>
             </div>
+
 
             <Footer/>
         </div>
