@@ -4,7 +4,56 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add the image upload to the overview section" />
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add the image upload to the overview section">
+      <change afterPath="$PROJECT_DIR$/public/courses/course1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/courses/course2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/adminPage/CourseManagment.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/courses/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/recruiters/login/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/recruiters/logout/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/recruiters/sign-up/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/users/login/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/users/logout/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/api/users/sign-up/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/ui/badge.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/ui/button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/ui/card.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/ui/input.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/courses/coursecard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/courses/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/lib/utils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/recruiter-profile/JobContent.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/recruiter-profile/JobListing.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dbConfig/dbConfig.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/helpers/getDataFromToken.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/recruiterModel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/userModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/mocktest/mocktest.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/mocktest/mocktest.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/mocktest/mocktest.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/mocktest/mocktest.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/mocktest/mocktest.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/mocktest/mocktest.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/adminPage/adminPage.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/adminPage/adminPage.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/adminPage/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/adminPage/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/assets/styles/recruiter.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/assets/styles/recruiter.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/basic-test/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/basic-test/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/contact-us/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/contact-us/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/recruiter-profile/MockExam.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/recruiter-profile/MockExam.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/recruiter-profile/MockExamContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/recruiter-profile/MockExamContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/recruiter-profile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/recruiter-profile/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/sign-up/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/sign-up/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/sign-up/sign-up.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/sign-up/sign-up.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +97,7 @@
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;userProfile&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging userProfile&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/veruw/Desktop/skillsync/frontend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -60,7 +109,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\veruw\\Desktop\\skillsync\\frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.2.4\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -96,6 +145,7 @@
       <workItem from="1740821582785" duration="17704000" />
       <workItem from="1740894966002" duration="27230000" />
       <workItem from="1740965701512" duration="17851000" />
+      <workItem from="1741062435842" duration="31000" />
     </task>
     <task id="LOCAL-00016" summary="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics">
       <option name="closed" value="true" />
