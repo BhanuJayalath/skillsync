@@ -7,128 +7,125 @@ import ResultTab from "./ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
-import MockExamContainer from "./MockExamContainer";
+import JobListing from "./JobListing";
+import JobContent from "./JobContent";
 
 import axios from "axios";
 export default function RecruiterProfile() {
   const [loadMockTests, setLoadMockTests] = useState<
     {
-      mockExamId: number;
+      mockExamId: string;
       mockExamContent: {
         questionContent: any[];
       };
     }[]
-  >([{ mockExamId: 1, mockExamContent: { questionContent: [] } }]);
+  >([]);
 
   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
+  const [loadJobPostContent, setLoadJobPostContent] = useState<
+    {
+      jobId: String;
+      jobTitle: String;
+      jobDescription: String;
+      requiredSkills: [];
+      jobType: [];
+    }[]
+  >([]);
   const [mockExamState, setMockExamState] = useState(false);
+  const [jobPostState, setJobPostState] = useState(false);
+
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
   ]);
   const [mockExamCount, setMockExamCount] = useState(Number);
-  // const [mockExamComponent, setMockExamComponent] = useState<
-  //   {
-  //     mockExamId: number;
-  //     mockExamContent: {
-  //       questionContent: [];
-  //     };
-  //   }[]
-  // >();
+  const [jobCount, setJobCount] = useState(Number);
+  const [updateMockExamContainers, setUpdateMockExamContainers] =
+    useState(false);
+  const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
+  const [removeMockExamContainers, setRemoveMockExamContainers] =
+    useState(false);
+  const [remove, setRemove] = useState(false);
+  const [response, setResponse] = useState();
+  const [jobPostResponse, setJobPostResponse] = useState();
+
+  useEffect(() => {
+    console.log(loadJobPostContent);
+  }, [loadJobPostContent]);
 
   useEffect(() => {
     const tempArray: any = [];
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
-        response.data.map((item: any, index: number) => {
-          tempArray.push(item);
+        setResponse(response.data);
+        if (response.data.length != 0) {
+          response.data.map((item: any, index: number) => {
+            tempArray.push(item);
+            if (localStorage.length > 0) {
+              for (let i = 0; i < localStorage.length; i++) {
+                const key: any = localStorage.key(i);
+                let Item: any = localStorage.getItem(key);
+                let jsonParsedItem = Item ? JSON.parse(Item) : null;
+                // console.log(jsonParsedItem.mockExamId);
+                if (item.mockExamId === jsonParsedItem.mockExamId) {
+                  tempArray[index] = jsonParsedItem;
+                } else if (jsonParsedItem.mockExamId) {
+                  tempArray.push(jsonParsedItem);
+                }
+              }
+            }
+            setLoadMockTests(tempArray);
+          });
+        } else {
           if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++) {
               const key: any = localStorage.key(i);
               let Item: any = localStorage.getItem(key);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
-              // console.log(Item.mockExamId);
-              if (item.mockExamId === jsonParsedItem.mockExamId) {
-                tempArray[index] = jsonParsedItem;
-                // console.log(index);
-              } else if (response.data.length - 1 === index) {
-                const lastElement = tempArray.find(
-                  (item: any) => item.mockExamId === jsonParsedItem.mockExamId
-                );
-                // console.log(lastElement);
-                if (!lastElement) {
-                  tempArray.push(jsonParsedItem);
-                }
-                // console.log(index);
-              }
+              tempArray.push(jsonParsedItem);
+              setLoadMockTests(tempArray);
             }
           }
-          setLoadMockTests(tempArray);
-        });
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [remove]);
 
   function loadMockExamComponent(mockexamId: number, mockExamCounter: number) {
-    // setMockExamCount(mockExamCounter);
-    // console.log(mockExamCounter);
     loadMockTests.find((item: any) => {
       if (item.mockExamId === mockexamId) {
         setLoadMockTestQuestions(item);
+        setMockExamCount(mockExamCounter);
       }
     });
 
     setMockExamState(!mockExamState);
   }
   function addMockExamContainers() {
-    localStorage.clear();
     setLoadMockTests([
       ...loadMockTests,
       {
-        mockExamId: Date.now(),
+        mockExamId: "exam" + Date.now(),
         mockExamContent: {
           questionContent: [],
         },
       },
     ]);
-    // setMockExamContainerId([...mockExamContainerId, Date.now()]);
-    // console.log(mockExamContainerId);
   }
-
-  function removeMockExamContainer(item: number) {
-    const newItems = [...mockExamContainerId];
-    const index = mockExamContainerId.indexOf(item);
-    if (index != -1) {
-      newItems.splice(index, 1);
-      setMockExamContainerId(newItems);
+  function removeMockExamComponent(mockExamId: Number) {
+    if (localStorage.length > 0) {
+      localStorage.removeItem(mockExamId.toString());
     }
-    // console.log(item);
-    if (localStorage.getItem(JSON.stringify(item))) {
-      localStorage.removeItem(JSON.stringify(item));
-    }
-  }
-  function retrieveLocalStorage() {
-    if (localStorage.length != 0) {
-      var temp = [];
-      var tempIds: number[] = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        if (key) {
-          const local = localStorage.getItem(key);
-          if (local) {
-            temp.push(JSON.parse(local));
-          }
-        }
-      }
-      temp.map((item) => {
-        tempIds.push(item.mockExamId);
+    axios
+      .delete(`${process.env.NEXT_PUBLIC_SAVE_URL}/${mockExamId}`)
+      .then((response) => {
+        setRemove(true);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-
-      setMockExamContainerId(tempIds);
-      // setMockExamComponent(temp);
-    }
   }
   let counter = 0;
   return (
@@ -213,11 +210,20 @@ export default function RecruiterProfile() {
             </div>
           </div>
           <div id={styles.contentContainer2}>
-            {mockExamState ? (
+            {jobPostState ? (
+              <JobContent
+                loadJobPostContent={loadJobPostContent}
+                updateJobPostContent={updateJobPostContent}
+                jobPostResponse={jobPostResponse}
+                jobCount={jobCount}
+              />
+            ) : mockExamState ? (
               <MockExam
                 setLoadMockTestQuestions={setLoadMockTestQuestions}
                 loadMockTestQuestions={loadMockTestQuestions}
                 mockExamCount={mockExamCount}
+                updateMockExamContainer={updateMockExamContainers}
+                response={response}
               />
             ) : (
               <>
@@ -225,7 +231,6 @@ export default function RecruiterProfile() {
                   <div id={styles.mockExamscontainerHeader}>
                     <h1>Mock Exams</h1>
                     <button onClick={addMockExamContainers}>
-                      {" "}
                       <Image
                         alt="plus-icon"
                         width={23}
@@ -233,14 +238,47 @@ export default function RecruiterProfile() {
                         src="/recruiter/plus-icon.svg"
                       />
                     </button>
+                    <button
+                      onClick={() => {
+                        setUpdateMockExamContainers(!updateMockExamContainers);
+                        setRemoveMockExamContainers(false);
+                      }}
+                    >
+                      {" "}
+                      <Image
+                        alt="update-icon"
+                        width={20}
+                        height={20}
+                        src="/recruiter/update-icon.svg"
+                      />
+                    </button>
+                    <button
+                      onClick={() => {
+                        setRemoveMockExamContainers(!removeMockExamContainers);
+                        setUpdateMockExamContainers(false);
+                      }}
+                    >
+                      {" "}
+                      <Image
+                        alt="remove-icon"
+                        width={23}
+                        height={23}
+                        src="/recruiter/remove-icon.svg"
+                      />
+                    </button>
                   </div>
                   <div className={styles.mockExamscontainerSection}>
-                    {loadMockTests?.map((item: any) => {
-                      counter++;
-                      // console.log(counter);
+                    {loadMockTests?.map((item: any, index: number) => {
                       return (
-                        <div
-                          key={item.mockExamId}
+                        <button
+                          key={item.mockExamId} // Ensure key is directly on the button
+                          onClick={() => {
+                            if (removeMockExamContainers) {
+                              removeMockExamComponent(item.mockExamId);
+                            } else {
+                              loadMockExamComponent(item.mockExamId, index + 1);
+                            }
+                          }}
                           id={styles.mockExamscontainer}
                         >
                           <Image
@@ -249,72 +287,39 @@ export default function RecruiterProfile() {
                             height={60}
                             src="/recruiter/exam-icon.svg"
                           />
-                          <h1>Mock Exam {counter}</h1>
+                          <h1>Mock Exam {index + 1}</h1>
                           <div id={styles.mockExamscontainerButtons}>
-                            <button
-                              onClick={() => {
-                                loadMockExamComponent(item.mockExamId, counter);
-                              }}
-                            >
+                            {removeMockExamContainers ? (
                               <Image
-                                alt="plus-icon"
-                                width={20}
-                                height={20}
-                                src="/recruiter/update-icon.svg"
-                              />
-                            </button>
-                            <button
-                              onClick={() => {
-                                removeMockExamContainer(item);
-                              }}
-                            >
-                              <Image
-                                alt="plus-icon"
-                                width={30}
-                                height={30}
+                                alt="remove-icon"
+                                width={25}
+                                height={25}
                                 src="/recruiter/remove-icon.svg"
                               />
-                            </button>
+                            ) : updateMockExamContainers ? (
+                              <Image
+                                alt="update-icon"
+                                width={25}
+                                height={25}
+                                src="/recruiter/update-icon.svg"
+                              />
+                            ) : null}
                           </div>
-                        </div>
+                        </button>
                       );
                     })}
                   </div>
                 </div>
-                <div id={styles.jobListing}>
-                  <h1 id={styles.jobListingcontainerHeader}>Job Listing</h1>
-                  <div className={styles.jobListingcontainerSection}>
-                    <div id={styles.jobListingcontainer}>
-                      <Image
-                        alt="job-search"
-                        width={60}
-                        height={60}
-                        src="/recruiter/job-search.svg"
-                      />
-                      <h1>Internship 01</h1>
-                    </div>
-                    <div id={styles.jobListingcontainer}>
-                      {" "}
-                      <Image
-                        alt="job-search"
-                        width={60}
-                        height={60}
-                        src="/recruiter/job-search.svg"
-                      />
-                      <h1>Internship 02</h1>
-                    </div>
-                    <div id={styles.jobListingcontainer}>
-                      {" "}
-                      <Image
-                        alt="job-search"
-                        width={60}
-                        height={60}
-                        src="/recruiter/job-search.svg"
-                      />
-                      <h1>Internship 03</h1>
-                    </div>
-                  </div>
-                </div>
+                <JobListing
+                  loadJobPostContent={loadJobPostContent}
+                  setLoadJobPostContent={setLoadJobPostContent}
+                  setUpdateJobPostContent={setUpdateJobPostContent}
+                  updateJobPostContent={updateJobPostContent}
+                  setJobPostState={setJobPostState}
+                  jobPostState={jobPostState}
+                  setJobCount={setJobCount}
+                  setJobPostResponse={setJobPostResponse}
+                />
               </>
             )}
           </div>
