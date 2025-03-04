@@ -5,17 +5,20 @@ import CoursesManagement from './CourseManagment';
 import styles from './adminPage.module.css';   // Importing custom styles
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import {useEffect, useState} from "react";
-import SignInForAdmin from './SignInForAdmin';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+
 
 export default function Page(){
     const router = useRouter();
+    const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
+        setIsClient(true);
         if (localStorage.getItem("isAuthenticated") !== "true") {
-          router.push("./SignInForAdmin.tsx"); // Redirect if not logged in
+            router.push("/SignInForAdmin"); // Redirect if not logged in
         }
-    }, []);
+    }, [router]);
+
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -34,6 +37,8 @@ export default function Page(){
           [name]: value,
         }));
       };
+
+    if (!isClient) return null;
 
     return(
         <div className={styles.outerContainer}>
@@ -131,13 +136,9 @@ export default function Page(){
                             <CoursesManagement/>
                         </div>
 
-
-
                     </div>
                 </div>
             </div>
-
-            <SignInForAdmin/>
 
             <Footer/>
         </div>

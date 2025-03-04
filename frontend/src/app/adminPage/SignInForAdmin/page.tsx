@@ -1,21 +1,25 @@
+"use client"
+
 import { useEffect, useState } from "react";
-import styles from "./adminPage.module.css"
-import { useRouter } from "next/router";
+import styles from "../adminPage.module.css"
+import { useRouter } from "next/navigation";
 
 export default function SignInForAdmin() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const router = useRouter();
+    const [isClient, setIsClient] = useState(false);
 
     // Redirect to Admin Page if already logged in
     useEffect(() => {
+        setIsClient(true);
         if (localStorage.getItem("isAuthenticated") === "true") {
-            router.push("/page");
+            router.push("/adminPage");
         }
-    }, []);
+    }, [router]);
 
-    
+    if (!isClient) return null;
 
     const handleLogin = () => {
         const adminUserName = "adminSkillSync";
