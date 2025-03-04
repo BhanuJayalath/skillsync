@@ -4,10 +4,19 @@ import Navbar from '../components/Navbar';
 import CoursesManagement from './CourseManagment';
 import styles from './adminPage.module.css';   // Importing custom styles
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SignInForAdmin from './SignInForAdmin';
+import { useRouter } from 'next/router';
 
 export default function Page(){
+    const router = useRouter();
+
+    useEffect(() => {
+        if (localStorage.getItem("isAuthenticated") !== "true") {
+          router.push("./SignInForAdmin.tsx"); // Redirect if not logged in
+        }
+    }, []);
+
     const [isEditing, setIsEditing] = useState(false);
 
     const [userInfo, setUserInfo] = useState({
