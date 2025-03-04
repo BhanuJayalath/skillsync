@@ -96,7 +96,6 @@ export default function TestListing({
                 const key: any = localStorage.key(i);
                 let Item: any = localStorage.getItem(key);
                 let jsonParsedItem = Item ? JSON.parse(Item) : null;
-                // console.log(jsonParsedItem.mockExamId);
                 if (item.mockExamId === jsonParsedItem.mockExamId) {
                   tempArray[index] = jsonParsedItem;
                 } else if (jsonParsedItem.mockExamId) {

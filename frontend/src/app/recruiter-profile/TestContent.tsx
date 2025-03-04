@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import MockExamContainer from "./QuestionContent";
 import axios from "axios";
 import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
@@ -140,7 +139,7 @@ export default function TestContent({
             return (
               <QuestionContent
                 key={questionCounter}
-                MockTestQuestions={item}
+                TestQuestions={item}
                 questionCounter={questionCounter}
                 update={update}
                 removeQuestion={removeQuestion}

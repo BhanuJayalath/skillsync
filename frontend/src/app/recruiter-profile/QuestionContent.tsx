@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 export default function QuestionContent({
-  MockTestQuestions,
+  TestQuestions,
   update,
   questionCounter,
   removeQuestion,
   updateTestContent,
 }: {
-  MockTestQuestions: any;
+  TestQuestions: any;
   update: any;
   questionCounter: number;
   removeQuestion: any;
@@ -24,7 +24,7 @@ export default function QuestionContent({
   const [removed, setRemoved] = useState(false);
   const [readOnly, setReadOnly] = useState(false);
   const storage = {
-    QuestionId: MockTestQuestions.QuestionId,
+    QuestionId: TestQuestions.QuestionId,
     Question: question,
     Answer1: answer1,
     Answer2: answer2,
@@ -33,21 +33,20 @@ export default function QuestionContent({
     correctAnswer: selectedAnswer,
   };
   useEffect(() => {
-    console.log(MockTestQuestions);
-    setQuestion(MockTestQuestions.Question);
-    setAnswer1(MockTestQuestions.Answer1);
-    setAnswer2(MockTestQuestions.Answer2);
-    setAnswer3(MockTestQuestions.Answer3);
-    setAnswer4(MockTestQuestions.Answer4);
+    setQuestion(TestQuestions.Question);
+    setAnswer1(TestQuestions.Answer1);
+    setAnswer2(TestQuestions.Answer2);
+    setAnswer3(TestQuestions.Answer3);
+    setAnswer4(TestQuestions.Answer4);
     setSelectedAnswer(
-      MockTestQuestions.correctAnswer ? MockTestQuestions.correctAnswer : null
+      TestQuestions.correctAnswer ? TestQuestions.correctAnswer : null
     );
     if (updateTestContent == false) {
       setReadOnly(true);
     }
   }, [removed]);
   useEffect(() => {
-    update(MockTestQuestions.QuestionId, storage);
+    update(TestQuestions.QuestionId, storage);
   }, [question, answer1, answer2, answer3, answer4, selectedAnswer]);
 
   function saveQuestion(event: any) {
@@ -77,7 +76,6 @@ export default function QuestionContent({
 
   function handleCheckBoxChange(selection: Number) {
     setSelectedAnswer(selection);
-    // addCorrectAnswer(selection, MockTestQuestions.QuestionId);
   }
   return (
     <div id={styles.mockExamSection}>
@@ -88,7 +86,7 @@ export default function QuestionContent({
             {updateTestContent ? (
               <button
                 onClick={() => {
-                  remove(MockTestQuestions.QuestionId);
+                  remove(TestQuestions.QuestionId);
                 }}
               >
                 <Image
