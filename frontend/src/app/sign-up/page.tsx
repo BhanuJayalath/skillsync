@@ -1,43 +1,84 @@
 "use client";
 
-import { useState } from "react";
 import styles from "./sign-up.module.css";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
-const SignUpPage = () => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    mobileNumber: "",
+export default function SignUpPage() {
+  const router = useRouter();
+  // signupType: "user" or "recruiter"
+  const [signupType, setSignupType] = useState("user");
+
+  const [user, setUser] = useState({
+    username: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    company: "", // only used for recruiters
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent default form submission
+    try {
+      setLoading(true);
+      let endpoint = "";
+      let redirectPath = "";
+      if (signupType === "user") {
+        endpoint = "/api/users/sign-up";
+        redirectPath = "/userProfile";
+      } else {
+        endpoint = "/api/recruiters/sign-up";
+        redirectPath = "/recruiter-profile";
+      }
+      const response = await axios.post(endpoint, user);
+      console.log("Signup success", response.data);
+      router.push(redirectPath);
+    } catch (error: any) {
+      console.log("Signup failed", error.message);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const togglePasswordVisibility = (field: "password" | "confirmPassword") => {
-    if (field === "password") setShowPassword(!showPassword);
-    if (field === "confirmPassword")
-      setShowConfirmPassword(!showConfirmPassword);
-  };
+  useEffect(() => {
+    if (signupType === "user") {
+      // For user signup, require username, email, and password.
+      if (user.username && user.email && user.password) {
+        setButtonDisabled(false);
+      } else {
+        setButtonDisabled(true);
+      }
+    } else {
+      // For recruiter signup, also require company name.
+      if (user.username && user.email && user.password && user.company) {
+        setButtonDisabled(false);
+      } else {
+        setButtonDisabled(true);
+      }
+    }
+  }, [user, signupType]);
 
   return (
     <div className={styles.signupContainer}>
+      
+
       {/* Left Section */}
       <div className={styles.leftSection}>
         <div className={styles.imagePlaceholder}>
-          {/* Replace with your image */}
+          {/* Replace with your images */}
           <img src="../logo.png" alt="logo" />
-          <img src="../SignUpPageImg.png" alt="Clipboard" />
+          <img src="../SignUpPageImg.png" alt="Sign Up Img" />
         </div>
       </div>
 
       {/* Right Section */}
+      
       <div className={styles.rightSection}>
         <div className={styles.formContainer}>
           <h2 className={styles.title}>Set up your Account.</h2>
@@ -46,99 +87,100 @@ const SignUpPage = () => {
             and personalized tips to boost your confidence and land your dream
             job!
           </p>
+          {/* Tab Selector */}
+          <div className={styles.tabSelector}>
+            <button
+              className={`${styles.tabButton} ${signupType === "user" ? styles.activeTab : ""}`}
+              onClick={() => setSignupType("user")}
+            >
+              User Signup
+            </button>
+            <button
+              className={`${styles.tabButton} ${signupType === "recruiter" ? styles.activeTab : ""}`}
+              onClick={() => setSignupType("recruiter")}
+            >
+              Recruiter Signup
+            </button>
+          </div>
+
 
           {/* Form */}
-          <form>
-            {/* Full Name */}
+          <form onSubmit={onSignUp}>
+            {/* User Name */}
             <div className={styles.formGroup}>
-              <label>Full Name</label>
+              
+              <label htmlFor="username">User Name</label>
               <input
+                id="username"
                 type="text"
-                name="fullName"
-                placeholder="Full Name"
-                value={formData.fullName}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* Mobile Number */}
-            <div className={styles.formGroup}>
-              <label>Mobile Number</label>
-              <input
-                type="text"
-                name="mobileNumber"
-                placeholder="123 456 7890"
-                value={formData.mobileNumber}
-                onChange={handleChange}
+                value={user.username}
+                onChange={(e) =>
+                  setUser({ ...user, username: e.target.value })
+                }
+                placeholder="Username"
               />
             </div>
 
             {/* Email */}
             <div className={styles.formGroup}>
-              <label>Email</label>
+              <label htmlFor="email">Email</label>
               <input
+                id="email"
                 type="email"
-                name="email"
-                placeholder="example@gmail.com"
-                value={formData.email}
-                onChange={handleChange}
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                placeholder="Email"
               />
             </div>
 
             {/* Password */}
             <div className={styles.formGroup}>
-              <label>Password</label>
+              <label htmlFor="password">Password</label>
               <div className={styles.passwordField}>
                 <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="********"
-                  value={formData.password}
-                  onChange={handleChange}
+                  id="password"
+                  type="password"
+                  value={user.password}
+                  onChange={(e) =>
+                    setUser({ ...user, password: e.target.value })
+                  }
+                  placeholder="Password"
                 />
-                <button
-                  type="button"
-                  onClick={() => togglePasswordVisibility("password")}
-                >
-                  👁
-                </button>
               </div>
             </div>
 
-            {/* Confirm Password */}
-            <div className={styles.formGroup}>
-              <label>Confirm Password</label>
-              <div className={styles.passwordField}>
+            {/* Company field for Recruiters */}
+            {signupType === "recruiter" && (
+              <div className={styles.formGroup}>
+                <label htmlFor="company">Company Name</label>
                 <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  placeholder="********"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
+                  id="company"
+                  type="text"
+                  value={user.company}
+                  onChange={(e) =>
+                    setUser({ ...user, company: e.target.value })
+                  }
+                  placeholder="Company Name"
                 />
-                <button
-                  type="button"
-                  onClick={() => togglePasswordVisibility("confirmPassword")}
-                >
-                  👁
-                </button>
               </div>
-            </div>
+            )}
 
             {/* Submit Button */}
-            <button type="submit" className={styles.submitButton}>
-              Register
+            <button
+              type="submit"
+              className={styles.submitButton}
+              disabled={buttonDisabled || loading}
+            >
+              {loading ? "Processing..." : "Register"}
             </button>
           </form>
 
           {/* Already Have Account */}
           <p className={styles.loginText}>
-            Already have an account? <a href="/sign-in">Login</a>
+            Already have an account? <Link href="/login">Login</Link>
           </p>
         </div>
       </div>
     </div>
   );
-};
-
-export default SignUpPage;
+}
