@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UserProfileService } from './user-profile.service';
+// import { put } from '@vercel/blob';
 
 @Controller()
 export class UserProfileController {
@@ -13,4 +14,17 @@ export class UserProfileController {
     }
     return user;
   }
+
+  // @Post('uploadImage') //define the POST route /getUser
+  // async uploadImage(@Body() req: Request) {
+  //   const form = await req.formData();
+  //   const file = form.get('file') as File;
+  //   if (!file.name) {
+  //     return { error: 'No file provided' }; //Return an error if file is not found
+  //   }
+  //   const blob = await put(file.name, file, {
+  //     access: 'public',
+  //   });
+  //   return Response.json(blob);
+  // }
 }
