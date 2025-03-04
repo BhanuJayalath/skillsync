@@ -176,6 +176,21 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                      width={100} height={0} className={styles.userAvatar}/></span>
                     )}
                 </div>
+                {/*<div>*/}
+
+                {/*    /!* File input for selecting an image *!/*/}
+                {/*    <input*/}
+                {/*        type="file"*/}
+                {/*        accept="image/*"*/}
+                {/*        onChange={handleImageChange}*/}
+                {/*    />*/}
+
+                {/*    {imageUrl && <img src={imageUrl} alt="Preview" width="200"/>}*/}
+
+                {/*    {imageFile && (*/}
+                {/*        <button onClick={() => handleImageChange(imageFile)}>Upload Image</button>*/}
+                {/*    )}*/}
+                {/*</div>*/}
                 <div>
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
