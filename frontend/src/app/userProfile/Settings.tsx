@@ -154,7 +154,21 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             })
             .catch(error => console.error('Error fetching cities:', error));
     }, [user.country]);
+    const handleUpload = async (e:React.FormEvent) =>{
+        e.preventDefault();
 
+        if (!inputFileRef.current?.files) {
+            throw new Error('No file selected');
+        }
+
+        const file = inputFileRef.current.files[0];
+
+        const newBlob = await upload(file.name, file, {
+            access: 'public',
+            handleUploadUrl: '/api/users/profilePic/upload',
+        });
+        setBlob(newBlob);
+    }
 
     return (
         <section className={styles.userInfo}>
