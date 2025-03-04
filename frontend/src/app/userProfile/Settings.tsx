@@ -45,9 +45,10 @@ interface SettingsProps {
     handleSubmit: () => Promise<void>;
     addEducation: (e: React.MouseEvent<HTMLButtonElement>) => void;
     addExperience: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    handleSummary: (value: string) => void;
 }
 
-const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience }: SettingsProps) => {
+const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience, handleSummary }: SettingsProps) => {
     const [countries, setCountries] = useState<{ name: string }[]>([]);
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
@@ -127,6 +128,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     : { summary: "error occurred" };
                 const filteredSummary = jsonSummary.summary.replace(/\*\*(.*?)\*\*/g, '$1');
                 setSummary(filteredSummary);
+                handleSummary(filteredSummary);
             })
             .catch(error => console.error("Error:", error));
 
