@@ -15,6 +15,7 @@ export default function RecruiterProfile() {
   const [loadTests, setLoadTests] = useState<
     {
       testId: string;
+      jobId: string;
       testContent: {
         questionContent: any[];
       };
@@ -37,6 +38,10 @@ export default function RecruiterProfile() {
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
   ]);
+
+  useEffect(() => {
+    console.log(testState);
+  }, [testState]);
   const [testCount, setTestCount] = useState(Number);
   const [jobCount, setJobCount] = useState(Number);
   const [updateTestContent, setUpdateTestContent] = useState(false);
@@ -131,6 +136,21 @@ export default function RecruiterProfile() {
           <div id={styles.contentContainer2}>
             {jobPostState ? (
               <JobContent
+                loadTests={loadTests}
+                setLoadTests={setLoadTests}
+                updateTestContent={updateTestContent}
+                setUpdateTestContent={setUpdateTestContent}
+                removeTestBlock={removeTestBlock}
+                setRemoveTestBlock={setRemoveTestBlock}
+                testState={testState}
+                setTestState={setTestState}
+                setJobPostState={setJobPostState}
+                setLoadTestQuestions={setLoadTestQuestions}
+                setTestCount={setTestCount}
+                remove={remove}
+                setRemove={setRemove}
+                testResponse={testResponse}
+                setTestResponse={setTestResponse}
                 loadJobPostContent={loadJobPostContent}
                 updateJobPostContent={updateJobPostContent}
                 jobPostResponse={jobPostResponse}
@@ -146,7 +166,7 @@ export default function RecruiterProfile() {
               />
             ) : (
               <>
-                <TestListing
+                {/* <TestListing
                   loadTests={loadTests}
                   setLoadTests={setLoadTests}
                   updateTestContent={updateTestContent}
@@ -161,7 +181,7 @@ export default function RecruiterProfile() {
                   setRemove={setRemove}
                   testResponse={testResponse}
                   setTestResponse={setTestResponse}
-                />
+                /> */}
                 <JobListing
                   loadJobPostContent={loadJobPostContent}
                   setLoadJobPostContent={setLoadJobPostContent}

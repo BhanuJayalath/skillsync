@@ -47,7 +47,7 @@ export default function JobListing({
   const tempArray: any = [];
 
   useEffect(() => {
-    console.log(loadJobPosts);
+    // console.log(loadJobPosts);
     axios.get(`${process.env.NEXT_PUBLIC_GET_JOBS}`).then((response) => {
       if (response.data.length != 0) {
         response.data.map((item: any, index: number) => {
@@ -64,6 +64,7 @@ export default function JobListing({
               }
             }
           }
+          console.log(tempArray);
           setLoadJobPosts(tempArray);
           setJobPostResponse(response.data);
         });
@@ -73,11 +74,14 @@ export default function JobListing({
             const key: any = localStorage.key(i);
             let Item: any = localStorage.getItem(key);
             let jsonParsedItem = Item ? JSON.parse(Item) : null;
-            tempArray.push(jsonParsedItem);
-            setLoadJobPosts(tempArray);
+            if (jsonParsedItem.jobId && !jsonParsedItem.testId) {
+              tempArray.push(jsonParsedItem);
+              setLoadJobPosts(tempArray);
+            }
           }
         }
       }
+      console.log(tempArray);
     });
   }, [remove]);
 
@@ -88,6 +92,7 @@ export default function JobListing({
     setJobPostState(true);
   }
   function addJobPostContainers() {
+    localStorage.clear();
     setLoadJobPosts([
       ...loadJobPosts,
       {

@@ -20,12 +20,14 @@ export default function TestListing({
   setRemoveTestBlock,
   testState,
   setTestState,
+  setJobPostState,
   setLoadTestQuestions,
   setTestCount,
   remove,
   setRemove,
   testResponse,
   setTestResponse,
+  loadJobPostContent,
 }: {
   loadTests: any;
   setLoadTests: any;
@@ -35,12 +37,14 @@ export default function TestListing({
   setRemoveTestBlock: any;
   testState: any;
   setTestState: any;
+  setJobPostState: any;
   setLoadTestQuestions: any;
   setTestCount: any;
   remove: any;
   setRemove: any;
   testResponse: any;
   setTestResponse: any;
+  loadJobPostContent: any;
 }) {
   useEffect(() => {
     const tempArray: any = [];
@@ -50,16 +54,20 @@ export default function TestListing({
         setTestResponse(response.data);
         if (response.data.length != 0) {
           response.data.map((item: any, index: number) => {
-            tempArray.push(item);
+            if (item.jobId === loadJobPostContent.jobId) {
+              tempArray.push(item);
+            }
             if (localStorage.length > 0) {
               for (let i = 0; i < localStorage.length; i++) {
                 const key: any = localStorage.key(i);
                 let Item: any = localStorage.getItem(key);
                 let jsonParsedItem = Item ? JSON.parse(Item) : null;
                 if (item.testId === jsonParsedItem.testId) {
+                  console.log("trigger1");
                   tempArray[index] = jsonParsedItem;
                 } else if (jsonParsedItem.testId) {
                   tempArray.push(jsonParsedItem);
+                  console.log("trigger2");
                 }
               }
             }
@@ -71,11 +79,16 @@ export default function TestListing({
               const key: any = localStorage.key(i);
               let Item: any = localStorage.getItem(key);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
-              tempArray.push(jsonParsedItem);
-              setLoadTests(tempArray);
+              if (jsonParsedItem.testId) {
+                tempArray.push(jsonParsedItem);
+                setLoadTests(tempArray);
+                console.log("trigger3");
+              }
             }
           }
         }
+        console.log("trigger 4");
+        console.log(tempArray);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -89,14 +102,16 @@ export default function TestListing({
         setTestCount(testCounter);
       }
     });
-
+    setJobPostState(false);
     setTestState(!testState);
   }
   function addTestComponent() {
+    console.log(loadTests);
     setLoadTests([
       ...loadTests,
       {
         testId: "test" + Date.now(),
+        jobId: loadJobPostContent.jobId,
         testContent: {
           questionContent: [],
         },

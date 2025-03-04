@@ -8,6 +8,9 @@ export class Tests {
   @Prop({ required: true })
   testId: String;
 
+  @Prop({ required: true })
+  jobId: String;
+
   @Prop({
     type: {
       questionContent: [
