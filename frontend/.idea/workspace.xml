@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="created the prompt for the AI">
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="got the enhanced cv summary using fetch api by sending a post request to the deepseek AI">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,15 +98,7 @@
       <workItem from="1740810076697" duration="230000" />
       <workItem from="1740821582785" duration="17704000" />
       <workItem from="1740894966002" duration="27230000" />
-      <workItem from="1740965701512" duration="14909000" />
-    </task>
-    <task id="LOCAL-00012" summary="add a settings section to the nav bar and add content to the cv section">
-      <option name="closed" value="true" />
-      <created>1740575003366</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1740575003366</updated>
+      <workItem from="1740965701512" duration="16788000" />
     </task>
     <task id="LOCAL-00013" summary="fix the errors in module.ts">
       <option name="closed" value="true" />
@@ -491,7 +484,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741008965828</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="got the enhanced cv summary using fetch api by sending a post request to the deepseek AI">
+      <option name="closed" value="true" />
+      <created>1741009144379</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1741009144382</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,7 +510,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="imported the components" />
     <MESSAGE value="created addEducation function for the settings" />
     <MESSAGE value="created addExperience function for the settings" />
     <MESSAGE value="created removeEducation function for the settings" />
@@ -534,6 +534,7 @@
     <MESSAGE value="add a summary section to the Settings.tsx" />
     <MESSAGE value="assigned the api key and the url to the variables in the settings.tsx using .env" />
     <MESSAGE value="created the prompt for the AI" />
-    <option name="LAST_COMMIT_MESSAGE" value="created the prompt for the AI" />
+    <MESSAGE value="got the enhanced cv summary using fetch api by sending a post request to the deepseek AI" />
+    <option name="LAST_COMMIT_MESSAGE" value="got the enhanced cv summary using fetch api by sending a post request to the deepseek AI" />
   </component>
 </project>

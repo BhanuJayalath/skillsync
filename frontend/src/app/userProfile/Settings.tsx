@@ -147,6 +147,24 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             })
             .catch(error => console.error('Error fetching cities:', error));
     }, [user.country]);
+
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [imageFile, setImageFile] = useState<File | null>(null);
+
+    // // Handle image selection
+    // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const file = event.target.files?.[0];
+    //     if (file) {
+    //         setImageFile(file);
+    //         // Optional: Show a preview of the selected image
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => {
+    //             setImageUrl(reader.result as string);
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
+
     return (
         <section className={styles.userInfo}>
             <div className={styles.userDetails}>
