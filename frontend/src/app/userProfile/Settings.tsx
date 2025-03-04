@@ -191,13 +191,6 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                         <button onClick={handleUpload}>Upload</button>
                     )}
                 </div>
-                {/*{blob && (*/}
-                {/*    <div>*/}
-                {/*        Blob url: <a href={blob.url}>{blob.url}</a>*/}
-                {/*        <span><Image src={blob.url} alt="userIcon"*/}
-                {/*                     width={100} height={0} className={styles.userAvatar}/></span>*/}
-                {/*    </div>*/}
-                {/*)}*/}
                 <div>
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
