@@ -56,6 +56,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
     const [summary, setSummary] = useState("");
+    const [imageFile, setImageFile] = useState<File | null>(null);
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
 
@@ -174,22 +175,26 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     }, [blob?.url]);
     console.log(user.avatar);
     return (
-        <section className={styles.userInfo}>
+        <section className={styles.userSettings}>
             <div className={styles.userDetails}>
-                <div className={styles.profilePic}>
-                    {user.avatar ? (
-                        <span><Image src={user.avatar} alt="userIcon"
-                                     width={100} height={0} className={styles.userAvatar}/></span>
-                    ) : (
-                        <span><Image src={"/user/userIcon.svg"} alt="userIcon"
-                                     width={100} height={0} className={styles.userAvatar}/></span>
-                    )}
-                </div>
-                <div>
-                    <input name="file" ref={inputFileRef} type="file" accept="image/*" required/>
-                    {inputFileRef && (
-                        <button onClick={handleUpload}>Upload</button>
-                    )}
+                <div className={styles.profileHeader}>
+                    <div className={styles.profilePic}>
+                        {user.avatar ? (
+                            <span><Image src={user.avatar} alt="userIcon"
+                                         width={100} height={0} className={styles.profilePic}/></span>
+                        ) : (
+                            <span><Image src={"/user/userIcon.svg"}
+                                         alt="userIcon"
+                                         width={100} height={0}
+                                         className={styles.profilePic}/></span>
+                        )}
+                    </div>
+                    <div className={styles.uploadContainer}>
+                        <input name="file" ref={inputFileRef} type="file" accept="image/*"
+                               onChange={(e) => handleUpload(e)}
+                               className={styles.hiddenInput}/>
+                        <button className={styles.customUploadButton}>Upload</button>
+                    </div>
                 </div>
                 <div>
                     <strong>{user.userName}</strong>
