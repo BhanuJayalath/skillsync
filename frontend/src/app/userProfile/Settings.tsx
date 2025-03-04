@@ -185,7 +185,12 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                      width={100} height={0} className={styles.userAvatar}/></span>
                     )}
                 </div>
-
+                <div>
+                    <input name="file" ref={inputFileRef} type="file" accept="image/*" required/>
+                    {inputFileRef && (
+                        <button onClick={handleUpload}>Upload</button>
+                    )}
+                </div>
                 {/*{blob && (*/}
                 {/*    <div>*/}
                 {/*        Blob url: <a href={blob.url}>{blob.url}</a>*/}
