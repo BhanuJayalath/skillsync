@@ -12,7 +12,7 @@ import axios from "axios";
 import TestListing from "./TestListing";
 
 export default function RecruiterProfile() {
-  const [loadMockTests, setLoadMockTests] = useState<
+  const [loadTests, setLoadTests] = useState<
     {
       mockExamId: string;
       mockExamContent: {
@@ -21,7 +21,7 @@ export default function RecruiterProfile() {
     }[]
   >([]);
 
-  const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
+  const [loadTestQuestions, setLoadTestQuestions] = useState([]);
   const [loadJobPostContent, setLoadJobPostContent] = useState<
     {
       jobId: String;
@@ -31,21 +31,21 @@ export default function RecruiterProfile() {
       jobType: [];
     }[]
   >([]);
-  const [mockExamState, setMockExamState] = useState(false);
+  const [testState, setTestState] = useState(false);
   const [jobPostState, setJobPostState] = useState(false);
 
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
   ]);
-  const [mockExamCount, setMockExamCount] = useState(Number);
+  const [testCount, setTestCount] = useState(Number);
   const [jobCount, setJobCount] = useState(Number);
-  const [updateMockExamContainers, setUpdateMockExamContainers] =
+  const [updateTestContent, setUpdateTestContent] =
     useState(false);
   const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
-  const [removeMockExamContainers, setRemoveMockExamContainers] =
+  const [removeTestBlock, setRemoveTestBlock] =
     useState(false);
   const [remove, setRemove] = useState(false);
-  const [response, setResponse] = useState();
+  const [testResponse, setTestResponse] = useState();
   const [jobPostResponse, setJobPostResponse] = useState();
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function RecruiterProfile() {
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
-        setResponse(response.data);
+        setTestResponse(response.data);
         if (response.data.length != 0) {
           response.data.map((item: any, index: number) => {
             tempArray.push(item);
@@ -74,7 +74,7 @@ export default function RecruiterProfile() {
                 }
               }
             }
-            setLoadMockTests(tempArray);
+            setLoadTests(tempArray);
           });
         } else {
           if (localStorage.length > 0) {
@@ -83,7 +83,7 @@ export default function RecruiterProfile() {
               let Item: any = localStorage.getItem(key);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
               tempArray.push(jsonParsedItem);
-              setLoadMockTests(tempArray);
+              setLoadTests(tempArray);
             }
           }
         }
@@ -93,19 +93,19 @@ export default function RecruiterProfile() {
       });
   }, [remove]);
 
-  function loadMockExamComponent(mockexamId: number, mockExamCounter: number) {
-    loadMockTests.find((item: any) => {
+  function loadTestComponent(mockexamId: number, mockExamCounter: number) {
+    loadTests.find((item: any) => {
       if (item.mockExamId === mockexamId) {
-        setLoadMockTestQuestions(item);
-        setMockExamCount(mockExamCounter);
+        setLoadTestQuestions(item);
+        setTestCount(mockExamCounter);
       }
     });
 
-    setMockExamState(!mockExamState);
+    setTestState(!testState);
   }
   function addMockExamContainers() {
-    setLoadMockTests([
-      ...loadMockTests,
+    setLoadTests([
+      ...loadTests,
       {
         mockExamId: "exam" + Date.now(),
         mockExamContent: {
@@ -217,31 +217,31 @@ export default function RecruiterProfile() {
                 jobPostResponse={jobPostResponse}
                 jobCount={jobCount}
               />
-            ) : mockExamState ? (
+            ) : testState ? (
               <TestContent
-                setLoadMockTestQuestions={setLoadMockTestQuestions}
-                loadMockTestQuestions={loadMockTestQuestions}
-                mockExamCount={mockExamCount}
-                updateMockExamContainer={updateMockExamContainers}
-                response={response}
+                setLoadTestQuestions={setLoadTestQuestions}
+                loadTestQuestions={loadTestQuestions}
+                testCount={testCount}
+                updateTestContent={updateTestContent}
+                testResponse={testResponse}
               />
             ) : (
               <>
                 <TestListing
-                  loadMockTests={loadMockTests}
-                  setLoadMockTests={setLoadMockTests}
-                  updateMockExamContainers={updateMockExamContainers}
-                  setUpdateMockExamContainers={setUpdateMockExamContainers}
-                  removeMockExamContainers={removeMockExamContainers}
-                  setRemoveMockExamContainers={setRemoveMockExamContainers}
-                  mockExamState={mockExamState}
-                  setMockExamState={setMockExamState}
-                  setLoadMockTestQuestions={setLoadMockTestQuestions}
-                  setMockExamCount={setMockExamCount}
+                  loadTests={loadTests}
+                  setLoadTests={setLoadTests}
+                  updateTestContent={updateTestContent}
+                  setUpdateTestContent={setUpdateTestContent}
+                  removeTestBlock={removeTestBlock}
+                  setRemoveTestBlock={setRemoveTestBlock}
+                  testState={testState}
+                  setTestState={setTestState}
+                  setLoadTestQuestions={setLoadTestQuestions}
+                  setTestCount={setTestCount}
                   remove={remove}
                   setRemove={setRemove}
-                  response={response}
-                  setResponse={setResponse}
+                  testResponse={testResponse}
+                  setTestResponse={setTestResponse}
                 />
                 {/* <div id={styles.mockExams}>
                   <div id={styles.mockExamscontainerHeader}>

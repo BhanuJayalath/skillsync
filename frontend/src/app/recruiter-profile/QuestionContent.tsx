@@ -7,13 +7,13 @@ export default function QuestionContent({
   update,
   questionCounter,
   removeQuestion,
-  updateMockExamContainer,
+  updateTestContent,
 }: {
   MockTestQuestions: any;
   update: any;
   questionCounter: number;
   removeQuestion: any;
-  updateMockExamContainer: any;
+  updateTestContent: any;
 }) {
   const [question, setQuestion] = useState<string>();
   const [answer1, setAnswer1] = useState<string>();
@@ -42,7 +42,7 @@ export default function QuestionContent({
     setSelectedAnswer(
       MockTestQuestions.correctAnswer ? MockTestQuestions.correctAnswer : null
     );
-    if (updateMockExamContainer == false) {
+    if (updateTestContent == false) {
       setReadOnly(true);
     }
   }, [removed]);
@@ -85,7 +85,7 @@ export default function QuestionContent({
         <header>
           Question {questionCounter}
           <div id={styles.mockExamSectionSaveandClose}>
-            {updateMockExamContainer ? (
+            {updateTestContent ? (
               <button
                 onClick={() => {
                   remove(MockTestQuestions.QuestionId);

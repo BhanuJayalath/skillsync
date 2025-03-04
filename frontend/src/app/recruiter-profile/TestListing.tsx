@@ -12,35 +12,35 @@ import JobContent from "./JobContent";
 
 import axios from "axios";
 export default function TestListing({
-  loadMockTests,
-  setLoadMockTests,
-  updateMockExamContainers,
-  setUpdateMockExamContainers,
-  removeMockExamContainers,
-  setRemoveMockExamContainers,
-  mockExamState,
-  setMockExamState,
-  setLoadMockTestQuestions,
-  setMockExamCount,
+  loadTests,
+  setLoadTests,
+  updateTestContent,
+  setUpdateTestContent,
+  removeTestBlock,
+  setRemoveTestBlock,
+  testState,
+  setTestState,
+  setLoadTestQuestions,
+  setTestCount,
   remove,
   setRemove,
-  response,
-  setResponse,
+  testResponse,
+  setTestResponse,
 }: {
-  loadMockTests: any;
-  setLoadMockTests: any;
-  updateMockExamContainers: any;
-  setUpdateMockExamContainers: any;
-  removeMockExamContainers: any;
-  setRemoveMockExamContainers: any;
-  mockExamState: any;
-  setMockExamState: any;
-  setLoadMockTestQuestions: any;
-  setMockExamCount: any;
+  loadTests: any;
+  setLoadTests: any;
+  updateTestContent: any;
+  setUpdateTestContent: any;
+  removeTestBlock: any;
+  setRemoveTestBlock: any;
+  testState: any;
+  setTestState: any;
+  setLoadTestQuestions: any;
+  setTestCount: any;
   remove: any;
   setRemove: any;
-  response: any;
-  setResponse: any;
+  testResponse: any;
+  setTestResponse: any;
 }) {
   //   const [loadMockTests, setLoadMockTests] = useState<
   //     {
@@ -87,7 +87,7 @@ export default function TestListing({
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
       .then((response) => {
-        setResponse(response.data);
+        setTestResponse(response.data);
         if (response.data.length != 0) {
           response.data.map((item: any, index: number) => {
             tempArray.push(item);
@@ -104,7 +104,7 @@ export default function TestListing({
                 }
               }
             }
-            setLoadMockTests(tempArray);
+            setLoadTests(tempArray);
           });
         } else {
           if (localStorage.length > 0) {
@@ -113,7 +113,7 @@ export default function TestListing({
               let Item: any = localStorage.getItem(key);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
               tempArray.push(jsonParsedItem);
-              setLoadMockTests(tempArray);
+              setLoadTests(tempArray);
             }
           }
         }
@@ -123,19 +123,19 @@ export default function TestListing({
       });
   }, [remove]);
 
-  function loadMockExamComponent(mockexamId: number, mockExamCounter: number) {
-    loadMockTests.find((item: any) => {
+  function loadTestContent(mockexamId: number, mockExamCounter: number) {
+    loadTests.find((item: any) => {
       if (item.mockExamId === mockexamId) {
-        setLoadMockTestQuestions(item);
-        setMockExamCount(mockExamCounter);
+        setLoadTestQuestions(item);
+        setTestCount(mockExamCounter);
       }
     });
 
-    setMockExamState(!mockExamState);
+    setTestState(!testState);
   }
-  function addMockExamContainers() {
-    setLoadMockTests([
-      ...loadMockTests,
+  function addTestComponent() {
+    setLoadTests([
+      ...loadTests,
       {
         mockExamId: "exam" + Date.now(),
         mockExamContent: {
@@ -144,7 +144,7 @@ export default function TestListing({
       },
     ]);
   }
-  function removeMockExamComponent(mockExamId: Number) {
+  function removeTestComponent(mockExamId: Number) {
     if (localStorage.length > 0) {
       localStorage.removeItem(mockExamId.toString());
     }
@@ -161,8 +161,8 @@ export default function TestListing({
   return (
     <div id={styles.mockExams}>
       <div id={styles.mockExamscontainerHeader}>
-        <h1>Mock Exams</h1>
-        <button onClick={addMockExamContainers}>
+        <h1>Tests</h1>
+        <button onClick={addTestComponent}>
           <Image
             alt="plus-icon"
             width={23}
@@ -172,8 +172,8 @@ export default function TestListing({
         </button>
         <button
           onClick={() => {
-            setUpdateMockExamContainers(!updateMockExamContainers);
-            setRemoveMockExamContainers(false);
+            setUpdateTestContent(!updateTestContent);
+            setRemoveTestBlock(false);
           }}
         >
           {" "}
@@ -186,8 +186,8 @@ export default function TestListing({
         </button>
         <button
           onClick={() => {
-            setRemoveMockExamContainers(!removeMockExamContainers);
-            setUpdateMockExamContainers(false);
+            setRemoveTestBlock(!removeTestBlock);
+            setUpdateTestContent(false);
           }}
         >
           {" "}
@@ -200,15 +200,15 @@ export default function TestListing({
         </button>
       </div>
       <div className={styles.mockExamscontainerSection}>
-        {loadMockTests?.map((item: any, index: number) => {
+        {loadTests?.map((item: any, index: number) => {
           return (
             <button
               key={item.mockExamId} // Ensure key is directly on the button
               onClick={() => {
-                if (removeMockExamContainers) {
-                  removeMockExamComponent(item.mockExamId);
+                if (removeTestBlock) {
+                  removeTestComponent(item.mockExamId);
                 } else {
-                  loadMockExamComponent(item.mockExamId, index + 1);
+                  loadTestContent(item.mockExamId, index + 1);
                 }
               }}
               id={styles.mockExamscontainer}
@@ -219,16 +219,16 @@ export default function TestListing({
                 height={60}
                 src="/recruiter/exam-icon.svg"
               />
-              <h1>Mock Exam {index + 1}</h1>
+              <h1>Test {index + 1}</h1>
               <div id={styles.mockExamscontainerButtons}>
-                {removeMockExamContainers ? (
+                {removeTestBlock ? (
                   <Image
                     alt="remove-icon"
                     width={25}
                     height={25}
                     src="/recruiter/remove-icon.svg"
                   />
-                ) : updateMockExamContainers ? (
+                ) : updateTestContent ? (
                   <Image
                     alt="update-icon"
                     width={25}

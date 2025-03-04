@@ -6,33 +6,33 @@ import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 import QuestionContent from "./QuestionContent";
 export default function TestContent({
-  loadMockTestQuestions,
-  setLoadMockTestQuestions,
-  mockExamCount,
-  updateMockExamContainer,
-  response,
+  loadTestQuestions,
+  setLoadTestQuestions,
+  testCount,
+  updateTestContent,
+  testResponse,
 }: {
-  setLoadMockTestQuestions: any;
-  loadMockTestQuestions: any;
-  mockExamCount: number;
-  updateMockExamContainer: any;
-  response: any;
+  setLoadTestQuestions: any;
+  loadTestQuestions: any;
+  testCount: number;
+  updateTestContent: any;
+  testResponse: any;
 }) {
   var counter = 0;
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   useEffect(() => {
-    const DatabaseExistingId = response.some(
-      (item: any) => item.mockExamId === loadMockTestQuestions.mockExamId
+    const DatabaseExistingId = testResponse.some(
+      (item: any) => item.mockExamId === loadTestQuestions.mockExamId
     );
     setDatabaseExistingId(DatabaseExistingId);
   });
 
   useEffect(() => {
     localStorage.setItem(
-      loadMockTestQuestions.mockExamId,
-      JSON.stringify(loadMockTestQuestions)
+      loadTestQuestions.mockExamId,
+      JSON.stringify(loadTestQuestions)
     );
-  }, [loadMockTestQuestions]);
+  }, [loadTestQuestions]);
 
   function addQuestion() {
     var temp = {
@@ -44,12 +44,12 @@ export default function TestContent({
       Answer4: "",
       correctAnswer: Number,
     };
-    setLoadMockTestQuestions({
-      ...loadMockTestQuestions,
+    setLoadTestQuestions({
+      ...loadTestQuestions,
       mockExamContent: {
-        ...loadMockTestQuestions.mockExamContent,
+        ...loadTestQuestions.mockExamContent,
         questionContent: [
-          ...loadMockTestQuestions.mockExamContent.questionContent,
+          ...loadTestQuestions.mockExamContent.questionContent,
           temp,
         ],
       },
@@ -58,10 +58,10 @@ export default function TestContent({
   function update(id: number, questionItem: any) {
     // console.log("trigger");
     const index =
-      loadMockTestQuestions.mockExamContent.questionContent.findIndex(
+      loadTestQuestions.mockExamContent.questionContent.findIndex(
         (item: any) => item.QuestionId == id
       );
-    setLoadMockTestQuestions((prev: any) => {
+    setLoadTestQuestions((prev: any) => {
       const updateQuestionItems = [...prev.mockExamContent.questionContent];
       updateQuestionItems[index] = questionItem;
       return {
@@ -76,11 +76,11 @@ export default function TestContent({
 
   function removeQuestion(questionId: number) {
     const index =
-      loadMockTestQuestions.mockExamContent.questionContent.findIndex(
+      loadTestQuestions.mockExamContent.questionContent.findIndex(
         (item: any) => item.QuestionId == questionId
       );
 
-    setLoadMockTestQuestions((prev: any) => {
+    setLoadTestQuestions((prev: any) => {
       const prevQuestionItems = [...prev.mockExamContent.questionContent];
       if (index >= 0) {
         prevQuestionItems.splice(index, 1);
@@ -95,15 +95,15 @@ export default function TestContent({
     });
   }
   function save() {
-    axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, loadMockTestQuestions, {
+    axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, loadTestQuestions, {
       headers: { "Content-Type": "application/json" },
     });
   }
   function updatetoDatabase() {
-    console.log(loadMockTestQuestions);
+    console.log(loadTestQuestions);
     axios.patch(
-      `${process.env.NEXT_PUBLIC_SAVE_URL}/${loadMockTestQuestions.mockExamId}`,
-      loadMockTestQuestions,
+      `${process.env.NEXT_PUBLIC_SAVE_URL}/${loadTestQuestions.mockExamId}`,
+      loadTestQuestions,
       {
         headers: { "Content-Type": "application/json" },
       }
@@ -114,8 +114,8 @@ export default function TestContent({
   return (
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
-        <h1>Mock Exam {mockExamCount}</h1>
-        {updateMockExamContainer ? (
+        <h1>Mock Exam {testCount}</h1>
+        {updateTestContent ? (
           <>
             <button onClick={addQuestion}>
               <Image
@@ -133,8 +133,8 @@ export default function TestContent({
           </>
         ) : null}
       </header>
-      {loadMockTestQuestions?.mockExamContent?.questionContent.length > 0 ? (
-        loadMockTestQuestions.mockExamContent.questionContent.map(
+      {loadTestQuestions?.mockExamContent?.questionContent.length > 0 ? (
+        loadTestQuestions.mockExamContent.questionContent.map(
           (item: any) => {
             questionCounter++;
             return (
@@ -144,7 +144,7 @@ export default function TestContent({
                 questionCounter={questionCounter}
                 update={update}
                 removeQuestion={removeQuestion}
-                updateMockExamContainer={updateMockExamContainer}
+                updateTestContent={updateTestContent}
               />
             );
           }
