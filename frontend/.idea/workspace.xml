@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="got the enhanced cv summary using fetch api by sending a post request to the deepseek AI">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add the image upload to the overview section" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,31 +95,7 @@
       <workItem from="1740810076697" duration="230000" />
       <workItem from="1740821582785" duration="17704000" />
       <workItem from="1740894966002" duration="27230000" />
-      <workItem from="1740965701512" duration="16788000" />
-    </task>
-    <task id="LOCAL-00013" summary="fix the errors in module.ts">
-      <option name="closed" value="true" />
-      <created>1740578918958</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1740578918958</updated>
-    </task>
-    <task id="LOCAL-00014" summary="add a user icon">
-      <option name="closed" value="true" />
-      <created>1740578931163</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1740578931163</updated>
-    </task>
-    <task id="LOCAL-00015" summary="adjust the user icon styles">
-      <option name="closed" value="true" />
-      <created>1740578959299</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1740578959299</updated>
+      <workItem from="1740965701512" duration="17851000" />
     </task>
     <task id="LOCAL-00016" summary="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics">
       <option name="closed" value="true" />
@@ -492,7 +465,31 @@
       <option name="project" value="LOCAL" />
       <updated>1741009144382</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="add a function to handle image changes">
+      <option name="closed" value="true" />
+      <created>1741061482181</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1741061482181</updated>
+    </task>
+    <task id="LOCAL-00063" summary="commented the use state of the imageUrl and imageFile for error fixing">
+      <option name="closed" value="true" />
+      <created>1741061542892</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1741061542892</updated>
+    </task>
+    <task id="LOCAL-00064" summary="add the image upload to the overview section">
+      <option name="closed" value="true" />
+      <created>1741061605835</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1741061605835</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -510,9 +507,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="created addEducation function for the settings" />
-    <MESSAGE value="created addExperience function for the settings" />
-    <MESSAGE value="created removeEducation function for the settings" />
     <MESSAGE value="created removeExperience function for the settings" />
     <MESSAGE value="created handleChange function for the settings" />
     <MESSAGE value="created handleNestedChange function for the settings" />
@@ -535,6 +529,9 @@
     <MESSAGE value="assigned the api key and the url to the variables in the settings.tsx using .env" />
     <MESSAGE value="created the prompt for the AI" />
     <MESSAGE value="got the enhanced cv summary using fetch api by sending a post request to the deepseek AI" />
-    <option name="LAST_COMMIT_MESSAGE" value="got the enhanced cv summary using fetch api by sending a post request to the deepseek AI" />
+    <MESSAGE value="add a function to handle image changes" />
+    <MESSAGE value="commented the use state of the imageUrl and imageFile for error fixing" />
+    <MESSAGE value="add the image upload to the overview section" />
+    <option name="LAST_COMMIT_MESSAGE" value="add the image upload to the overview section" />
   </component>
 </project>
