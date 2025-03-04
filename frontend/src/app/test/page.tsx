@@ -3,42 +3,74 @@
 import { useState } from "react"
 import styles from "./test.module.css"
 
+// Update the Question interface to include correctAnswer (not optional anymore)
 interface Question {
   id: number
   text: string
   options: string[]
-  correctAnswer?: number // Optional for evaluation
+  correctAnswer: number // Now required for scoring
 }
 
 export default function MCQTest() {
-  // Sample questions data
+  // Update the questions array to include correct answers
   const questions: Question[] = [
     {
       id: 1,
-      text: "What is the capital of France?",
-      options: ["London", "Paris", "Berlin", "Madrid"],
+      text: "What is JSX in React?",
+      options: [
+        "A new programming language",
+        "A syntax extension for JavaScript",
+        "A type of database",
+        "A built-in React function"
+      ],
+      correctAnswer: 1, // JSX is a syntax extension for JavaScript
     },
     {
       id: 2,
-      text: "Which planet is known as the Red Planet?",
-      options: ["Earth", "Mars", "Jupiter", "Venus"],
+      text: "Which method is used to update the state in a functional React component?",
+      options: [
+        "setState()",
+        "useState()",
+        "updateState()",
+        "modifyState()"
+      ],
+      correctAnswer: 1, // useState()
     },
     {
       id: 3,
-      text: "Who painted the Mona Lisa?",
-      options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
+      text: "What is the purpose of the useEffect hook in React?",
+      options: [
+        "To handle side effects in functional components",
+        "To create a new component",
+        "To define a new state variable",
+        "To modify the JSX structure"
+      ],
+      correctAnswer: 0, // Handles side effects in functional components
     },
     {
       id: 4,
-      text: "What is the largest ocean on Earth?",
-      options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+      text: "Which keyword is used to create a React component as a class component?",
+      options: [
+        "component",
+        "function",
+        "class",
+        "extends"
+      ],
+      correctAnswer: 2, 
     },
     {
       id: 5,
-      text: "Which element has the chemical symbol 'O'?",
-      options: ["Gold", "Oxygen", "Osmium", "Oganesson"],
+      text: "What is the virtual DOM in React?",
+      options: [
+        "A lightweight copy of the real DOM",
+        "A database used by React",
+        "A new programming paradigm",
+        "An alternative to JavaScript"
+      ],
+      correctAnswer: 0, // A lightweight copy of the real DOM
     },
-  ]
+];
+
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null))
@@ -46,6 +78,9 @@ export default function MCQTest() {
 
   // Add a new state to track whether the test has started
   const [testStarted, setTestStarted] = useState(false)
+
+  // Add a state to store the score
+  const [score, setScore] = useState({ correct: 0, total: questions.length })
 
   // Add this function to start the test
   const startTest = () => {
@@ -70,10 +105,23 @@ export default function MCQTest() {
     }
   }
 
+  // Update the handleSubmit function to calculate the score
   const handleSubmit = () => {
+    let correctCount = 0
+
+    // Calculate the score
+    answers.forEach((answer, index) => {
+      if (answer === questions[index].correctAnswer) {
+        correctCount++
+      }
+    })
+
+    setScore({ correct: correctCount, total: questions.length })
     setIsSubmitted(true)
+
     // Here you would typically send the answers to a server
     console.log("Submitted answers:", answers)
+    console.log("Score:", correctCount, "out of", questions.length)
   }
 
   const allQuestionsAnswered = answers.every((answer) => answer !== null)
@@ -169,7 +217,27 @@ export default function MCQTest() {
               </>
             ) : (
               <div className={styles.resultContainer}>
-                <h2 className={styles.resultTitle}>Test Submitted!</h2>
+                <h2 className={styles.resultTitle}>Test Completed!</h2>
+
+                <div className={styles.scoreCard}>
+                  <div className={styles.scoreCircle}>
+                    <span className={styles.scoreNumber}>{score.correct}</span>
+                    <span className={styles.scoreTotal}>/{score.total}</span>
+                  </div>
+                  <div className={styles.scoreText}>
+                    <p className={styles.scorePercentage}>{Math.round((score.correct / score.total) * 100)}%</p>
+                    <p className={styles.scoreGrade}>
+                      {score.correct === score.total
+                        ? "Perfect Score!"
+                        : score.correct >= Math.floor(score.total * 0.8)
+                          ? "Excellent!"
+                          : score.correct >= Math.floor(score.total * 0.6)
+                            ? "Good Job!"
+                            : "Keep Practicing!"}
+                    </p>
+                  </div>
+                </div>
+
                 <p className={styles.resultText}>Thank you for completing the test. Your answers have been recorded.</p>
                 <button
                   className={styles.restartButton}
@@ -178,6 +246,7 @@ export default function MCQTest() {
                     setCurrentQuestionIndex(0)
                     setIsSubmitted(false)
                     setTestStarted(false)
+                    setScore({ correct: 0, total: questions.length })
                   }}
                 >
                   Take Test Again
