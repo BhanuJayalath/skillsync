@@ -114,6 +114,14 @@ export default function UserProfile() {
             [field]: e.target.value
         }));
     };
+    const handleSummary = (
+        value: string
+    ) => {
+        setUser((prev) => ({
+            ...prev,
+            cvSummary: value
+        }));
+    };
     // Update nested fields (experience, education)
     const handleNestedChange = (
         index: number,
@@ -271,7 +279,7 @@ export default function UserProfile() {
                             {activeTab === 1 && <Progress user={user} />}
                             {activeTab === 2 && <Courses user={user} />}
                             {activeTab === 3 && <Resume user={user}  removeEducation={removeEducation} removeExperience={removeExperience}/>}
-                            {activeTab === 4 && <Settings user={user} handleSubmit={handleSubmit} handleChange={handleChange} handleNestedChange={handleNestedChange} addEducation={addEducation} addExperience={addExperience}/>}
+                            {activeTab === 4 && <Settings user={user} handleSubmit={handleSubmit} handleChange={handleChange} handleNestedChange={handleNestedChange} addEducation={addEducation} addExperience={addExperience} handleSummary={handleSummary}/>}
                         </section>
                     </div>
                 </main>
