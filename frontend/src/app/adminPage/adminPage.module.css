@@ -38,6 +38,19 @@
     cursor: pointer;
 }
 
+.nav button {
+  background-color: #ff0000;
+  padding: 5px 12px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.nav button:hover{
+  background-color: #b90000;
+}
+
+
 .mainContent {
     flex: 1;
     padding: 20px;
