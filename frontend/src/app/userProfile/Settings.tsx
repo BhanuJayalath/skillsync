@@ -1,6 +1,8 @@
 import styles from "@/app/userProfile/user.module.css";
 import Image from "next/image";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
+import { type PutBlobResult } from '@vercel/blob';
+import { upload } from '@vercel/blob/client';
 
 interface User {
     fullName: string;
@@ -46,13 +48,16 @@ interface SettingsProps {
     addEducation: (e: React.MouseEvent<HTMLButtonElement>) => void;
     addExperience: (e: React.MouseEvent<HTMLButtonElement>) => void;
     handleSummary: (value: string) => void;
+    handleAvatar: (value: string) => void;
 }
 
-const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience, handleSummary }: SettingsProps) => {
+const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience, handleSummary, handleAvatar }: SettingsProps) => {
     const [countries, setCountries] = useState<{ name: string }[]>([]);
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
     const [summary, setSummary] = useState("");
+    const inputFileRef = useRef<HTMLInputElement>(null);
+    const [blob, setBlob] = useState<PutBlobResult | null>(null);
 
     // Fetch countries and languages
     useEffect(() => {
@@ -150,49 +155,27 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             .catch(error => console.error('Error fetching cities:', error));
     }, [user.country]);
 
-    // const [imageUrl, setImageUrl] = useState<string | null>(null);
-    // const [imageFile, setImageFile] = useState<File | null>(null);
-
-    // // Handle image selection
-    // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const file = event.target.files?.[0];
-    //     if (file) {
-    //         setImageFile(file);
-    //         // Optional: Show a preview of the selected image
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             setImageUrl(reader.result as string);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
 
     return (
         <section className={styles.userInfo}>
             <div className={styles.userDetails}>
                 <div className={styles.profilePic}>
                     {user.avatar ? (
-                        <span className={styles.userAvatar}>{user.avatar}</span>
+                        <span><Image src={user.avatar} alt="userIcon"
+                                     width={100} height={0} className={styles.userAvatar}/></span>
                     ) : (
                         <span><Image src={"/user/userIcon.svg"} alt="userIcon"
                                      width={100} height={0} className={styles.userAvatar}/></span>
                     )}
                 </div>
-                {/*<div>*/}
 
-                {/*    /!* File input for selecting an image *!/*/}
-                {/*    <input*/}
-                {/*        type="file"*/}
-                {/*        accept="image/*"*/}
-                {/*        onChange={handleImageChange}*/}
-                {/*    />*/}
-
-                {/*    {imageUrl && <img src={imageUrl} alt="Preview" width="200"/>}*/}
-
-                {/*    {imageFile && (*/}
-                {/*        <button onClick={() => handleImageChange(imageFile)}>Upload Image</button>*/}
-                {/*    )}*/}
-                {/*</div>*/}
+                {/*{blob && (*/}
+                {/*    <div>*/}
+                {/*        Blob url: <a href={blob.url}>{blob.url}</a>*/}
+                {/*        <span><Image src={blob.url} alt="userIcon"*/}
+                {/*                     width={100} height={0} className={styles.userAvatar}/></span>*/}
+                {/*    </div>*/}
+                {/*)}*/}
                 <div>
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
