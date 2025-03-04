@@ -76,7 +76,7 @@ export default function JobContent({
 
   function updatetoDatabase() {
     axios.patch(
-      `${process.env.NEXT_PUBLIC_UPDATE_JOBS}/${loadJobPostContent.jobId}`,
+      `${process.env.NEXT_PUBLIC_UPDATE_JOB}/${loadJobPostContent.jobId}`,
       storage,
       {
         headers: { "Content-Type": "application/json" },
@@ -84,7 +84,7 @@ export default function JobContent({
     );
   }
   function saveToDatabase() {
-    axios.post(`${process.env.NEXT_PUBLIC_CREATE_JOBS}`, storage, {
+    axios.post(`${process.env.NEXT_PUBLIC_SAVE_JOB}`, storage, {
       headers: { "Content-Type": "application/json" },
     });
   }

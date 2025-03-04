@@ -42,50 +42,10 @@ export default function TestListing({
   testResponse: any;
   setTestResponse: any;
 }) {
-  //   const [loadMockTests, setLoadMockTests] = useState<
-  //     {
-  //       mockExamId: string;
-  //       mockExamContent: {
-  //         questionContent: any[];
-  //       };
-  //     }[]
-  //   >([]);
-
-  //   const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
-  //   const [loadJobPostContent, setLoadJobPostContent] = useState<
-  //     {
-  //       jobId: String;
-  //       jobTitle: String;
-  //       jobDescription: String;
-  //       requiredSkills: [];
-  //       jobType: [];
-  //     }[]
-  //   >([]);
-  //   const [mockExamState, setMockExamState] = useState(false);
-  //   const [jobPostState, setJobPostState] = useState(false);
-
-  //   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
-  //     Date.now(),
-  //   ]);
-  //   const [mockExamCount, setMockExamCount] = useState(Number);
-  //   const [jobCount, setJobCount] = useState(Number);
-  //   const [updateMockExamContainers, setUpdateMockExamContainers] =
-  //     useState(false);
-  //   const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
-  //   const [removeMockExamContainers, setRemoveMockExamContainers] =
-  //     useState(false);
-  //   const [remove, setRemove] = useState(false);
-  //   const [response, setResponse] = useState();
-  //   const [jobPostResponse, setJobPostResponse] = useState();
-
-  //   useEffect(() => {
-  //     console.log(loadJobPostContent);
-  //   }, [loadJobPostContent]);
-
   useEffect(() => {
     const tempArray: any = [];
     axios
-      .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
+      .get(`${process.env.NEXT_PUBLIC_GET_TESTS}`)
       .then((response) => {
         setTestResponse(response.data);
         if (response.data.length != 0) {
@@ -96,9 +56,9 @@ export default function TestListing({
                 const key: any = localStorage.key(i);
                 let Item: any = localStorage.getItem(key);
                 let jsonParsedItem = Item ? JSON.parse(Item) : null;
-                if (item.mockExamId === jsonParsedItem.mockExamId) {
+                if (item.testId === jsonParsedItem.testId) {
                   tempArray[index] = jsonParsedItem;
-                } else if (jsonParsedItem.mockExamId) {
+                } else if (jsonParsedItem.testId) {
                   tempArray.push(jsonParsedItem);
                 }
               }
@@ -122,11 +82,11 @@ export default function TestListing({
       });
   }, [remove]);
 
-  function loadTestContent(mockexamId: number, mockExamCounter: number) {
+  function loadTestContent(testId: string, testCounter: number) {
     loadTests.find((item: any) => {
-      if (item.mockExamId === mockexamId) {
+      if (item.testId === testId) {
         setLoadTestQuestions(item);
-        setTestCount(mockExamCounter);
+        setTestCount(testCounter);
       }
     });
 
@@ -136,19 +96,19 @@ export default function TestListing({
     setLoadTests([
       ...loadTests,
       {
-        mockExamId: "exam" + Date.now(),
-        mockExamContent: {
+        testId: "test" + Date.now(),
+        testContent: {
           questionContent: [],
         },
       },
     ]);
   }
-  function removeTestComponent(mockExamId: Number) {
+  function removeTestComponent(testId: string) {
     if (localStorage.length > 0) {
-      localStorage.removeItem(mockExamId.toString());
+      localStorage.removeItem(testId.toString());
     }
     axios
-      .delete(`${process.env.NEXT_PUBLIC_SAVE_URL}/${mockExamId}`)
+      .delete(`${process.env.NEXT_PUBLIC_REMOVE_TEST}/${testId}`)
       .then((response) => {
         setRemove(true);
       })
@@ -202,12 +162,12 @@ export default function TestListing({
         {loadTests?.map((item: any, index: number) => {
           return (
             <button
-              key={item.mockExamId} // Ensure key is directly on the button
+              key={item.testId} // Ensure key is directly on the button
               onClick={() => {
                 if (removeTestBlock) {
-                  removeTestComponent(item.mockExamId);
+                  removeTestComponent(item.testId);
                 } else {
-                  loadTestContent(item.mockExamId, index + 1);
+                  loadTestContent(item.testId, index + 1);
                 }
               }}
               id={styles.mockExamscontainer}

@@ -14,8 +14,8 @@ import TestListing from "./TestListing";
 export default function RecruiterProfile() {
   const [loadTests, setLoadTests] = useState<
     {
-      mockExamId: string;
-      mockExamContent: {
+      testId: string;
+      testContent: {
         questionContent: any[];
       };
     }[]

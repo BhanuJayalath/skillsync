@@ -6,6 +6,7 @@ import { UserProfileController } from './user-profile/user-profile.controller';
 import { JobRecommendationModule } from './job-recommendation/job-recommendation.module';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { MocktestModule } from './mocktest/mocktest.module';
+import { TestsModule } from './tests/tests.module';
 @Module({
   imports: [
 
@@ -13,6 +14,7 @@ import { MocktestModule } from './mocktest/mocktest.module';
     MocktestModule,
     UserProfileModule,
     JobRecommendationModule,
+    TestsModule,
   ],
   controllers: [AppController, UserProfileController],
   providers: [AppService],

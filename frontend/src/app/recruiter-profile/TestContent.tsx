@@ -21,52 +21,51 @@ export default function TestContent({
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   useEffect(() => {
     const DatabaseExistingId = testResponse.some(
-      (item: any) => item.mockExamId === loadTestQuestions.mockExamId
+      (item: any) => item.testId === loadTestQuestions.testId
     );
     setDatabaseExistingId(DatabaseExistingId);
   });
 
   useEffect(() => {
     localStorage.setItem(
-      loadTestQuestions.mockExamId,
+      loadTestQuestions.testId,
       JSON.stringify(loadTestQuestions)
     );
   }, [loadTestQuestions]);
 
   function addQuestion() {
     var temp = {
-      QuestionId: Date.now(),
-      Question: "",
-      Answer1: "",
-      Answer2: "",
-      Answer3: "",
-      Answer4: "",
+      questionId: Date.now(),
+      question: "",
+      answer1: "",
+      answer2: "",
+      answer3: "",
+      answer4: "",
       correctAnswer: Number,
     };
     setLoadTestQuestions({
       ...loadTestQuestions,
-      mockExamContent: {
-        ...loadTestQuestions.mockExamContent,
+      testContent: {
+        ...loadTestQuestions.testContent,
         questionContent: [
-          ...loadTestQuestions.mockExamContent.questionContent,
+          ...loadTestQuestions.testContent.questionContent,
           temp,
         ],
       },
     });
   }
-  function update(id: number, questionItem: any) {
+  function update(id: string, questionItem: any) {
     // console.log("trigger");
-    const index =
-      loadTestQuestions.mockExamContent.questionContent.findIndex(
-        (item: any) => item.QuestionId == id
-      );
+    const index = loadTestQuestions.testContent.questionContent.findIndex(
+      (item: any) => item.questionId == id
+    );
     setLoadTestQuestions((prev: any) => {
-      const updateQuestionItems = [...prev.mockExamContent.questionContent];
+      const updateQuestionItems = [...prev.testContent.questionContent];
       updateQuestionItems[index] = questionItem;
       return {
         ...prev,
-        mockExamContent: {
-          ...prev.mockExamContent,
+        testContent: {
+          ...prev.testContent,
           questionContent: updateQuestionItems,
         },
       };
@@ -74,34 +73,32 @@ export default function TestContent({
   }
 
   function removeQuestion(questionId: number) {
-    const index =
-      loadTestQuestions.mockExamContent.questionContent.findIndex(
-        (item: any) => item.QuestionId == questionId
-      );
+    const index = loadTestQuestions.testContent.questionContent.findIndex(
+      (item: any) => item.questionId == questionId
+    );
 
     setLoadTestQuestions((prev: any) => {
-      const prevQuestionItems = [...prev.mockExamContent.questionContent];
+      const prevQuestionItems = [...prev.testContent.questionContent];
       if (index >= 0) {
         prevQuestionItems.splice(index, 1);
       }
       return {
         ...prev,
-        mockExamContent: {
-          ...prev.mockExamContent,
+        testContent: {
+          ...prev.testContent,
           questionContent: prevQuestionItems,
         },
       };
     });
   }
   function save() {
-    axios.post(`${process.env.NEXT_PUBLIC_SAVE_URL}`, loadTestQuestions, {
+    axios.post(`${process.env.NEXT_PUBLIC_SAVE_TEST}`, loadTestQuestions, {
       headers: { "Content-Type": "application/json" },
     });
   }
   function updatetoDatabase() {
-    console.log(loadTestQuestions);
     axios.patch(
-      `${process.env.NEXT_PUBLIC_SAVE_URL}/${loadTestQuestions.mockExamId}`,
+      `${process.env.NEXT_PUBLIC_UPDATE_TEST}/${loadTestQuestions.testId}`,
       loadTestQuestions,
       {
         headers: { "Content-Type": "application/json" },
@@ -113,7 +110,7 @@ export default function TestContent({
   return (
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
-        <h1>Mock Exam {testCount}</h1>
+        <h1>Test {testCount}</h1>
         {updateTestContent ? (
           <>
             <button onClick={addQuestion}>
@@ -132,22 +129,20 @@ export default function TestContent({
           </>
         ) : null}
       </header>
-      {loadTestQuestions?.mockExamContent?.questionContent.length > 0 ? (
-        loadTestQuestions.mockExamContent.questionContent.map(
-          (item: any) => {
-            questionCounter++;
-            return (
-              <QuestionContent
-                key={questionCounter}
-                TestQuestions={item}
-                questionCounter={questionCounter}
-                update={update}
-                removeQuestion={removeQuestion}
-                updateTestContent={updateTestContent}
-              />
-            );
-          }
-        )
+      {loadTestQuestions?.testContent?.questionContent.length > 0 ? (
+        loadTestQuestions.testContent.questionContent.map((item: any) => {
+          questionCounter++;
+          return (
+            <QuestionContent
+              key={questionCounter}
+              TestQuestions={item}
+              questionCounter={questionCounter}
+              update={update}
+              removeQuestion={removeQuestion}
+              updateTestContent={updateTestContent}
+            />
+          );
+        })
       ) : (
         <div id={styles.emptyMockExamSection}>
           <h1>Add your Questions Here</h1>

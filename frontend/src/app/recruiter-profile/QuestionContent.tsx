@@ -24,20 +24,20 @@ export default function QuestionContent({
   const [removed, setRemoved] = useState(false);
   const [readOnly, setReadOnly] = useState(false);
   const storage = {
-    QuestionId: TestQuestions.QuestionId,
-    Question: question,
-    Answer1: answer1,
-    Answer2: answer2,
-    Answer3: answer3,
-    Answer4: answer4,
+    questionId: TestQuestions.questionId,
+    question: question,
+    answer1: answer1,
+    answer2: answer2,
+    answer3: answer3,
+    answer4: answer4,
     correctAnswer: selectedAnswer,
   };
   useEffect(() => {
-    setQuestion(TestQuestions.Question);
-    setAnswer1(TestQuestions.Answer1);
-    setAnswer2(TestQuestions.Answer2);
-    setAnswer3(TestQuestions.Answer3);
-    setAnswer4(TestQuestions.Answer4);
+    setQuestion(TestQuestions.question);
+    setAnswer1(TestQuestions.answer1);
+    setAnswer2(TestQuestions.answer2);
+    setAnswer3(TestQuestions.answer3);
+    setAnswer4(TestQuestions.answer4);
     setSelectedAnswer(
       TestQuestions.correctAnswer ? TestQuestions.correctAnswer : null
     );
@@ -46,7 +46,7 @@ export default function QuestionContent({
     }
   }, [removed]);
   useEffect(() => {
-    update(TestQuestions.QuestionId, storage);
+    update(TestQuestions.questionId, storage);
   }, [question, answer1, answer2, answer3, answer4, selectedAnswer]);
 
   function saveQuestion(event: any) {
@@ -86,7 +86,7 @@ export default function QuestionContent({
             {updateTestContent ? (
               <button
                 onClick={() => {
-                  remove(TestQuestions.QuestionId);
+                  remove(TestQuestions.questionId);
                 }}
               >
                 <Image
