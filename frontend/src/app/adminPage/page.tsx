@@ -5,6 +5,7 @@ import CoursesManagement from './CourseManagment';
 import styles from './adminPage.module.css';   // Importing custom styles
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import {useState} from "react";
+import SignInForAdmin from './SignInForAdmin';
 
 export default function Page(){
     const [isEditing, setIsEditing] = useState(false);
@@ -126,6 +127,8 @@ export default function Page(){
                     </div>
                 </div>
             </div>
+
+            <SignInForAdmin/>
 
             <Footer/>
         </div>

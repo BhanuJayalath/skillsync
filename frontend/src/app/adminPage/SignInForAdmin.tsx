@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 export default function SignInForAdmin() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const router = useRouter();
+    const [error, setError] = useState("");
+    // const router = useRouter();
 
     const handleLogin = () => {
         const adminUserName = "adminSkillSync";
@@ -13,7 +14,7 @@ export default function SignInForAdmin() {
 
         if (username === adminUserName && password === adminPassword){
             localStorage.setItem("isAuthenticated", "true");
-            router.push("page");
+            // router.push("page");
         } else {
             setError("Invalid username or password");
         }
@@ -22,6 +23,7 @@ export default function SignInForAdmin() {
   return (
     <div className={styles.signinContainer}>
       <h2>Admin Sign In</h2>
+      {error && <p className={styles.errorMessage}>{error}</p>}
       
       <input 
         type="text" 
@@ -35,6 +37,7 @@ export default function SignInForAdmin() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      <button onClick={handleLogin}>Login</button>
     </div>
   )
 }
