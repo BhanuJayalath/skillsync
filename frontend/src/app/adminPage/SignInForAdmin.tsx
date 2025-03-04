@@ -6,12 +6,12 @@ export default function SignInForAdmin() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    // const router = useRouter();
+    const router = useRouter();
 
     // Redirect to Admin Page if already logged in
     useEffect(() => {
         if (localStorage.getItem("isAuthenticated") === "true") {
-            // router.push("/page");
+            router.push("/page");
         }
     }, []);
 
@@ -23,7 +23,7 @@ export default function SignInForAdmin() {
 
         if (username === adminUserName && password === adminPassword){
             localStorage.setItem("isAuthenticated", "true");
-            // router.push("/page");
+            router.push("/page");
         } else {
             setError("Invalid username or password");
         }
