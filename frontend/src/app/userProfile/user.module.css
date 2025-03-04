@@ -202,24 +202,15 @@
     padding: 0 1em; /* Add padding */
 }
 
+.profilePic{
+    display: flex;
+    flex-direction: column;
+}
+
 .profilePic .userAvatar {
     margin: 1em 1em 2em 1em ;
 }
 
-.editButton {
-    margin-left: auto;
-    background: #3498db; /* Refined blue */
-    color: white;
-    border: none;
-    padding: 0.6em 1.2em;
-    border-radius: 0.3em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.editButton:hover {
-    background-color: #2980b9; /* Darker shade on hover */
-}
 .userFooter {
     background-color: #3498db; /* Refined blue */
     display: flex;
@@ -449,6 +440,61 @@
 }
 
 /*settings section*/
+.userSettings {
+    flex: 1 1 45%;
+    background: #fff;
+    border-radius: 0.5em;
+    width: 50em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    padding: 1em; /* Add padding inside the user info section */
+}
+.userSettings .userDetails {
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+    padding: 0 1em; /* Add padding */
+}
+
+.userSettings .profileHeader{
+    margin: 1em 1em 1em 0 ;
+}
+
+.userSettings .profilePicContainer {
+    width: 100px;  /* Adjust size as needed */
+    height: 100px; /* Adjust size as needed */
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ccc; /* Optional */
+}
+
+.userSettings .profilePic {
+    width: 100px;  /* Match container size */
+    height: 100px; /* Match container size */
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 1em 1em 1em 1em ;
+}
+
+
+.userSettings .editButton {
+    margin-left: auto;
+    background: #3498db; /* Refined blue */
+    color: white;
+    border: none;
+    padding: 0.6em 1.2em;
+    border-radius: 0.3em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.userSettings .editButton:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
+
+
 /* Form_1 */
 .form {
     display: grid;
@@ -560,4 +606,3 @@
         border: none; /*Remove the border*/
     }
 }
-
