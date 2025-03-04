@@ -179,7 +179,7 @@
     background: #fff;
     border-radius: 0.5em;
     width: 50em;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
     padding: 1em; /* Add padding inside the user info section */
 }
 
@@ -220,44 +220,26 @@
 .editButton:hover {
     background-color: #2980b9; /* Darker shade on hover */
 }
-
-/* Form */
-.form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em 2em;
-    margin-top: 0.5em;
-    width: 100%;
-    padding: 0 1em; /* Add padding */
-}
-
-.form div {
-    margin: 0; /* Remove default margins */
-}
-
-.form label {
+.userFooter {
+    background-color: #3498db; /* Refined blue */
+    display: flex;
+    flex-direction: row;
+    color: white;
+    padding: 0.3em;
+    justify-content: center;
+    margin: 1em -1em -1em -1em; /* Adjust to align with userInfo padding */
+    border-radius: 0 0 0.5em 0.5em; /* Only round the top corners */
     font-size: 0.9em;
-    display: block;
-    margin-bottom: 0.3em;
 }
 
-.form input,
-.form select {
-    padding: 0.6em;
-    border: 1px solid #ccc;
-    border-radius: 0.3em;
-    width: 100%; /* Ensure full width */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
+/*.customSection {*/
+/*    margin: 1em;*/
+/*    padding: 1em;*/
+/*    border: 1px solid #ddd;*/
+/*    border-radius: 0.4em;*/
+/*}*/
 
-.emailSection {
-    margin: 1em;
-    padding: 1em;
-    border: 1px solid #ddd;
-    border-radius: 0.4em;
-}
-
-.emailSection button {
+.form2 button {
     margin-top: 1em;
     background: #3498db; /* Refined blue */
     color: white;
@@ -268,7 +250,7 @@
     transition: background-color 0.3s ease;
 }
 
-.emailSection button:hover {
+.form2 button:hover {
     background-color: #2980b9; /* Darker shade on hover */
 }
 
@@ -375,6 +357,12 @@
     line-height: 1.6;
 }
 
+.cvSection p{
+    white-space: normal; /* Ensures text wraps */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
 .contactInfo {
     text-align: center;
     margin-bottom: 20px;
@@ -402,6 +390,10 @@
 .education,
 .skills {
     margin-top: 25px;
+}
+
+.education:hover{
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
 }
 
 .sectionTitle {
@@ -441,13 +433,11 @@
     margin-bottom: 0.5em;
 }
 
-.jobResponsibilities,
 .skillList {
     list-style-type: disc;
     padding-left: 20px;
 }
 
-.jobResponsibilities li,
 .skillList li {
     margin: 5px 0;
     color: #444;
@@ -456,6 +446,82 @@
 .skill {
     font-size: 1rem;
     color: #333;
+}
+
+/*settings section*/
+/* Form_1 */
+.form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em 2em;
+    margin-top: 0.5em;
+    width: 100%;
+    padding: 0 1em; /* Add padding */
+}
+
+.form div {
+    margin: 0; /* Remove default margins */
+}
+
+.form label {
+    font-size: 0.9em;
+    display: block;
+    margin-bottom: 0.3em;
+}
+
+.form input,
+.form select {
+    padding: 0.6em;
+    border: 1px solid #ccc;
+    border-radius: 0.3em;
+    width: 100%; /* Ensure full width */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+/* Form_2*/
+.form2 {
+    margin: 1em auto;
+}
+
+.formSection {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.formSection h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.formGroup input[type="text"],
+.formGroup textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.formGroup textarea {
+    resize: vertical; /* Allows vertical resizing */
+    height: 100px;
 }
 
 /*Animations*/
@@ -494,3 +560,4 @@
         border: none; /*Remove the border*/
     }
 }
+

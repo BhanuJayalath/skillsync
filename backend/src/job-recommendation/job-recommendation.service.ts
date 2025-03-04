@@ -30,7 +30,6 @@ export class JobRecommendationService {
   Only return the JSON object with no extra explanation, comments, or additional text.
 `;
 
-
     try {
       const response = await fetch(`${apiUrl}/chat/completions`, {
         method: 'POST',
