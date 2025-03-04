@@ -47,7 +47,6 @@ export default function JobListing({
   const tempArray: any = [];
 
   useEffect(() => {
-    // console.log(loadJobPosts);
     axios.get(`${process.env.NEXT_PUBLIC_GET_JOBS}`).then((response) => {
       if (response.data.length != 0) {
         response.data.map((item: any, index: number) => {
@@ -58,13 +57,14 @@ export default function JobListing({
               let Item: any = localStorage.getItem(key);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
               if (item.jobId === jsonParsedItem.jobId) {
+                console.log("trigger1");
                 tempArray[index] = jsonParsedItem;
-              } else if (jsonParsedItem.jobId) {
+              } else if (jsonParsedItem.jobId && !jsonParsedItem.testId) {
+                console.log("trigger2");
                 tempArray.push(jsonParsedItem);
               }
             }
           }
-          console.log(tempArray);
           setLoadJobPosts(tempArray);
           setJobPostResponse(response.data);
         });

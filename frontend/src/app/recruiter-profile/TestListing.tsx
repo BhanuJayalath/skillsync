@@ -65,7 +65,7 @@ export default function TestListing({
                 if (item.testId === jsonParsedItem.testId) {
                   console.log("trigger1");
                   tempArray[index] = jsonParsedItem;
-                } else if (jsonParsedItem.testId) {
+                } else if (jsonParsedItem.testId && !jsonParsedItem.jobId) {
                   tempArray.push(jsonParsedItem);
                   console.log("trigger2");
                 }
