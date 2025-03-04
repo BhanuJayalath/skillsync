@@ -56,7 +56,6 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
     const [summary, setSummary] = useState("");
-    const [imageFile, setImageFile] = useState<File | null>(null);
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
 
