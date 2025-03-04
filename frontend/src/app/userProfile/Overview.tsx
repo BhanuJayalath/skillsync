@@ -23,7 +23,8 @@ const Overview = ({ user }: { user: User }) => {
             <div className={styles.userDetails}>
                 <div className={styles.profilePic}>
                     {user.avatar ? (
-                        <span className={styles.userAvatar}>{user.avatar}</span>
+                        <span><Image src={user.avatar} alt="userIcon"
+                                     width={100} height={0} className={styles.userAvatar}/></span>
                     ) : (
                         <span><Image src={"/user/userIcon.svg"} alt="userIcon"
                                      width={100} height={0} className={styles.userAvatar}/></span>
