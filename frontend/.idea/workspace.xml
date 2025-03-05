@@ -8,7 +8,12 @@
       <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +70,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.2.4\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "C:\\Users\\veruw\\Desktop\\skillsync\\frontend\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -103,6 +108,7 @@
       <workItem from="1740965701512" duration="17851000" />
       <workItem from="1741062435842" duration="31000" />
       <workItem from="1741062540884" duration="459000" />
+      <workItem from="1741149491639" duration="1792000" />
     </task>
     <task id="LOCAL-00016" summary="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics">
       <option name="closed" value="true" />
