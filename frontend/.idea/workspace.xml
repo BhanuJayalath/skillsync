@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add the image upload to the overview section">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="changed the name of the description section to summary">
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -101,23 +101,7 @@
       <workItem from="1740965701512" duration="17851000" />
       <workItem from="1741062435842" duration="31000" />
       <workItem from="1741062540884" duration="459000" />
-      <workItem from="1741149491639" duration="6002000" />
-    </task>
-    <task id="LOCAL-00016" summary="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics">
-      <option name="closed" value="true" />
-      <created>1740579050619</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1740579050619</updated>
-    </task>
-    <task id="LOCAL-00017" summary="adjust the user info alignments">
-      <option name="closed" value="true" />
-      <created>1740579624659</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1740579624659</updated>
+      <workItem from="1741149491639" duration="6411000" />
     </task>
     <task id="LOCAL-00018" summary="add the media print to the global css and imported the global css for testing purposes">
       <option name="closed" value="true" />
@@ -495,7 +479,23 @@
       <option name="project" value="LOCAL" />
       <updated>1741061605835</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="create a button to generate the cv summary">
+      <option name="closed" value="true" />
+      <created>1741171250278</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1741171250278</updated>
+    </task>
+    <task id="LOCAL-00066" summary="changed the name of the description section to summary">
+      <option name="closed" value="true" />
+      <created>1741171314177</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1741171314177</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -513,8 +513,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="created removeExperience function for the settings" />
-    <MESSAGE value="created handleChange function for the settings" />
     <MESSAGE value="created handleNestedChange function for the settings" />
     <MESSAGE value="created handleSkillsChange function for the settings" />
     <MESSAGE value="created handleSubmit function for the settings" />
@@ -538,6 +536,8 @@
     <MESSAGE value="add a function to handle image changes" />
     <MESSAGE value="commented the use state of the imageUrl and imageFile for error fixing" />
     <MESSAGE value="add the image upload to the overview section" />
-    <option name="LAST_COMMIT_MESSAGE" value="add the image upload to the overview section" />
+    <MESSAGE value="create a button to generate the cv summary" />
+    <MESSAGE value="changed the name of the description section to summary" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed the name of the description section to summary" />
   </component>
 </project>
