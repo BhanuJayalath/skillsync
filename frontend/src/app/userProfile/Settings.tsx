@@ -1,6 +1,8 @@
 import styles from "@/app/userProfile/user.module.css";
 import Image from "next/image";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
+import { type PutBlobResult } from '@vercel/blob';
+import { upload } from '@vercel/blob/client';
 
 interface User {
     fullName: string;
@@ -45,13 +47,17 @@ interface SettingsProps {
     handleSubmit: () => Promise<void>;
     addEducation: (e: React.MouseEvent<HTMLButtonElement>) => void;
     addExperience: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    handleSummary: (value: string) => void;
+    handleAvatar: (value: string) => void;
 }
 
-const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience }: SettingsProps) => {
+const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience, handleSummary, handleAvatar }: SettingsProps) => {
     const [countries, setCountries] = useState<{ name: string }[]>([]);
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
     const [summary, setSummary] = useState("");
+    const inputFileRef = useRef<HTMLInputElement>(null);
+    const [blob, setBlob] = useState<PutBlobResult | null>(null);
 
     // Fetch countries and languages
     useEffect(() => {
@@ -77,16 +83,18 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             .catch(error => console.error('Error fetching countries:', error));
     }, []);
 
-    useEffect(() => {
-        const apiUrl = process.env.NEXT_PUBLIC_CV_DESCRIPTION_API_URL;
-        const apiKey = process.env.NEXT_PUBLIC_CV_DESCRIPTION_API_KEY;
+    const handleGenerate = async (e:React.FormEvent) =>{
+        e.preventDefault();
+
+        const apiUrl = process.env.NEXT_PUBLIC_CV_SUMMARY_API_URL;
+        const apiKey = process.env.NEXT_PUBLIC_CV_SUMMARY_API_KEY;
         const prompt = `Generate a professional CV summary using only the provided details. 
         Strictly return a JSON object with a brief explanation, comments, or additional text.
 
         Details:
-        ${user.experience.length > 0 ? `Experience: ${user.experience.map(exp => 
+        ${user.experience.length > 0 ? `Experience: ${user.experience.map(exp =>
             `${exp.jobName} at ${exp.companyName} (${exp.startDate} - ${exp.endDate})`).join('. ')}.` : ''}
-        ${user.education.length > 0 ? `Education: ${user.education.map(edu => 
+        ${user.education.length > 0 ? `Education: ${user.education.map(edu =>
             `${edu.courseName} from ${edu.schoolName} (${edu.startDate} - ${edu.endDate})`).join('. ')}.` : ''}
         ${user.skills.length > 0 ? `Skills: ${user.skills.join(', ')}.` : ''}
 
@@ -127,10 +135,10 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     : { summary: "error occurred" };
                 const filteredSummary = jsonSummary.summary.replace(/\*\*(.*?)\*\*/g, '$1');
                 setSummary(filteredSummary);
+                handleSummary(filteredSummary);
             })
             .catch(error => console.error("Error:", error));
-
-    }, []);
+    }
 
     // Fetch cities when a country is selected
     useEffect(() => {
@@ -147,50 +155,47 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             })
             .catch(error => console.error('Error fetching cities:', error));
     }, [user.country]);
+    const handleUpload = async (e:React.FormEvent) =>{
+        e.preventDefault();
 
-    // const [imageUrl, setImageUrl] = useState<string | null>(null);
-    // const [imageFile, setImageFile] = useState<File | null>(null);
+        if (!inputFileRef.current?.files) {
+            throw new Error('No file selected');
+        }
 
-    // // Handle image selection
-    // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const file = event.target.files?.[0];
-    //     if (file) {
-    //         setImageFile(file);
-    //         // Optional: Show a preview of the selected image
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             setImageUrl(reader.result as string);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
+        const file = inputFileRef.current.files[0];
 
+        const newBlob = await upload(file.name, file, {
+            access: 'public',
+            handleUploadUrl: '/api/users/profilePic/upload',
+        });
+        setBlob(newBlob);
+    }
+    useEffect(() => {
+        handleAvatar(blob?.url || user.avatar);
+    }, [blob?.url]);
+    console.log(user.avatar);
     return (
-        <section className={styles.userInfo}>
+        <section className={styles.userSettings}>
             <div className={styles.userDetails}>
-                <div className={styles.profilePic}>
-                    {user.avatar ? (
-                        <span className={styles.userAvatar}>{user.avatar}</span>
-                    ) : (
-                        <span><Image src={"/user/userIcon.svg"} alt="userIcon"
-                                     width={100} height={0} className={styles.userAvatar}/></span>
-                    )}
+                <div className={styles.profileHeader}>
+                    <div className={styles.profilePic}>
+                        {user.avatar ? (
+                            <span><Image src={user.avatar} alt="userIcon"
+                                         width={100} height={0} className={styles.profilePic}/></span>
+                        ) : (
+                            <span><Image src={"/user/userIcon.svg"}
+                                         alt="userIcon"
+                                         width={100} height={0}
+                                         className={styles.profilePic}/></span>
+                        )}
+                    </div>
+                    <div className={styles.uploadContainer}>
+                        <input name="file" ref={inputFileRef} type="file" accept="image/*"
+                               onChange={(e) => handleUpload(e)}
+                               className={styles.hiddenInput}/>
+                        <button className={styles.customUploadButton}>Upload</button>
+                    </div>
                 </div>
-                {/*<div>*/}
-
-                {/*    /!* File input for selecting an image *!/*/}
-                {/*    <input*/}
-                {/*        type="file"*/}
-                {/*        accept="image/*"*/}
-                {/*        onChange={handleImageChange}*/}
-                {/*    />*/}
-
-                {/*    {imageUrl && <img src={imageUrl} alt="Preview" width="200"/>}*/}
-
-                {/*    {imageFile && (*/}
-                {/*        <button onClick={() => handleImageChange(imageFile)}>Upload Image</button>*/}
-                {/*    )}*/}
-                {/*</div>*/}
                 <div>
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
@@ -268,7 +273,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             <form className={styles.form2}>
                 <div className={styles.formSection}>
                     <div className={styles.formGroup}>
-                        <label>CV Description</label>
+                        <label>CV Summary</label>
                         <textarea
                             value={summary}
                             onChange={(e) => {
@@ -276,6 +281,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 handleChange(e, "cvSummary");
                             }}
                         />
+                        <button onClick={(e) =>handleGenerate(e)}>Generate</button>
                     </div>
                 </div>
                 <div className={styles.formSection}>
