@@ -339,7 +339,7 @@
 /* CV Section */
 .cvSection {
     font-family: Arial, sans-serif;
-    width: 21cm;
+    width: 49.61rem;
     padding: 2cm;
     margin: 0 auto;
     background: #ffffff;
@@ -446,13 +446,13 @@
     border-radius: 0.5em;
     width: 50em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-    padding: 1em; /* Add padding inside the user info section */
+    padding: 1em;
 }
 .userSettings .userDetails {
     display: flex;
     align-items: center;
     margin-top: 1em;
-    padding: 0 1em; /* Add padding */
+    padding: 0 1em;
 }
 
 .userSettings .profileHeader{
@@ -460,14 +460,14 @@
 }
 
 .userSettings .profilePicContainer {
-    width: 100px;  /* Adjust size as needed */
-    height: 100px; /* Adjust size as needed */
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #ccc; /* Optional */
+    border: 2px solid #000000;
 }
 
 .userSettings .profilePic {
@@ -555,7 +555,7 @@
     border: 1px solid #ccc;
     border-radius: 0.3em;
     width: 100%; /* Ensure full width */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    box-sizing: border-box;
 }
 /* Form_2*/
 .form2 {
@@ -633,7 +633,7 @@
         left: 0;
         top: 0;
         margin: 0; /* Reset any margins */
-        padding: 2cm; /* Keep the padding */
+        padding: 1cm; /* Keep the padding */
         width: 21cm; /* Ensure it takes the full page width */
         height: auto; /* expanding to the full height needed */
         box-shadow: none; /* Remove shadow for printing */

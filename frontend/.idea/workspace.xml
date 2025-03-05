@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="fixed errors occurred in handle generate summary">
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="deleted the unnecessary codes">
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,15 +100,7 @@
       <workItem from="1740965701512" duration="17851000" />
       <workItem from="1741062435842" duration="31000" />
       <workItem from="1741062540884" duration="459000" />
-      <workItem from="1741149491639" duration="6779000" />
-    </task>
-    <task id="LOCAL-00022" summary="updated the styles for the forms">
-      <option name="closed" value="true" />
-      <created>1740824905671</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1740824905671</updated>
+      <workItem from="1741149491639" duration="7008000" />
     </task>
     <task id="LOCAL-00023" summary="created the courses.tsx">
       <option name="closed" value="true" />
@@ -494,7 +486,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741171850190</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="deleted the unnecessary codes">
+      <option name="closed" value="true" />
+      <created>1741171902528</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1741171902528</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -512,7 +512,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="deleted the unnecessary commented codes" />
     <MESSAGE value="updated the Resume.tsx" />
     <MESSAGE value="add relevant use states to the Settings.tsx" />
     <MESSAGE value="add useEffect to fetch the countries in the form section of the Settings.tsx" />
@@ -537,6 +536,7 @@
     <MESSAGE value="commented the useEffect for the test purposes" />
     <MESSAGE value="add the handleGenerate function to the generate button onClick" />
     <MESSAGE value="fixed errors occurred in handle generate summary" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed errors occurred in handle generate summary" />
+    <MESSAGE value="deleted the unnecessary codes" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted the unnecessary codes" />
   </component>
 </project>
