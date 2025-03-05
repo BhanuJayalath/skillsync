@@ -144,15 +144,6 @@ export default function UserProfile() {
             ),
         }));
     };
-
-    // Change handler for skills array
-    // const handleSkillsChange = (index: number, value: string) => {
-    //     setUser((prev) => {
-    //         const updatedSkills = [...prev.skills];
-    //         updatedSkills[index] = value;
-    //         return { ...prev, skills: updatedSkills };
-    //     });
-    // };
     const handleSubmit = async () => {
         try {
             const response = await fetch(`http://localhost:3001/updateUser/${user.id}`, {
