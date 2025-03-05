@@ -337,7 +337,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 handleChange(e, "cvSummary");
                             }}
                         />
-                        <button onClick={handleGenerate}>Generate</button>
+                        <button onClick={(e) =>handleGenerate(e)}>Generate</button>
                     </div>
                 </div>
                 <div className={styles.formSection}>
