@@ -12,7 +12,7 @@ export class UserProfileService {
 
   async findUser(userId: string): Promise<User | null> {
     // Query the user by the 'id' field
-    return await this.userModel.findOne({ id: userId }).exec();
+    return await this.userModel.findOne({ _id: userId }).exec();
   }
 
   async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
