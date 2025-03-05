@@ -49,46 +49,12 @@ export default function JobListing({
   useEffect(() => {
     axios.get(`${process.env.NEXT_PUBLIC_GET_JOBS}`).then((response) => {
       if (response.data.length != 0) {
-        response.data.map((item: any, index: number) => {
+        setJobPostResponse(response.data);
+        response.data.map((item: any) => {
           tempArray.push(item);
-          if (localStorage.length > 0) {
-            for (let i = 0; i < localStorage.length; i++) {
-              const key: any = localStorage.key(i);
-              let Item: any = localStorage.getItem(key);
-              let jsonParsedItem = Item ? JSON.parse(Item) : null;
-              if (
-                item.jobId === jsonParsedItem.jobId &&
-                !jsonParsedItem.testId
-              ) {
-                tempArray[index] = jsonParsedItem;
-              } else if (
-                response.data.length - 1 === index &&
-                jsonParsedItem.jobId &&
-                !jsonParsedItem.testId &&
-                !tempArray.some(
-                  (item: any) => item.jobId === jsonParsedItem.jobId
-                )
-              ) {
-                tempArray.push(jsonParsedItem);
-              }
-            }
-          }
-          setLoadJobPosts(tempArray);
-          setJobPostResponse(response.data);
         });
-      } else {
-        if (localStorage.length > 0) {
-          for (let i = 0; i < localStorage.length; i++) {
-            const key: any = localStorage.key(i);
-            let Item: any = localStorage.getItem(key);
-            let jsonParsedItem = Item ? JSON.parse(Item) : null;
-            if (jsonParsedItem.jobId && !jsonParsedItem.testId) {
-              tempArray.push(jsonParsedItem);
-              setLoadJobPosts(tempArray);
-            }
-          }
-        }
       }
+      setLoadJobPosts(tempArray);
     });
   }, [remove]);
 
@@ -112,12 +78,12 @@ export default function JobListing({
     ]);
   }
   function removeJobPostComponent(jobId: string) {
-    if (localStorage.length > 0) {
-      localStorage.removeItem(jobId);
-    }
-    axios
-      .delete(`${process.env.NEXT_PUBLIC_REMOVE_JOB}/${jobId}`)
+    Promise.all([
+      axios.delete(`${process.env.NEXT_PUBLIC_REMOVE_TEST}/${jobId}`),
+      axios.delete(`${process.env.NEXT_PUBLIC_REMOVE_JOB}/${jobId}`),
+    ])
       .then((response) => {})
+
       .catch((error) => {
         console.log(error);
       });

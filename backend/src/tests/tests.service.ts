@@ -26,4 +26,7 @@ export class TestsService {
   async delete(id: string) {
     return this.TestModel.findOneAndDelete({ testId: id }).exec();
   }
+  async deleteByJobId(jobId: string) {
+    return await this.TestModel.deleteMany({ jobId: jobId });
+  }
 }

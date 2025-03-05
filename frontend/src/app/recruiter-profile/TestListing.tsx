@@ -49,30 +49,14 @@ export default function TestListing({
   useEffect(() => {
     const tempArray: any = [];
     axios.get(`${process.env.NEXT_PUBLIC_GET_TESTS}`).then((response) => {
-      response.data.map((item: any, index: number) => {
-        if (loadJobPostContent.jobId === item.jobId) {
+      setTestResponse(response.data);
+      response.data.map((item: any) => {
+        if (item.jobId === loadJobPostContent.jobId) {
           tempArray.push(item);
         }
-        setTestResponse(response.data);
-      });
-      tempArray.map((item: any, index: number) => {
-        for (let i = 0; i < localStorage.length; i++) {
-          const key: any = localStorage.key(i);
-          let Item: any = localStorage.getItem(key);
-          let jsonParsedItem = Item ? JSON.parse(Item) : null;
-          if (item.jobId === jsonParsedItem.jobId && jsonParsedItem.testId) {
-            tempArray[index] = jsonParsedItem;
-          } else if (
-            tempArray.length - 1 === index &&
-            loadJobPostContent.jobId === jsonParsedItem.jobId &&
-            jsonParsedItem.testId
-          ) {
-            tempArray.push(item);
-          }
-        }
-        setLoadTests(tempArray);
       });
     });
+    setLoadTests(tempArray);
   }, [remove]);
 
   function loadTestContent(testId: string, testCounter: number) {
@@ -99,9 +83,6 @@ export default function TestListing({
     ]);
   }
   function removeTestComponent(testId: string) {
-    if (localStorage.length > 0) {
-      localStorage.removeItem(testId.toString());
-    }
     axios
       .delete(`${process.env.NEXT_PUBLIC_REMOVE_TEST}/${testId}`)
       .then((response) => {

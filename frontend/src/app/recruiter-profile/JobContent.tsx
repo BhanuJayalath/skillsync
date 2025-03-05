@@ -46,6 +46,7 @@ export default function JobContent({
   testResponse: any;
   setTestResponse: any;
 }) {
+  const [jobId, setJobId] = useState<string>();
   const [jobTitle, setJobTitle] = useState<string>();
   const [jobDescription, setJobDescription] = useState<string>();
   const [requiredSkills, setRequiredSkills] = useState<string[]>([]);
@@ -56,7 +57,7 @@ export default function JobContent({
   const [readOnly, setReadOnly] = useState(false);
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   const storage = {
-    jobId: loadJobPostContent.jobId,
+    jobId: jobId,
     jobTitle: jobTitle,
     jobDescription: jobDescription,
     requiredSkills: requiredSkills,
@@ -64,7 +65,8 @@ export default function JobContent({
   };
 
   useEffect(() => {
-    // console.log(loadTests);
+    // console.log(loadJobPostContent.jobId);
+    setJobId(loadJobPostContent.jobId);
     setJobTitle(loadJobPostContent.jobTitle);
     setJobDescription(loadJobPostContent.jobDescription);
     setRequiredSkills(loadJobPostContent.requiredSkills);
@@ -104,7 +106,7 @@ export default function JobContent({
 
   var counter = 0;
   useEffect(() => {
-    localStorage.setItem(loadJobPostContent.jobId, JSON.stringify(storage));
+    // localStorage.setItem(loadJobPostContent.jobId, JSON.stringify(storage));
   }, [storage]);
 
   function updatetoDatabase() {

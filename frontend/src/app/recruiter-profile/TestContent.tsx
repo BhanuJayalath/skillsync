@@ -27,10 +27,10 @@ export default function TestContent({
   });
 
   useEffect(() => {
-    localStorage.setItem(
-      loadTestQuestions.testId,
-      JSON.stringify(loadTestQuestions)
-    );
+    // localStorage.setItem(
+    //   loadTestQuestions.testId,
+    //   JSON.stringify(loadTestQuestions)
+    // );
   }, [loadTestQuestions]);
 
   function addQuestion() {
