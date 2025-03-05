@@ -188,12 +188,12 @@ export default function UserProfile() {
     useEffect(() => {
         const fetchUserDetails = async () => {
             const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
-            const response = await fetch(`${getUserUrl}`, {
-                method: 'POST',
+            const userId = "006";
+            const response = await fetch(`${getUserUrl}/${userId}`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({userId: '006'}),
             });
 
             if (response.ok) {
