@@ -114,6 +114,22 @@ export default function UserProfile() {
             [field]: e.target.value
         }));
     };
+    const handleSummary = (
+        value: string
+    ) => {
+        setUser((prev) => ({
+            ...prev,
+            cvSummary: value
+        }));
+    };
+    const handleAvatar = async (
+        value: string
+    ) => {
+        setUser((prev) => ({
+            ...prev,
+            avatar: value
+        }));
+    };
     // Update nested fields (experience, education)
     const handleNestedChange = (
         index: number,
@@ -139,15 +155,15 @@ export default function UserProfile() {
     // };
     const handleSubmit = async () => {
         try {
-            const response = await fetch("http://localhost:3001/api/update-user-general", {
+            const response = await fetch(`http://localhost:3001/updateUser/${user.id}`, {
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    id: user.id,
                     email: user.email,
                     number: user.number,
                     userName: user.userName,
                     fullName: user.fullName,
+                    avatar:user.avatar,
                     gitHub: user.gitHub,
                     linkedIn: user.linkedIn,
                     gender: user.gender,
@@ -171,12 +187,13 @@ export default function UserProfile() {
     }
     useEffect(() => {
         const fetchUserDetails = async () => {
-            const response = await fetch('http://localhost:3001/getUser', {
-                method: 'POST',
+            const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
+            const userId = "006";
+            const response = await fetch(`${getUserUrl}/${userId}`, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({userId: '006'}),
             });
 
             if (response.ok) {
@@ -271,7 +288,7 @@ export default function UserProfile() {
                             {activeTab === 1 && <Progress user={user} />}
                             {activeTab === 2 && <Courses user={user} />}
                             {activeTab === 3 && <Resume user={user}  removeEducation={removeEducation} removeExperience={removeExperience}/>}
-                            {activeTab === 4 && <Settings user={user} handleSubmit={handleSubmit} handleChange={handleChange} handleNestedChange={handleNestedChange} addEducation={addEducation} addExperience={addExperience}/>}
+                            {activeTab === 4 && <Settings user={user} handleSubmit={handleSubmit} handleChange={handleChange} handleNestedChange={handleNestedChange} addEducation={addEducation} addExperience={addExperience} handleSummary={handleSummary} handleAvatar={handleAvatar}/>}
                         </section>
                     </div>
                 </main>

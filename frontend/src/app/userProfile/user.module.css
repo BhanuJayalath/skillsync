@@ -202,24 +202,15 @@
     padding: 0 1em; /* Add padding */
 }
 
+.profilePic{
+    display: flex;
+    flex-direction: column;
+}
+
 .profilePic .userAvatar {
     margin: 1em 1em 2em 1em ;
 }
 
-.editButton {
-    margin-left: auto;
-    background: #3498db; /* Refined blue */
-    color: white;
-    border: none;
-    padding: 0.6em 1.2em;
-    border-radius: 0.3em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.editButton:hover {
-    background-color: #2980b9; /* Darker shade on hover */
-}
 .userFooter {
     background-color: #3498db; /* Refined blue */
     display: flex;
@@ -348,7 +339,7 @@
 /* CV Section */
 .cvSection {
     font-family: Arial, sans-serif;
-    width: 21cm;
+    width: 49.61rem;
     padding: 2cm;
     margin: 0 auto;
     background: #ffffff;
@@ -449,6 +440,95 @@
 }
 
 /*settings section*/
+.userSettings {
+    flex: 1 1 45%;
+    background: #fff;
+    border-radius: 0.5em;
+    width: 50em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    padding: 1em;
+}
+.userSettings .userDetails {
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+    padding: 0 1em;
+}
+
+.userSettings .profileHeader{
+    margin: 1em 1em 1em 0 ;
+}
+
+.userSettings .profilePicContainer {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000000;
+}
+
+.userSettings .profilePic {
+    width: 100px;  /* Match container size */
+    height: 100px; /* Match container size */
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 1em 1em 1em 1em ;
+}
+
+
+.userSettings .editButton {
+    margin-left: auto;
+    background: #3498db; /* Refined blue */
+    color: white;
+    border: none;
+    padding: 0.6em 1.2em;
+    border-radius: 0.3em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.userSettings .editButton:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
+
+.uploadContainer {
+    position: relative;
+    display: inline-block;
+    margin:  1em 1em 0 0;
+}
+
+.hiddenInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 1; /* Add z-index */
+}
+
+.customUploadButton {
+    background: #3498db; /* Refined blue */
+    border: none;
+    color: white;
+    padding: 0.5em 1em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.customUploadButton:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
+
 /* Form_1 */
 .form {
     display: grid;
@@ -475,7 +555,7 @@
     border: 1px solid #ccc;
     border-radius: 0.3em;
     width: 100%; /* Ensure full width */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    box-sizing: border-box;
 }
 /* Form_2*/
 .form2 {
@@ -553,11 +633,10 @@
         left: 0;
         top: 0;
         margin: 0; /* Reset any margins */
-        padding: 2cm; /* Keep the padding */
+        padding: 1cm; /* Keep the padding */
         width: 21cm; /* Ensure it takes the full page width */
         height: auto; /* expanding to the full height needed */
         box-shadow: none; /* Remove shadow for printing */
         border: none; /*Remove the border*/
     }
 }
-

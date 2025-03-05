@@ -23,7 +23,8 @@ const Overview = ({ user }: { user: User }) => {
             <div className={styles.userDetails}>
                 <div className={styles.profilePic}>
                     {user.avatar ? (
-                        <span className={styles.userAvatar}>{user.avatar}</span>
+                        <span><Image src={user.avatar} alt="userIcon"
+                                     width={100} height={0} className={styles.userAvatar}/></span>
                     ) : (
                         <span><Image src={"/user/userIcon.svg"} alt="userIcon"
                                      width={100} height={0} className={styles.userAvatar}/></span>
@@ -33,7 +34,6 @@ const Overview = ({ user }: { user: User }) => {
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
                 </div>
-                <button className={styles.editButton}>Edit</button>
             </div>
             <div>
                 <p>Job Role: {user.jobRole[0].jobName}</p>
