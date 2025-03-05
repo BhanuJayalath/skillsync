@@ -1,10 +1,49 @@
 "use client"
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import CoursesManagement from './CourseManagment';
 import styles from './adminPage.module.css';   // Importing custom styles
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
+import {useEffect, useState} from "react";
+import { useRouter } from 'next/navigation';
 
-export default function page(){
+
+export default function Page(){
+    const router = useRouter();
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+        if (localStorage.getItem("isAuthenticated") !== "true") {
+            router.push("adminPage/SignInForAdmin"); // Redirect if not logged in
+        }
+    }, [router]);
+
+    const handleLogout = () => {
+        localStorage.removeItem("isAuthenticated");
+        router.push("adminPage/SignInForAdmin"); // Redirect to sign-in page
+    };
+
+    const [isEditing, setIsEditing] = useState(false);
+
+    const [userInfo, setUserInfo] = useState({
+        fullName: "Your First Name",
+        displayName: "Your Display Name",
+        ender: "Your Gender",
+        country: "Your Country",
+    });
+
+    // Handle input changes
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setUserInfo((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+      };
+
+    if (!isClient) return null;
+
     return(
         <div className={styles.outerContainer}>
             <Navbar/>
@@ -15,12 +54,13 @@ export default function page(){
                     <nav className={styles.nav}>
                         <ul>
                             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                            <li><a href="/">🏠 Home</a></li>
-                            <li><a href="#">💬 Messages</a></li>
-                            <li><a href="#">⭐ Favorites</a></li>
-                            <li><a href="#">📈 Analytics</a></li>
-                            <li><a href="#">⚙️ Settings</a></li>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="#">Messages</a></li>
+                            <li><a href="#">Favorites</a></li>
+                            <li><a href="#">Analytics</a></li>
+                            <li><a href="#">Settings</a></li>
                         </ul>
+                        <button onClick={handleLogout}>Logout</button>
                     </nav>
                 </aside>
 
@@ -40,29 +80,34 @@ export default function page(){
                             <h3>User Name</h3>
                             <p>example@gmail.com</p>
                             <div className={styles.detailsGrid}>
-                                <div>
-                                    <p className={styles.label}>Full Name</p>
-                                    <p>Your First Name</p>
-                                </div>
-                                <div>
-                                    <p className={styles.label}>Display Name</p>
-                                    <p>Your Display Name</p>
-                                </div>
-                                <div>
-                                    <p className={styles.label}>Gender</p>
-                                    <p>Your Gender</p>
-                                </div>
-                                <div>
-                                    <p className={styles.label}>Country</p>
-                                    <p>Your Country</p>
-                                </div>
+                                {(Object.keys(userInfo) as Array<keyof typeof userInfo>).map((key) => (
+                                    <div key={key}>
+                                        <p className={styles.label}>{key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1")}</p>
+                                        {isEditing ? (
+                                            <input
+                                            type="text"
+                                            name={key}
+                                            value={userInfo[key]}
+                                            onChange={handleChange}
+                                            />
+                                        ) : (
+                                            <p>{userInfo[key]}</p>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
-                            <button className={styles.editButton}>Edit</button>
+                            <button className={styles.editButton} onClick={() => setIsEditing(!isEditing)}>
+                                {isEditing ? "Save" : "Edit"}
+                            </button>
                         </div>
 
                         {/* Users List */}
                         <div className={styles.usersCard}>
-                            <h3>Users</h3>
+                            <div className={styles.usersBar}>
+                                <h3>Users</h3>
+                                <input type="text" placeholder="Search users" className={styles.searchInput} />
+                            </div>
+                            <hr />
                             <div className={styles.userList}>
                                 {["User1", "User2", "User3", "User4"].map((user) => (
                                     <div key={user} className={styles.userItem}>{user}</div>
@@ -74,7 +119,15 @@ export default function page(){
                         <div className={styles.coursesSection}>
                             <h3>Courses</h3>
                             <div className={styles.coursesList}>
-                                {["Course 01", "Course 02", "Course 03"].map((course, index) => (
+                                {["Course 01", "Course 02", "Course 03", "Course 04", "Course 05"].map((course, index) => (
+                                    <div key={index} className={styles.courseItem}>
+                                        <div className={styles.icon}>🎓</div>
+                                        <p className={styles.courseName}>{course}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className={styles.coursesList}>
+                                {["Course 01", "Course 02", "Course 03", "Course 04", "Course 05"].map((course, index) => (
                                     <div key={index} className={styles.courseItem}>
                                         <div className={styles.icon}>🎓</div>
                                         <p className={styles.courseName}>{course}</p>
@@ -83,10 +136,15 @@ export default function page(){
                             </div>
                         </div>
 
+                        {/* Courses Management */}
+                        <div>
+                            <CoursesManagement/>
+                        </div>
 
                     </div>
                 </div>
             </div>
+
 
             <Footer/>
         </div>
