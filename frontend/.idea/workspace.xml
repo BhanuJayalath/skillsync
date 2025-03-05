@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="deleted the unnecessary codes">
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +51,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "userProfile",
+    "git-widget-placeholder": "#74 on userProfile",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/veruw/Desktop/skillsync/frontend",
     "node.js.detected.package.eslint": "true",
@@ -101,6 +102,7 @@
       <workItem from="1741062435842" duration="31000" />
       <workItem from="1741062540884" duration="459000" />
       <workItem from="1741149491639" duration="7008000" />
+      <workItem from="1741186866304" duration="310000" />
     </task>
     <task id="LOCAL-00023" summary="created the courses.tsx">
       <option name="closed" value="true" />

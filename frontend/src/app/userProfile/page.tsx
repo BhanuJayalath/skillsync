@@ -187,7 +187,8 @@ export default function UserProfile() {
     }
     useEffect(() => {
         const fetchUserDetails = async () => {
-            const response = await fetch('http://localhost:3001/getUser', {
+            const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
+            const response = await fetch(`${getUserUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
