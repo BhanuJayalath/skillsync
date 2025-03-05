@@ -34,7 +34,7 @@ export class JobRecommendationService {
 `;
 
     try {
-      const response = await fetch(`${apiUrl}/chat/completions`, {
+      const response = await fetch(`${apiUrl}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${apiKey}`,
