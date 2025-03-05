@@ -17,6 +17,7 @@ export class JobRecommendationController {
   @Post('getJob') //define the POST route /getUser
   async getJob(@Body() body: { skills: string; jobs: any }) {
     const skills = body.skills;
+    const jobs = await this.jobService.getAllJobs()
     const jobTitles = body.jobs.map((job) => job.title);
     const selectedJobs = await this.jobService.getRecommendations(
       skills,
