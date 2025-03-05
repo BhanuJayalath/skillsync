@@ -1,12 +1,12 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import MockExam from "./MockExam";
+import MockExam from "./TestContent";
 import Tab from "./Tab";
 import ResultTab from "./ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
-import MockExamContainer from "./MockExamContainer";
+import MockExamContainer from "./QuestionContent";
 
 import axios from "axios";
 export default function JobListing({
@@ -47,40 +47,49 @@ export default function JobListing({
   const tempArray: any = [];
 
   useEffect(() => {
-    console.log(loadJobPosts);
-    axios
-      .get("http://localhost:3001/job-recommendation/all-jobs")
-      .then((response) => {
-        if (response.data.length != 0) {
-          response.data.map((item: any, index: number) => {
-            tempArray.push(item);
-            if (localStorage.length > 0) {
-              for (let i = 0; i < localStorage.length; i++) {
-                const key: any = localStorage.key(i);
-                let Item: any = localStorage.getItem(key);
-                let jsonParsedItem = Item ? JSON.parse(Item) : null;
-                if (item.jobId === jsonParsedItem.jobId) {
-                  tempArray[index] = jsonParsedItem;
-                } else if (jsonParsedItem.jobId) {
-                  tempArray.push(jsonParsedItem);
-                }
-              }
-            }
-            setLoadJobPosts(tempArray);
-            setJobPostResponse(response.data);
-          });
-        } else {
+    axios.get(`${process.env.NEXT_PUBLIC_GET_JOBS}`).then((response) => {
+      if (response.data.length != 0) {
+        response.data.map((item: any, index: number) => {
+          tempArray.push(item);
           if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++) {
               const key: any = localStorage.key(i);
               let Item: any = localStorage.getItem(key);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
+              if (
+                item.jobId === jsonParsedItem.jobId &&
+                !jsonParsedItem.testId
+              ) {
+                tempArray[index] = jsonParsedItem;
+              } else if (
+                response.data.length - 1 === index &&
+                jsonParsedItem.jobId &&
+                !jsonParsedItem.testId &&
+                !tempArray.some(
+                  (item: any) => item.jobId === jsonParsedItem.jobId
+                )
+              ) {
+                tempArray.push(jsonParsedItem);
+              }
+            }
+          }
+          setLoadJobPosts(tempArray);
+          setJobPostResponse(response.data);
+        });
+      } else {
+        if (localStorage.length > 0) {
+          for (let i = 0; i < localStorage.length; i++) {
+            const key: any = localStorage.key(i);
+            let Item: any = localStorage.getItem(key);
+            let jsonParsedItem = Item ? JSON.parse(Item) : null;
+            if (jsonParsedItem.jobId && !jsonParsedItem.testId) {
               tempArray.push(jsonParsedItem);
               setLoadJobPosts(tempArray);
             }
           }
         }
-      });
+      }
+    });
   }, [remove]);
 
   function loadJobPostComponent(jobId: string, JobCounter: number) {
@@ -90,6 +99,7 @@ export default function JobListing({
     setJobPostState(true);
   }
   function addJobPostContainers() {
+    localStorage.clear();
     setLoadJobPosts([
       ...loadJobPosts,
       {
@@ -106,7 +116,7 @@ export default function JobListing({
       localStorage.removeItem(jobId);
     }
     axios
-      .delete(`${process.env.NEXT_PUBLIC_UPDATE_JOBS}/${jobId}`)
+      .delete(`${process.env.NEXT_PUBLIC_REMOVE_JOB}/${jobId}`)
       .then((response) => {})
       .catch((error) => {
         console.log(error);

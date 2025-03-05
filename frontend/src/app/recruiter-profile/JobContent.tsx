@@ -1,10 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
-import MockExamContainer from "./MockExamContainer";
+import MockExamContainer from "./QuestionContent";
 import axios from "axios";
 import Image from "next/image";
+import TestListing from "./TestListing";
 import styles from "../assets/styles/recruiter.module.css";
 export default function JobContent({
+  loadTests,
+  setLoadTests,
+  updateTestContent,
+  setUpdateTestContent,
+  removeTestBlock,
+  setRemoveTestBlock,
+  testState,
+  setTestState,
+  setJobPostState,
+  setLoadTestQuestions,
+  setTestCount,
+  remove,
+  setRemove,
+  testResponse,
+  setTestResponse,
   loadJobPostContent,
   updateJobPostContent,
   jobCount,
@@ -14,6 +30,21 @@ export default function JobContent({
   updateJobPostContent: any;
   jobCount: any;
   jobPostResponse: any;
+  loadTests: any;
+  setLoadTests: any;
+  updateTestContent: any;
+  setUpdateTestContent: any;
+  removeTestBlock: any;
+  setRemoveTestBlock: any;
+  testState: any;
+  setTestState: any;
+  setJobPostState: any;
+  setLoadTestQuestions: any;
+  setTestCount: any;
+  remove: any;
+  setRemove: any;
+  testResponse: any;
+  setTestResponse: any;
 }) {
   const [jobTitle, setJobTitle] = useState<string>();
   const [jobDescription, setJobDescription] = useState<string>();
@@ -31,7 +62,9 @@ export default function JobContent({
     requiredSkills: requiredSkills,
     jobType: jobType,
   };
+
   useEffect(() => {
+    // console.log(loadTests);
     setJobTitle(loadJobPostContent.jobTitle);
     setJobDescription(loadJobPostContent.jobDescription);
     setRequiredSkills(loadJobPostContent.requiredSkills);
@@ -76,7 +109,7 @@ export default function JobContent({
 
   function updatetoDatabase() {
     axios.patch(
-      `${process.env.NEXT_PUBLIC_UPDATE_JOBS}/${loadJobPostContent.jobId}`,
+      `${process.env.NEXT_PUBLIC_UPDATE_JOB}/${loadJobPostContent.jobId}`,
       storage,
       {
         headers: { "Content-Type": "application/json" },
@@ -84,7 +117,7 @@ export default function JobContent({
     );
   }
   function saveToDatabase() {
-    axios.post(`${process.env.NEXT_PUBLIC_CREATE_JOBS}`, storage, {
+    axios.post(`${process.env.NEXT_PUBLIC_SAVE_JOB}`, storage, {
       headers: { "Content-Type": "application/json" },
     });
   }
@@ -178,6 +211,24 @@ export default function JobContent({
           <h1>Add your Job Post Here</h1>
         </div>
       )}
+      <TestListing
+        loadTests={loadTests}
+        setLoadTests={setLoadTests}
+        updateTestContent={updateTestContent}
+        setUpdateTestContent={setUpdateTestContent}
+        removeTestBlock={removeTestBlock}
+        setRemoveTestBlock={setRemoveTestBlock}
+        testState={testState}
+        setTestState={setTestState}
+        setJobPostState={setJobPostState}
+        setLoadTestQuestions={setLoadTestQuestions}
+        setTestCount={setTestCount}
+        remove={remove}
+        setRemove={setRemove}
+        testResponse={testResponse}
+        setTestResponse={setTestResponse}
+        loadJobPostContent={loadJobPostContent}
+      />
     </section>
   );
 }
