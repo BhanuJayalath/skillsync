@@ -83,62 +83,6 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             .catch(error => console.error('Error fetching countries:', error));
     }, []);
 
-    // useEffect(() => {
-    //     const apiUrl = process.env.NEXT_PUBLIC_CV_SUMMARY_API_URL;
-    //     const apiKey = process.env.NEXT_PUBLIC_CV_SUMMARY_API_KEY;
-    //     const prompt = `Generate a professional CV summary using only the provided details.
-    //     Strictly return a JSON object with a brief explanation, comments, or additional text.
-    //
-    //     Details:
-    //     ${user.experience.length > 0 ? `Experience: ${user.experience.map(exp =>
-    //         `${exp.jobName} at ${exp.companyName} (${exp.startDate} - ${exp.endDate})`).join('. ')}.` : ''}
-    //     ${user.education.length > 0 ? `Education: ${user.education.map(edu =>
-    //         `${edu.courseName} from ${edu.schoolName} (${edu.startDate} - ${edu.endDate})`).join('. ')}.` : ''}
-    //     ${user.skills.length > 0 ? `Skills: ${user.skills.join(', ')}.` : ''}
-    //
-    //     Ensure the summary is concise, professional, and natural.
-    //     No placeholders or missing information should be mentioned.
-    //
-    //     Return only this JSON object with no additional text:
-    //     {
-    //       "summary": "Your generated summary here"
-    //     }`;
-    //
-    //     fetch(`${apiUrl}`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Authorization": `Bearer ${apiKey}`,
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             "model": "deepseek/deepseek-r1-distill-llama-70b:free",
-    //             "messages": [
-    //                 {
-    //                     "role": "user",
-    //                     "content": prompt
-    //                 }
-    //             ]
-    //         })
-    //     })
-    //         .then(response => {
-    //             console.log("Response Status:", response.status);
-    //             return response.json();
-    //         }) // Convert response to JSON
-    //         .then(data => {
-    //             // Extract and log the AI's response
-    //             const summary = data.choices?.[0]?.message?.content.match(/{[\s\S]*}/) || "No response";
-    //             console.log("AI Response:", summary);
-    //             const jsonSummary = summary
-    //                 ? JSON.parse(summary[0])
-    //                 : { summary: "error occurred" };
-    //             const filteredSummary = jsonSummary.summary.replace(/\*\*(.*?)\*\*/g, '$1');
-    //             setSummary(filteredSummary);
-    //             handleSummary(filteredSummary);
-    //         })
-    //         .catch(error => console.error("Error:", error));
-    //
-    // }, []);
-
     const handleGenerate = async (e:React.FormEvent) =>{
         e.preventDefault();
 
