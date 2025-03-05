@@ -1,5 +1,6 @@
 "use client"; 
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link"; 
 import logo from "../assets/images/logo.png";
@@ -78,7 +79,7 @@ const Login: React.FC = () => {
           {/* Social Buttons */}
           <button
             className={`${styles.socialBtn} ${styles.googleBtn}`}
-            onClick={() => handleSocialLogin("Google")}
+            onClick={() => signIn("google")}
             disabled={isLoading}
           >
             Login with Google
