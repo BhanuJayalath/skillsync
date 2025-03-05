@@ -6,9 +6,9 @@ import {
   Body,
   Param,
   Patch,
-} from '@nestjs/common'; //bhanu
+} from '@nestjs/common';
 import { JobRecommendationService } from './job-recommendation.service';
-import { Job } from './job.schema'; //bhanu
+import { Job } from './job.schema';
 
 @Controller('job-recommendation')
 export class JobRecommendationController {
@@ -30,7 +30,6 @@ export class JobRecommendationController {
     }
     return matchingJobs;
   }
-  //---------------------------------------------------------------------------------------bhanu
   @Post('create-job')
   async createJob(
     @Body()
