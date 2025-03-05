@@ -67,9 +67,6 @@ class JobRole {
 
 @Schema()
 export class User {
-  @Prop({ type: String, unique: true })
-  id: string; // Unique user ID
-
   @Prop()
   email: string; // User's email address
 
