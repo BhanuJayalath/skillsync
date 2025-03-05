@@ -11,7 +11,10 @@ export class JobRecommendationService {
     @InjectModel(Job.name) private jobModel: Model<Job>,
   ) {}
 
-  async getRecommendations(skills: string, jobRoles: string): Promise<string> {
+  async getRecommendations(
+    skills: string,
+    jobRoles: string[],
+  ): Promise<string> {
     const apiKey = this.configService.get<string>('DEEPSEEK_API_KEY');
     const apiUrl = this.configService.get<string>('DEEPSEEK_API_URL');
 
