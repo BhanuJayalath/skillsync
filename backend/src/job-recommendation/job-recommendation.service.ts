@@ -1,17 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { InjectModel } from '@nestjs/mongoose'; //bhanu
-import { Model } from 'mongoose'; //bhanu
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { Job } from './job.schema';
 
 @Injectable()
 export class JobRecommendationService {
   constructor(
     private configService: ConfigService,
-    @InjectModel(Job.name) private jobModel: Model<Job>, // bhanu
+    @InjectModel(Job.name) private jobModel: Model<Job>,
   ) {}
 
-  async getRecommendations(skills: string, jobRoles: string): Promise<string> {
+  async getRecommendations(
+    skills: string,
+    jobRoles: string[],
+  ): Promise<string> {
     const apiKey = this.configService.get<string>('DEEPSEEK_API_KEY');
     const apiUrl = this.configService.get<string>('DEEPSEEK_API_URL');
 
@@ -30,9 +33,8 @@ export class JobRecommendationService {
   Only return the JSON object with no extra explanation, comments, or additional text.
 `;
 
-
     try {
-      const response = await fetch(`${apiUrl}/chat/completions`, {
+      const response = await fetch(`${apiUrl}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${apiKey}`,
@@ -61,7 +63,7 @@ export class JobRecommendationService {
       throw new Error('Failed to fetch job recommendations.');
     }
   }
-  //------------------------------------------------------------------------------bhanu
+
   async createJob(jobData: {
     jobId: string;
     jobTitle: string;

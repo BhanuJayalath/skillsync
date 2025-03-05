@@ -1,39 +1,36 @@
-// import { Body, Controller, Post } from '@nestjs/common';
 import {
   Controller,
   Get,
   Post,
-  Put,
   Delete,
   Body,
   Param,
-  Query,
   Patch,
-} from '@nestjs/common'; //bhanu
+} from '@nestjs/common';
 import { JobRecommendationService } from './job-recommendation.service';
-import { Job } from './job.schema'; //bhanu
+import { Job } from './job.schema';
 
-@Controller('job-recommendation')
+@Controller('jobs')
 export class JobRecommendationController {
   constructor(private readonly jobService: JobRecommendationService) {}
 
-  @Post('getJob') //define the POST route /getUser
+  @Post('recommendJob') //define the POST route /getUser
   async getJob(@Body() body: { skills: string; jobs: any }) {
     const skills = body.skills;
-    const jobTitles = body.jobs.map((job) => job.title);
+    const jobs = await this.jobService.getAllJobs();
+    const jobTitles = jobs.map((job) => job.jobTitle);
     const selectedJobs = await this.jobService.getRecommendations(
       skills,
       jobTitles,
     );
     const matchingJobs = {
-      jobs: body.jobs.filter((job) => selectedJobs.includes(job.title)),
+      jobs: jobs.filter((job) => selectedJobs.includes(job.jobTitle)),
     };
     if (!matchingJobs) {
       return { error: 'jobs not found' }; //Return an error if user is not found
     }
     return matchingJobs;
   }
-  //---------------------------------------------------------------------------------------bhanu
   @Post('create-job')
   async createJob(
     @Body()
@@ -56,7 +53,6 @@ export class JobRecommendationController {
   async getJobById(@Param('jobId') jobId: string): Promise<Job> {
     return this.jobService.getJobById(jobId);
   }
-
   // **UPDATE a job by ID**
   @Patch(':jobId')
   async updateJob(

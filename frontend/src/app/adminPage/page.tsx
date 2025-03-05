@@ -4,9 +4,26 @@ import Navbar from '../components/Navbar';
 import CoursesManagement from './CourseManagment';
 import styles from './adminPage.module.css';   // Importing custom styles
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import { useRouter } from 'next/navigation';
+
 
 export default function Page(){
+    const router = useRouter();
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+        if (localStorage.getItem("isAuthenticated") !== "true") {
+            router.push("adminPage/SignInForAdmin"); // Redirect if not logged in
+        }
+    }, [router]);
+
+    const handleLogout = () => {
+        localStorage.removeItem("isAuthenticated");
+        router.push("adminPage/SignInForAdmin"); // Redirect to sign-in page
+    };
+
     const [isEditing, setIsEditing] = useState(false);
 
     const [userInfo, setUserInfo] = useState({
@@ -25,6 +42,8 @@ export default function Page(){
         }));
       };
 
+    if (!isClient) return null;
+
     return(
         <div className={styles.outerContainer}>
             <Navbar/>
@@ -41,6 +60,7 @@ export default function Page(){
                             <li><a href="#">Analytics</a></li>
                             <li><a href="#">Settings</a></li>
                         </ul>
+                        <button onClick={handleLogout}>Logout</button>
                     </nav>
                 </aside>
 
@@ -121,11 +141,10 @@ export default function Page(){
                             <CoursesManagement/>
                         </div>
 
-
-
                     </div>
                 </div>
             </div>
+
 
             <Footer/>
         </div>

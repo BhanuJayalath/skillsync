@@ -4,13 +4,10 @@ import { Document } from 'mongoose';
 @Schema()
 export class Job extends Document {
   @Prop({ required: true })
-  jobId: string;
-
-  @Prop({ required: true })
   jobTitle: string;
 
   @Prop({ required: true })
-  jobDescription: string; //bhanu
+  jobDescription: string;
 
   @Prop({ type: [String] })
   requiredSkills: string[];
