@@ -272,7 +272,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             <form className={styles.form2}>
                 <div className={styles.formSection}>
                     <div className={styles.formGroup}>
-                        <label>CV Description</label>
+                        <label>CV Summary</label>
                         <textarea
                             value={summary}
                             onChange={(e) => {
