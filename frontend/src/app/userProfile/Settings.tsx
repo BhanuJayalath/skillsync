@@ -84,8 +84,8 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     }, []);
 
     useEffect(() => {
-        const apiUrl = process.env.NEXT_PUBLIC_CV_DESCRIPTION_API_URL;
-        const apiKey = process.env.NEXT_PUBLIC_CV_DESCRIPTION_API_KEY;
+        const apiUrl = process.env.NEXT_PUBLIC_CV_SUMMARY_API_URL;
+        const apiKey = process.env.NEXT_PUBLIC_CV_SUMMARY_API_KEY;
         const prompt = `Generate a professional CV summary using only the provided details. 
         Strictly return a JSON object with a brief explanation, comments, or additional text.
 
@@ -170,7 +170,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
         setBlob(newBlob);
     }
     useEffect(() => {
-        handleAvatar(blob?.url || "");
+        handleAvatar(blob?.url || user.avatar);
     }, [blob?.url]);
     console.log(user.avatar);
     return (
