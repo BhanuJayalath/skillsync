@@ -155,11 +155,10 @@ export default function UserProfile() {
     // };
     const handleSubmit = async () => {
         try {
-            const response = await fetch("http://localhost:3001/api/update-user-general", {
+            const response = await fetch(`http://localhost:3001/updateUser/${user.id}`, {
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    id: user.id,
                     email: user.email,
                     number: user.number,
                     userName: user.userName,
