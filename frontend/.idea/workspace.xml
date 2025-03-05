@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="deleted the unnecessary codes">
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add the get user url .env and get it from the .env">
       <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,15 +102,7 @@
       <workItem from="1741062435842" duration="31000" />
       <workItem from="1741062540884" duration="459000" />
       <workItem from="1741149491639" duration="7008000" />
-      <workItem from="1741186866304" duration="310000" />
-    </task>
-    <task id="LOCAL-00023" summary="created the courses.tsx">
-      <option name="closed" value="true" />
-      <created>1740901674915</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1740901674915</updated>
+      <workItem from="1741186866304" duration="1589000" />
     </task>
     <task id="LOCAL-00024" summary="created the Overview.tsx file">
       <option name="closed" value="true" />
@@ -496,7 +488,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741171902528</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="add the get user url .env and get it from the .env">
+      <option name="closed" value="true" />
+      <created>1741187219315</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1741187219315</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -514,7 +514,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated the Resume.tsx" />
     <MESSAGE value="add relevant use states to the Settings.tsx" />
     <MESSAGE value="add useEffect to fetch the countries in the form section of the Settings.tsx" />
     <MESSAGE value="add useEffect to fetch the cities in the form section of the Settings.tsx" />
@@ -539,6 +538,7 @@
     <MESSAGE value="add the handleGenerate function to the generate button onClick" />
     <MESSAGE value="fixed errors occurred in handle generate summary" />
     <MESSAGE value="deleted the unnecessary codes" />
-    <option name="LAST_COMMIT_MESSAGE" value="deleted the unnecessary codes" />
+    <MESSAGE value="add the get user url .env and get it from the .env" />
+    <option name="LAST_COMMIT_MESSAGE" value="add the get user url .env and get it from the .env" />
   </component>
 </project>
