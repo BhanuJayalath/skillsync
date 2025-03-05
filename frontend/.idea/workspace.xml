@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add the image upload to the overview section">
-      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/Settings.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/user.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/user.module.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +101,7 @@
       <workItem from="1740965701512" duration="17851000" />
       <workItem from="1741062435842" duration="31000" />
       <workItem from="1741062540884" duration="459000" />
-      <workItem from="1741149491639" duration="1792000" />
+      <workItem from="1741149491639" duration="6002000" />
     </task>
     <task id="LOCAL-00016" summary="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics">
       <option name="closed" value="true" />
