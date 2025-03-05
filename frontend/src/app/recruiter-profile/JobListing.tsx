@@ -56,11 +56,19 @@ export default function JobListing({
               const key: any = localStorage.key(i);
               let Item: any = localStorage.getItem(key);
               let jsonParsedItem = Item ? JSON.parse(Item) : null;
-              if (item.jobId === jsonParsedItem.jobId) {
-                console.log("trigger1");
+              if (
+                item.jobId === jsonParsedItem.jobId &&
+                !jsonParsedItem.testId
+              ) {
                 tempArray[index] = jsonParsedItem;
-              } else if (jsonParsedItem.jobId && !jsonParsedItem.testId) {
-                console.log("trigger2");
+              } else if (
+                response.data.length - 1 === index &&
+                jsonParsedItem.jobId &&
+                !jsonParsedItem.testId &&
+                !tempArray.some(
+                  (item: any) => item.jobId === jsonParsedItem.jobId
+                )
+              ) {
                 tempArray.push(jsonParsedItem);
               }
             }
@@ -81,7 +89,6 @@ export default function JobListing({
           }
         }
       }
-      console.log(tempArray);
     });
   }, [remove]);
 
