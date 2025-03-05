@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add the get user url .env and get it from the .env">
       <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +102,7 @@
       <workItem from="1741062435842" duration="31000" />
       <workItem from="1741062540884" duration="459000" />
       <workItem from="1741149491639" duration="7008000" />
-      <workItem from="1741186866304" duration="1589000" />
+      <workItem from="1741186866304" duration="1899000" />
     </task>
     <task id="LOCAL-00024" summary="created the Overview.tsx file">
       <option name="closed" value="true" />
