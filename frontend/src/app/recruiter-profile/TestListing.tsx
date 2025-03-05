@@ -50,34 +50,62 @@ export default function TestListing({
     const tempArray: any = [];
     axios.get(`${process.env.NEXT_PUBLIC_GET_TESTS}`).then((response) => {
       response.data.map((item: any, index: number) => {
+        // console.log(item);
         if (loadJobPostContent.jobId === item.jobId) {
-          console.log("trigger 1", item.jobId);
+          // console.log("trigger 1", item.jobId);
           tempArray.push(item);
-        } 
-        else {
+          // console.log(tempArray);
           for (let i = 0; i < localStorage.length; i++) {
             const key: any = localStorage.key(i);
             let Item: any = localStorage.getItem(key);
             let jsonParsedItem = Item ? JSON.parse(Item) : null;
             if (
               loadJobPostContent.jobId === jsonParsedItem.jobId &&
-              jsonParsedItem.testId &&
-              loadJobPostContent.jobId === item.jobId
+              jsonParsedItem.testId
             ) {
+              console.log("trigger 2", item.jobId);
               tempArray[index] = jsonParsedItem;
+              console.log(tempArray);
             } else if (
-              loadJobPostContent.jobId === jsonParsedItem.jobId &&
+              response.data.length - 1 === index &&
+              jsonParsedItem.jobId &&
               jsonParsedItem.testId &&
-              loadJobPostContent.jobId !== item.jobId &&
               !tempArray.some(
                 (item: any) => item.jobId === jsonParsedItem.jobId
               )
             ) {
-              console.log("trigger3");
+              // console.log("trigger 3", item.jobId);
               tempArray.push(jsonParsedItem);
+              console.log(tempArray);
             }
           }
         }
+        // console.log(tempArray);
+        // else if (loadJobPostContent.jobId !== item.jobId) {
+        //   for (let i = 0; i < localStorage.length; i++) {
+        //     const key: any = localStorage.key(i);
+        //     let Item: any = localStorage.getItem(key);
+        //     let jsonParsedItem = Item ? JSON.parse(Item) : null;
+        //     if (
+        //       loadJobPostContent.jobId === jsonParsedItem.jobId &&
+        //       jsonParsedItem.testId &&
+        //       loadJobPostContent.jobId === item.jobId
+        //     ) {
+        //       console.log("trigger 2", item.jobId);
+        //       tempArray[index] = jsonParsedItem;
+        //     } else if (
+        //       loadJobPostContent.jobId === jsonParsedItem.jobId &&
+        //       jsonParsedItem.testId &&
+        //       loadJobPostContent.jobId !== item.jobId &&
+        //       !tempArray.some(
+        //         (item: any) => item.jobId === jsonParsedItem.jobId
+        //       )
+        //     ) {
+        //       console.log("trigger 3", item.jobId);
+        //       tempArray.push(jsonParsedItem);
+        //     }
+        //   }
+        // }
         setTestResponse(response.data);
       });
       setLoadTests(tempArray);
