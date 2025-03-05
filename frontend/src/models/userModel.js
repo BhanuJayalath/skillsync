@@ -4,21 +4,18 @@ import mongoose from 'mongoose';
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
-        required: [true,"Username is required"],
         unique: true,
         minlength: 3,
         maxlength: 20
     },
     email: {
         type: String,
-        required: [true,"Email is required"],
         unique: true,
         minlength: 5,
         maxlength: 50
     },
     password: {
-        type: String,
-        required: [true,"Password is required"],
+        type: String, //removed the passwords's required field because its causing an issues when connecting with social accounts
         minlength: 6,
         maxlength: 1024
     },
