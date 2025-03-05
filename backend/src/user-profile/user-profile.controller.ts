@@ -1,14 +1,13 @@
-import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
 import { UserProfileService } from './user-profile.service';
 import { User } from './user-profile.schema';
 
 @Controller()
 export class UserProfileController {
   constructor(private readonly userProfileService: UserProfileService) {}
-  @Post('getUser') //define the POST route /getUser
-  async getUser(@Body() body: { userId: string }) {
-    const userId = body.userId;
-    const user = await this.userProfileService.findUser(userId);
+  @Get('getUser/:id') //define the POST route /getUser
+  async getUser(@Param('id') id: string) {
+    const user = await this.userProfileService.findUser(id);
     if (!user) {
       return { error: 'User not found' }; //Return an error if user is not found
     }
