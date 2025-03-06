@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add the get user url .env and get it from the .env">
-      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job.schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job.schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +50,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "#74 on userProfile",
+    "git-widget-placeholder": "userProfile",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/veruw/Desktop/skillsync/frontend",
     "node.js.detected.package.eslint": "true",
@@ -103,6 +102,7 @@
       <workItem from="1741062540884" duration="459000" />
       <workItem from="1741149491639" duration="7008000" />
       <workItem from="1741186866304" duration="4656000" />
+      <workItem from="1741237167811" duration="33000" />
     </task>
     <task id="LOCAL-00024" summary="created the Overview.tsx file">
       <option name="closed" value="true" />
