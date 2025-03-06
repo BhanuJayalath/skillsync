@@ -32,6 +32,8 @@ export default function MCQTest() {
   const [testStarted, setTestStarted] = useState(false)
   const [score, setScore] = useState({ correct: 0, total: 0 })
 
+  //fixed userId for now
+  const userId = "006"
   const [testId, setTestId] = useState("Test1741231239210") // Fixed testId for now
   const jobId = "Job1741231081858" // Fixed jobId for now
 
@@ -39,7 +41,7 @@ export default function MCQTest() {
     // Fetch the test data from the backend
     const fetchTestData = async () => {
       try {
-        const response = await axios.get<Test>(`http://localhost:3001/test/${testId}`)
+        const response = await axios.get<Test>(`http://localhost:3001/tests/${testId}`)
         const test = response.data
         setQuestions(test.testContent.questionContent)
         setAnswers(Array(test.testContent.questionContent.length).fill(null))
@@ -93,7 +95,7 @@ export default function MCQTest() {
   
     // Send the test mark to the backend
     try {
-      await axios.patch(`http://localhost:3001/users/${userId}/tests`, {
+      await axios.patch(`http://localhost:3001/saveTestMark/${userId}`, {
         jobId,
         testId,
         score: correctCount,
@@ -199,6 +201,7 @@ export default function MCQTest() {
                       </>
                     )}
                   </div>
+
                 </div>
 
                 <div className={styles.navigationContainer}>

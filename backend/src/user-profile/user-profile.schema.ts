@@ -48,16 +48,22 @@ class Education {
 
 class Test {
   @Prop()
+  jobId: string;
+
+  @Prop()
   testId: string;
 
   @Prop()
-  testLevel: string;
+  score: number;
 
-  @Prop()
-  mark: string;
+  // @Prop()
+  // testLevel: string;
 
-  @Prop()
-  xAxis: string;
+  // @Prop()
+  // mark: string;
+
+  // @Prop()
+  // xAxis: string;
 }
 
 class JobRole {

@@ -27,4 +27,13 @@ export class UserProfileController {
 
     return updatedUser;
   }
+
+  @Patch('saveTestMark/:userId')
+  async saveTestMark(
+    @Param('userId') userId: string,
+    @Body() saveTestMarkDto: { jobId: string; testId: string; score: number },
+  ) {
+    const { jobId, testId, score } = saveTestMarkDto;
+    return this.userProfileService.saveTestMark(userId, jobId, testId, score);
+  }
 }
