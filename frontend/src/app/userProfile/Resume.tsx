@@ -1,5 +1,5 @@
 import styles from "@/app/userProfile/user.module.css";
-import React from "react";
+import React, {useEffect} from "react";
 
 interface User {
     fullName: string;
@@ -38,9 +38,15 @@ interface ResumeProps {
     user: User;
     removeEducation: (index: number) => void;
     removeExperience: (index: number) => void;
+    updateNestedChanges : (
+        index: number,
+        section: "experience" | "education"
+    ) => void;
 }
 
-const Resume = ({user, removeEducation, removeExperience}: ResumeProps) => {
+const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: ResumeProps) => {
+
+
     return (
         <section className={styles.cvSection}>
             <div className={styles.contactInfo}>
@@ -52,7 +58,7 @@ const Resume = ({user, removeEducation, removeExperience}: ResumeProps) => {
                     <p>Location: {user.city}, {user.country}</p>
                 </div>
             </div>
-            <div id="summrySection" className={styles.experience}>
+            <div id="summarySection" className={styles.experience}>
                 <h2 className={styles.sectionTitle}>Summary</h2>
                 <div className={styles.job}>
                     <p className={styles.jobResponsibilities}>{user.cvSummary}</p>
@@ -63,10 +69,10 @@ const Resume = ({user, removeEducation, removeExperience}: ResumeProps) => {
                 <ul className={styles.jobList}>
                     {user.experience.map((experience, index) => (
                         <li key={index} className={styles.expItem}>
-                            <div className={styles.job} onClick={() => removeExperience(index)}>
+                            <div id={`experience${index}`} className={styles.job} onClick={() => removeExperience(index)}>
                                 <h3 className={styles.jobTitle}>{experience.jobName}</h3>
                                 <p className={styles.companyName}>{experience.companyName}</p>
-                                <p className={styles.jobDates}>{experience.startDate} - {experience.endDate}</p>
+                                <p className={styles.jobDates}>{experience.startDate}  {experience.endDate && `-${experience.endDate}`}</p>
                                 <p className={styles.jobResponsibilities}>{experience.description}</p>
                             </div>
                         </li>
@@ -79,10 +85,10 @@ const Resume = ({user, removeEducation, removeExperience}: ResumeProps) => {
                 <ul className={styles.educationList}>
                     {user.education.map((education, index) => (
                         <li key={index} className={styles.eduItem}>
-                            <div className={styles.degree} onClick={() => removeEducation(index)}>
+                            <div id={`courses${index}`} className={styles.degree} onClick={() => removeEducation(index)}>
                                 <h3 className={styles.degreeTitle}>{education.courseName}</h3>
                                 <p className={styles.schoolName}>{education.schoolName}</p>
-                                <p className={styles.graduationYear}>{education.startDate} - {education.endDate}</p>
+                                <p className={styles.graduationYear}>{education.startDate}  {education.endDate && `-${education.endDate}`}</p>
                                 <p className={styles.jobResponsibilities}>{education.description}</p>
                             </div>
                         </li>
