@@ -14,6 +14,8 @@ import Settings from "@/app/userProfile/Settings";
 
 
 export default function UserProfile() {
+    const searchParams = useSearchParams();
+    const userId = searchParams.get("userId");
     //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
     // Initializing profile state with default user details
