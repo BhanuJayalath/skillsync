@@ -14,20 +14,21 @@ export default function JobContent({
   setRemoveTestBlock,
   testState,
   setTestState,
+  jobPostState,
   setJobPostState,
   setLoadTestQuestions,
   setTestCount,
-  remove,
-  setRemove,
   testResponse,
   setTestResponse,
   loadJobPostContent,
   updateJobPostContent,
+  setUpdateJobPostContent,
   jobCount,
   jobPostResponse,
 }: {
   loadJobPostContent: any;
   updateJobPostContent: any;
+  setUpdateJobPostContent: any;
   jobCount: any;
   jobPostResponse: any;
   loadTests: any;
@@ -38,11 +39,10 @@ export default function JobContent({
   setRemoveTestBlock: any;
   testState: any;
   setTestState: any;
+  jobPostState: any;
   setJobPostState: any;
   setLoadTestQuestions: any;
   setTestCount: any;
-  remove: any;
-  setRemove: any;
   testResponse: any;
   setTestResponse: any;
 }) {
@@ -52,7 +52,7 @@ export default function JobContent({
   const [requiredSkillsValue, setRequiredSkillsValue] = useState<string>("");
   const [jobType, setJobType] = useState<string>();
   const [selectedAnswer, setSelectedAnswer] = useState<Number>();
-  const [removed, setRemoved] = useState(false);
+  // const [removed, setRemoved] = useState(false);
   const [readOnly, setReadOnly] = useState(false);
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   const storage = {
@@ -64,7 +64,6 @@ export default function JobContent({
   };
 
   useEffect(() => {
-    // console.log(loadTests);
     setJobTitle(loadJobPostContent.jobTitle);
     setJobDescription(loadJobPostContent.jobDescription);
     setRequiredSkills(loadJobPostContent.requiredSkills);
@@ -73,7 +72,7 @@ export default function JobContent({
     if (updateJobPostContent == false) {
       setReadOnly(true);
     }
-  }, [removed]);
+  }, []);
   useEffect(() => {
     if (jobPostResponse) {
       const DatabaseExistingId = jobPostResponse.some(
@@ -103,9 +102,7 @@ export default function JobContent({
   }
 
   var counter = 0;
-  useEffect(() => {
-    localStorage.setItem(loadJobPostContent.jobId, JSON.stringify(storage));
-  }, [storage]);
+  useEffect(() => {}, [storage]);
 
   function updatetoDatabase() {
     axios.patch(
@@ -129,11 +126,15 @@ export default function JobContent({
     ];
     setRequiredSkills(updatedSkills);
   }
-  var questionCounter = 0;
+  function previousPage() {
+    setJobPostState(false);
+    setUpdateJobPostContent(false);
+  }
 
   return (
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
+        <button onClick={previousPage}>back</button>
         <h1>Job Post {jobCount}</h1>
         <div id={styles.mockExamSectionSaveandClose}>
           {updateJobPostContent &&
@@ -221,10 +222,9 @@ export default function JobContent({
         testState={testState}
         setTestState={setTestState}
         setJobPostState={setJobPostState}
+        jobPostState={jobPostState}
         setLoadTestQuestions={setLoadTestQuestions}
         setTestCount={setTestCount}
-        remove={remove}
-        setRemove={setRemove}
         testResponse={testResponse}
         setTestResponse={setTestResponse}
         loadJobPostContent={loadJobPostContent}

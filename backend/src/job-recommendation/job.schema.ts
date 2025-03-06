@@ -4,6 +4,9 @@ import { Document } from 'mongoose';
 @Schema()
 export class Job extends Document {
   @Prop({ required: true })
+  jobId: string;
+
+  @Prop({ required: true })
   jobTitle: string;
 
   @Prop({ required: true })

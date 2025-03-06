@@ -9,13 +9,23 @@ export default function TestContent({
   setLoadTestQuestions,
   testCount,
   updateTestContent,
+  setUpdateTestContent,
   testResponse,
+  testState,
+  setTestState,
+  jobPostState,
+  setJobPostState,
 }: {
   setLoadTestQuestions: any;
   loadTestQuestions: any;
   testCount: number;
   updateTestContent: any;
+  setUpdateTestContent: any;
   testResponse: any;
+  testState: any;
+  setTestState: any;
+  jobPostState: any;
+  setJobPostState: any;
 }) {
   var counter = 0;
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
@@ -27,10 +37,10 @@ export default function TestContent({
   });
 
   useEffect(() => {
-    localStorage.setItem(
-      loadTestQuestions.testId,
-      JSON.stringify(loadTestQuestions)
-    );
+    // localStorage.setItem(
+    //   loadTestQuestions.testId,
+    //   JSON.stringify(loadTestQuestions)
+    // );
   }, [loadTestQuestions]);
 
   function addQuestion() {
@@ -95,6 +105,9 @@ export default function TestContent({
     axios.post(`${process.env.NEXT_PUBLIC_SAVE_TEST}`, loadTestQuestions, {
       headers: { "Content-Type": "application/json" },
     });
+    setJobPostState(!jobPostState);
+    setTestState(!testState);
+    setUpdateTestContent(false);
   }
   function updatetoDatabase() {
     axios.patch(
@@ -105,11 +118,17 @@ export default function TestContent({
       }
     );
   }
+  function previousPage() {
+    setJobPostState(!jobPostState);
+    setTestState(!testState);
+    setUpdateTestContent(false);
+  }
   var questionCounter = 0;
 
   return (
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
+        <button onClick={previousPage}>back</button>
         <h1>Test {testCount}</h1>
         {updateTestContent ? (
           <>

@@ -39,15 +39,11 @@ export default function RecruiterProfile() {
     Date.now(),
   ]);
 
-  useEffect(() => {
-    console.log(testState);
-  }, [testState]);
   const [testCount, setTestCount] = useState(Number);
   const [jobCount, setJobCount] = useState(Number);
   const [updateTestContent, setUpdateTestContent] = useState(false);
   const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
   const [removeTestBlock, setRemoveTestBlock] = useState(false);
-  const [remove, setRemove] = useState(false);
   const [testResponse, setTestResponse] = useState();
   const [jobPostResponse, setJobPostResponse] = useState();
 
@@ -145,13 +141,13 @@ export default function RecruiterProfile() {
                 testState={testState}
                 setTestState={setTestState}
                 setJobPostState={setJobPostState}
+                jobPostState={jobPostState}
                 setLoadTestQuestions={setLoadTestQuestions}
                 setTestCount={setTestCount}
-                remove={remove}
-                setRemove={setRemove}
                 testResponse={testResponse}
                 setTestResponse={setTestResponse}
                 loadJobPostContent={loadJobPostContent}
+                setUpdateJobPostContent={setUpdateJobPostContent}
                 updateJobPostContent={updateJobPostContent}
                 jobPostResponse={jobPostResponse}
                 jobCount={jobCount}
@@ -159,40 +155,27 @@ export default function RecruiterProfile() {
             ) : testState ? (
               <TestContent
                 setLoadTestQuestions={setLoadTestQuestions}
+                jobPostState={jobPostState}
+                setJobPostState={setJobPostState}
+                testState={testState}
+                setTestState={setTestState}
                 loadTestQuestions={loadTestQuestions}
                 testCount={testCount}
                 updateTestContent={updateTestContent}
+                setUpdateTestContent={setUpdateTestContent}
                 testResponse={testResponse}
               />
             ) : (
-              <>
-                {/* <TestListing
-                  loadTests={loadTests}
-                  setLoadTests={setLoadTests}
-                  updateTestContent={updateTestContent}
-                  setUpdateTestContent={setUpdateTestContent}
-                  removeTestBlock={removeTestBlock}
-                  setRemoveTestBlock={setRemoveTestBlock}
-                  testState={testState}
-                  setTestState={setTestState}
-                  setLoadTestQuestions={setLoadTestQuestions}
-                  setTestCount={setTestCount}
-                  remove={remove}
-                  setRemove={setRemove}
-                  testResponse={testResponse}
-                  setTestResponse={setTestResponse}
-                /> */}
-                <JobListing
-                  loadJobPostContent={loadJobPostContent}
-                  setLoadJobPostContent={setLoadJobPostContent}
-                  setUpdateJobPostContent={setUpdateJobPostContent}
-                  updateJobPostContent={updateJobPostContent}
-                  setJobPostState={setJobPostState}
-                  jobPostState={jobPostState}
-                  setJobCount={setJobCount}
-                  setJobPostResponse={setJobPostResponse}
-                />
-              </>
+              <JobListing
+                loadJobPostContent={loadJobPostContent}
+                setLoadJobPostContent={setLoadJobPostContent}
+                setUpdateJobPostContent={setUpdateJobPostContent}
+                updateJobPostContent={updateJobPostContent}
+                setJobPostState={setJobPostState}
+                jobPostState={jobPostState}
+                setJobCount={setJobCount}
+                setJobPostResponse={setJobPostResponse}
+              />
             )}
           </div>
         </div>

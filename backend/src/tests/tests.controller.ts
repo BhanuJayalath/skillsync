@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { TestsService } from './tests.service';
 
-@Controller('test')
+@Controller('tests')
 export class TestsController {
   constructor(private readonly TestsService: TestsService) {}
 
@@ -18,11 +18,12 @@ export class TestsController {
     return this.TestsService.create(createDto);
   }
 
-  @Get('all-tests')
-  findAll() {
-    return this.TestsService.findAll();
+  @Get('all-tests/:id') //add the jobId
+  async findAll(@Param('id') id: string) {
+    return this.TestsService.find(id);
   }
-  @Get(':id')
+
+  @Get('test/:id') //add the testId
   findOne(@Param('id') id: string) {
     return this.TestsService.findOne(id);
   }
@@ -36,5 +37,9 @@ export class TestsController {
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.TestsService.delete(id);
+  }
+  @Delete(':job/:jobId')
+  deleteByJobId(@Param('jobId') jobId: string) {
+    return this.TestsService.deleteByJobId(jobId);
   }
 }
