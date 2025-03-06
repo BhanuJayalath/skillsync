@@ -47,11 +47,10 @@ interface SettingsProps {
     handleSubmit: () => Promise<void>;
     addEducation: (e: React.MouseEvent<HTMLButtonElement>) => void;
     addExperience: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    handleSummary: (value: string) => void;
-    handleAvatar: (value: string) => void;
+    handleFields: (value: string, field:string) => void;
 }
 
-const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience, handleSummary, handleAvatar }: SettingsProps) => {
+const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience, handleFields }: SettingsProps) => {
     const [countries, setCountries] = useState<{ name: string }[]>([]);
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
@@ -61,7 +60,8 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
 
     // Fetch countries and languages
     useEffect(() => {
-        fetch('https://restcountries.com/v3.1/all')
+        const countriesUrl = process.env.NEXT_PUBLIC_COUNTRIES_URL;
+        fetch(`${countriesUrl}`)
             .then(response => response.json())
             .then(data => {
                 const countryList = data.map((country: any) => ({
@@ -135,7 +135,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     : { summary: "error occurred" };
                 const filteredSummary = jsonSummary.summary.replace(/\*\*(.*?)\*\*/g, '$1');
                 setSummary(filteredSummary);
-                handleSummary(filteredSummary);
+                handleFields(filteredSummary,"cvSummary");
             })
             .catch(error => console.error("Error:", error));
     }
@@ -143,8 +143,8 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     // Fetch cities when a country is selected
     useEffect(() => {
         if (!user.country) return;
-
-        fetch('https://countriesnow.space/api/v0.1/countries/cities', {
+        const citiesUrl = process.env.NEXT_PUBLIC_CITIES_URL;
+        fetch(`${citiesUrl}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ country: user.country }),
@@ -157,7 +157,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     }, [user.country]);
     const handleUpload = async (e:React.FormEvent) =>{
         e.preventDefault();
-
+        const blobUrl = process.env.NEXT_PUBLIC_BLOB_UPLOAD_URL;
         if (!inputFileRef.current?.files) {
             throw new Error('No file selected');
         }
@@ -166,12 +166,12 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
 
         const newBlob = await upload(file.name, file, {
             access: 'public',
-            handleUploadUrl: '/api/users/profilePic/upload',
+            handleUploadUrl: `${blobUrl}`,
         });
         setBlob(newBlob);
     }
     useEffect(() => {
-        handleAvatar(blob?.url || user.avatar);
+        handleFields(blob?.url || user.avatar,"avatar");
     }, [blob?.url]);
     console.log(user.avatar);
     return (
