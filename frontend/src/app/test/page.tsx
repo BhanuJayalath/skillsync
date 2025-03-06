@@ -1,86 +1,58 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import axios from "axios"
 import styles from "./test.module.css"
 
 // Update the Question interface to include correctAnswer (not optional anymore)
 interface Question {
-  id: number
-  text: string
-  options: string[]
+  questionId: number
+  question: string
+  answer1: string
+  answer2: string
+  answer3: string
+  answer4: string
   correctAnswer: number // Now required for scoring
 }
 
+interface Test {
+  testId: string
+  jobId: string
+  testContent: {
+    questionContent: Question[]
+  }
+}
+
 export default function MCQTest() {
-  // Update the questions array to include correct answers
-  const questions: Question[] = [
-    {
-      id: 1,
-      text: "What is JSX in React?",
-      options: [
-        "A new programming language",
-        "A syntax extension for JavaScript",
-        "A type of database",
-        "A built-in React function"
-      ],
-      correctAnswer: 1, // JSX is a syntax extension for JavaScript
-    },
-    {
-      id: 2,
-      text: "Which method is used to update the state in a functional React component?",
-      options: [
-        "setState()",
-        "useState()",
-        "updateState()",
-        "modifyState()"
-      ],
-      correctAnswer: 1, // useState()
-    },
-    {
-      id: 3,
-      text: "What is the purpose of the useEffect hook in React?",
-      options: [
-        "To handle side effects in functional components",
-        "To create a new component",
-        "To define a new state variable",
-        "To modify the JSX structure"
-      ],
-      correctAnswer: 0, // Handles side effects in functional components
-    },
-    {
-      id: 4,
-      text: "Which keyword is used to create a React component as a class component?",
-      options: [
-        "component",
-        "function",
-        "class",
-        "extends"
-      ],
-      correctAnswer: 2, 
-    },
-    {
-      id: 5,
-      text: "What is the virtual DOM in React?",
-      options: [
-        "A lightweight copy of the real DOM",
-        "A database used by React",
-        "A new programming paradigm",
-        "An alternative to JavaScript"
-      ],
-      correctAnswer: 0, // A lightweight copy of the real DOM
-    },
-];
 
-
+  const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null))
+  const [answers, setAnswers] = useState<(number | null)[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
-
-  // Add a new state to track whether the test has started
   const [testStarted, setTestStarted] = useState(false)
+  const [score, setScore] = useState({ correct: 0, total: 0 })
 
-  // Add a state to store the score
-  const [score, setScore] = useState({ correct: 0, total: questions.length })
+  //fixed userId for now
+  const userId = "006"
+  const [testId, setTestId] = useState("Test1741231239210") // Fixed testId for now
+  const jobId = "Job1741231081858" // Fixed jobId for now
+
+  useEffect(() => {
+    // Fetch the test data from the backend
+    const fetchTestData = async () => {
+      try {
+        const response = await axios.get<Test>(`http://localhost:3001/tests/${testId}`)
+        const test = response.data
+        setQuestions(test.testContent.questionContent)
+        setAnswers(Array(test.testContent.questionContent.length).fill(null))
+        setScore({ correct: 0, total: test.testContent.questionContent.length })
+      } catch (error) {
+        console.error("Error fetching test data:", error)
+      }
+    }
+
+    fetchTestData()
+  }, [testId])
 
   // Add this function to start the test
   const startTest = () => {
@@ -106,23 +78,33 @@ export default function MCQTest() {
   }
 
   // Update the handleSubmit function to calculate the score
-  const handleSubmit = () => {
-    let correctCount = 0
-
-    // Calculate the score
+  const handleSubmit = async () => {
+    let correctCount = 0;
+  
     answers.forEach((answer, index) => {
       if (answer === questions[index].correctAnswer) {
-        correctCount++
+        correctCount++;
       }
-    })
-
-    setScore({ correct: correctCount, total: questions.length })
-    setIsSubmitted(true)
-
-    // Here you would typically send the answers to a server
-    console.log("Submitted answers:", answers)
-    console.log("Score:", correctCount, "out of", questions.length)
-  }
+    });
+  
+    setScore({ correct: correctCount, total: questions.length });
+    setIsSubmitted(true);
+  
+    console.log("Submitted answers:", answers);
+    console.log("Score:", correctCount, "out of", questions.length);
+  
+    // Send the test mark to the backend
+    try {
+      await axios.patch(`http://localhost:3001/saveTestMark/${userId}`, {
+        jobId,
+        testId,
+        score: correctCount,
+      });
+      console.log("Test mark saved successfully");
+    } catch (error) {
+      console.error("Error saving test mark:", error);
+    }
+  };
 
   const allQuestionsAnswered = answers.every((answer) => answer !== null)
   const progressPercentage = (answers.filter((a) => a !== null).length / questions.length) * 100
@@ -175,22 +157,51 @@ export default function MCQTest() {
                   <h2 className={styles.questionNumber}>
                     Question {currentQuestionIndex + 1} of {questions.length}
                   </h2>
-                  <h3 className={styles.questionText}>{questions[currentQuestionIndex].text}</h3>
+                  <h3 className={styles.questionText}>{questions[currentQuestionIndex]?.question}</h3>
 
                   <div className={styles.optionsContainer}>
-                    {questions[currentQuestionIndex].options.map((option, index) => (
-                      <div
-                        key={index}
-                        className={`${styles.optionItem} ${answers[currentQuestionIndex] === index ? styles.selectedOption : ""}`}
-                        onClick={() => handleAnswerSelect(index)}
-                      >
-                        <div className={styles.optionCircle}>
-                          {answers[currentQuestionIndex] === index && <div className={styles.optionCircleFill}></div>}
+                    {questions[currentQuestionIndex] && (
+                      <>
+                        <div
+                          className={`${styles.optionItem} ${answers[currentQuestionIndex] === 1 ? styles.selectedOption : ""}`}
+                          onClick={() => handleAnswerSelect(1)}
+                        >
+                          <div className={styles.optionCircle}>
+                            {answers[currentQuestionIndex] === 1 && <div className={styles.optionCircleFill}></div>}
+                          </div>
+                          <span className={styles.optionText}>{questions[currentQuestionIndex].answer1}</span>
                         </div>
-                        <span className={styles.optionText}>{option}</span>
-                      </div>
-                    ))}
+                        <div
+                          className={`${styles.optionItem} ${answers[currentQuestionIndex] === 2 ? styles.selectedOption : ""}`}
+                          onClick={() => handleAnswerSelect(2)}
+                        >
+                          <div className={styles.optionCircle}>
+                            {answers[currentQuestionIndex] === 2 && <div className={styles.optionCircleFill}></div>}
+                          </div>
+                          <span className={styles.optionText}>{questions[currentQuestionIndex].answer2}</span>
+                        </div>
+                        <div
+                          className={`${styles.optionItem} ${answers[currentQuestionIndex] === 3 ? styles.selectedOption : ""}`}
+                          onClick={() => handleAnswerSelect(3)}
+                        >
+                          <div className={styles.optionCircle}>
+                            {answers[currentQuestionIndex] === 3 && <div className={styles.optionCircleFill}></div>}
+                          </div>
+                          <span className={styles.optionText}>{questions[currentQuestionIndex].answer3}</span>
+                        </div>
+                        <div
+                          className={`${styles.optionItem} ${answers[currentQuestionIndex] === 4 ? styles.selectedOption : ""}`}
+                          onClick={() => handleAnswerSelect(4)}
+                        >
+                          <div className={styles.optionCircle}>
+                            {answers[currentQuestionIndex] === 4 && <div className={styles.optionCircleFill}></div>}
+                          </div>
+                          <span className={styles.optionText}>{questions[currentQuestionIndex].answer4}</span>
+                        </div>
+                      </>
+                    )}
                   </div>
+
                 </div>
 
                 <div className={styles.navigationContainer}>

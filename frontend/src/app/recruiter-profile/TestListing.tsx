@@ -1,3 +1,4 @@
+"use client";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import MockExam from "./TestContent";
@@ -6,92 +7,96 @@ import ResultTab from "./ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
-import MockExamContainer from "./QuestionContent";
+import JobListing from "./JobListing";
+import JobContent from "./JobContent";
 
 import axios from "axios";
-export default function JobListing({
+export default function TestListing({
+  loadTests,
+  setLoadTests,
+  updateTestContent,
+  setUpdateTestContent,
+  removeTestBlock,
+  setRemoveTestBlock,
+  testState,
+  setTestState,
   setJobPostState,
   jobPostState,
+  setLoadTestQuestions,
+  setTestCount,
+  testResponse,
+  setTestResponse,
   loadJobPostContent,
-  setLoadJobPostContent,
-  setJobCount,
-  setUpdateJobPostContent,
-  updateJobPostContent,
-  setJobPostResponse,
 }: {
-  setJobPostState: any;
+  loadTests: any;
+  setLoadTests: any;
+  updateTestContent: any;
+  setUpdateTestContent: any;
+  removeTestBlock: any;
+  setRemoveTestBlock: any;
+  testState: any;
+  setTestState: any;
   jobPostState: any;
+  setJobPostState: any;
+  setLoadTestQuestions: any;
+  setTestCount: any;
+  testResponse: any;
+  setTestResponse: any;
   loadJobPostContent: any;
-  setLoadJobPostContent: any;
-  setJobCount: any;
-  setUpdateJobPostContent: any;
-  updateJobPostContent: any;
-  setJobPostResponse: any;
 }) {
-  const [loadJobPosts, setLoadJobPosts] = useState<
-    {
-      jobId: String;
-      jobTitle: String;
-      jobDescription: String;
-      requiredSkills: String[];
-      jobType: string[];
-    }[]
-  >([]);
-
-  const [removeJobPostContainers, setRemoveJobPostContainers] = useState(false);
   const [remove, setRemove] = useState(false);
-
   useEffect(() => {
     const tempArray: any = [];
-    axios.get(`${process.env.NEXT_PUBLIC_GET_JOBS}`).then((response) => {
-      if (response.data.length != 0) {
-        setJobPostResponse(response.data);
+    axios
+      .get(`${process.env.NEXT_PUBLIC_GET_TESTS}/${loadJobPostContent.jobId}`)
+      .then((response) => {
+        setTestResponse(response.data);
         response.data.map((item: any) => {
           tempArray.push(item);
         });
-      }
-      setLoadJobPosts(tempArray);
-    });
-  }, [remove, jobPostState]);
+      });
+    setLoadTests(tempArray);
+  }, [remove]);
 
-  function loadJobPostComponent(jobId: string, JobCounter: number) {
-    const jobPost = loadJobPosts.find((item: any) => item.jobId === jobId);
-    setLoadJobPostContent(jobPost);
-    setJobCount(JobCounter);
+  function loadTestContent(testId: string, testCounter: number) {
+    loadTests.find((item: any) => {
+      if (item.testId === testId) {
+        setLoadTestQuestions(item);
+        setTestCount(testCounter);
+      }
+    });
     setJobPostState(!jobPostState);
+    setTestState(!testState);
   }
-  function addJobPostContainers() {
-    localStorage.clear();
-    setLoadJobPosts([
-      ...loadJobPosts,
+  function addTestComponent() {
+    console.log(loadTests);
+    setLoadTests([
+      ...loadTests,
       {
-        jobId: "Job" + Date.now(),
-        jobTitle: "",
-        jobDescription: "",
-        requiredSkills: [],
-        jobType: [],
+        testId: "Test" + Date.now(),
+        jobId: loadJobPostContent.jobId,
+        testContent: {
+          questionContent: [],
+        },
       },
     ]);
   }
-  function removeJobPostComponent(jobId: string) {
-    Promise.all([
-      axios.delete(`${process.env.NEXT_PUBLIC_REMOVE_TEST}/job/${jobId}`),
-      axios.delete(`${process.env.NEXT_PUBLIC_REMOVE_JOB}/${jobId}`),
-    ])
+  function removeTestComponent(testId: string) {
+    axios
+      .delete(`${process.env.NEXT_PUBLIC_REMOVE_TEST}/${testId}`)
       .then((response) => {
         setRemove(true);
       })
-
       .catch((error) => {
-        setRemove(true);
+        console.log(error);
       });
   }
   let counter = 0;
   return (
-    <div id={styles.jobListing}>
-      <div id={styles.jobListingcontainerHeader}>
-        <h1>Job Listing</h1>
-        <button onClick={addJobPostContainers}>
+    <div id={styles.mockExams}>
+      <div id={styles.mockExamscontainerHeader}>
+        <h1>Tests</h1>
+        <button onClick={addTestComponent}>
           <Image
             alt="plus-icon"
             width={23}
@@ -101,8 +106,8 @@ export default function JobListing({
         </button>
         <button
           onClick={() => {
-            setUpdateJobPostContent(!updateJobPostContent);
-            setRemoveJobPostContainers(false);
+            setUpdateTestContent(!updateTestContent);
+            setRemoveTestBlock(false);
           }}
         >
           {" "}
@@ -115,8 +120,8 @@ export default function JobListing({
         </button>
         <button
           onClick={() => {
-            setRemoveJobPostContainers(!removeJobPostContainers);
-            setUpdateJobPostContent(false);
+            setRemoveTestBlock(!removeTestBlock);
+            setUpdateTestContent(false);
           }}
         >
           {" "}
@@ -129,15 +134,15 @@ export default function JobListing({
         </button>
       </div>
       <div className={styles.mockExamscontainerSection}>
-        {loadJobPosts?.map((item: any, index: number) => {
+        {loadTests?.map((item: any, index: number) => {
           return (
             <button
-              key={index} // Ensure key is directly on the button element
+              key={item.testId} // Ensure key is directly on the button
               onClick={() => {
-                if (removeJobPostContainers) {
-                  removeJobPostComponent(item.jobId); // Use jobId here instead of mockExamId
+                if (removeTestBlock) {
+                  removeTestComponent(item.testId);
                 } else {
-                  loadJobPostComponent(item.jobId, index + 1);
+                  loadTestContent(item.testId, index + 1);
                 }
               }}
               id={styles.mockExamscontainer}
@@ -148,16 +153,16 @@ export default function JobListing({
                 height={60}
                 src="/recruiter/exam-icon.svg"
               />
-              <h1>Job Post {index + 1}</h1>
+              <h1>Test {index + 1}</h1>
               <div id={styles.mockExamscontainerButtons}>
-                {removeJobPostContainers ? (
+                {removeTestBlock ? (
                   <Image
                     alt="remove-icon"
                     width={25}
                     height={25}
                     src="/recruiter/remove-icon.svg"
                   />
-                ) : updateJobPostContent ? (
+                ) : updateTestContent ? (
                   <Image
                     alt="update-icon"
                     width={25}

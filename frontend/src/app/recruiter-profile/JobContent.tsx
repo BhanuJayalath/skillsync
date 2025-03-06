@@ -1,19 +1,50 @@
 "use client";
 import { useState, useEffect } from "react";
-import MockExamContainer from "./MockExamContainer";
+import MockExamContainer from "./QuestionContent";
 import axios from "axios";
 import Image from "next/image";
+import TestListing from "./TestListing";
 import styles from "../assets/styles/recruiter.module.css";
 export default function JobContent({
+  loadTests,
+  setLoadTests,
+  updateTestContent,
+  setUpdateTestContent,
+  removeTestBlock,
+  setRemoveTestBlock,
+  testState,
+  setTestState,
+  jobPostState,
+  setJobPostState,
+  setLoadTestQuestions,
+  setTestCount,
+  testResponse,
+  setTestResponse,
   loadJobPostContent,
   updateJobPostContent,
+  setUpdateJobPostContent,
   jobCount,
   jobPostResponse,
 }: {
   loadJobPostContent: any;
   updateJobPostContent: any;
+  setUpdateJobPostContent: any;
   jobCount: any;
   jobPostResponse: any;
+  loadTests: any;
+  setLoadTests: any;
+  updateTestContent: any;
+  setUpdateTestContent: any;
+  removeTestBlock: any;
+  setRemoveTestBlock: any;
+  testState: any;
+  setTestState: any;
+  jobPostState: any;
+  setJobPostState: any;
+  setLoadTestQuestions: any;
+  setTestCount: any;
+  testResponse: any;
+  setTestResponse: any;
 }) {
   const [jobTitle, setJobTitle] = useState<string>();
   const [jobDescription, setJobDescription] = useState<string>();
@@ -21,7 +52,7 @@ export default function JobContent({
   const [requiredSkillsValue, setRequiredSkillsValue] = useState<string>("");
   const [jobType, setJobType] = useState<string>();
   const [selectedAnswer, setSelectedAnswer] = useState<Number>();
-  const [removed, setRemoved] = useState(false);
+  // const [removed, setRemoved] = useState(false);
   const [readOnly, setReadOnly] = useState(false);
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   const storage = {
@@ -31,6 +62,7 @@ export default function JobContent({
     requiredSkills: requiredSkills,
     jobType: jobType,
   };
+
   useEffect(() => {
     setJobTitle(loadJobPostContent.jobTitle);
     setJobDescription(loadJobPostContent.jobDescription);
@@ -40,7 +72,7 @@ export default function JobContent({
     if (updateJobPostContent == false) {
       setReadOnly(true);
     }
-  }, [removed]);
+  }, []);
   useEffect(() => {
     if (jobPostResponse) {
       const DatabaseExistingId = jobPostResponse.some(
@@ -70,13 +102,11 @@ export default function JobContent({
   }
 
   var counter = 0;
-  useEffect(() => {
-    localStorage.setItem(loadJobPostContent.jobId, JSON.stringify(storage));
-  }, [storage]);
+  useEffect(() => {}, [storage]);
 
   function updatetoDatabase() {
     axios.patch(
-      `${process.env.NEXT_PUBLIC_UPDATE_JOBS}/${loadJobPostContent.jobId}`,
+      `${process.env.NEXT_PUBLIC_UPDATE_JOB}/${loadJobPostContent.jobId}`,
       storage,
       {
         headers: { "Content-Type": "application/json" },
@@ -84,7 +114,7 @@ export default function JobContent({
     );
   }
   function saveToDatabase() {
-    axios.post(`${process.env.NEXT_PUBLIC_CREATE_JOBS}`, storage, {
+    axios.post(`${process.env.NEXT_PUBLIC_SAVE_JOB}`, storage, {
       headers: { "Content-Type": "application/json" },
     });
   }
@@ -96,11 +126,15 @@ export default function JobContent({
     ];
     setRequiredSkills(updatedSkills);
   }
-  var questionCounter = 0;
+  function previousPage() {
+    setJobPostState(false);
+    setUpdateJobPostContent(false);
+  }
 
   return (
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
+        <button onClick={previousPage}>back</button>
         <h1>Job Post {jobCount}</h1>
         <div id={styles.mockExamSectionSaveandClose}>
           {updateJobPostContent &&
@@ -178,6 +212,23 @@ export default function JobContent({
           <h1>Add your Job Post Here</h1>
         </div>
       )}
+      <TestListing
+        loadTests={loadTests}
+        setLoadTests={setLoadTests}
+        updateTestContent={updateTestContent}
+        setUpdateTestContent={setUpdateTestContent}
+        removeTestBlock={removeTestBlock}
+        setRemoveTestBlock={setRemoveTestBlock}
+        testState={testState}
+        setTestState={setTestState}
+        setJobPostState={setJobPostState}
+        jobPostState={jobPostState}
+        setLoadTestQuestions={setLoadTestQuestions}
+        setTestCount={setTestCount}
+        testResponse={testResponse}
+        setTestResponse={setTestResponse}
+        loadJobPostContent={loadJobPostContent}
+      />
     </section>
   );
 }

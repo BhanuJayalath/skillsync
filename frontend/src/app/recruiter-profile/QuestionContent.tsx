@@ -2,18 +2,18 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
-export default function MockExamContainer({
-  MockTestQuestions,
+export default function QuestionContent({
+  TestQuestions,
   update,
   questionCounter,
   removeQuestion,
-  updateMockExamContainer,
+  updateTestContent,
 }: {
-  MockTestQuestions: any;
+  TestQuestions: any;
   update: any;
   questionCounter: number;
   removeQuestion: any;
-  updateMockExamContainer: any;
+  updateTestContent: any;
 }) {
   const [question, setQuestion] = useState<string>();
   const [answer1, setAnswer1] = useState<string>();
@@ -24,30 +24,29 @@ export default function MockExamContainer({
   const [removed, setRemoved] = useState(false);
   const [readOnly, setReadOnly] = useState(false);
   const storage = {
-    QuestionId: MockTestQuestions.QuestionId,
-    Question: question,
-    Answer1: answer1,
-    Answer2: answer2,
-    Answer3: answer3,
-    Answer4: answer4,
+    questionId: TestQuestions.questionId,
+    question: question,
+    answer1: answer1,
+    answer2: answer2,
+    answer3: answer3,
+    answer4: answer4,
     correctAnswer: selectedAnswer,
   };
   useEffect(() => {
-    console.log(MockTestQuestions);
-    setQuestion(MockTestQuestions.Question);
-    setAnswer1(MockTestQuestions.Answer1);
-    setAnswer2(MockTestQuestions.Answer2);
-    setAnswer3(MockTestQuestions.Answer3);
-    setAnswer4(MockTestQuestions.Answer4);
+    setQuestion(TestQuestions.question);
+    setAnswer1(TestQuestions.answer1);
+    setAnswer2(TestQuestions.answer2);
+    setAnswer3(TestQuestions.answer3);
+    setAnswer4(TestQuestions.answer4);
     setSelectedAnswer(
-      MockTestQuestions.correctAnswer ? MockTestQuestions.correctAnswer : null
+      TestQuestions.correctAnswer ? TestQuestions.correctAnswer : null
     );
-    if (updateMockExamContainer == false) {
+    if (updateTestContent == false) {
       setReadOnly(true);
     }
   }, [removed]);
   useEffect(() => {
-    update(MockTestQuestions.QuestionId, storage);
+    update(TestQuestions.questionId, storage);
   }, [question, answer1, answer2, answer3, answer4, selectedAnswer]);
 
   function saveQuestion(event: any) {
@@ -77,7 +76,6 @@ export default function MockExamContainer({
 
   function handleCheckBoxChange(selection: Number) {
     setSelectedAnswer(selection);
-    // addCorrectAnswer(selection, MockTestQuestions.QuestionId);
   }
   return (
     <div id={styles.mockExamSection}>
@@ -85,10 +83,10 @@ export default function MockExamContainer({
         <header>
           Question {questionCounter}
           <div id={styles.mockExamSectionSaveandClose}>
-            {updateMockExamContainer ? (
+            {updateTestContent ? (
               <button
                 onClick={() => {
-                  remove(MockTestQuestions.QuestionId);
+                  remove(TestQuestions.questionId);
                 }}
               >
                 <Image
