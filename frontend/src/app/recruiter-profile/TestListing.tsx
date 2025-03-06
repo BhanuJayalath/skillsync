@@ -21,10 +21,9 @@ export default function TestListing({
   testState,
   setTestState,
   setJobPostState,
+  jobPostState,
   setLoadTestQuestions,
   setTestCount,
-  remove,
-  setRemove,
   testResponse,
   setTestResponse,
   loadJobPostContent,
@@ -37,181 +36,27 @@ export default function TestListing({
   setRemoveTestBlock: any;
   testState: any;
   setTestState: any;
+  jobPostState: any;
   setJobPostState: any;
   setLoadTestQuestions: any;
   setTestCount: any;
-  remove: any;
-  setRemove: any;
   testResponse: any;
   setTestResponse: any;
   loadJobPostContent: any;
 }) {
+  const [remove, setRemove] = useState(false);
   useEffect(() => {
     const tempArray: any = [];
-    axios.get(`${process.env.NEXT_PUBLIC_GET_TESTS}`).then((response) => {
-      response.data.map((item: any, index: number) => {
-        // console.log(item);
-        if (loadJobPostContent.jobId === item.jobId) {
-          // console.log("trigger 1", item.jobId);
-          tempArray.push(item);
-          // console.log(tempArray);
-          for (let i = 0; i < localStorage.length; i++) {
-            const key: any = localStorage.key(i);
-            let Item: any = localStorage.getItem(key);
-            let jsonParsedItem = Item ? JSON.parse(Item) : null;
-            if (
-              loadJobPostContent.jobId === jsonParsedItem.jobId &&
-              jsonParsedItem.testId
-            ) {
-              console.log("trigger 2", item.jobId);
-              tempArray[index] = jsonParsedItem;
-              console.log(tempArray);
-            } else if (
-              response.data.length - 1 === index &&
-              jsonParsedItem.jobId &&
-              jsonParsedItem.testId &&
-              !tempArray.some(
-                (item: any) => item.jobId === jsonParsedItem.jobId
-              )
-            ) {
-              // console.log("trigger 3", item.jobId);
-              tempArray.push(jsonParsedItem);
-              console.log(tempArray);
-            }
-          }
-        }
-        // console.log(tempArray);
-        // else if (loadJobPostContent.jobId !== item.jobId) {
-        //   for (let i = 0; i < localStorage.length; i++) {
-        //     const key: any = localStorage.key(i);
-        //     let Item: any = localStorage.getItem(key);
-        //     let jsonParsedItem = Item ? JSON.parse(Item) : null;
-        //     if (
-        //       loadJobPostContent.jobId === jsonParsedItem.jobId &&
-        //       jsonParsedItem.testId &&
-        //       loadJobPostContent.jobId === item.jobId
-        //     ) {
-        //       console.log("trigger 2", item.jobId);
-        //       tempArray[index] = jsonParsedItem;
-        //     } else if (
-        //       loadJobPostContent.jobId === jsonParsedItem.jobId &&
-        //       jsonParsedItem.testId &&
-        //       loadJobPostContent.jobId !== item.jobId &&
-        //       !tempArray.some(
-        //         (item: any) => item.jobId === jsonParsedItem.jobId
-        //       )
-        //     ) {
-        //       console.log("trigger 3", item.jobId);
-        //       tempArray.push(jsonParsedItem);
-        //     }
-        //   }
-        // }
+    axios
+      .get(`${process.env.NEXT_PUBLIC_GET_TESTS}/${loadJobPostContent.jobId}`)
+      .then((response) => {
         setTestResponse(response.data);
+        response.data.map((item: any) => {
+          tempArray.push(item);
+        });
       });
-      setLoadTests(tempArray);
-    });
+    setLoadTests(tempArray);
   }, [remove]);
-  // useEffect(() => {
-  //   const tempArray: any = [];
-  //   axios.get(`${process.env.NEXT_PUBLIC_GET_TESTS}`).then((response) => {
-  //     if (response.data.length != 0) {
-  //       response.data.map((item: any, index: number) => {
-  //         tempArray.push(item);
-  //         if (localStorage.length > 0) {
-  //           for (let i = 0; i < localStorage.length; i++) {
-  //             const key: any = localStorage.key(i);
-  //             let Item: any = localStorage.getItem(key);
-  //             let jsonParsedItem = Item ? JSON.parse(Item) : null;
-  //             if (
-  //               item.jobId === jsonParsedItem.jobId &&
-  //               jsonParsedItem.testId
-  //             ) {
-  //               tempArray[index] = jsonParsedItem;
-  //             } else if (
-  //               response.data.length - 1 === index &&
-  //               jsonParsedItem.jobId &&
-  //               jsonParsedItem.testId &&
-  //               !tempArray.some(
-  //                 (item: any) => item.jobId === jsonParsedItem.jobId
-  //               )
-  //             ) {
-  //               tempArray.push(jsonParsedItem);
-  //             }
-  //           }
-  //         }
-  //         setLoadTests(tempArray);
-  //         setTestResponse(response.data);
-  //       });
-  //     } else {
-  //       if (localStorage.length > 0) {
-  //         for (let i = 0; i < localStorage.length; i++) {
-  //           const key: any = localStorage.key(i);
-  //           let Item: any = localStorage.getItem(key);
-  //           let jsonParsedItem = Item ? JSON.parse(Item) : null;
-  //           if (jsonParsedItem.jobId && jsonParsedItem.testId) {
-  //             tempArray.push(jsonParsedItem);
-  //             setLoadTests(tempArray);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   });
-  // }, [remove]);
-
-  // useEffect(() => {
-  //   const tempArray: any = [];
-  //   axios
-  //     .get(`${process.env.NEXT_PUBLIC_GET_TESTS}`)
-  //     .then((response) => {
-  //       setTestResponse(response.data);
-  //       if (response.data.length != 0) {
-  //         console.log("this");
-  //         response.data.map((item: any, index: number) => {
-  //           if (item.jobId === loadJobPostContent.jobId) {
-  //             tempArray.push(item);
-  //             if (localStorage.length > 0) {
-  //               for (let i = 0; i < localStorage.length; i++) {
-  //                 const key: any = localStorage.key(i);
-  //                 let Item: any = localStorage.getItem(key);
-  //                 let jsonParsedItem = Item ? JSON.parse(Item) : null;
-  //                 if (item.testId === jsonParsedItem.testId) {
-  //                   console.log("trigger1");
-  //                   tempArray[index] = jsonParsedItem;
-  //                 } else if (jsonParsedItem.testId && !jsonParsedItem.jobId) {
-  //                   tempArray.push(jsonParsedItem);
-  //                   console.log("trigger2");
-  //                 }
-  //               }
-  //             }
-  //           }else{
-
-  //           }
-  //           setLoadTests(tempArray);
-  //         });
-  //       } else {
-  //         if (localStorage.length > 0) {
-  //           for (let i = 0; i < localStorage.length; i++) {
-  //             const key: any = localStorage.key(i);
-  //             let Item: any = localStorage.getItem(key);
-  //             let jsonParsedItem = Item ? JSON.parse(Item) : null;
-  //             if (
-  //               loadJobPostContent.jobId === jsonParsedItem.jobId &&
-  //               loadJobPostContent.testId === jsonParsedItem.testId
-  //             ) {
-  //               tempArray.push(jsonParsedItem);
-  //               setLoadTests(tempArray);
-  //               console.log("trigger3");
-  //             }
-  //           }
-  //         }
-  //       }
-  //       console.log("trigger 4");
-  //       console.log(tempArray);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, [remove]);
 
   function loadTestContent(testId: string, testCounter: number) {
     loadTests.find((item: any) => {
@@ -220,7 +65,7 @@ export default function TestListing({
         setTestCount(testCounter);
       }
     });
-    setJobPostState(false);
+    setJobPostState(!jobPostState);
     setTestState(!testState);
   }
   function addTestComponent() {
@@ -228,7 +73,7 @@ export default function TestListing({
     setLoadTests([
       ...loadTests,
       {
-        testId: "test" + Date.now(),
+        testId: "Test" + Date.now(),
         jobId: loadJobPostContent.jobId,
         testContent: {
           questionContent: [],
@@ -237,9 +82,6 @@ export default function TestListing({
     ]);
   }
   function removeTestComponent(testId: string) {
-    if (localStorage.length > 0) {
-      localStorage.removeItem(testId.toString());
-    }
     axios
       .delete(`${process.env.NEXT_PUBLIC_REMOVE_TEST}/${testId}`)
       .then((response) => {

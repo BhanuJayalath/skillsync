@@ -11,6 +11,9 @@ export class TestsService {
     const Test = new this.TestModel(data);
     return Test.save();
   }
+  async find(id: string) {
+    return await this.TestModel.find({ jobId: id });
+  }
 
   async findAll() {
     return this.TestModel.find().exec();
@@ -26,5 +29,8 @@ export class TestsService {
   }
   async delete(id: string) {
     return this.TestModel.findOneAndDelete({ testId: id }).exec();
+  }
+  async deleteByJobId(jobId: string) {
+    return await this.TestModel.deleteMany({ jobId: jobId });
   }
 }
