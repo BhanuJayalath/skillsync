@@ -5,12 +5,12 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 
 const teamMembers = [
-  { name: "Bhanu Jayalath", role: "Full Stack Developer", image: "/team/bhanu.png" },
-  { name: "Dishika Veruwantha", role: "Full Stack Developer", image: "/team/dishika.png" },
-  { name: "Linuka Arambawela", role: "Full Stack Developer", image: "/team/linuka.png" },
-  { name: "Dulith Mayakaduwa", role: "Full Stack Developer", image: "/team/dulith.png" },
-  { name: "Ashmirah Bandaranaike", role: "Full Stack Developer", image: "/team/ashmira.png" },
-  { name: "Pesandu De Alwis", role: "Full Stack Developer", image: "/team/pesadu.png" },
+  { name: "Bhanu Jayalath", role: "Full Stack Developer", image: "/team/bhanu.png", linkedin: "https://www.linkedin.com/in/bhanu-jayalath", github: "https://github.com/BhanuJayalath" },
+  { name: "Dishika Veruwantha", role: "Full Stack Developer", image: "/team/dishika.png", linkedin: "https://www.linkedin.com/in/dishika-veruwantha", github: "https://github.com/DishikaVeruwantha" },
+  { name: "Linuka Arambawela", role: "Full Stack Developer", image: "/team/linuka.png", linkedin: "https://www.linkedin.com/in/linuka-arambawela", github: "https://github.com/LinukaAr" },
+  { name: "Dulith Mayakaduwa", role: "Full Stack Developer", image: "/team/dulith.png", linkedin: "https://www.linkedin.com/in/dulith-mayakaduwa", github: "https://github.com/DulithM" },
+  { name: "Ashmirah Bandaranaike", role: "Full Stack Developer", image: "/team/ashmira.png", linkedin: "https://www.linkedin.com/in/ashmirah-bandaranaike", github: "https://github.com/Ashmirah" },
+  { name: "Pesandu De Alwis", role: "Full Stack Developer", image: "/team/pesadu.png", linkedin: "https://www.linkedin.com/in/pesandu-de-alwis", github: "https://github.com/Pesandu-De-Alwis" },
 ]
 
 export default function AboutUs() {
@@ -64,6 +64,14 @@ export default function AboutUs() {
                 />
                 <h3 className={styles.memberName}>{member.name}</h3>
                 <p className={styles.memberRole}>{member.role}</p>
+                <div className={styles.memberLinks}>
+                    <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
+                      <img src="https://img.icons8.com/ios-glyphs/25/linkedin.png" alt="LinkedIn" />
+                    </a>
+                    <a href={member.github} target="_blank" rel="noopener noreferrer">
+                      <img src="https://img.icons8.com/ios-glyphs/25/github.png" alt="GitHub" />
+                    </a>
+                </div>
               </div>
             ))}
           </div>
