@@ -15,9 +15,10 @@ export class TestsService {
   async findAll() {
     return this.TestModel.find().exec();
   }
-  async findOne(id: string) {
-    return this.TestModel.findById(id).exec();
+  async findOne(testId: string) {
+    return this.TestModel.findOne({ testId }).exec(); // Query by testId
   }
+  
   async update(testId: string, data: Partial<Tests>) {
     return this.TestModel.findOneAndUpdate({ testId: testId }, data, {
       new: true,

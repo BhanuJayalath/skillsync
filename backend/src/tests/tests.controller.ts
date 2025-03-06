@@ -22,10 +22,12 @@ export class TestsController {
   findAll() {
     return this.TestsService.findAll();
   }
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.TestsService.findOne(id);
+  
+  @Get(':testId')
+  findOne(@Param('testId') testId: string) {
+    return this.TestsService.findOne(testId);
   }
+  
   @Patch(':TestId')
   update(
     @Param('TestId') TestId: string,
