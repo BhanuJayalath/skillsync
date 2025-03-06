@@ -1,4 +1,5 @@
 "use client"; // Indicating as a client-side component
+
 import Image from 'next/image';     // Importing images
 import Footer from "@/app/components/Footer";   // Importing Footer component
 import { useSearchParams } from 'next/navigation';
@@ -13,7 +14,7 @@ import Resume from "@/app/userProfile/Resume";
 import Settings from "@/app/userProfile/Settings";
 
 
-export default function UserProfile() {
+ function UserProfile() {
     const searchParams = useSearchParams();
     const userId = searchParams.get("userId");
     //Adding a useState for the active section
@@ -312,4 +313,12 @@ export default function UserProfile() {
         </Suspense>
         </>
     );
-};
+}
+
+export default function UserProfilePage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <UserProfile />
+        </Suspense>
+    );
+}
