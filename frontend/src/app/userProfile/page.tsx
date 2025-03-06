@@ -2,7 +2,7 @@
 import Image from 'next/image';     // Importing images
 import Footer from "@/app/components/Footer";   // Importing Footer component
 import { useSearchParams } from 'next/navigation';
-import React, {useEffect, useState} from 'react';   // Importing useState hook from React for state management
+import React, {Suspense, useEffect, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from './user.module.css';   // Importing custom styles
 import '../globals.css';
@@ -232,79 +232,84 @@ export default function UserProfile() {
         fetchUserDetails().then(e => console.log(e));
     }, [activeTab, userId]);
     return (
-        <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
-            <div className={styles.innerContainer}>
-                {/* Sidebar */}
-                <aside className={styles.sidebar}>
-                    <div className={styles.logoContainer}>
-                        <Image src={"/logo.png"} alt="Logo" width={150} height={0} className={styles.logo}/>
-                    </div>
-                    <nav className={styles.nav}>
-                        <ul>
-                            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                            <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
-                                                   width={40} height={0} className={styles.navImage}/> Home</a></li>
-                            <li
-                                onClick={() => setActiveTab(0)}
-                                className={activeTab === 0 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
-                                                width={40} height={0} className={styles.navImage}/> Overview</a></li>
-                            <li
-                                onClick={() => setActiveTab(1)}
-                                className={activeTab === 1 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
-                                                width={40} height={0} className={styles.navImage}/> Progress</a></li>
-                            <li
-                                onClick={() => setActiveTab(2)}
-                                className={activeTab === 2 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
-                                                width={50} height={0} className={styles.navImage}/> Courses</a></li>
-                            <li
-                                onClick={() => setActiveTab(3)}
-                                className={activeTab === 3 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
-                                                width={30} height={0} className={styles.navImage}/> Resume</a></li>
-                            <li
-                                onClick={() => setActiveTab(4)}
-                                className={activeTab === 4 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
-                                                width={30} height={0} className={styles.navImage}/> Settings</a></li>
-                        </ul>
-                    </nav>
-
-                </aside>
-                {/* Main Content */}
-                <main className={styles.mainContent}>
-                    <header className={styles.header}>
-                        <div className={styles.searchContainer}>
-                            <input type="text" placeholder="Search"/>
-                            <button>🔍</button>
+        <><Suspense fallback={<div>Loading...</div>}>
+            <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
+                <div className={styles.innerContainer}>
+                    {/* Sidebar */}
+                    <aside className={styles.sidebar}>
+                        <div className={styles.logoContainer}>
+                            <Image src={"/logo.png"} alt="Logo" width={150} height={0} className={styles.logo}/>
                         </div>
-                    </header>
-                    <div className={styles.contentWrapper}>
-                        <section className={styles.tabsSection}>
-                            {activeTab === 0 && <Overview user={user} />}
-                            {activeTab === 1 && <Progress user={user} />}
-                            {activeTab === 2 && <Courses user={user} />}
-                            {activeTab === 3 && <Resume
-                                user={user} removeEducation={removeEducation}
-                                removeExperience={removeExperience}
-                                updateNestedChanges={updateNestedChanges}/>}
-                            {activeTab === 4 && <Settings
-                                user={user}
-                                handleSubmit={handleSubmit}
-                                handleChange={handleChange}
-                                handleNestedChange={handleNestedChange}
-                                addEducation={addEducation}
-                                addExperience={addExperience}
-                                handleFields={handleFields} />}
-                        </section>
-                    </div>
-                </main>
+                        <nav className={styles.nav}>
+                            <ul>
+                                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+                                <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
+                                                       width={40} height={0} className={styles.navImage}/> Home</a></li>
+                                <li
+                                    onClick={() => setActiveTab(0)}
+                                    className={activeTab === 0 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
+                                                    width={40} height={0} className={styles.navImage}/> Overview</a>
+                                </li>
+                                <li
+                                    onClick={() => setActiveTab(1)}
+                                    className={activeTab === 1 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
+                                                    width={40} height={0} className={styles.navImage}/> Progress</a>
+                                </li>
+                                <li
+                                    onClick={() => setActiveTab(2)}
+                                    className={activeTab === 2 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
+                                                    width={50} height={0} className={styles.navImage}/> Courses</a></li>
+                                <li
+                                    onClick={() => setActiveTab(3)}
+                                    className={activeTab === 3 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
+                                                    width={30} height={0} className={styles.navImage}/> Resume</a></li>
+                                <li
+                                    onClick={() => setActiveTab(4)}
+                                    className={activeTab === 4 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
+                                                    width={30} height={0} className={styles.navImage}/> Settings</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </aside>
+                    {/* Main Content */}
+                    <main className={styles.mainContent}>
+                        <header className={styles.header}>
+                            <div className={styles.searchContainer}>
+                                <input type="text" placeholder="Search"/>
+                                <button>🔍</button>
+                            </div>
+                        </header>
+                        <div className={styles.contentWrapper}>
+                            <section className={styles.tabsSection}>
+                                {activeTab === 0 && <Overview user={user}/>}
+                                {activeTab === 1 && <Progress user={user}/>}
+                                {activeTab === 2 && <Courses user={user}/>}
+                                {activeTab === 3 && <Resume
+                                    user={user} removeEducation={removeEducation}
+                                    removeExperience={removeExperience}
+                                    updateNestedChanges={updateNestedChanges}/>}
+                                {activeTab === 4 && <Settings
+                                    user={user}
+                                    handleSubmit={handleSubmit}
+                                    handleChange={handleChange}
+                                    handleNestedChange={handleNestedChange}
+                                    addEducation={addEducation}
+                                    addExperience={addExperience}
+                                    handleFields={handleFields}/>}
+                            </section>
+                        </div>
+                    </main>
+                </div>
+                {/*Footer component*/}
+                <Footer/>
             </div>
-            {/*Footer component*/
-            }
-            <Footer/>
-        </div>
+        </Suspense>
+        </>
     );
 };
