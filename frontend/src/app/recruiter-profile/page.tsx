@@ -1,5 +1,5 @@
 "use client";
-import Tab from "./Tab";
+import Tab from "./JobTab";
 import ResultTab from "./ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
