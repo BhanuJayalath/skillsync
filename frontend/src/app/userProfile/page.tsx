@@ -13,14 +13,11 @@ import Settings from "@/app/userProfile/Settings";
 
 
 export default function UserProfile() {
-    // const location = useRouter();
-    // const userId = location.query;
     //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
     // Initializing profile state with default user details
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [user, setUser] = useState({
-        id: "000",    // Unique user ID
         email: "Name@gmail.com",   // User's email address
         number: '(+94)12 345 6789', // number
         userName: "UserName",  // User's display name
@@ -69,6 +66,7 @@ export default function UserProfile() {
         ],
         skills: ['typeScript', 'javaScript', 'HTML']
     });
+
     // Education Handlers
     const addEducation = (
         e: React.MouseEvent<HTMLButtonElement>) => {
@@ -114,22 +112,8 @@ export default function UserProfile() {
             [field]: e.target.value
         }));
     };
-    const handleSummary = (
-        value: string
-    ) => {
-        setUser((prev) => ({
-            ...prev,
-            cvSummary: value
-        }));
-    };
-    const handleAvatar = async (
-        value: string
-    ) => {
-        setUser((prev) => ({
-            ...prev,
-            avatar: value
-        }));
-    };
+
+
     // Update nested fields (experience, education)
     const handleNestedChange = (
         index: number,
@@ -145,8 +129,9 @@ export default function UserProfile() {
         }));
     };
     const handleSubmit = async () => {
+        const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
         try {
-            const response = await fetch(`http://localhost:3001/updateUser/${user.id}`, {
+            const response = await fetch(`${updateUserUrl}/${userId}`, {
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
@@ -179,7 +164,6 @@ export default function UserProfile() {
     useEffect(() => {
         const fetchUserDetails = async () => {
             const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
-            const userId = "006";
             const response = await fetch(`${getUserUrl}/${userId}`, {
                 method: 'GET',
                 headers: {
@@ -199,30 +183,7 @@ export default function UserProfile() {
             }
         };
         fetchUserDetails().then(e => console.log(e));
-    }, []);
-    useEffect(() => {
-        //checking the availability of the window
-        if (typeof window !== 'undefined') {
-            for (let i = 0; i < 5; i++) {
-                const section = document.querySelector<HTMLDivElement>(`#tab-${i}`);
-                if (section) {
-                    section.style.display = i === activeTab ? 'block' : 'none';
-                }
-            }
-            const educationElement = document.getElementById('educationSection');
-            const skillElement = document.getElementById('skillSection');
-            const experienceElement = document.getElementById('experienceSection');
-            if (user.education.length == 0 && educationElement) {
-                educationElement.style.display = 'none';
-            }
-            if (user.experience.length == 0 && experienceElement) {
-                experienceElement.style.display = 'none';
-            }
-            if (user.skills.length == 0 && skillElement) {
-                skillElement.style.display = 'none';
-            }
-        }
-    }, [activeTab, user.education, user.experience, user.skills]);
+    }, [activeTab]);
     return (
         <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
             <div className={styles.innerContainer}>
@@ -278,8 +239,18 @@ export default function UserProfile() {
                             {activeTab === 0 && <Overview user={user} />}
                             {activeTab === 1 && <Progress user={user} />}
                             {activeTab === 2 && <Courses user={user} />}
-                            {activeTab === 3 && <Resume user={user}  removeEducation={removeEducation} removeExperience={removeExperience}/>}
-                            {activeTab === 4 && <Settings user={user} handleSubmit={handleSubmit} handleChange={handleChange} handleNestedChange={handleNestedChange} addEducation={addEducation} addExperience={addExperience} handleSummary={handleSummary} handleAvatar={handleAvatar}/>}
+                            {activeTab === 3 && <Resume
+                                user={user} removeEducation={removeEducation}
+                                removeExperience={removeExperience}
+                                updateNestedChanges={updateNestedChanges}/>}
+                            {activeTab === 4 && <Settings
+                                user={user}
+                                handleSubmit={handleSubmit}
+                                handleChange={handleChange}
+                                handleNestedChange={handleNestedChange}
+                                addEducation={addEducation}
+                                addExperience={addExperience}
+                                handleFields={handleFields} />}
                         </section>
                     </div>
                 </main>
