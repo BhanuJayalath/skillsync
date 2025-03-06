@@ -22,11 +22,12 @@ export class TestsController {
   async findAll(@Param('id') id: string) {
     return this.TestsService.find(id);
   }
-
-  @Get('test/:id') //add the testId
-  findOne(@Param('id') id: string) {
-    return this.TestsService.findOne(id);
+  
+  @Get(':testId')
+  findOne(@Param('testId') testId: string) {
+    return this.TestsService.findOne(testId);
   }
+  
   @Patch(':TestId')
   update(
     @Param('TestId') TestId: string,
