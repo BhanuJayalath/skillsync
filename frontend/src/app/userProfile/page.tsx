@@ -230,7 +230,7 @@ export default function UserProfile() {
             }
         };
         fetchUserDetails().then(e => console.log(e));
-    }, [activeTab]);
+    }, [activeTab, userId]);
     return (
         <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
             <div className={styles.innerContainer}>
