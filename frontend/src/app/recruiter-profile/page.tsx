@@ -44,7 +44,6 @@ export default function RecruiterProfile() {
   const [updateTestContent, setUpdateTestContent] = useState(false);
   const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
   const [removeTestBlock, setRemoveTestBlock] = useState(false);
-  const [remove, setRemove] = useState(false);
   const [testResponse, setTestResponse] = useState();
   const [jobPostResponse, setJobPostResponse] = useState();
 
@@ -145,11 +144,10 @@ export default function RecruiterProfile() {
                 jobPostState={jobPostState}
                 setLoadTestQuestions={setLoadTestQuestions}
                 setTestCount={setTestCount}
-                remove={remove}
-                setRemove={setRemove}
                 testResponse={testResponse}
                 setTestResponse={setTestResponse}
                 loadJobPostContent={loadJobPostContent}
+                setUpdateJobPostContent={setUpdateJobPostContent}
                 updateJobPostContent={updateJobPostContent}
                 jobPostResponse={jobPostResponse}
                 jobCount={jobCount}
@@ -164,6 +162,7 @@ export default function RecruiterProfile() {
                 loadTestQuestions={loadTestQuestions}
                 testCount={testCount}
                 updateTestContent={updateTestContent}
+                setUpdateTestContent={setUpdateTestContent}
                 testResponse={testResponse}
               />
             ) : (

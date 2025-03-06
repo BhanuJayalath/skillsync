@@ -38,10 +38,6 @@ export default function JobListing({
     }[]
   >([]);
 
-  const [mockExamContainerId, setMockExamContainerId] = useState<any>([
-    Date.now(),
-  ]);
-  const [mockExamCount, setMockExamCount] = useState(Number);
   const [removeJobPostContainers, setRemoveJobPostContainers] = useState(false);
   const [remove, setRemove] = useState(false);
 
@@ -87,7 +83,7 @@ export default function JobListing({
       })
 
       .catch((error) => {
-        console.log(error);
+        setRemove(true);
       });
   }
   let counter = 0;

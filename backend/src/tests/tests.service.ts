@@ -11,13 +11,17 @@ export class TestsService {
     const Test = new this.TestModel(data);
     return Test.save();
   }
+  async find(id: string) {
+    return await this.TestModel.find({ jobId: id });
+  }
 
-  async findAll() {
-    return this.TestModel.find().exec();
-  }
+  // async findAll() {
+  //   return this.TestModel.find().exec();
+  // }
   async findOne(id: string) {
-    return this.TestModel.findById(id).exec();
+    return await this.TestModel.findOne({ testId: id });
   }
+
   async update(testId: string, data: Partial<Tests>) {
     return this.TestModel.findOneAndUpdate({ testId: testId }, data, {
       new: true,

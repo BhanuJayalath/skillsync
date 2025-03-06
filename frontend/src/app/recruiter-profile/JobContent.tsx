@@ -18,17 +18,17 @@ export default function JobContent({
   setJobPostState,
   setLoadTestQuestions,
   setTestCount,
-  remove,
-  setRemove,
   testResponse,
   setTestResponse,
   loadJobPostContent,
   updateJobPostContent,
+  setUpdateJobPostContent,
   jobCount,
   jobPostResponse,
 }: {
   loadJobPostContent: any;
   updateJobPostContent: any;
+  setUpdateJobPostContent: any;
   jobCount: any;
   jobPostResponse: any;
   loadTests: any;
@@ -43,8 +43,6 @@ export default function JobContent({
   setJobPostState: any;
   setLoadTestQuestions: any;
   setTestCount: any;
-  remove: any;
-  setRemove: any;
   testResponse: any;
   setTestResponse: any;
 }) {
@@ -54,7 +52,7 @@ export default function JobContent({
   const [requiredSkillsValue, setRequiredSkillsValue] = useState<string>("");
   const [jobType, setJobType] = useState<string>();
   const [selectedAnswer, setSelectedAnswer] = useState<Number>();
-  const [removed, setRemoved] = useState(false);
+  // const [removed, setRemoved] = useState(false);
   const [readOnly, setReadOnly] = useState(false);
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   const storage = {
@@ -74,7 +72,7 @@ export default function JobContent({
     if (updateJobPostContent == false) {
       setReadOnly(true);
     }
-  }, [removed]);
+  }, []);
   useEffect(() => {
     if (jobPostResponse) {
       const DatabaseExistingId = jobPostResponse.some(
@@ -104,9 +102,7 @@ export default function JobContent({
   }
 
   var counter = 0;
-  useEffect(() => {
-    // localStorage.setItem(loadJobPostContent.jobId, JSON.stringify(storage));
-  }, [storage]);
+  useEffect(() => {}, [storage]);
 
   function updatetoDatabase() {
     axios.patch(
@@ -132,8 +128,8 @@ export default function JobContent({
   }
   function previousPage() {
     setJobPostState(false);
+    setUpdateJobPostContent(false);
   }
-  var questionCounter = 0;
 
   return (
     <section className={styles.mockExam}>
@@ -229,8 +225,6 @@ export default function JobContent({
         jobPostState={jobPostState}
         setLoadTestQuestions={setLoadTestQuestions}
         setTestCount={setTestCount}
-        remove={remove}
-        setRemove={setRemove}
         testResponse={testResponse}
         setTestResponse={setTestResponse}
         loadJobPostContent={loadJobPostContent}

@@ -9,6 +9,7 @@ export default function TestContent({
   setLoadTestQuestions,
   testCount,
   updateTestContent,
+  setUpdateTestContent,
   testResponse,
   testState,
   setTestState,
@@ -19,6 +20,7 @@ export default function TestContent({
   loadTestQuestions: any;
   testCount: number;
   updateTestContent: any;
+  setUpdateTestContent: any;
   testResponse: any;
   testState: any;
   setTestState: any;
@@ -103,6 +105,9 @@ export default function TestContent({
     axios.post(`${process.env.NEXT_PUBLIC_SAVE_TEST}`, loadTestQuestions, {
       headers: { "Content-Type": "application/json" },
     });
+    setJobPostState(!jobPostState);
+    setTestState(!testState);
+    setUpdateTestContent(false);
   }
   function updatetoDatabase() {
     axios.patch(
@@ -116,6 +121,7 @@ export default function TestContent({
   function previousPage() {
     setJobPostState(!jobPostState);
     setTestState(!testState);
+    setUpdateTestContent(false);
   }
   var questionCounter = 0;
 
