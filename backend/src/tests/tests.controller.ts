@@ -37,7 +37,7 @@ export class TestsController {
   delete(@Param('id') id: string) {
     return this.TestsService.delete(id);
   }
-  @Delete(':jobId')
+  @Delete(':job/:jobId')
   deleteByJobId(@Param('jobId') jobId: string) {
     return this.TestsService.deleteByJobId(jobId);
   }

@@ -10,12 +10,20 @@ export default function TestContent({
   testCount,
   updateTestContent,
   testResponse,
+  testState,
+  setTestState,
+  jobPostState,
+  setJobPostState,
 }: {
   setLoadTestQuestions: any;
   loadTestQuestions: any;
   testCount: number;
   updateTestContent: any;
   testResponse: any;
+  testState: any;
+  setTestState: any;
+  jobPostState: any;
+  setJobPostState: any;
 }) {
   var counter = 0;
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
@@ -105,11 +113,16 @@ export default function TestContent({
       }
     );
   }
+  function previousPage() {
+    setJobPostState(!jobPostState);
+    setTestState(!testState);
+  }
   var questionCounter = 0;
 
   return (
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
+        <button onClick={previousPage}>back</button>
         <h1>Test {testCount}</h1>
         {updateTestContent ? (
           <>

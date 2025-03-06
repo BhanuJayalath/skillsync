@@ -14,6 +14,7 @@ export default function JobContent({
   setRemoveTestBlock,
   testState,
   setTestState,
+  jobPostState,
   setJobPostState,
   setLoadTestQuestions,
   setTestCount,
@@ -38,6 +39,7 @@ export default function JobContent({
   setRemoveTestBlock: any;
   testState: any;
   setTestState: any;
+  jobPostState: any;
   setJobPostState: any;
   setLoadTestQuestions: any;
   setTestCount: any;
@@ -46,7 +48,6 @@ export default function JobContent({
   testResponse: any;
   setTestResponse: any;
 }) {
-  const [jobId, setJobId] = useState<string>();
   const [jobTitle, setJobTitle] = useState<string>();
   const [jobDescription, setJobDescription] = useState<string>();
   const [requiredSkills, setRequiredSkills] = useState<string[]>([]);
@@ -57,7 +58,7 @@ export default function JobContent({
   const [readOnly, setReadOnly] = useState(false);
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   const storage = {
-    jobId: jobId,
+    jobId: loadJobPostContent.jobId,
     jobTitle: jobTitle,
     jobDescription: jobDescription,
     requiredSkills: requiredSkills,
@@ -65,8 +66,6 @@ export default function JobContent({
   };
 
   useEffect(() => {
-    // console.log(loadJobPostContent.jobId);
-    setJobId(loadJobPostContent.jobId);
     setJobTitle(loadJobPostContent.jobTitle);
     setJobDescription(loadJobPostContent.jobDescription);
     setRequiredSkills(loadJobPostContent.requiredSkills);
@@ -131,11 +130,15 @@ export default function JobContent({
     ];
     setRequiredSkills(updatedSkills);
   }
+  function previousPage() {
+    setJobPostState(false);
+  }
   var questionCounter = 0;
 
   return (
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
+        <button onClick={previousPage}>back</button>
         <h1>Job Post {jobCount}</h1>
         <div id={styles.mockExamSectionSaveandClose}>
           {updateJobPostContent &&
@@ -223,6 +226,7 @@ export default function JobContent({
         testState={testState}
         setTestState={setTestState}
         setJobPostState={setJobPostState}
+        jobPostState={jobPostState}
         setLoadTestQuestions={setLoadTestQuestions}
         setTestCount={setTestCount}
         remove={remove}

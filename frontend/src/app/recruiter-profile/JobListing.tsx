@@ -44,9 +44,9 @@ export default function JobListing({
   const [mockExamCount, setMockExamCount] = useState(Number);
   const [removeJobPostContainers, setRemoveJobPostContainers] = useState(false);
   const [remove, setRemove] = useState(false);
-  const tempArray: any = [];
 
   useEffect(() => {
+    const tempArray: any = [];
     axios.get(`${process.env.NEXT_PUBLIC_GET_JOBS}`).then((response) => {
       if (response.data.length != 0) {
         setJobPostResponse(response.data);
@@ -56,20 +56,20 @@ export default function JobListing({
       }
       setLoadJobPosts(tempArray);
     });
-  }, [remove]);
+  }, [remove, jobPostState]);
 
   function loadJobPostComponent(jobId: string, JobCounter: number) {
     const jobPost = loadJobPosts.find((item: any) => item.jobId === jobId);
     setLoadJobPostContent(jobPost);
     setJobCount(JobCounter);
-    setJobPostState(true);
+    setJobPostState(!jobPostState);
   }
   function addJobPostContainers() {
     localStorage.clear();
     setLoadJobPosts([
       ...loadJobPosts,
       {
-        jobId: "job" + Date.now(),
+        jobId: "Job" + Date.now(),
         jobTitle: "",
         jobDescription: "",
         requiredSkills: [],
@@ -79,15 +79,16 @@ export default function JobListing({
   }
   function removeJobPostComponent(jobId: string) {
     Promise.all([
-      axios.delete(`${process.env.NEXT_PUBLIC_REMOVE_TEST}/${jobId}`),
+      axios.delete(`${process.env.NEXT_PUBLIC_REMOVE_TEST}/job/${jobId}`),
       axios.delete(`${process.env.NEXT_PUBLIC_REMOVE_JOB}/${jobId}`),
     ])
-      .then((response) => {})
+      .then((response) => {
+        setRemove(true);
+      })
 
       .catch((error) => {
         console.log(error);
       });
-    setRemove(true);
   }
   let counter = 0;
   return (

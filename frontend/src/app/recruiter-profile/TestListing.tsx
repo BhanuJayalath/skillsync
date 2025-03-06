@@ -21,6 +21,7 @@ export default function TestListing({
   testState,
   setTestState,
   setJobPostState,
+  jobPostState,
   setLoadTestQuestions,
   setTestCount,
   remove,
@@ -37,6 +38,7 @@ export default function TestListing({
   setRemoveTestBlock: any;
   testState: any;
   setTestState: any;
+  jobPostState: any;
   setJobPostState: any;
   setLoadTestQuestions: any;
   setTestCount: any;
@@ -47,6 +49,8 @@ export default function TestListing({
   loadJobPostContent: any;
 }) {
   useEffect(() => {
+    console.log("testlisting -jobpoststate", jobPostState);
+    console.log("testlisting -teststate", testState);
     const tempArray: any = [];
     axios.get(`${process.env.NEXT_PUBLIC_GET_TESTS}`).then((response) => {
       setTestResponse(response.data);
@@ -66,7 +70,7 @@ export default function TestListing({
         setTestCount(testCounter);
       }
     });
-    setJobPostState(false);
+    setJobPostState(!jobPostState);
     setTestState(!testState);
   }
   function addTestComponent() {
@@ -74,7 +78,7 @@ export default function TestListing({
     setLoadTests([
       ...loadTests,
       {
-        testId: "test" + Date.now(),
+        testId: "Test" + Date.now(),
         jobId: loadJobPostContent.jobId,
         testContent: {
           questionContent: [],
