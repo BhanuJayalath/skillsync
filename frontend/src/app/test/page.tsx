@@ -32,7 +32,6 @@ export default function MCQTest() {
   const [testStarted, setTestStarted] = useState(false)
   const [score, setScore] = useState({ correct: 0, total: 0 })
 
-  // Update the questions array to include correct answers
   const [testId, setTestId] = useState("Test1741231239210") // Fixed testId for now
   const jobId = "Job1741231081858" // Fixed jobId for now
 
@@ -77,23 +76,33 @@ export default function MCQTest() {
   }
 
   // Update the handleSubmit function to calculate the score
-  const handleSubmit = () => {
-    let correctCount = 0
-
-    // Calculate the score
+  const handleSubmit = async () => {
+    let correctCount = 0;
+  
     answers.forEach((answer, index) => {
       if (answer === questions[index].correctAnswer) {
-        correctCount++
+        correctCount++;
       }
-    })
-
-    setScore({ correct: correctCount, total: questions.length })
-    setIsSubmitted(true)
-
-    // Here you would typically send the answers to a server
-    console.log("Submitted answers:", answers)
-    console.log("Score:", correctCount, "out of", questions.length)
-  }
+    });
+  
+    setScore({ correct: correctCount, total: questions.length });
+    setIsSubmitted(true);
+  
+    console.log("Submitted answers:", answers);
+    console.log("Score:", correctCount, "out of", questions.length);
+  
+    // Send the test mark to the backend
+    try {
+      await axios.patch(`http://localhost:3001/users/${userId}/tests`, {
+        jobId,
+        testId,
+        score: correctCount,
+      });
+      console.log("Test mark saved successfully");
+    } catch (error) {
+      console.error("Error saving test mark:", error);
+    }
+  };
 
   const allQuestionsAnswered = answers.every((answer) => answer !== null)
   const progressPercentage = (answers.filter((a) => a !== null).length / questions.length) * 100
