@@ -7,6 +7,8 @@ import styles from "../assets/styles/recruiter.module.css";
 import JobListing from "./JobListing";
 import JobContent from "./JobContent";
 import TestContent from "./TestContent";
+import Dashboard from "./Dashboard";
+import Profile from "./Profile";
 
 import axios from "axios";
 import TestListing from "./TestListing";
@@ -34,11 +36,8 @@ export default function RecruiterProfile() {
   >([]);
   const [testState, setTestState] = useState(false);
   const [jobPostState, setJobPostState] = useState(false);
-
-  const [mockExamContainerId, setMockExamContainerId] = useState<any>([
-    Date.now(),
-  ]);
-
+  const [dashboardTab, setDashboardTab] = useState(true);
+  const [profileTab, setProfileTab] = useState(false);
   const [testCount, setTestCount] = useState(Number);
   const [jobCount, setJobCount] = useState(Number);
   const [updateTestContent, setUpdateTestContent] = useState(false);
@@ -76,59 +75,7 @@ export default function RecruiterProfile() {
           />
         </div>
         <div id={styles.contentSection}>
-          <div id={styles.contentContainer1}>
-            <div id={styles.topGraded}>
-              <h1>Top Graded</h1>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-            </div>
-            <div id={styles.profiles}>
-              <h1>Profiles</h1>
-              <div id={styles.profilesContainer}>
-                <Tab />
-              </div>
-              <div id={styles.profilesContainer}>
-                <Tab />
-              </div>
-              <div id={styles.profilesContainer}>
-                <Tab />
-              </div>
-              <div id={styles.profilesContainer}>
-                <Tab />
-              </div>
-              <div id={styles.profilesContainer}>
-                <Tab />
-              </div>
-            </div>
-            <div id={styles.results}>
-              <h1>Results</h1>
-              <div id={styles.resultsContainer}>
-                <ResultTab />
-              </div>
-              <div id={styles.resultsContainer}>
-                <ResultTab />
-              </div>
-              <div id={styles.resultsContainer}>
-                <ResultTab />
-              </div>
-            </div>
-          </div>
+          {dashboardTab ? <Dashboard /> : profileTab ? <Profile /> : null}
           <div id={styles.contentContainer2}>
             {jobPostState ? (
               <JobContent
@@ -189,23 +136,33 @@ export default function RecruiterProfile() {
           className="logo"
         />
         <ul>
-          <li>
+          <li
+            onClick={() => {
+              setDashboardTab(true);
+              setProfileTab(false);
+            }}
+          >
             <Image
               src="/recruiter/home.svg"
               alt="home-icon"
               width={23}
               height={23}
             />
-            Home
+            Dashboard
           </li>
-          <li>
+          <li
+            onClick={() => {
+              setProfileTab(true);
+              setDashboardTab(false);
+            }}
+          >
             <Image
               src="/recruiter/message.svg"
               alt="message-icon"
               width={23}
               height={23}
             />
-            Message
+            Profile
           </li>
           <li>
             <Image
