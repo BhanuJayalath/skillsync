@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="adjust the user info alignments">
+    <list default="true" id="c1660f1f-11bd-4d4c-a0d8-f1bf3622df44" name="Changes" comment="add the get user url .env and get it from the .env">
+      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/job-recommendation/job-recommendation.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/user-profile/user-profile.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/userProfile/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/userProfile/page.tsx" afterDir="false" />
     </list>
@@ -46,27 +50,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;userProfile&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/veruw/Desktop/skillsync/frontend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\veruw\\Desktop\\skillsync\\frontend\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "#74 on userProfile",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/veruw/Desktop/skillsync/frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "C:\\Users\\veruw\\Desktop\\skillsync\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\veruw\Desktop\skillsync\frontend\public\user" />
@@ -94,144 +98,409 @@
       <workItem from="1740320368795" duration="2065000" />
       <workItem from="1740397596116" duration="605000" />
       <workItem from="1740544719211" duration="2836000" />
+      <workItem from="1740746978733" duration="3736000" />
+      <workItem from="1740810076697" duration="230000" />
+      <workItem from="1740821582785" duration="17704000" />
+      <workItem from="1740894966002" duration="27230000" />
+      <workItem from="1740965701512" duration="17851000" />
+      <workItem from="1741062435842" duration="31000" />
+      <workItem from="1741062540884" duration="459000" />
+      <workItem from="1741149491639" duration="7008000" />
+      <workItem from="1741186866304" duration="4656000" />
     </task>
-    <task id="LOCAL-00001" summary="created the job recommendation module and updated the relevant parts">
+    <task id="LOCAL-00024" summary="created the Overview.tsx file">
       <option name="closed" value="true" />
-      <created>1740313798620</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+      <created>1740901706662</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
       <option name="project" value="LOCAL" />
-      <updated>1740313798620</updated>
+      <updated>1740901706662</updated>
     </task>
-    <task id="LOCAL-00002" summary="add more styles and animation to the user profile">
+    <task id="LOCAL-00025" summary="created the Progress.tsx file">
       <option name="closed" value="true" />
-      <created>1740313987972</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
+      <created>1740901719465</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
-      <updated>1740313987972</updated>
+      <updated>1740901719465</updated>
     </task>
-    <task id="LOCAL-00003" summary="making a user profile editor section">
+    <task id="LOCAL-00026" summary="created the Resume.tsx file">
       <option name="closed" value="true" />
-      <created>1740551861425</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
+      <created>1740901729099</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
       <option name="project" value="LOCAL" />
-      <updated>1740551861425</updated>
+      <updated>1740901729099</updated>
     </task>
-    <task id="LOCAL-00004" summary="add styling to the cv section">
+    <task id="LOCAL-00027" summary="created the Settings.tsx file">
       <option name="closed" value="true" />
-      <created>1740568213626</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
+      <created>1740901738219</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
       <option name="project" value="LOCAL" />
-      <updated>1740568213626</updated>
+      <updated>1740901738219</updated>
     </task>
-    <task id="LOCAL-00005" summary="updated the tabs section and course items styles">
+    <task id="LOCAL-00028" summary="moved the relevant codes from page.tsx and updated the Settings.tsx file">
       <option name="closed" value="true" />
-      <created>1740570598762</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
+      <created>1740909438005</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
       <option name="project" value="LOCAL" />
-      <updated>1740570598762</updated>
+      <updated>1740909438005</updated>
     </task>
-    <task id="LOCAL-00006" summary="put all sections inside the tabs sections and add few courses for testing">
+    <task id="LOCAL-00029" summary="moved the relevant codes from page.tsx and updated the Resume.tsx file">
       <option name="closed" value="true" />
-      <created>1740570728197</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
+      <created>1740909456208</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
       <option name="project" value="LOCAL" />
-      <updated>1740570728197</updated>
+      <updated>1740909456208</updated>
     </task>
-    <task id="LOCAL-00007" summary="making the cv section downloadable">
+    <task id="LOCAL-00030" summary="moved the relevant codes from page.tsx and updated the Progress.tsx file">
       <option name="closed" value="true" />
-      <created>1740573333037</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
+      <created>1740909469087</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
       <option name="project" value="LOCAL" />
-      <updated>1740573333037</updated>
+      <updated>1740909469087</updated>
     </task>
-    <task id="LOCAL-00008" summary="add a button to download the cv and change the structure">
+    <task id="LOCAL-00031" summary="moved the relevant codes from page.tsx and updated the Overview.tsx file">
       <option name="closed" value="true" />
-      <created>1740573440802</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
+      <created>1740909488679</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
       <option name="project" value="LOCAL" />
-      <updated>1740573440802</updated>
+      <updated>1740909488679</updated>
     </task>
-    <task id="LOCAL-00009" summary="deleted the unnecessary files">
+    <task id="LOCAL-00032" summary="moved the relevant codes from page.tsx and updated the Courses.tsx file">
       <option name="closed" value="true" />
-      <created>1740573706373</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
+      <created>1740909501203</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
       <option name="project" value="LOCAL" />
-      <updated>1740573706373</updated>
+      <updated>1740909501203</updated>
     </task>
-    <task id="LOCAL-00010" summary="add new icons">
+    <task id="LOCAL-00033" summary="updated the Settings.tsx file">
       <option name="closed" value="true" />
-      <created>1740574827079</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
+      <created>1740917168957</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
       <option name="project" value="LOCAL" />
-      <updated>1740574827079</updated>
+      <updated>1740917168957</updated>
     </task>
-    <task id="LOCAL-00011" summary="updated the cv section styles">
+    <task id="LOCAL-00034" summary="add styling to the settings form section">
       <option name="closed" value="true" />
-      <created>1740574891680</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
+      <created>1740917274283</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
       <option name="project" value="LOCAL" />
-      <updated>1740574891680</updated>
+      <updated>1740917274283</updated>
     </task>
-    <task id="LOCAL-00012" summary="add a settings section to the nav bar and add content to the cv section">
+    <task id="LOCAL-00035" summary="commented the page html section to create multiple components">
       <option name="closed" value="true" />
-      <created>1740575003366</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
+      <created>1740917747068</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
       <option name="project" value="LOCAL" />
-      <updated>1740575003366</updated>
+      <updated>1740917747068</updated>
     </task>
-    <task id="LOCAL-00013" summary="fix the errors in module.ts">
+    <task id="LOCAL-00036" summary="imported the components">
       <option name="closed" value="true" />
-      <created>1740578918958</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
+      <created>1740917784119</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
       <option name="project" value="LOCAL" />
-      <updated>1740578918958</updated>
+      <updated>1740917784119</updated>
     </task>
-    <task id="LOCAL-00014" summary="add a user icon">
+    <task id="LOCAL-00037" summary="created addEducation function for the settings">
       <option name="closed" value="true" />
-      <created>1740578931163</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
+      <created>1740917822475</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
       <option name="project" value="LOCAL" />
-      <updated>1740578931163</updated>
+      <updated>1740917822475</updated>
     </task>
-    <task id="LOCAL-00015" summary="adjust the user icon styles">
+    <task id="LOCAL-00038" summary="created addExperience function for the settings">
       <option name="closed" value="true" />
-      <created>1740578959299</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
+      <created>1740917845260</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
       <option name="project" value="LOCAL" />
-      <updated>1740578959299</updated>
+      <updated>1740917845260</updated>
     </task>
-    <task id="LOCAL-00016" summary="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics">
+    <task id="LOCAL-00039" summary="created removeEducation function for the settings">
       <option name="closed" value="true" />
-      <created>1740579050619</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
+      <created>1740917865331</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
       <option name="project" value="LOCAL" />
-      <updated>1740579050619</updated>
+      <updated>1740917865331</updated>
     </task>
-    <task id="LOCAL-00017" summary="adjust the user info alignments">
+    <task id="LOCAL-00040" summary="created removeExperience function for the settings">
       <option name="closed" value="true" />
-      <created>1740579624659</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
+      <created>1740917885279</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
       <option name="project" value="LOCAL" />
-      <updated>1740579624659</updated>
+      <updated>1740917885279</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00041" summary="created handleChange function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917904338</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917904338</updated>
+    </task>
+    <task id="LOCAL-00042" summary="created handleNestedChange function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917923049</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917923049</updated>
+    </task>
+    <task id="LOCAL-00043" summary="created handleSkillsChange function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917952436</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917952436</updated>
+    </task>
+    <task id="LOCAL-00044" summary="created handleSubmit function for the settings">
+      <option name="closed" value="true" />
+      <created>1740917971789</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1740917971789</updated>
+    </task>
+    <task id="LOCAL-00045" summary="add the components to the tabs section and passing the relevant props for each component">
+      <option name="closed" value="true" />
+      <created>1740918116126</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1740918116126</updated>
+    </task>
+    <task id="LOCAL-00046" summary="deleted the unnecessary commented codes">
+      <option name="closed" value="true" />
+      <created>1740918258648</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1740918258648</updated>
+    </task>
+    <task id="LOCAL-00047" summary="updated the Resume.tsx">
+      <option name="closed" value="true" />
+      <created>1740918317264</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1740918317264</updated>
+    </task>
+    <task id="LOCAL-00048" summary="add relevant use states to the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966019288</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966019288</updated>
+    </task>
+    <task id="LOCAL-00049" summary="add useEffect to fetch the countries in the form section of the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966077974</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966077974</updated>
+    </task>
+    <task id="LOCAL-00050" summary="add useEffect to fetch the cities in the form section of the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966107207</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966107210</updated>
+    </task>
+    <task id="LOCAL-00051" summary="add the selectElement for country in the form section of the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966330658</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966330658</updated>
+    </task>
+    <task id="LOCAL-00052" summary="add the selectElement for language in the form section of the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966349239</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966349239</updated>
+    </task>
+    <task id="LOCAL-00053" summary="add the selectElement for city in the form section of the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1740966364966</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966364968</updated>
+    </task>
+    <task id="LOCAL-00054" summary="updated the Overview.tsx to display the relevant user info">
+      <option name="closed" value="true" />
+      <created>1740966441830</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966441830</updated>
+    </task>
+    <task id="LOCAL-00055" summary="updated the type of the handleChange function to have both input elements and select elements">
+      <option name="closed" value="true" />
+      <created>1740966504694</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1740966504694</updated>
+    </task>
+    <task id="LOCAL-00056" summary="add a summary to the user cv">
+      <option name="closed" value="true" />
+      <created>1741008558771</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1741008558771</updated>
+    </task>
+    <task id="LOCAL-00057" summary="add a summary section to the cv">
+      <option name="closed" value="true" />
+      <created>1741008585100</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1741008585100</updated>
+    </task>
+    <task id="LOCAL-00058" summary="add a summary section to the Settings.tsx">
+      <option name="closed" value="true" />
+      <created>1741008838309</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1741008838309</updated>
+    </task>
+    <task id="LOCAL-00059" summary="assigned the api key and the url to the variables in the settings.tsx using .env">
+      <option name="closed" value="true" />
+      <created>1741008925088</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1741008925088</updated>
+    </task>
+    <task id="LOCAL-00060" summary="created the prompt for the AI">
+      <option name="closed" value="true" />
+      <created>1741008965828</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1741008965828</updated>
+    </task>
+    <task id="LOCAL-00061" summary="got the enhanced cv summary using fetch api by sending a post request to the deepseek AI">
+      <option name="closed" value="true" />
+      <created>1741009144379</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1741009144382</updated>
+    </task>
+    <task id="LOCAL-00062" summary="add a function to handle image changes">
+      <option name="closed" value="true" />
+      <created>1741061482181</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1741061482181</updated>
+    </task>
+    <task id="LOCAL-00063" summary="commented the use state of the imageUrl and imageFile for error fixing">
+      <option name="closed" value="true" />
+      <created>1741061542892</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1741061542892</updated>
+    </task>
+    <task id="LOCAL-00064" summary="add the image upload to the overview section">
+      <option name="closed" value="true" />
+      <created>1741061605835</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1741061605835</updated>
+    </task>
+    <task id="LOCAL-00065" summary="create a button to generate the cv summary">
+      <option name="closed" value="true" />
+      <created>1741171250278</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1741171250278</updated>
+    </task>
+    <task id="LOCAL-00066" summary="changed the name of the description section to summary">
+      <option name="closed" value="true" />
+      <created>1741171314177</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1741171314177</updated>
+    </task>
+    <task id="LOCAL-00067" summary="changed summary generation in the useEffect to a function">
+      <option name="closed" value="true" />
+      <created>1741171700203</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1741171700203</updated>
+    </task>
+    <task id="LOCAL-00068" summary="commented the useEffect for the test purposes">
+      <option name="closed" value="true" />
+      <created>1741171749781</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1741171749781</updated>
+    </task>
+    <task id="LOCAL-00069" summary="add the handleGenerate function to the generate button onClick">
+      <option name="closed" value="true" />
+      <created>1741171786560</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1741171786560</updated>
+    </task>
+    <task id="LOCAL-00070" summary="fixed errors occurred in handle generate summary">
+      <option name="closed" value="true" />
+      <created>1741171850190</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1741171850190</updated>
+    </task>
+    <task id="LOCAL-00071" summary="deleted the unnecessary codes">
+      <option name="closed" value="true" />
+      <created>1741171902528</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1741171902528</updated>
+    </task>
+    <task id="LOCAL-00072" summary="add the get user url .env and get it from the .env">
+      <option name="closed" value="true" />
+      <created>1741187219315</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1741187219315</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -249,25 +518,31 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="created the job recommendation module and updated the relevant parts" />
-    <MESSAGE value="add more styles and animation to the user profile" />
-    <MESSAGE value="testing the default user object" />
-    <MESSAGE value="converting crlf to lf" />
-    <MESSAGE value="making a user profile editor section" />
-    <MESSAGE value="add styling to the cv section" />
-    <MESSAGE value="updated the tabs section and course items styles" />
-    <MESSAGE value="put all sections inside the tabs sections and add few courses for testing" />
-    <MESSAGE value="making the cv section downloadable" />
-    <MESSAGE value="add a button to download the cv and change the structure" />
-    <MESSAGE value="deleted the unnecessary files" />
-    <MESSAGE value="add new icons" />
-    <MESSAGE value="updated the cv section styles" />
-    <MESSAGE value="add a settings section to the nav bar and add content to the cv section" />
-    <MESSAGE value="fix the errors in module.ts" />
-    <MESSAGE value="add a user icon" />
-    <MESSAGE value="adjust the user icon styles" />
-    <MESSAGE value="changed the user avatar value for testing purposes and add an if condition to display the default icon if no profile pics" />
-    <MESSAGE value="adjust the user info alignments" />
-    <option name="LAST_COMMIT_MESSAGE" value="adjust the user info alignments" />
+    <MESSAGE value="add relevant use states to the Settings.tsx" />
+    <MESSAGE value="add useEffect to fetch the countries in the form section of the Settings.tsx" />
+    <MESSAGE value="add useEffect to fetch the cities in the form section of the Settings.tsx" />
+    <MESSAGE value="add the selectElement for country in the form section of the Settings.tsx" />
+    <MESSAGE value="add the selectElement for language in the form section of the Settings.tsx" />
+    <MESSAGE value="add the selectElement for city in the form section of the Settings.tsx" />
+    <MESSAGE value="updated the Overview.tsx to display the relevant user info" />
+    <MESSAGE value="updated the type of the handleChange function to have both input elements and select elements" />
+    <MESSAGE value="add a summary to the user cv" />
+    <MESSAGE value="add a summary section to the cv" />
+    <MESSAGE value="add a summary section to the Settings.tsx" />
+    <MESSAGE value="assigned the api key and the url to the variables in the settings.tsx using .env" />
+    <MESSAGE value="created the prompt for the AI" />
+    <MESSAGE value="got the enhanced cv summary using fetch api by sending a post request to the deepseek AI" />
+    <MESSAGE value="add a function to handle image changes" />
+    <MESSAGE value="commented the use state of the imageUrl and imageFile for error fixing" />
+    <MESSAGE value="add the image upload to the overview section" />
+    <MESSAGE value="create a button to generate the cv summary" />
+    <MESSAGE value="changed the name of the description section to summary" />
+    <MESSAGE value="changed summary generation in the useEffect to a function" />
+    <MESSAGE value="commented the useEffect for the test purposes" />
+    <MESSAGE value="add the handleGenerate function to the generate button onClick" />
+    <MESSAGE value="fixed errors occurred in handle generate summary" />
+    <MESSAGE value="deleted the unnecessary codes" />
+    <MESSAGE value="add the get user url .env and get it from the .env" />
+    <option name="LAST_COMMIT_MESSAGE" value="add the get user url .env and get it from the .env" />
   </component>
 </project>

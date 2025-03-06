@@ -115,3 +115,20 @@
     color: #000;
     text-decoration: none;
   }
+
+  .memberLinks {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .memberLinks a {
+    display: flex;
+    align-items: center;
+  }
+  
+  .memberLinks img {
+    width: 30px;
+    height: 30px;
+  }

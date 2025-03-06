@@ -1,135 +1,52 @@
 "use client";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import MockExam from "./MockExam";
 import Tab from "./Tab";
 import ResultTab from "./ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "../assets/styles/recruiter.module.css";
-import MockExamContainer from "./MockExamContainer";
+import JobListing from "./JobListing";
+import JobContent from "./JobContent";
+import TestContent from "./TestContent";
 
 import axios from "axios";
+import TestListing from "./TestListing";
+
 export default function RecruiterProfile() {
-  const [loadMockTests, setLoadMockTests] = useState<
+  const [loadTests, setLoadTests] = useState<
     {
-      mockExamId: number;
-      mockExamContent: {
+      testId: string;
+      jobId: string;
+      testContent: {
         questionContent: any[];
       };
     }[]
-  >([{ mockExamId: 1, mockExamContent: { questionContent: [] } }]);
+  >([]);
 
-  const [loadMockTestQuestions, setLoadMockTestQuestions] = useState([]);
-  const [mockExamState, setMockExamState] = useState(false);
+  const [loadTestQuestions, setLoadTestQuestions] = useState([]);
+  const [loadJobPostContent, setLoadJobPostContent] = useState<
+    {
+      jobId: String;
+      jobTitle: String;
+      jobDescription: String;
+      requiredSkills: [];
+      jobType: [];
+    }[]
+  >([]);
+  const [testState, setTestState] = useState(false);
+  const [jobPostState, setJobPostState] = useState(false);
+
   const [mockExamContainerId, setMockExamContainerId] = useState<any>([
     Date.now(),
   ]);
-  const [mockExamCount, setMockExamCount] = useState(Number);
-  // const [mockExamComponent, setMockExamComponent] = useState<
-  //   {
-  //     mockExamId: number;
-  //     mockExamContent: {
-  //       questionContent: [];
-  //     };
-  //   }[]
-  // >();
 
-  useEffect(() => {
-    const tempArray: any = [];
-    axios
-      .get(`${process.env.NEXT_PUBLIC_GET_MOCK_TESTS}`)
-      .then((response) => {
-        response.data.map((item: any, index: number) => {
-          tempArray.push(item);
-          if (localStorage.length > 0) {
-            for (let i = 0; i < localStorage.length; i++) {
-              const key: any = localStorage.key(i);
-              let Item: any = localStorage.getItem(key);
-              let jsonParsedItem = Item ? JSON.parse(Item) : null;
-              // console.log(Item.mockExamId);
-              if (item.mockExamId === jsonParsedItem.mockExamId) {
-                tempArray[index] = jsonParsedItem;
-                // console.log(index);
-              } else if (response.data.length - 1 === index) {
-                const lastElement = tempArray.find(
-                  (item: any) => item.mockExamId === jsonParsedItem.mockExamId
-                );
-                // console.log(lastElement);
-                if (!lastElement) {
-                  tempArray.push(jsonParsedItem);
-                }
-                // console.log(index);
-              }
-            }
-          }
-          setLoadMockTests(tempArray);
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+  const [testCount, setTestCount] = useState(Number);
+  const [jobCount, setJobCount] = useState(Number);
+  const [updateTestContent, setUpdateTestContent] = useState(false);
+  const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
+  const [removeTestBlock, setRemoveTestBlock] = useState(false);
+  const [testResponse, setTestResponse] = useState();
+  const [jobPostResponse, setJobPostResponse] = useState();
 
-  function loadMockExamComponent(mockexamId: number, mockExamCounter: number) {
-    // setMockExamCount(mockExamCounter);
-    // console.log(mockExamCounter);
-    loadMockTests.find((item: any) => {
-      if (item.mockExamId === mockexamId) {
-        setLoadMockTestQuestions(item);
-      }
-    });
-
-    setMockExamState(!mockExamState);
-  }
-  function addMockExamContainers() {
-    localStorage.clear();
-    setLoadMockTests([
-      ...loadMockTests,
-      {
-        mockExamId: Date.now(),
-        mockExamContent: {
-          questionContent: [],
-        },
-      },
-    ]);
-    // setMockExamContainerId([...mockExamContainerId, Date.now()]);
-    // console.log(mockExamContainerId);
-  }
-
-  function removeMockExamContainer(item: number) {
-    const newItems = [...mockExamContainerId];
-    const index = mockExamContainerId.indexOf(item);
-    if (index != -1) {
-      newItems.splice(index, 1);
-      setMockExamContainerId(newItems);
-    }
-    // console.log(item);
-    if (localStorage.getItem(JSON.stringify(item))) {
-      localStorage.removeItem(JSON.stringify(item));
-    }
-  }
-  function retrieveLocalStorage() {
-    if (localStorage.length != 0) {
-      var temp = [];
-      var tempIds: number[] = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        if (key) {
-          const local = localStorage.getItem(key);
-          if (local) {
-            temp.push(JSON.parse(local));
-          }
-        }
-      }
-      temp.map((item) => {
-        tempIds.push(item.mockExamId);
-      });
-
-      setMockExamContainerId(tempIds);
-      // setMockExamComponent(temp);
-    }
-  }
   let counter = 0;
   return (
     <section className={styles.main}>
@@ -213,109 +130,52 @@ export default function RecruiterProfile() {
             </div>
           </div>
           <div id={styles.contentContainer2}>
-            {mockExamState ? (
-              <MockExam
-                setLoadMockTestQuestions={setLoadMockTestQuestions}
-                loadMockTestQuestions={loadMockTestQuestions}
-                mockExamCount={mockExamCount}
+            {jobPostState ? (
+              <JobContent
+                loadTests={loadTests}
+                setLoadTests={setLoadTests}
+                updateTestContent={updateTestContent}
+                setUpdateTestContent={setUpdateTestContent}
+                removeTestBlock={removeTestBlock}
+                setRemoveTestBlock={setRemoveTestBlock}
+                testState={testState}
+                setTestState={setTestState}
+                setJobPostState={setJobPostState}
+                jobPostState={jobPostState}
+                setLoadTestQuestions={setLoadTestQuestions}
+                setTestCount={setTestCount}
+                testResponse={testResponse}
+                setTestResponse={setTestResponse}
+                loadJobPostContent={loadJobPostContent}
+                setUpdateJobPostContent={setUpdateJobPostContent}
+                updateJobPostContent={updateJobPostContent}
+                jobPostResponse={jobPostResponse}
+                jobCount={jobCount}
+              />
+            ) : testState ? (
+              <TestContent
+                setLoadTestQuestions={setLoadTestQuestions}
+                jobPostState={jobPostState}
+                setJobPostState={setJobPostState}
+                testState={testState}
+                setTestState={setTestState}
+                loadTestQuestions={loadTestQuestions}
+                testCount={testCount}
+                updateTestContent={updateTestContent}
+                setUpdateTestContent={setUpdateTestContent}
+                testResponse={testResponse}
               />
             ) : (
-              <>
-                <div id={styles.mockExams}>
-                  <div id={styles.mockExamscontainerHeader}>
-                    <h1>Mock Exams</h1>
-                    <button onClick={addMockExamContainers}>
-                      {" "}
-                      <Image
-                        alt="plus-icon"
-                        width={23}
-                        height={23}
-                        src="/recruiter/plus-icon.svg"
-                      />
-                    </button>
-                  </div>
-                  <div className={styles.mockExamscontainerSection}>
-                    {loadMockTests?.map((item: any) => {
-                      counter++;
-                      // console.log(counter);
-                      return (
-                        <div
-                          key={item.mockExamId}
-                          id={styles.mockExamscontainer}
-                        >
-                          <Image
-                            alt="exam-icon"
-                            width={60}
-                            height={60}
-                            src="/recruiter/exam-icon.svg"
-                          />
-                          <h1>Mock Exam {counter}</h1>
-                          <div id={styles.mockExamscontainerButtons}>
-                            <button
-                              onClick={() => {
-                                loadMockExamComponent(item.mockExamId, counter);
-                              }}
-                            >
-                              <Image
-                                alt="plus-icon"
-                                width={20}
-                                height={20}
-                                src="/recruiter/update-icon.svg"
-                              />
-                            </button>
-                            <button
-                              onClick={() => {
-                                removeMockExamContainer(item);
-                              }}
-                            >
-                              <Image
-                                alt="plus-icon"
-                                width={30}
-                                height={30}
-                                src="/recruiter/remove-icon.svg"
-                              />
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div id={styles.jobListing}>
-                  <h1 id={styles.jobListingcontainerHeader}>Job Listing</h1>
-                  <div className={styles.jobListingcontainerSection}>
-                    <div id={styles.jobListingcontainer}>
-                      <Image
-                        alt="job-search"
-                        width={60}
-                        height={60}
-                        src="/recruiter/job-search.svg"
-                      />
-                      <h1>Internship 01</h1>
-                    </div>
-                    <div id={styles.jobListingcontainer}>
-                      {" "}
-                      <Image
-                        alt="job-search"
-                        width={60}
-                        height={60}
-                        src="/recruiter/job-search.svg"
-                      />
-                      <h1>Internship 02</h1>
-                    </div>
-                    <div id={styles.jobListingcontainer}>
-                      {" "}
-                      <Image
-                        alt="job-search"
-                        width={60}
-                        height={60}
-                        src="/recruiter/job-search.svg"
-                      />
-                      <h1>Internship 03</h1>
-                    </div>
-                  </div>
-                </div>
-              </>
+              <JobListing
+                loadJobPostContent={loadJobPostContent}
+                setLoadJobPostContent={setLoadJobPostContent}
+                setUpdateJobPostContent={setUpdateJobPostContent}
+                updateJobPostContent={updateJobPostContent}
+                setJobPostState={setJobPostState}
+                jobPostState={jobPostState}
+                setJobCount={setJobCount}
+                setJobPostResponse={setJobPostResponse}
+              />
             )}
           </div>
         </div>
