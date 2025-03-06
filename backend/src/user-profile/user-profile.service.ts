@@ -17,7 +17,7 @@ export class UserProfileService {
 
   async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
     const updatedUser = await this.userModel
-      .findOneAndUpdate({ id: userId }, updateData, {
+      .findOneAndUpdate({ _id: userId }, updateData, {
         new: true,
         runValidators: true,
       })
