@@ -76,7 +76,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div id={styles.contentContainer1}>
+    <>
       <div id={styles.topGraded}>
         <h1>Job Post</h1>
         <>
@@ -124,6 +124,6 @@ export default function Dashboard() {
           })}
         </>
       </div>
-    </div>
+    </>
   );
 }

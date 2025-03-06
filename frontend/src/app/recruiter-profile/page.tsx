@@ -52,30 +52,11 @@ export default function RecruiterProfile() {
       <div className={styles.contentContainer}>
         <div className={styles.navigation}>
           <div className={styles.welcomeBar}>Welcome User</div>
-          <search className={styles.searchBar}>
-            <Image
-              alt="menu-icon"
-              width={23}
-              height={23}
-              src="/recruiter/menu.svg"
-            />
-            Search
-            <Image
-              alt="search-icon"
-              width={23}
-              height={23}
-              src="/recruiter/search.svg"
-            />
-          </search>
-          <Image
-            alt="notification-icon"
-            width={23}
-            height={23}
-            src="/recruiter/bell.svg"
-          />
         </div>
         <div id={styles.contentSection}>
-          {dashboardTab ? <Dashboard /> : profileTab ? <Profile /> : null}
+          <div id={styles.contentContainer1}>
+            {dashboardTab ? <Dashboard /> : profileTab ? <Profile /> : null}
+          </div>
           <div id={styles.contentContainer2}>
             {jobPostState ? (
               <JobContent
@@ -163,24 +144,6 @@ export default function RecruiterProfile() {
               height={23}
             />
             Profile
-          </li>
-          <li>
-            <Image
-              src="/recruiter/add-to-favourites.svg"
-              alt="favourites-icon"
-              width={23}
-              height={23}
-            />
-            Favourites
-          </li>
-          <li>
-            <Image
-              src="/recruiter/analytics.svg"
-              alt="analytics-icon"
-              width={23}
-              height={23}
-            />
-            Analytics
           </li>
         </ul>
       </div>
