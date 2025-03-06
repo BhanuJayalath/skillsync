@@ -149,7 +149,18 @@ export default function UserProfile() {
             };
         });
     };
-
+    const handleFields = (
+        value: string,
+        field:string
+    ) => {
+        setUser((prev) => {
+            console.log("Updating:", field, "with", value);
+            return {
+                ...prev,
+                [field]: value
+            };
+        });
+    };
     // Update nested fields (experience, education)
     const handleNestedChange = (
         index: number,
