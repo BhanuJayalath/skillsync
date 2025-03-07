@@ -14,7 +14,7 @@ export class UserProfileService {
     // Query the user by the 'id' field
     return await this.userModel.findOne({ _id: userId }).exec();
   }
-//edit
+  //edit
   async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
     const updatedUser = await this.userModel
       .findOneAndUpdate({ _id: userId }, updateData, {
@@ -28,7 +28,12 @@ export class UserProfileService {
     return updatedUser;
   }
 
-  async saveTestMark(userId: string, jobId: string, testId: string, score: number): Promise<User> {
+  async saveTestMark(
+    userId: string,
+    jobId: string,
+    testId: string,
+    score: number,
+  ): Promise<User> {
     const updatedUser = await this.userModel
       .findOneAndUpdate(
         { _id: userId },
@@ -40,5 +45,9 @@ export class UserProfileService {
     if (!updatedUser)
       throw new NotFoundException(`User with ID ${userId} not found`);
     return updatedUser;
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return this.userModel.find().exec();
   }
 }
