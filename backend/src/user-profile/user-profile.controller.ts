@@ -40,4 +40,11 @@ export class UserProfileController {
   async getAllUsers(): Promise<User[]> {
     return this.userProfileService.getAllUsers();
   }
+
+  @Delete('deleteUser/:userId')
+  async deleteUser(
+    @Param('userId') userId: string,
+  ): Promise<{ message: string }> {
+    return this.userProfileService.deleteUser(userId);
+  }
 }
