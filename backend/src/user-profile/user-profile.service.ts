@@ -54,7 +54,7 @@ export class UserProfileService {
   async deleteUser(userId: string): Promise<{ message: string }> {
     const result = await this.userModel.deleteOne({ _id: userId }).exec();
     if (result.deletedCount === 0)
-      throw new NotFoundException(`Job with ID ${userId} not found`);
-    return { message: `Job with ID ${userId} deleted successfully` };
+      throw new NotFoundException(`User with ID ${userId} not found`);
+    return { message: `User with ID ${userId} deleted successfully` };
   }
 }
