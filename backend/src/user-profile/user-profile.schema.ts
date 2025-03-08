@@ -2,6 +2,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 // Defining the Courses, Tests, Job Role, Experience, Education, and Skills as nested schemas
 class Course {
   @Prop()
+  courseId: string;
+
+  @Prop()
   code: string;
 
   @Prop()
@@ -14,6 +17,9 @@ class Course {
   mark: string;
 }
 class Experience {
+  @Prop()
+  jobId: string;
+
   @Prop()
   jobName: string;
 
@@ -30,6 +36,9 @@ class Experience {
   description: string;
 }
 class Education {
+  @Prop()
+  eduId: string;
+
   @Prop()
   courseName: string;
 
