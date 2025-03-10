@@ -2,6 +2,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 // Defining the Courses, Tests, Job Role, Experience, Education, and Skills as nested schemas
 class Course {
   @Prop()
+  courseId: string;
+
+  @Prop()
   code: string;
 
   @Prop()
@@ -13,19 +16,63 @@ class Course {
   @Prop()
   mark: string;
 }
+class Experience {
+  @Prop()
+  jobId: string;
+
+  @Prop()
+  jobName: string;
+
+  @Prop()
+  companyName: string;
+
+  @Prop()
+  startDate: string;
+
+  @Prop()
+  endDate: string;
+
+  @Prop()
+  description: string;
+}
+class Education {
+  @Prop()
+  eduId: string;
+
+  @Prop()
+  courseName: string;
+
+  @Prop()
+  schoolName: string;
+
+  @Prop()
+  startDate: string;
+
+  @Prop()
+  endDate: string;
+
+  @Prop()
+  description: string;
+}
 
 class Test {
+  @Prop()
+  jobId: string;
+
   @Prop()
   testId: string;
 
   @Prop()
-  testLevel: string;
+  score: number;
 
-  @Prop()
-  mark: string;
+  // @Prop()
+  // testLevel: string;
 
-  @Prop()
-  xAxis: string;
+  // @Prop()
+  // mark: string;
+
+  // @Prop()
+  // xAxis: string;
 }
 
 class JobRole {
@@ -35,9 +82,6 @@ class JobRole {
 
 @Schema()
 export class User {
-  @Prop({ type: String, unique: true })
-  id: string; // Unique user ID
-
   @Prop()
   email: string; // User's email address
 
@@ -52,6 +96,12 @@ export class User {
 
   @Prop()
   avatar: string; // Profile picture URL
+
+  @Prop()
+  gitHub: string; // User gitHub URL
+
+  @Prop()
+  linkedIn: string; // User linkedin URL
 
   @Prop()
   gender: string; // User's gender
@@ -77,14 +127,14 @@ export class User {
   @Prop([JobRole])
   jobRole: JobRole[]; // Array of job roles
 
-  @Prop([Number])
-  experience: number[]; // Array of experience
+  @Prop({ type: [Experience] })
+  experience: Experience[];
 
-  @Prop([Number])
-  education: number[]; // Array of education
+  @Prop({ type: [Education] })
+  education: Education[];
 
-  @Prop([Number])
-  skills: number[]; // Array of skills
+  @Prop({ type: [String] })
+  skills: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

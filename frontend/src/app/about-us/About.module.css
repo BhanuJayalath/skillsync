@@ -1,0 +1,134 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #e8f3ff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    background-color: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1rem;
+  }
+  
+  .headerContent {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #0f172a;
+  }
+
+  .main {
+    flex: 1;
+    padding: 3rem 1rem;
+  }
+  
+  .hero {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #0f172a;
+  }
+  
+  .subtitle {
+    font-size: 1.25rem;
+    color: #4b5563;
+  }
+  
+  .content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .sectionTitle {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #0f172a;
+  }
+  
+  .text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+  }
+  
+  .teamGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .teamMember {
+    text-align: center;
+  }
+  
+  .memberImage {
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+  
+  .memberName {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #0f172a;
+  }
+  
+  .memberRole {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .footer {
+    background-color: #D1E5F4;
+  }
+  
+  .socialIcons a {
+    color: #000;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+  }
+  
+  .footer ul li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer ul li a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .memberLinks {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  .memberLinks a {
+    display: flex;
+    align-items: center;
+  }
+  
+  .memberLinks img {
+    width: 30px;
+    height: 30px;
+  }
