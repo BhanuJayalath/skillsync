@@ -7,6 +7,7 @@ import { JobRecommendationModule } from './job-recommendation/job-recommendation
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { TestsModule } from './tests/tests.module';
 import { AdminPageModule } from './admin-page/admin-page.module';
+import { AdminPageModule } from './admin-page/admin-page.module';
 @Module({
   imports: [
     RecruiterModule,
