@@ -7,7 +7,7 @@ export default function Profile() {
   const [companyName, setCompanyName] = useState("WS02");
   const [email, setEmail] = useState("company@gmail.com");
   const [description, setDescription] = useState(
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    "WSO2 is a leading open-source technology company that provides enterprise-grade solutions for API management, integration, and identity and access management (IAM). Its flagship products, such as WSO2 API Manager and WSO2 Identity Server, enable businesses to build, deploy, and secure digital services efficiently. With a strong focus on cloud-native and microservices architectures, WSO2 helps organizations streamline their digital transformation by offering scalable and customizable platforms. It supports various industry standards and offers both on-premise and cloud deployment options, making it a preferred choice for enterprises seeking robust and flexible integration solutions."
   );
   const [services, SetServices] = useState(
     "FullStack Development / Mobile development"
@@ -52,8 +52,8 @@ export default function Profile() {
         <div id={styles.profileCard}>
           <h1>{companyName}</h1>
           <h2>{description}</h2>
-          <h3>Email - {email}</h3>
-          <h4>Services - {services}</h4>
+          <h3>{email}</h3>
+          <h4>{services}</h4>
         </div>
       )}
     </section>

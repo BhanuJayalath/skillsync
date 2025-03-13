@@ -51,6 +51,7 @@ export default function RecruiterProfile() {
     <section className={styles.main}>
       <div className={styles.contentContainer}>
         <div className={styles.navigation}>
+          <div id={styles.pageTitle}>Recruiter Profile</div>
           <div className={styles.welcomeBar}>Welcome User</div>
         </div>
         <div id={styles.contentSection}>

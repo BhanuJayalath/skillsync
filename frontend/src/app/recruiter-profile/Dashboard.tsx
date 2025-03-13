@@ -8,7 +8,7 @@ export default function Dashboard() {
   const [jobs, setJobs] = useState([]);
   const [tests, setTests] = useState([]);
   const [bestPerformed, setBestPerformed] = useState([]);
-
+  const [onLoad, setOnLoad] = useState(true);
   const users = [
     {
       userId: "1",
@@ -41,10 +41,14 @@ export default function Dashboard() {
     axios.get(`${process.env.NEXT_PUBLIC_GET_JOBS}`).then((response) => {
       response.data.map((item: any) => {
         tempJobSet.push(item);
+        if (onLoad) {
+          loadTests(item.jobId);
+        }
       });
       setJobs(tempJobSet);
+      console.log(onLoad);
     });
-  }, []);
+  }, [onLoad,setOnLoad]);
   function loadTests(jobId: any) {
     const tempTestsSet: any = [];
     axios
@@ -52,6 +56,10 @@ export default function Dashboard() {
       .then((response) => {
         response.data.map((item: any) => {
           tempTestsSet.push(item);
+          if (onLoad) {
+            performance(item.testId);
+            setOnLoad(false);
+          }
         });
         setTests(tempTestsSet);
       });
@@ -79,10 +87,11 @@ export default function Dashboard() {
     <>
       <div id={styles.topGraded}>
         <h1>Job Post</h1>
-        <>
+        <div id={styles.dashboardDisplayContainer}>
           {jobs.map((item: any) => {
             return (
               <button
+                key={item.jobId}
                 onClick={() => {
                   loadTests(item.jobId);
                 }}
@@ -92,11 +101,11 @@ export default function Dashboard() {
               </button>
             );
           })}
-        </>
+        </div>
       </div>
       <div id={styles.profiles}>
         <h1>Tests</h1>
-        <>
+        <div id={styles.dashboardDisplayContainer}>
           {tests.map((item: any, index: number) => {
             return (
               <button
@@ -110,19 +119,19 @@ export default function Dashboard() {
               </button>
             );
           })}
-        </>
+        </div>
       </div>
       <div id={styles.results}>
         <h1>Results</h1>
-        <>
-          {bestPerformed.map((item: any) => {
+        <div id={styles.dashboardDisplayContainer}>
+          {bestPerformed.map((item: any, index: number) => {
             return (
-              <div id={styles.resultsContainer}>
+              <div key={index} id={styles.resultsContainer}>
                 <ResultTab userDetails={item} />
               </div>
             );
           })}
-        </>
+        </div>
       </div>
     </>
   );
