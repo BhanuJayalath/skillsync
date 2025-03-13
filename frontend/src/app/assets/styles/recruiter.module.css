@@ -115,7 +115,7 @@
 }
 #contentContainer1 {
   flex-direction: row;
-  height: 70vh;
+  height: auto;
 }
 #contentContainer2 {
   flex-direction: column;
@@ -132,7 +132,7 @@
   padding: 10px;
   width: 32%;
   gap: 10px;
-  height: 100%;
+  height: 70vh;
   border-radius: 5px;
   background-color: #e3f3ff;
 }
@@ -187,13 +187,12 @@
 }
 .mockExamscontainerSection,
 .jobListingcontainerSection {
-  width: 100%;
+  width: fit-content;
   gap: 10px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  /* background-color: #103842; */
 }
 
 #mockExamscontainer,
@@ -205,6 +204,7 @@
   gap: 20px;
   width: 300px;
   height: 300px;
+  /* flex-grow: 1; */
   background-color: #e3f3ff;
 }
 /* .sideBar li:hover,
@@ -299,34 +299,110 @@
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
-  /* background-color: #48afc9; */
 }
 #jobPostSkillLabel {
   display: flex;
   flex-direction: row;
   gap: 10px;
   width: 100%;
-  /* background-color: #48afc9; */
 }
 
 #companyProfile {
+  position: relative;
   display: flex;
   flex-direction: column;
+  gap: 20px;
   padding: 20px;
   color: #000f22;
   width: 100%;
+  min-height: 500px;
   height: 100%;
+  border-radius: 20px;
+  background-color: #ecfcff;
+}
+#companyProfile header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+}
+#companyProfile header button {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  gap: 10px;
+  font-size: 12px;
+  border-radius: 50px;
+  margin-left: auto;
+  background-color: #d1e5f4;
+}
+
+#companyProfile header h1 {
+  font-weight: 550;
+  font-size: 20px;
+  margin-right: auto;
 }
 #profileCard {
   display: flex;
   flex-direction: column;
   text-align: justify;
   width: 100%;
+  height: 100%;
   gap: 20px;
 }
-#profileForm {
+#updateProfileCard {
   display: flex;
   flex-direction: column;
+  text-align: justify;
+  width: 100%;
+  height: 100%;
+  gap: 40px;
+}
+#updateProfileCard header {
+  display: flex;
+  justify-content: left;
+  font-size: 20px;
+  font-weight: 550;
+}
+#profileForm {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#profileForm div {
+  width: 80%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  row-gap: 50px;
+}
+#profileForm #companyProfileAbout {
+  height: 200px;
+}
+
+#profileForm div input,
+#profileForm div textarea,
+#profileForm div label {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  outline: none;
+
+  padding: 5px;
+  /* background-color: #48afc9; */
+}
+#profileForm div input,
+#profileForm div textarea {
+  width: 70%;
+  border: 2px solid #d1e5f4;
+}
+
+#profileForm div label {
+  align-items: center;
+  width: 30%;
 }
 #dashboardDisplayContainer {
   display: flex;
@@ -339,10 +415,22 @@
 #profileCard h1 {
   font-size: 50px;
 }
-#profileCard h3, #profileCard h4 {
+#profileCard h3,
+#profileCard h4 {
   padding: 10px;
+  font-size: 12px;
   width: fit-content;
   height: fit-content;
+  border-radius: 50px;
+  background-color: #d1e5f4;
+}
+#companyProfile header button {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  gap: 10px;
+  font-size: 12px;
   border-radius: 50px;
   background-color: #d1e5f4;
 }
