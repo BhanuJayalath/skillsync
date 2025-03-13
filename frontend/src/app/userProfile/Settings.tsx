@@ -7,11 +7,11 @@ import { upload } from '@vercel/blob/client';
 interface User {
     fullName: string;
     userName: string;
+    contact: string;
     avatar: string;
     gitHub: string;
     linkedIn: string;
     email: string;
-    number: string;
     city: string;
     language: string;
     gender: string;
@@ -157,7 +157,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     }, [user.country]);
     const handleUpload = async (e:React.FormEvent) =>{
         e.preventDefault();
-        const blobUrl = process.env.NEXT_PUBLIC_BLOB_UPLOAD_URL;
+        const blobUrl = process.env.NEXT_PUBLIC_BLOB_UPLOAD_PATH;
         if (!inputFileRef.current?.files) {
             throw new Error('No file selected');
         }
@@ -181,11 +181,11 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <div className={styles.profilePic}>
                         {user.avatar ? (
                             <span><Image src={user.avatar} alt="userIcon"
-                                         width={100} height={0} className={styles.profilePic}/></span>
+                                         width={100} height={100} className={styles.profilePic}/></span>
                         ) : (
                             <span><Image src={"/user/userIcon.svg"}
                                          alt="userIcon"
-                                         width={100} height={0}
+                                         width={100} height={100}
                                          className={styles.profilePic}/></span>
                         )}
                     </div>
@@ -205,35 +205,35 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             {/*form section*/}
             <form className={styles.form}>
                 <div>
-                    <label>User Name</label>
-                    <input type="text" name="fullName" value={user.fullName}
+                    <label>Full Name</label>
+                    <input type="text" name="fullName" value={user.fullName || ''}
                            onChange={(e) => handleChange(e, "fullName")}
-                           placeholder={user.fullName}/>
+                           placeholder={user.fullName || ''}/>
                 </div>
                 <div>
-                    <label>Full Name</label>
-                    <input type="text" name="userName" value={user.userName}
-                           onChange={(e) => handleChange(e, "userName")}
-                           placeholder={user.userName}/>
+                    <label>Contact</label>
+                    <input type="text" name="contact" value={user.contact || ''}
+                           onChange={(e) => handleChange(e, "contact")}
+                           placeholder={user.contact || ''}/>
                 </div>
                 <div>
                     <label>Github</label>
-                    <input type="text" name="gitHub" value={user.gitHub}
+                    <input type="text" name="gitHub" value={user.gitHub || ''}
                            onChange={(e) => handleChange(e, "gitHub")}
-                           placeholder={user.gitHub}/>
+                           placeholder={user.gitHub || ''}/>
                 </div>
                 <div>
                     <label>LinkedIn</label>
-                    <input type="text" name="linkedIn" value={user.linkedIn}
+                    <input type="text" name="linkedIn" value={user.linkedIn || ''}
                            onChange={(e) => handleChange(e, "linkedIn")}
-                           placeholder={user.linkedIn}/>
+                           placeholder={user.linkedIn || ''}/>
                 </div>
                 <div>
                     <label>Gender</label>
                     <select>
                         <option value="">Select Gender</option>
-                        <option value={user.gender}>Male</option>
-                        <option value={user.gender}>Female</option>
+                        <option value={user.gender || ''}>Male</option>
+                        <option value={user.gender || ''}>Female</option>
                     </select>
                 </div>
                 <div>
@@ -252,7 +252,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <select id="language" onChange={(e) => handleChange(e, "language")}>
                         <option value="">Select Language</option>
                         {languages.map((language, index) => (
-                            <option key={index} value={user.language}>
+                            <option key={index} value={user.language || ''}>
                                 {language}
                             </option>
                         ))}
@@ -293,7 +293,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 <input
                                     type="text"
                                     id={`jobName-${index}`}
-                                    value={exp.jobName}
+                                    value={exp.jobName || ''}
                                     onChange={(e) => handleNestedChange(index, "jobName", e.target.value, "experience")}
                                 />
                             </div>
@@ -302,7 +302,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 <input
                                     type="text"
                                     id={`companyName-${index}`}
-                                    value={exp.companyName}
+                                    value={exp.companyName || ''}
                                     onChange={(e) => handleNestedChange(index, "companyName", e.target.value, "experience")}
                                 />
                             </div>
@@ -311,7 +311,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 <input
                                     type="date" // Use type="date"
                                     id={`startDate-${index}`}
-                                    value={exp.startDate}
+                                    value={exp.startDate || ''}
                                     onChange={(e) => handleNestedChange(index, "startDate", e.target.value, "experience")}
                                 />
                             </div>
@@ -320,7 +320,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 <input
                                     type="date" // Use type="date"
                                     id={`endDate-${index}`}
-                                    value={exp.endDate}
+                                    value={exp.endDate || ''}
                                     onChange={(e) => handleNestedChange(index, "endDate", e.target.value, "experience")}
                                 />
                             </div>
@@ -328,7 +328,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 <label htmlFor={`description-${index}`}>Description</label>
                                 <textarea
                                     id={`description-${index}`}
-                                    value={exp.description}
+                                    value={exp.description || ''}
                                     onChange={(e) => handleNestedChange(index, "description", e.target.value, "experience")}
                                 />
                             </div>
@@ -347,34 +347,34 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             <input
                                 type="text"
                                 id={`courseName-${index}`}
-                                value={edu.courseName}
+                                value={edu.courseName || ''}
                                 onChange={(e) => handleNestedChange(index, "courseName", e.target.value, "education")}
                             />
                             <label htmlFor={`schoolName-${index}`}>School Name</label>
                             <input
                                 type="text"
                                 id={`schoolName-${index}`}
-                                value={edu.schoolName}
+                                value={edu.schoolName || ''}
                                 onChange={(e) => handleNestedChange(index, "schoolName", e.target.value, "education")}
                             />
                             <label htmlFor={`startDate-${index}`}>Start Date</label>
                             <input
                                 type="date"
                                 id={`startDate-${index}`}
-                                value={edu.startDate}
+                                value={edu.startDate || ''}
                                 onChange={(e) => handleNestedChange(index, "startDate", e.target.value, "education")}
                             />
                             <label htmlFor={`endDate-${index}`}>End Date</label>
                             <input
                                 type="date"
                                 id={`endDate-${index}`}
-                                value={edu.endDate}
+                                value={edu.endDate || ''}
                                 onChange={(e) => handleNestedChange(index, "endDate", e.target.value, "education")}
                             />
                             <label htmlFor={`description-${index}`}>Description</label>
                             <textarea
                                 id={`description-${index}`}
-                                value={edu.description}
+                                value={edu.description || ''}
                                 onChange={(e) => handleNestedChange(index, "description", e.target.value, "education")}
                             />
                         </div>
