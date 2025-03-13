@@ -1,147 +1,162 @@
-"use client"; 
-import React, { useState } from "react";
-import { signIn } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link"; 
-import logo from "../assets/images/logo.png";
-import image from "../assets/images/Illustration.svg";
-import styles from "../assets/styles/login.module.css";
+"use client";
 
-const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [loginError, setLoginError] = useState("");
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import Link from "next/link";
+import styles from "./login.module.css";
 
-  
-  const handleSocialLogin = (provider: string) => {
-    setIsLoading(true);
-    setLoginError("");
+export default function LoginPage() {
+  const router = useRouter();
 
-    
-    setTimeout(() => {
-      setIsLoading(false);
-      alert(`Mock Login with ${provider} successful!`);
-    }, 1500);
-  };
+  // loginType: "user" or "recruiter"
+  const [loginType, setLoginType] = useState("user");
 
-  
-  const handleFormLogin = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsLoading(true);
-    setLoginError("");
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  });
 
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      setLoginError("Please enter a valid email address.");
-      setIsLoading(false);
-      return;
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  // Enable the login button only if both email and password are provided.
+  useEffect(() => {
+    if (credentials.email && credentials.password) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
     }
+  }, [credentials]);
 
-    
-    setTimeout(() => {
-      setIsLoading(false);
-      if (email === "test@example.com" && password === "password") {
-        alert("Mock Login successful! (Backend not implemented yet)");
+  const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+
+      // Choose endpoints based on login type
+      let loginEndpoint = "";
+      let meEndpoint = "";
+      let redirectPath = "";
+      if (loginType === "user") {
+        loginEndpoint = "/api/users/login";
+        meEndpoint = "/api/users/me";
+        redirectPath = "/userProfile";
       } else {
-        setLoginError("Invalid email or password.");
+        loginEndpoint = "/api/recruiters/login";
+        meEndpoint = "/api/recruiters/me";
+        redirectPath = "/recruiter-profile";
       }
-    }, 1500);
+
+      // Call the appropriate login API endpoint
+      await axios.post(loginEndpoint, credentials);
+      toast.success("Login successful");
+
+      // Fetch user details from the corresponding "me" endpoint
+      const res = await axios.get(meEndpoint);
+      let userId = "";
+      if (loginType === "user") {
+        userId = res.data.user._id;
+      } else {
+        userId = res.data.recruiter._id;
+      }
+
+      // Redirect to the dynamic profile route using the user's id
+      router.push(`${redirectPath}/${userId}`);
+    } catch (error: any) {
+      console.log("Login failed", error.message);
+      toast.error(error.response?.data?.error || error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className={styles.loginPage}>
+    <div className={styles.loginContainer}>
       {/* Left Section */}
       <div className={styles.leftSection}>
-        <div className={styles.imageContainer}>
-          <Image
-            src={logo}
-            alt="Logo"
-            className={styles.logoOverlay}
-            width={160}
-            height={40}
-          />
-          <Image
-            src={image}
-            alt="Illustration"
-            className={styles.backgroundImage}
-            width={400}
-            height={400}
-          />
+        <div className={styles.imagePlaceholder}>
+          {/* Replace with your images */}
+          <img src="../logo.png" alt="logo" />
+          <img src="../SignInPageImg.png" alt="Login Illustration" />
         </div>
       </div>
 
       {/* Right Section */}
       <div className={styles.rightSection}>
         <div className={styles.formContainer}>
-          <h4 className={styles.welcomeText}>Welcome to</h4>
-          <h1 className={styles.appName}>SkillSync</h1>
+          <h2 className={styles.title}>Login to Your Account</h2>
+          <p className={styles.subtitle}>
+          Unlock your exclusive experience! Enter your email and password to dive into your personalized account.
+          </p>
 
-          {/* Social Buttons */}
-          <button
-            className={`${styles.socialBtn} ${styles.googleBtn}`}
-            onClick={() => signIn("google")}
-            disabled={isLoading}
-          >
-            Login with Google
-          </button>
-          <button
-            className={`${styles.socialBtn} ${styles.facebookBtn}`}
-            onClick={() => handleSocialLogin("Facebook")}
-            disabled={isLoading}
-          >
-            Login with Facebook
-          </button>
-
-          {/* Divider */}
-          <div className={styles.divider}>
-            <span>OR</span>
+          {/* Tab Selector for login type */}
+          <div className={styles.tabSelector}>
+            <button
+              className={`${styles.tabButton} ${
+                loginType === "user" ? styles.activeTab : ""
+              }`}
+              onClick={() => setLoginType("user")}
+            >
+              User Login
+            </button>
+            <button
+              className={`${styles.tabButton} ${
+                loginType === "recruiter" ? styles.activeTab : ""
+              }`}
+              onClick={() => setLoginType("recruiter")}
+            >
+              Recruiter Login
+            </button>
           </div>
 
           {/* Login Form */}
-          <form onSubmit={handleFormLogin}>
-            <input
-              type="email"
-              placeholder="example@gmail.com"
-              className={styles.inputBox}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="**********"
-              className={styles.inputBox}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            {/* Error Message */}
-            {loginError && <p className={styles.errorMessage}>{loginError}</p>}
-
-            {/* Options */}
-            <div className={styles.options}>
-              <label>
-                <input type="checkbox" /> Remember me
-              </label>
-              <a href="#" className={styles.forgotPassword}>
-                Forgot Password?
-              </a>
+          <form onSubmit={onLogin}>
+            {/* Email Field */}
+            <div className={styles.formGroup}>
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                placeholder="Email"
+                value={credentials.email}
+                onChange={(e) =>
+                  setCredentials({ ...credentials, email: e.target.value })
+                }
+              />
             </div>
 
-            {/* Login Button */}
-            <button type="submit" className={styles.loginBtn} disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Login"}
+            {/* Password Field */}
+            <div className={styles.formGroup}>
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                placeholder="Password"
+                value={credentials.password}
+                onChange={(e) =>
+                  setCredentials({ ...credentials, password: e.target.value })
+                }
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className={styles.submitButton}
+              disabled={buttonDisabled || loading}
+            >
+              {loading ? "Processing..." : "Login"}
             </button>
           </form>
 
-          <p className={styles.registerLink}>
-            <br></br>
-            Don't have an account?{" "}
-            <Link href="/sign-up">Register</Link>
+          {/* Additional Links */}
+          <p className={styles.registerText}>
+            Don't have an account? <Link href="/sign-up">Register</Link>
           </p>
         </div>
       </div>
     </div>
   );
-};
-
-export default Login;
+}

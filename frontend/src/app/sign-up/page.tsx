@@ -95,9 +95,7 @@ export default function SignUpPage() {
         <div className={styles.formContainer}>
           <h2 className={styles.title}>Set up your Account.</h2>
           <p className={styles.subtitle}>
-            Sign up now to access expert-curated resources, practice questions,
-            and personalized tips to boost your confidence and land your dream
-            job!
+          Sign up now to access expert resources, practice questions, and insights to boost your career or recruit top talent!
           </p>
           {/* Tab Selector */}
           <div className={styles.tabSelector}>
