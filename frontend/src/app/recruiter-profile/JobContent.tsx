@@ -132,11 +132,11 @@ export default function JobContent({
   }
 
   return (
-    <section className={styles.mockExam}>
-      <header id={styles.mockExamHeading}>
+    <section className={styles.JobContent}>
+      <header id={styles.JobContentHeading}>
         <button onClick={previousPage}>back</button>
         <h1>Job Post {jobCount}</h1>
-        <div id={styles.mockExamSectionSaveandClose}>
+        <div id={styles.jobContentSectionSaveandClose}>
           {updateJobPostContent &&
             (databaseExistingId ? (
               <button onClick={updatetoDatabase}>Update</button>
@@ -146,18 +146,18 @@ export default function JobContent({
         </div>
       </header>
       {loadJobPostContent ? (
-        <div id={styles.mockExamSection}>
-          <div id={styles.mockExamSectionBlock}>
+        <div id={styles.jobContentSection}>
+          <div id={styles.jobContentSectionBlock}>
             <h2>Add Job Title</h2>
             <input
-              id={styles.mockExamSectionQuestion}
+              id={styles.jobContentSectionTitle}
               type="text"
               value={jobTitle}
               onChange={saveJobTitle}
               readOnly={readOnly}
             />
             <h2>Add Job Description</h2>
-            <div id={styles.mockExamSectionAnswer}>
+            <div id={styles.jobContentSectionDescription}>
               <input
                 type="text"
                 value={jobDescription}
@@ -166,7 +166,7 @@ export default function JobContent({
               />
             </div>
             <h2>Add Required Skills</h2>
-            <div id={styles.mockExamSectionAnswer}>
+            <div id={styles.jobContentSectionRequiredSkills}>
               <form onSubmit={saveRequiredSkills}>
                 <input
                   type="text"
@@ -197,7 +197,7 @@ export default function JobContent({
               </div>
             </div>
             <h2>Add Job Type</h2>
-            <div id={styles.mockExamSectionAnswer}>
+            <div id={styles.jobContentSectionJobType}>
               <input
                 type="text"
                 value={jobType}

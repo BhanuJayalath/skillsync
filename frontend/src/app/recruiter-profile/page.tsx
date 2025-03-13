@@ -9,6 +9,7 @@ import JobContent from "./JobContent";
 import TestContent from "./TestContent";
 import Dashboard from "./Dashboard";
 import Profile from "./Profile";
+import UserProfile from "../userProfile/page";
 
 import axios from "axios";
 import TestListing from "./TestListing";
