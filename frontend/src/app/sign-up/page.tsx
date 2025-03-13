@@ -26,18 +26,33 @@ export default function SignUpPage() {
     e.preventDefault(); // Prevent default form submission
     try {
       setLoading(true);
-      let endpoint = "";
+      let signUpEndpoint = "";
+      let meEndpoint = "";
       let redirectPath = "";
       if (signupType === "user") {
-        endpoint = "/api/users/sign-up";
+        signUpEndpoint = "/api/users/sign-up";
+        meEndpoint = "/api/users/me";
         redirectPath = "/userProfile";
       } else {
-        endpoint = "/api/recruiters/sign-up";
+        signUpEndpoint = "/api/recruiters/sign-up";
+        meEndpoint = "/api/recruiters/me";
         redirectPath = "/recruiter-profile";
       }
-      const response = await axios.post(endpoint, user);
-      console.log("Signup success", response.data);
-      router.push(redirectPath);
+      // Sign up the user or recruiter
+      await axios.post(signUpEndpoint, user);
+      toast.success("Signup success");
+
+      // Fetch the details from the corresponding "me" endpoint
+      const res = await axios.get(meEndpoint);
+      let userId = "";
+      if (signupType === "user") {
+        userId = res.data.user._id;
+      } else {
+        userId = res.data.recruiter._id;
+      }
+
+      // Redirect to the dynamic profile route using the user's id
+      router.push(`${redirectPath}/${userId}`);
     } catch (error: any) {
       console.log("Signup failed", error.message);
       toast.error(error.message);
@@ -66,8 +81,6 @@ export default function SignUpPage() {
 
   return (
     <div className={styles.signupContainer}>
-      
-
       {/* Left Section */}
       <div className={styles.leftSection}>
         <div className={styles.imagePlaceholder}>
@@ -78,7 +91,6 @@ export default function SignUpPage() {
       </div>
 
       {/* Right Section */}
-      
       <div className={styles.rightSection}>
         <div className={styles.formContainer}>
           <h2 className={styles.title}>Set up your Account.</h2>
@@ -90,25 +102,27 @@ export default function SignUpPage() {
           {/* Tab Selector */}
           <div className={styles.tabSelector}>
             <button
-              className={`${styles.tabButton} ${signupType === "user" ? styles.activeTab : ""}`}
+              className={`${styles.tabButton} ${
+                signupType === "user" ? styles.activeTab : ""
+              }`}
               onClick={() => setSignupType("user")}
             >
               User Signup
             </button>
             <button
-              className={`${styles.tabButton} ${signupType === "recruiter" ? styles.activeTab : ""}`}
+              className={`${styles.tabButton} ${
+                signupType === "recruiter" ? styles.activeTab : ""
+              }`}
               onClick={() => setSignupType("recruiter")}
             >
               Recruiter Signup
             </button>
           </div>
 
-
           {/* Form */}
           <form onSubmit={onSignUp}>
             {/* User Name */}
             <div className={styles.formGroup}>
-              
               <label htmlFor="username">User Name</label>
               <input
                 id="username"
