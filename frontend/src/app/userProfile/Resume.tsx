@@ -4,7 +4,7 @@ import React, {useEffect} from "react";
 interface User {
     fullName: string;
     email: string;
-    number: string;
+    contact: string;
     city: string;
     country: string;
     cvSummary: string;
@@ -96,7 +96,7 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
                 <p className={styles.jobTitle}>{user.jobRole[0].jobName}</p>
                 <div className={styles.contactDetails}>
                     <p>Email: {user.email}</p>
-                    <p>Phone: {user.number}</p>
+                    <p>Phone: {user.contact}</p>
                     <p>Location: {user.city}, {user.country}</p>
                 </div>
             </div>
