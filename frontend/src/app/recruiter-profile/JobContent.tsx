@@ -134,39 +134,64 @@ export default function JobContent({
   return (
     <section className={styles.JobContent}>
       <header id={styles.JobContentHeading}>
-        <button onClick={previousPage}>back</button>
+        <button onClick={previousPage}>
+          <Image
+            alt="back-icon"
+            width={25}
+            height={25}
+            src="/recruiter/back-icon.svg"
+          />
+        </button>
         <h1>Job Post {jobCount}</h1>
         <div id={styles.jobContentSectionSaveandClose}>
           {updateJobPostContent &&
             (databaseExistingId ? (
-              <button onClick={updatetoDatabase}>Update</button>
+              <button onClick={updatetoDatabase}>
+                <Image
+                  alt="update-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/update-icon.svg"
+                />
+              </button>
             ) : (
-              <button onClick={saveToDatabase}>Save</button>
+              <button onClick={saveToDatabase}>
+                <Image
+                  alt="save-icon"
+                  width={35}
+                  height={35}
+                  src="/recruiter/save-icon.svg"
+                />
+              </button>
             ))}
         </div>
       </header>
       {loadJobPostContent ? (
         <div id={styles.jobContentSection}>
           <div id={styles.jobContentSectionBlock}>
-            <h2>Add Job Title</h2>
-            <input
-              id={styles.jobContentSectionTitle}
-              type="text"
-              value={jobTitle}
-              onChange={saveJobTitle}
-              readOnly={readOnly}
-            />
-            <h2>Add Job Description</h2>
-            <div id={styles.jobContentSectionDescription}>
+            <div id={styles.jobContentSectionTitle}>
+              <h2>Add Job Title</h2>
               <input
                 type="text"
-                value={jobDescription}
-                onChange={saveJobDescription}
+                value={jobTitle}
+                onChange={saveJobTitle}
                 readOnly={readOnly}
               />
             </div>
-            <h2>Add Required Skills</h2>
+            <div id={styles.jobContentSectionDescription}>
+              <h2>Add Job Description</h2>
+              <textarea
+                rows={10}
+                cols={50}
+                value={jobDescription}
+                onChange={saveJobDescription}
+                readOnly={readOnly}
+              ></textarea>
+            </div>
             <div id={styles.jobContentSectionRequiredSkills}>
+              <header>
+                <h2>Add Required Skills</h2>
+              </header>
               <form onSubmit={saveRequiredSkills}>
                 <input
                   type="text"
@@ -176,6 +201,12 @@ export default function JobContent({
                 />
                 <button disabled={readOnly} type="submit">
                   Add
+                  <Image
+                    alt="plus-icon"
+                    width={20}
+                    height={20}
+                    src="/recruiter/plus-icon.svg"
+                  />
                 </button>
               </form>
               <div id={styles.jobPostSkill}>
@@ -189,15 +220,20 @@ export default function JobContent({
                           removeSkill(index);
                         }}
                       >
-                        Remove
+                        <Image
+                          alt="remove-icon"
+                          width={20}
+                          height={20}
+                          src="/recruiter/remove-icon.svg"
+                        />
                       </button>
                     </div>
                   );
                 })}
               </div>
             </div>
-            <h2>Add Job Type</h2>
             <div id={styles.jobContentSectionJobType}>
+              <h2>Add Job Type</h2>
               <input
                 type="text"
                 value={jobType}

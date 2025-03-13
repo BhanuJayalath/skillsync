@@ -128,7 +128,14 @@ export default function TestContent({
   return (
     <section className={styles.mockExam}>
       <header id={styles.mockExamHeading}>
-        <button onClick={previousPage}>back</button>
+        <button onClick={previousPage}>
+          <Image
+            alt="back-icon"
+            width={25}
+            height={25}
+            src="/recruiter/back-icon.svg"
+          />
+        </button>
         <h1>Test {testCount}</h1>
         {updateTestContent ? (
           <>

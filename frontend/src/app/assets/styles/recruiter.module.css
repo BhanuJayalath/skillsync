@@ -238,7 +238,7 @@
 #mockExamSection {
   margin-bottom: 10px;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 #emptyMockExamSection {
   display: flex;
@@ -252,8 +252,8 @@
   width: 100%;
   height: 100%;
   padding: 20px;
-  background-color: #d1e5f4;
-  gap: 20px;
+  background-color: #ecfcff;
+  gap: 60px;
 }
 #mockExamSectionBlock header {
   display: flex;
@@ -265,25 +265,78 @@
 #jobContentSectionTitle,
 #mockExamSectionAnswer,
 #jobContentSectionJobType,
-#jobContentSectionRequiredSkills,
-#jobContentSectionDescription {
+#jobContentSectionRequiredSkills {
   display: flex;
-  flex-direction: row;
-  /* justify-content: center; */
-  align-items: center;
+  flex-direction: column;
   width: 100%;
-  height: 50px;
+  height: auto;
+  gap: 20px;
+}
+#jobContentSectionDescription textarea {
+  resize: none;
 }
 #mockExamSectionAnswer input[type="checkbox"] {
   width: 10%;
   height: 50%;
 }
+#jobContentSectionTitle input[type="text"],
 #mockExamSectionAnswer input[type="text"],
-#jobContentSectionRequiredSkills input[type="text"],
-#jobContentSectionJobType input[type="text"],
-#jobContentSectionDescription input[type="text"] {
+#jobContentSectionJobType input[type="text"] {
+  width: 100%;
+  height: 50px;
+  padding: 5px;
+  outline: none;
+  border: 2px solid #d1e5f4;
+}
+#jobContentSectionRequiredSkills input[type="text"] {
+  width: 70%;
+  height: 50px;
+  padding: 5px;
+  outline: none;
+  border: 2px solid #d1e5f4;
+}
+#jobContentSectionDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  height: auto;
+}
+#jobContentSectionDescription textarea {
+  outline: none;
+  border: 2px solid #d1e5f4;
+  padding: 5px;
+}
+#jobContentSectionTitle h2,
+#mockExamSectionAnswer h2,
+#jobContentSectionJobType h2,
+#jobContentSectionDescription h2 {
   width: 100%;
   height: 100%;
+}
+#jobContentSectionRequiredSkills header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-direction: row;
+}
+#jobContentSectionRequiredSkills form button {
+  display: flex;
+  width:110px;
+  height: fit-content;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  gap: 10px;
+  font-size: 12px;
+  border-radius: 50px;
+  background-color: #d1e5f4;
+}
+#jobContentSectionRequiredSkills form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
 }
 #mockExamscontainerButtons {
   display: flex;
@@ -309,14 +362,22 @@
 #jobPostSkill {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  /* justify-content: space-evenly; */
+  gap: 20px;
   width: 100%;
+  height: auto;
+  flex-wrap: wrap;
+  /* background-color: #48afc9; */
 }
 #jobPostSkillLabel {
   display: flex;
-  flex-direction: row;
+  width: fit-content;
+  align-items: center;
+  padding: 10px;
   gap: 10px;
-  width: 100%;
+  font-size: 12px;
+  border-radius: 50px;
+  background-color: #d1e5f4;
 }
 
 #companyProfile {
