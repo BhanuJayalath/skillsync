@@ -57,6 +57,10 @@ export default function JobRecommendations() {
       <div>
         <h1>Job Recommendations</h1>
 
+        {loading && <p>Loading job recommendations...</p>}
+        {error && <p>Error: {error}</p>}
+        {!loading && jobs.length === 0 && <p>No jobs found.</p>}
+
   return (
     <>
       <Navbar />
