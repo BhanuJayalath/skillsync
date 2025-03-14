@@ -8,7 +8,7 @@ import JobListing from "./JobListing";
 import JobContent from "./JobContent";
 import TestContent from "./TestContent";
 import Dashboard from "./Dashboard";
-import Profile from "./Profile";
+import Profile from "./[id]/Profile";
 import UserProfile from "../userProfile/page";
 
 import axios from "axios";

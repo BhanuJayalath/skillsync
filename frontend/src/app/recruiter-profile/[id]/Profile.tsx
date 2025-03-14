@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "../assets/styles/recruiter.module.css";
+import styles from "../../assets/styles/recruiter.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
