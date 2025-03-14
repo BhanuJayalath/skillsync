@@ -148,32 +148,50 @@ export default function TestContent({
               />
             </button>
             {databaseExistingId ? (
-              <button onClick={updatetoDatabase}>Update</button>
+              <button onClick={updatetoDatabase}>
+                <Image
+                  alt="update-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/update-icon.svg"
+                />
+              </button>
             ) : (
-              <button onClick={save}>Save</button>
+              <button onClick={save}>
+                <Image
+                  alt="save-icon"
+                  width={35}
+                  height={35}
+                  src="/recruiter/save-icon.svg"
+                />
+              </button>
             )}
           </>
         ) : null}
       </header>
-      {loadTestQuestions?.testContent?.questionContent.length > 0 ? (
-        loadTestQuestions.testContent.questionContent.map((item: any) => {
-          questionCounter++;
-          return (
-            <QuestionContent
-              key={questionCounter}
-              TestQuestions={item}
-              questionCounter={questionCounter}
-              update={update}
-              removeQuestion={removeQuestion}
-              updateTestContent={updateTestContent}
-            />
-          );
-        })
-      ) : (
-        <div id={styles.emptyMockExamSection}>
-          <h1>Add your Questions Here</h1>
+      <div id={styles.questionContentDisplayArea}>
+        <div id={styles.questionContentArea}>
+          {loadTestQuestions?.testContent?.questionContent.length > 0 ? (
+            loadTestQuestions.testContent.questionContent.map((item: any) => {
+              questionCounter++;
+              return (
+                <QuestionContent
+                  key={questionCounter}
+                  TestQuestions={item}
+                  questionCounter={questionCounter}
+                  update={update}
+                  removeQuestion={removeQuestion}
+                  updateTestContent={updateTestContent}
+                />
+              );
+            })
+          ) : (
+            <div id={styles.emptyMockExamSection}>
+              <h1>Add your Questions Here</h1>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </section>
   );
 }

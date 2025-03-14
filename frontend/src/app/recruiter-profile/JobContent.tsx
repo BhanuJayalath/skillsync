@@ -221,10 +221,10 @@ export default function JobContent({
                         }}
                       >
                         <Image
-                          alt="remove-icon"
+                          alt="delete-icon"
                           width={20}
                           height={20}
-                          src="/recruiter/remove-icon.svg"
+                          src="/recruiter/delete-icon.svg"
                         />
                       </button>
                     </div>

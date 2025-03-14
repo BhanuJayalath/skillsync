@@ -78,7 +78,6 @@ export default function QuestionContent({
     setSelectedAnswer(selection);
   }
   return (
-    <div id={styles.mockExamSection}>
       <div id={styles.mockExamSectionBlock}>
         <header>
           Question {questionCounter}
@@ -177,6 +176,5 @@ export default function QuestionContent({
           />
         </div>
       </div>
-    </div>
   );
 }

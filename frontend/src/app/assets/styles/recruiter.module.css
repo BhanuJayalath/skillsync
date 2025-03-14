@@ -164,17 +164,19 @@
   margin-left: auto;
 }
 #mockExams,
+#testListing,
 #jobListing {
   display: flex;
   padding: 20px;
   gap: 20px;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-evenly;
   width: 100%;
   color: black;
 }
 #mockExamscontainerHeader,
+#testListingHeader,
 #jobListingcontainerHeader {
   display: flex;
   flex-direction: row;
@@ -186,6 +188,7 @@
   height: 100px;
 }
 .mockExamscontainerSection,
+.testListingSection,
 .jobListingcontainerSection {
   width: fit-content;
   gap: 10px;
@@ -196,6 +199,7 @@
 }
 
 #mockExamscontainer,
+#testListingcontainer,
 #jobListingcontainer {
   display: flex;
   align-items: center;
@@ -223,6 +227,7 @@
   height: 100%;
   color: #000f22;
 }
+
 #mockExamHeading,
 #JobContentHeading {
   display: flex;
@@ -253,7 +258,7 @@
   height: 100%;
   padding: 20px;
   background-color: #ecfcff;
-  gap: 60px;
+  gap: 30px;
 }
 #mockExamSectionBlock header {
   display: flex;
@@ -272,15 +277,24 @@
   height: auto;
   gap: 20px;
 }
+#mockExamSectionAnswer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  gap: 20px;
+}
 #jobContentSectionDescription textarea {
   resize: none;
 }
 #mockExamSectionAnswer input[type="checkbox"] {
-  width: 10%;
-  height: 50%;
+  width: 50px;
+  height: 25px;
 }
 #jobContentSectionTitle input[type="text"],
 #mockExamSectionAnswer input[type="text"],
+#mockExamSectionQuestion,
 #jobContentSectionJobType input[type="text"] {
   width: 100%;
   height: 50px;
@@ -322,7 +336,7 @@
 }
 #jobContentSectionRequiredSkills form button {
   display: flex;
-  width:110px;
+  width: 110px;
   height: fit-content;
   align-items: center;
   justify-content: space-evenly;
@@ -338,14 +352,16 @@
   align-items: center;
   gap: 20px;
 }
-#mockExamscontainerButtons {
+#mockExamscontainerButtons,
+#testListingButtons {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   gap: 20px;
 }
-.mockExamscontainerSection button {
+.mockExamscontainerSection button,
+.testListingSection button {
   display: flex;
   justify-content: center;
   width: 50%;
@@ -465,7 +481,6 @@
   outline: none;
 
   padding: 5px;
-  /* background-color: #48afc9; */
 }
 #profileForm div input,
 #profileForm div textarea {
@@ -506,4 +521,17 @@
   font-size: 12px;
   border-radius: 50px;
   background-color: #d1e5f4;
+}
+#questionContentDisplayArea {
+  width: 100%;
+  height: 100%;
+  /* background-color: #48afc9; */
+}
+#questionContentArea {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
 }

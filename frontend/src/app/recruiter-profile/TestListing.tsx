@@ -93,8 +93,8 @@ export default function TestListing({
   }
   let counter = 0;
   return (
-    <div id={styles.mockExams}>
-      <div id={styles.mockExamscontainerHeader}>
+    <div id={styles.testListing}>
+      <div id={styles.testListingHeader}>
         <h1>Tests</h1>
         <button onClick={addTestComponent}>
           <Image
@@ -133,7 +133,7 @@ export default function TestListing({
           />
         </button>
       </div>
-      <div className={styles.mockExamscontainerSection}>
+      <div className={styles.testListingSection}>
         {loadTests?.map((item: any, index: number) => {
           return (
             <button
@@ -145,7 +145,7 @@ export default function TestListing({
                   loadTestContent(item.testId, index + 1);
                 }
               }}
-              id={styles.mockExamscontainer}
+              id={styles.testListingcontainer}
             >
               <Image
                 alt="exam-icon"
@@ -154,7 +154,7 @@ export default function TestListing({
                 src="/recruiter/exam-icon.svg"
               />
               <h1>Test {index + 1}</h1>
-              <div id={styles.mockExamscontainerButtons}>
+              <div id={styles.testListingButtons}>
                 {removeTestBlock ? (
                   <Image
                     alt="remove-icon"
