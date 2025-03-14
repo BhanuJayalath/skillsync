@@ -1,11 +1,17 @@
-import React from 'react';
+"use client";
 
-const Page: React.FC = () => {
+import { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
+export default function JobRecommendations() {
   return (
-    <div>
-      <h1>job recomandations pahe</h1>
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <h1>Job Recommendations</h1>
+      </div>
+      <Footer />
+    </>
   );
-};
-
-export default Page;
+}
