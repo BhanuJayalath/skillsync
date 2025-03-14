@@ -187,6 +187,7 @@ import Settings from "@/app/userProfile/Settings";
                     email: user.email,
                     contact: user.contact,
                     fullName: user.fullName,
+                    cvSummary: user.cvSummary,
                     avatar:user.avatar,
                     gitHub: user.gitHub,
                     linkedIn: user.linkedIn,
