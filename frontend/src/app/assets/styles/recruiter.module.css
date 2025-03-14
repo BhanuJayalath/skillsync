@@ -395,6 +395,19 @@
   border-radius: 50px;
   background-color: #d1e5f4;
 }
+#JobContentHeading h3,
+#mockExamHeading h3 {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  align-items: center;
+  padding: 10px;
+  font-size: 12px;
+  color: white;
+  gap: 10px;
+  border-radius: 10px;
+  background-color: #00233c;
+}
 
 #companyProfile {
   position: relative;
@@ -543,4 +556,8 @@
   background: blue !important;
   opacity: 1;
   cursor: not-allowed;
+}
+#mockExamSectionBlock h2,
+#mockExamSectionBlock header {
+  font-weight: 600;
 }

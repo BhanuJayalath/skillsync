@@ -84,6 +84,7 @@ export default function RecruiterProfile() {
               />
             ) : testState ? (
               <TestContent
+                loadJobPostContent={loadJobPostContent}
                 setLoadTestQuestions={setLoadTestQuestions}
                 jobPostState={jobPostState}
                 setJobPostState={setJobPostState}

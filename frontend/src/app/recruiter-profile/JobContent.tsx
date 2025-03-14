@@ -143,6 +143,8 @@ export default function JobContent({
           />
         </button>
         <h1>Job Post {jobCount}</h1>
+        <h3>{loadJobPostContent.jobTitle}</h3>
+        <h3>{loadJobPostContent.jobId}</h3>
         <div id={styles.jobContentSectionSaveandClose}>
           {updateJobPostContent &&
             (databaseExistingId ? (

@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 import QuestionContent from "./QuestionContent";
 export default function TestContent({
+  loadJobPostContent,
   loadTestQuestions,
   setLoadTestQuestions,
   testCount,
@@ -16,6 +17,7 @@ export default function TestContent({
   jobPostState,
   setJobPostState,
 }: {
+  loadJobPostContent: any;
   setLoadTestQuestions: any;
   loadTestQuestions: any;
   testCount: number;
@@ -137,6 +139,9 @@ export default function TestContent({
           />
         </button>
         <h1>Test {testCount}</h1>
+        <h3>{loadTestQuestions.testId}</h3>
+        <h3>{loadJobPostContent.jobTitle}</h3>
+        <h3>{loadJobPostContent.jobId}</h3>
         {updateTestContent ? (
           <>
             <button onClick={addQuestion}>

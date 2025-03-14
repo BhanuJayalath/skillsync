@@ -191,7 +191,7 @@ export default function QuestionContent({
               }}
               disabled={readOnly}
             />
-            <h2>{answer1}</h2>
+            <h3>{answer1}</h3>
           </div>
           <div id={styles.mockExamSectionAnswer}>
             <input
@@ -203,7 +203,7 @@ export default function QuestionContent({
               }}
               disabled={readOnly}
             />
-            <h2>{answer2}</h2>
+            <h3>{answer2}</h3>
           </div>
           <div id={styles.mockExamSectionAnswer}>
             <input
@@ -215,7 +215,7 @@ export default function QuestionContent({
               }}
               disabled={readOnly}
             />
-            <h2>{answer3}</h2>
+            <h3>{answer3}</h3>
           </div>
           <div id={styles.mockExamSectionAnswer}>
             <input
@@ -227,7 +227,7 @@ export default function QuestionContent({
               }}
               disabled={readOnly}
             />
-            <h2>{answer4}</h2>
+            <h3>{answer4}</h3>
           </div>
         </>
       )}
