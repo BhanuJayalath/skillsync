@@ -13,9 +13,10 @@ export default function JobRecommendations() {
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [notLoggedIn, setNotLoggedIn] = useState(false); 
 
   useEffect(() => {
-    //Fetch User ID (from LocalStorage or Backend)
+    
     async function fetchUserId() {
       try {
         const storedUserId = localStorage.getItem("userId");
@@ -24,28 +25,17 @@ export default function JobRecommendations() {
           setUserId(storedUserId);
           fetchUserProfile(storedUserId);
         } else {
-          // Fetch user ID from the backend
-          const response = await axios.get("http://localhost:3001/api/auth/current-user", {
-            withCredentials: true, // If using cookies/sessions
-          });
-
-          if (response.data && response.data.userId) {
-            setUserId(response.data.userId);
-            localStorage.setItem("userId", response.data.userId); // Store for later use
-            fetchUserProfile(response.data.userId);
-          } else {
-            throw new Error("User not logged in");
-          }
+          setNotLoggedIn(true);
+          setLoading(false);
         }
       } catch (err: any) {
         console.error("Error fetching user ID:", err.message);
         setError("User not logged in");
-        router.push("/login"); // Redirect to login if user is not logged in
         setLoading(false);
       }
     }
 
-    
+    // Fetch User Profile and Skills
     const fetchUserProfile = async (userId: string) => {
       try {
         const userResponse = await axios.get(`http://localhost:3001/api/users/${userId}`);
@@ -64,7 +54,7 @@ export default function JobRecommendations() {
       }
     };
 
-    //  Fetch Job Recommendations
+    // Fetch Job Recommendations
     const fetchJobRecommendations = async (skills: string[]) => {
       try {
         const jobResponse = await axios.post("http://localhost:3001/api/jobs/recommendations", {
@@ -90,23 +80,34 @@ export default function JobRecommendations() {
         <h1>Job Recommendations</h1>
 
         {loading && <p>Loading job recommendations...</p>}
-        {error && <p>Error: {error}</p>}
-        {!loading && jobs.length === 0 && <p>No jobs found.</p>}
 
-        <ul>
-          {jobs.map((job, index) => (
-            <li key={index}>
-              <h2>{job.jobTitle}</h2>
-              <p>{job.jobDescription}</p>
-              <p>
-                <strong>Type:</strong> {job.jobType}
-              </p>
-              <p>
-                <strong>Required Skills:</strong> {job.requiredSkills?.join(", ")}
-              </p>
-            </li>
-          ))}
-        </ul>
+        
+        {notLoggedIn && (
+          <div>
+            <p>You are not logged in. Please log in to see job recommendations.</p>
+            <button onClick={() => router.push("/login")}>Go to Login</button>
+          </div>
+        )}
+
+        {error && <p>Error: {error}</p>}
+        {!loading && jobs.length === 0 && !notLoggedIn && <p>No jobs found.</p>}
+
+        {!notLoggedIn && (
+          <ul>
+            {jobs.map((job, index) => (
+              <li key={index}>
+                <h2>{job.jobTitle}</h2>
+                <p>{job.jobDescription}</p>
+                <p>
+                  <strong>Type:</strong> {job.jobType}
+                </p>
+                <p>
+                  <strong>Required Skills:</strong> {job.requiredSkills?.join(", ")}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <Footer />
     </>
