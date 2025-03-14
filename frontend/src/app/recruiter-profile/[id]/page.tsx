@@ -1,18 +1,18 @@
 "use client";
-import Tab from "./JobTab";
-import ResultTab from "./ResultTab";
+import Tab from "../JobTab";
+import ResultTab from "../ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import styles from "../assets/styles/recruiter.module.css";
-import JobListing from "./JobListing";
-import JobContent from "./JobContent";
-import TestContent from "./TestContent";
-import Dashboard from "./Dashboard";
-import Profile from "./[id]/Profile";
-import UserProfile from "../userProfile/page";
+import styles from "../../assets/styles/recruiter.module.css";
+import JobListing from "../JobListing";
+import JobContent from "../JobContent";
+import TestContent from "../TestContent";
+import Dashboard from "../Dashboard";
+import Profile from "../Profile";
+import UserProfile from "../../userProfile/page";
 
 import axios from "axios";
-import TestListing from "./TestListing";
+import TestListing from "../TestListing";
 
 export default function RecruiterProfile() {
   const [loadTests, setLoadTests] = useState<
