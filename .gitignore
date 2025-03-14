@@ -3,3 +3,6 @@
 #idea
 .idea
 *.iml
+# ESLint and Prettier cache files
+/.eslintcache
+/.prettiercache
