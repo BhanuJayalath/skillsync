@@ -15,7 +15,6 @@ export default function Profile() {
     "FullStack Development / Mobile development"
   );
   const companyInfo = {
-    _id: recruiterId,
     email: email,
     company: companyName,
   };
