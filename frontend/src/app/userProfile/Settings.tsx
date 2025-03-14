@@ -17,7 +17,7 @@ interface User {
     gender: string;
     country: string;
     cvSummary: string;
-    jobRole: jobRole[];
+    selectedJob: selectedJob;
     skills: string[];
     education: Education[];
     experience: Experience[];
@@ -29,8 +29,9 @@ interface Education {
     endDate: string;
     description: string;
 }
-interface jobRole {
-    jobName: string;
+interface selectedJob {
+    jobTitle: string;
+    jobId:string;
 }
 interface Experience {
     jobName: string;
