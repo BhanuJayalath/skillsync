@@ -49,9 +49,10 @@ import Settings from "@/app/userProfile/Settings";
             {testId: '250107', testLevel: 'Generated', mark: '86', xAxis: '100'},
             {testId: '250108', testLevel: 'Interview', mark: '46', xAxis: '180'}
         ],
-        jobRole: [{
-            jobName: 'Job Role '
-        }],
+        selectedJob: {
+            jobTitle: 'Job Role ',
+            jobId:'',
+        },
         experience: [
             {
                 jobName: 'Full-stack developer1',
