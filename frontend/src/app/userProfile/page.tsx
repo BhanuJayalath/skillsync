@@ -1,7 +1,9 @@
 "use client"; // Indicating as a client-side component
+
 import Image from 'next/image';     // Importing images
 import Footer from "@/app/components/Footer";   // Importing Footer component
-import React, {useEffect, useState} from 'react';   // Importing useState hook from React for state management
+import { useSearchParams } from 'next/navigation';
+import React, {Suspense, useEffect, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from './user.module.css';   // Importing custom styles
 import '../globals.css';
@@ -12,15 +14,14 @@ import Resume from "@/app/userProfile/Resume";
 import Settings from "@/app/userProfile/Settings";
 
 
-export default function UserProfile() {
-    // const location = useRouter();
-    // const userId = location.query;
+ function UserProfile() {
+    const searchParams = useSearchParams();
+    const userId = searchParams.get("userId");
     //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
     // Initializing profile state with default user details
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [user, setUser] = useState({
-        id: "000",    // Unique user ID
         email: "Name@gmail.com",   // User's email address
         number: '(+94)12 345 6789', // number
         userName: "UserName",  // User's display name
@@ -69,6 +70,7 @@ export default function UserProfile() {
         ],
         skills: ['typeScript', 'javaScript', 'HTML']
     });
+
     // Education Handlers
     const addEducation = (
         e: React.MouseEvent<HTMLButtonElement>) => {
@@ -114,21 +116,51 @@ export default function UserProfile() {
             [field]: e.target.value
         }));
     };
-    const handleSummary = (
-        value: string
+    const updateNestedChanges = (
+        index: number,
+        section: "experience" | "education"
     ) => {
-        setUser((prev) => ({
-            ...prev,
-            cvSummary: value
-        }));
+        setUser((prev) => {
+            // Clone the section array
+            const updatedSection = [...prev[section]];
+
+            // For the specific index, update the item to keep only jobName or courseName
+            if (section === "experience") {
+                updatedSection[index] = {
+                    jobName: '',
+                    companyName: '', // Set to empty or default value
+                    startDate: '', // Set to empty or default value
+                    endDate: '', // Set to empty or default value
+                    description: '' // Set to empty or default value
+                };
+            } else if (section === "education") {
+                updatedSection[index] = {
+                    courseName: '',
+                    schoolName: '', // Set to empty or default value
+                    startDate: '', // Set to empty or default value
+                    endDate: '', // Set to empty or default value
+                    description: '' // Set to empty or default value
+                };
+            }
+
+            // Return the new state with the updated section
+            return {
+                ...prev,
+                [section]: updatedSection, // Update the specific section
+            };
+        });
     };
-    const handleAvatar = async (
-        value: string
+    const handleFields = (
+        value: string,
+        field:string
     ) => {
-        setUser((prev) => ({
-            ...prev,
-            avatar: value
-        }));
+        setUser((prev) => {
+            console.log("Updating:", field, "with", value);
+            return {
+                ...prev,
+                [field]: value
+            };
+        });
     };
     // Update nested fields (experience, education)
     const handleNestedChange = (
@@ -144,18 +176,10 @@ export default function UserProfile() {
             ),
         }));
     };
-
-    // Change handler for skills array
-    // const handleSkillsChange = (index: number, value: string) => {
-    //     setUser((prev) => {
-    //         const updatedSkills = [...prev.skills];
-    //         updatedSkills[index] = value;
-    //         return { ...prev, skills: updatedSkills };
-    //     });
-    // };
     const handleSubmit = async () => {
+        const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
         try {
-            const response = await fetch(`http://localhost:3001/updateUser/${user.id}`, {
+            const response = await fetch(`${updateUserUrl}/${userId}`, {
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
@@ -188,7 +212,6 @@ export default function UserProfile() {
     useEffect(() => {
         const fetchUserDetails = async () => {
             const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
-            const userId = "006";
             const response = await fetch(`${getUserUrl}/${userId}`, {
                 method: 'GET',
                 headers: {
@@ -208,94 +231,94 @@ export default function UserProfile() {
             }
         };
         fetchUserDetails().then(e => console.log(e));
-    }, []);
-    useEffect(() => {
-        //checking the availability of the window
-        if (typeof window !== 'undefined') {
-            for (let i = 0; i < 5; i++) {
-                const section = document.querySelector<HTMLDivElement>(`#tab-${i}`);
-                if (section) {
-                    section.style.display = i === activeTab ? 'block' : 'none';
-                }
-            }
-            const educationElement = document.getElementById('educationSection');
-            const skillElement = document.getElementById('skillSection');
-            const experienceElement = document.getElementById('experienceSection');
-            if (user.education.length == 0 && educationElement) {
-                educationElement.style.display = 'none';
-            }
-            if (user.experience.length == 0 && experienceElement) {
-                experienceElement.style.display = 'none';
-            }
-            if (user.skills.length == 0 && skillElement) {
-                skillElement.style.display = 'none';
-            }
-        }
-    }, [activeTab, user.education, user.experience, user.skills]);
+    }, [activeTab, userId]);
     return (
-        <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
-            <div className={styles.innerContainer}>
-                {/* Sidebar */}
-                <aside className={styles.sidebar}>
-                    <div className={styles.logoContainer}>
-                        <Image src={"/logo.png"} alt="Logo" width={150} height={0} className={styles.logo}/>
-                    </div>
-                    <nav className={styles.nav}>
-                        <ul>
-                            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                            <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
-                                                   width={40} height={0} className={styles.navImage}/> Home</a></li>
-                            <li
-                                onClick={() => setActiveTab(0)}
-                                className={activeTab === 0 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
-                                                width={40} height={0} className={styles.navImage}/> Overview</a></li>
-                            <li
-                                onClick={() => setActiveTab(1)}
-                                className={activeTab === 1 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
-                                                width={40} height={0} className={styles.navImage}/> Progress</a></li>
-                            <li
-                                onClick={() => setActiveTab(2)}
-                                className={activeTab === 2 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
-                                                width={50} height={0} className={styles.navImage}/> Courses</a></li>
-                            <li
-                                onClick={() => setActiveTab(3)}
-                                className={activeTab === 3 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
-                                                width={30} height={0} className={styles.navImage}/> Resume</a></li>
-                            <li
-                                onClick={() => setActiveTab(4)}
-                                className={activeTab === 4 ? styles.activeLink : ''}
-                            ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
-                                                width={30} height={0} className={styles.navImage}/> Settings</a></li>
-                        </ul>
-                    </nav>
-
-                </aside>
-                {/* Main Content */}
-                <main className={styles.mainContent}>
-                    <header className={styles.header}>
-                        <div className={styles.searchContainer}>
-                            <input type="text" placeholder="Search"/>
-                            <button>🔍</button>
+        <><Suspense fallback={<div>Loading...</div>}>
+            <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
+                <div className={styles.innerContainer}>
+                    {/* Sidebar */}
+                    <aside className={styles.sidebar}>
+                        <div className={styles.logoContainer}>
+                            <Image src={"/logo.png"} alt="Logo" width={150} height={0} className={styles.logo}/>
                         </div>
-                    </header>
-                    <div className={styles.contentWrapper}>
-                        <section className={styles.tabsSection}>
-                            {activeTab === 0 && <Overview user={user} />}
-                            {activeTab === 1 && <Progress user={user} />}
-                            {activeTab === 2 && <Courses user={user} />}
-                            {activeTab === 3 && <Resume user={user}  removeEducation={removeEducation} removeExperience={removeExperience}/>}
-                            {activeTab === 4 && <Settings user={user} handleSubmit={handleSubmit} handleChange={handleChange} handleNestedChange={handleNestedChange} addEducation={addEducation} addExperience={addExperience} handleSummary={handleSummary} handleAvatar={handleAvatar}/>}
-                        </section>
-                    </div>
-                </main>
+                        <nav className={styles.nav}>
+                            <ul>
+                                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+                                <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
+                                                       width={40} height={0} className={styles.navImage}/> Home</a></li>
+                                <li
+                                    onClick={() => setActiveTab(0)}
+                                    className={activeTab === 0 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
+                                                    width={40} height={0} className={styles.navImage}/> Overview</a>
+                                </li>
+                                <li
+                                    onClick={() => setActiveTab(1)}
+                                    className={activeTab === 1 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
+                                                    width={40} height={0} className={styles.navImage}/> Progress</a>
+                                </li>
+                                <li
+                                    onClick={() => setActiveTab(2)}
+                                    className={activeTab === 2 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
+                                                    width={50} height={0} className={styles.navImage}/> Courses</a></li>
+                                <li
+                                    onClick={() => setActiveTab(3)}
+                                    className={activeTab === 3 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
+                                                    width={30} height={0} className={styles.navImage}/> Resume</a></li>
+                                <li
+                                    onClick={() => setActiveTab(4)}
+                                    className={activeTab === 4 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
+                                                    width={30} height={0} className={styles.navImage}/> Settings</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </aside>
+                    {/* Main Content */}
+                    <main className={styles.mainContent}>
+                        <header className={styles.header}>
+                            <div className={styles.searchContainer}>
+                                <input type="text" placeholder="Search"/>
+                                <button>🔍</button>
+                            </div>
+                        </header>
+                        <div className={styles.contentWrapper}>
+                            <section className={styles.tabsSection}>
+                                {activeTab === 0 && <Overview user={user}/>}
+                                {activeTab === 1 && <Progress user={user}/>}
+                                {activeTab === 2 && <Courses user={user}/>}
+                                {activeTab === 3 && <Resume
+                                    user={user} removeEducation={removeEducation}
+                                    removeExperience={removeExperience}
+                                    updateNestedChanges={updateNestedChanges}/>}
+                                {activeTab === 4 && <Settings
+                                    user={user}
+                                    handleSubmit={handleSubmit}
+                                    handleChange={handleChange}
+                                    handleNestedChange={handleNestedChange}
+                                    addEducation={addEducation}
+                                    addExperience={addExperience}
+                                    handleFields={handleFields}/>}
+                            </section>
+                        </div>
+                    </main>
+                </div>
+                {/*Footer component*/}
+                <Footer/>
             </div>
-            {/*Footer component*/
-            }
-            <Footer/>
-        </div>
+        </Suspense>
+        </>
     );
-};
+}
+
+export default function UserProfilePage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <UserProfile />
+        </Suspense>
+    );
+}

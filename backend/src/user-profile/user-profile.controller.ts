@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
 import { UserProfileService } from './user-profile.service';
 import { User } from './user-profile.schema';
 
@@ -26,5 +26,25 @@ export class UserProfileController {
     }
 
     return updatedUser;
+  }
+
+  @Patch('saveTestMark/:userId')
+  async saveTestMark(
+    @Param('userId') userId: string,
+    @Body() saveTestMarkDto: { jobId: string; testId: string; score: number },
+  ) {
+    const { jobId, testId, score } = saveTestMarkDto;
+    return this.userProfileService.saveTestMark(userId, jobId, testId, score);
+  }
+  @Get('allUsers')
+  async getAllUsers(): Promise<User[]> {
+    return this.userProfileService.getAllUsers();
+  }
+
+  @Delete('deleteUser/:userId')
+  async deleteUser(
+    @Param('userId') userId: string,
+  ): Promise<{ message: string }> {
+    return this.userProfileService.deleteUser(userId);
   }
 }

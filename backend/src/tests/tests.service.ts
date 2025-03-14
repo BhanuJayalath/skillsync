@@ -15,13 +15,13 @@ export class TestsService {
     return await this.TestModel.find({ jobId: id });
   }
 
-  // async findAll() {
-  //   return this.TestModel.find().exec();
-  // }
-  async findOne(id: string) {
-    return await this.TestModel.findOne({ testId: id });
+  async findAll() {
+    return this.TestModel.find().exec();
   }
-
+  async findOne(testId: string) {
+    return this.TestModel.findOne({ testId }).exec(); // Query by testId
+  }
+  
   async update(testId: string, data: Partial<Tests>) {
     return this.TestModel.findOneAndUpdate({ testId: testId }, data, {
       new: true,
