@@ -263,12 +263,6 @@ export default function JobContent({
                   return (
                     <div id={styles.jobPostSkillLabel} key={index}>
                       <label>{item}</label>
-                      <Image
-                        alt="delete-icon"
-                        width={20}
-                        height={20}
-                        src="/recruiter/delete-icon.svg"
-                      />
                     </div>
                   );
                 })}
