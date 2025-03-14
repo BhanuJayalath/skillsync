@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function JobRecommendations() {
+  // State management
   const [userId] = useState("67d2fc8e78ff23ae75d6755e"); // Hardcoded User ID for now
   const [skills, setSkills] = useState<string[]>([]);
   const [jobs, setJobs] = useState<any[]>([]);
@@ -61,11 +62,20 @@ export default function JobRecommendations() {
         {error && <p>Error: {error}</p>}
         {!loading && jobs.length === 0 && <p>No jobs found.</p>}
 
-  return (
-    <>
-      <Navbar />
-      <div>
-        <h1>Job Recommendations</h1>
+        <ul>
+          {jobs.map((job, index) => (
+            <li key={index}>
+              <h2>{job.jobTitle}</h2>
+              <p>{job.jobDescription}</p>
+              <p>
+                <strong>Type:</strong> {job.jobType}
+              </p>
+              <p>
+                <strong>Required Skills:</strong> {job.requiredSkills?.join(", ")}
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
       <Footer />
     </>
