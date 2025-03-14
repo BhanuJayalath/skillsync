@@ -2,7 +2,7 @@
 
 import Image from 'next/image';     // Importing images
 import Footer from "@/app/components/Footer";   // Importing Footer component
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter  } from 'next/navigation';
 import React, {Suspense, useEffect, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from './user.module.css';   // Importing custom styles
@@ -16,14 +16,16 @@ import Settings from "@/app/userProfile/Settings";
 
  function UserProfile() {
     const searchParams = useSearchParams();
-    const userId = searchParams.get("userId");
+     const userId = searchParams.get("userId");
+     const router = useRouter();
+    // const userId = "67d185705f4875a6efc7ff0e";
     //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
     // Initializing profile state with default user details
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [user, setUser] = useState({
         email: "Name@gmail.com",   // User's email address
-        number: '(+94)12 345 6789', // number
+        contact: '(+94)12 345 6789', // number
         userName: "UserName",  // User's display name
         gitHub: "github",
         linkedIn: "linkedin",
@@ -47,9 +49,10 @@ import Settings from "@/app/userProfile/Settings";
             {testId: '250107', testLevel: 'Generated', mark: '86', xAxis: '100'},
             {testId: '250108', testLevel: 'Interview', mark: '46', xAxis: '180'}
         ],
-        jobRole: [{
-            jobName: 'Job Role '
-        }],
+        selectedJob: {
+            jobTitle: 'Job Role ',
+            jobId:'',
+        },
         experience: [
             {
                 jobName: 'Full-stack developer1',
@@ -184,8 +187,7 @@ import Settings from "@/app/userProfile/Settings";
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     email: user.email,
-                    number: user.number,
-                    userName: user.userName,
+                    contact: user.contact,
                     fullName: user.fullName,
                     avatar:user.avatar,
                     gitHub: user.gitHub,
@@ -210,27 +212,31 @@ import Settings from "@/app/userProfile/Settings";
         }
     }
     useEffect(() => {
-        const fetchUserDetails = async () => {
-            const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
-            const response = await fetch(`${getUserUrl}/${userId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+        if(userId){
+            const fetchUserDetails = async () => {
+                const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
+                const response = await fetch(`${getUserUrl}/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.error) {
-                    console.log(data.error);  // If the backend returns an error, displaying it in the console
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.error) {
+                        console.log(data.error);  // If the backend returns an error, displaying it in the console
+                    } else {
+                        setUser(data);  // Otherwise, display the user details
+                    }
                 } else {
-                    setUser(data);  // Otherwise, display the user details
+                    console.log('Failed to fetch user details');
                 }
-            } else {
-                console.log('Failed to fetch user details');
-            }
-        };
-        fetchUserDetails().then(e => console.log(e));
+            };
+            fetchUserDetails().then(e => console.log(e));
+        }else{
+            router.push('http://localhost:3000/login');
+        }
     }, [activeTab, userId]);
     return (
         <><Suspense fallback={<div>Loading...</div>}>
@@ -239,40 +245,40 @@ import Settings from "@/app/userProfile/Settings";
                     {/* Sidebar */}
                     <aside className={styles.sidebar}>
                         <div className={styles.logoContainer}>
-                            <Image src={"/logo.png"} alt="Logo" width={150} height={0} className={styles.logo}/>
+                            <Image src={"/logo.png"} alt="Logo" width={150} height={150} className={styles.logo} priority/>
                         </div>
                         <nav className={styles.nav}>
                             <ul>
                                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                                 <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
-                                                       width={40} height={0} className={styles.navImage}/> Home</a></li>
+                                                       width={40} height={40} className={styles.navImage}/> Home</a></li>
                                 <li
                                     onClick={() => setActiveTab(0)}
                                     className={activeTab === 0 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
-                                                    width={40} height={0} className={styles.navImage}/> Overview</a>
+                                                    width={40} height={40} className={styles.navImage}/> Overview</a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(1)}
                                     className={activeTab === 1 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
-                                                    width={40} height={0} className={styles.navImage}/> Progress</a>
+                                                    width={40} height={40} className={styles.navImage}/> Progress</a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(2)}
                                     className={activeTab === 2 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
-                                                    width={50} height={0} className={styles.navImage}/> Courses</a></li>
+                                                    width={50} height={40} className={styles.navImage}/> Courses</a></li>
                                 <li
                                     onClick={() => setActiveTab(3)}
                                     className={activeTab === 3 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
-                                                    width={30} height={0} className={styles.navImage}/> Resume</a></li>
+                                                    width={30} height={40} className={styles.navImage}/> Resume</a></li>
                                 <li
                                     onClick={() => setActiveTab(4)}
                                     className={activeTab === 4 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
-                                                    width={30} height={0} className={styles.navImage}/> Settings</a>
+                                                    width={30} height={40} className={styles.navImage}/> Settings</a>
                                 </li>
                             </ul>
                         </nav>

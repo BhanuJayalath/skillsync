@@ -6,14 +6,15 @@ interface User {
     userName: string;
     avatar: string;
     email: string;
-    jobRole: JobRole[];
-    number: string;
+    selectedJob: selectedJob;
+    contact: string;
     linkedIn: string;
     gitHub: string;
 }
 
-interface JobRole{
-    jobName:string;
+interface selectedJob{
+    jobTitle:string;
+    jobId:string;
 }
 
 const Overview = ({ user }: { user: User }) => {
@@ -24,10 +25,10 @@ const Overview = ({ user }: { user: User }) => {
                 <div className={styles.profilePic}>
                     {user.avatar ? (
                         <span><Image src={user.avatar} alt="userIcon"
-                                     width={100} height={0} className={styles.userAvatar}/></span>
+                                     width={100} height={100} className={styles.userAvatar}/></span>
                     ) : (
                         <span><Image src={"/user/userIcon.svg"} alt="userIcon"
-                                     width={100} height={0} className={styles.userAvatar}/></span>
+                                     width={100} height={100} className={styles.userAvatar}/></span>
                     )}
                 </div>
                 <div>
@@ -36,8 +37,8 @@ const Overview = ({ user }: { user: User }) => {
                 </div>
             </div>
             <div>
-                <p>Job Role: {user.jobRole[0].jobName}</p>
-                <p>Contact: {user.number}</p>
+                <p>Job Role: {user.selectedJob?.jobTitle}</p>
+                <p>Contact: {user.contact}</p>
                 <p>LinkedIn: {user.linkedIn}</p>
                 <p>Github: {user.gitHub}</p>
             </div>

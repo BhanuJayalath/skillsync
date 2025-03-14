@@ -4,11 +4,11 @@ import React, {useEffect} from "react";
 interface User {
     fullName: string;
     email: string;
-    number: string;
+    contact: string;
     city: string;
     country: string;
     cvSummary: string;
-    jobRole: jobRole[];
+    selectedJob: selectedJob;
     skills: string[];
     education: Education[];
     experience: Experience[];
@@ -22,8 +22,9 @@ interface Education {
     description: string;
 }
 
-interface jobRole {
-    jobName: string;
+interface selectedJob {
+    jobTitle: string;
+    jobId:string;
 }
 
 interface Experience {
@@ -93,10 +94,10 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
         <section className={styles.cvSection}>
             <div className={styles.contactInfo}>
                 <h1 className={styles.name}>{user.fullName}</h1>
-                <p className={styles.jobTitle}>{user.jobRole[0].jobName}</p>
+                <p className={styles.jobTitle}>{user.selectedJob.jobTitle}</p>
                 <div className={styles.contactDetails}>
                     <p>Email: {user.email}</p>
-                    <p>Phone: {user.number}</p>
+                    <p>Phone: {user.contact}</p>
                     <p>Location: {user.city}, {user.country}</p>
                 </div>
             </div>
