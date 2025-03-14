@@ -44,16 +44,13 @@ const userSchema = new mongoose.Schema({
   verifyTokenExpiry: Date,
 
   number: { type: String },
-  displayName: { type: String },
   fullName: { type: String },
   avatar: { type: String },
   gitHub: { type: String },
   linkedIn: { type: String },
   gender: { type: String },
-  language: { type: String },
   city: { type: String },
   country: { type: String },
-  timeZone: { type: String },
   
   tests: [testSchema],
   jobRole: [jobRoleSchema],
