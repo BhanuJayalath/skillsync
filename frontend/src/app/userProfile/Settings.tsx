@@ -51,7 +51,7 @@ interface SettingsProps {
 }
 
 const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience, handleFields }: SettingsProps) => {
-    const [countries, setCountries] = useState<{ name: string }[]>([]);
+    const [countries, setCountries] = useState<{ name: string; code: string }[]>([]);
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
     const [summary, setSummary] = useState("");
@@ -60,27 +60,31 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
 
     // Fetch countries and languages
     useEffect(() => {
-        const countriesUrl = process.env.NEXT_PUBLIC_COUNTRIES_URL;
-        fetch(`${countriesUrl}`)
-            .then(response => response.json())
-            .then(data => {
-                const countryList = data.map((country: any) => ({
-                    name: country.name.common,
-                }));
+        const fetchCountries = async ()=>{
+            const countriesUrl = process.env.NEXT_PUBLIC_COUNTRIES_URL;
+            fetch(`${countriesUrl}`)
+                .then(response => response.json())
+                .then(data => {
+                    const countryList = data.map((country: any) => ({
+                        name: country.name.common,
+                        code: country.idd?.root + (country.idd?.suffixes ? country.idd.suffixes[0] : '')
+                    }));
 
-                const languageSet = new Set<string>();
-                data.forEach((country: any) => {
-                    if (country.languages) {
-                        Object.values(country.languages).forEach((lang: any) =>
-                            languageSet.add(lang)
-                        );
-                    }
-                });
-
-                setCountries(countryList);
-                setLanguages(Array.from(languageSet));
-            })
-            .catch(error => console.error('Error fetching countries:', error));
+                    const languageSet = new Set<string>();
+                    data.forEach((country: any) => {
+                        if (country.languages) {
+                            Object.values(country.languages).forEach((lang: any) =>
+                                languageSet.add(lang)
+                            );
+                        }
+                    });
+                    console.log(countryList);
+                    setCountries(countryList);
+                    setLanguages(Array.from(languageSet));
+                })
+                .catch(error => console.error('Error fetching countries:', error));
+        }
+        fetchCountries();
     }, []);
 
     const handleGenerate = async (e:React.FormEvent) =>{
@@ -241,8 +245,8 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <select id="country" onChange={(e) => handleChange(e, "country")}>
                         <option value="">Select Country</option>
                         {countries.map((country, index) => (
-                            <option key={index} value={country.name}>
-                                {country.name}
+                            <option key={index} value={`${country.name} (${country.code})`}>
+                                {country.name} ({country.code})
                             </option>
                         ))}
                     </select>
