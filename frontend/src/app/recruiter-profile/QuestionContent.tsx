@@ -78,103 +78,159 @@ export default function QuestionContent({
     setSelectedAnswer(selection);
   }
   return (
-      <div id={styles.mockExamSectionBlock}>
-        <header>
-          Question {questionCounter}
-          <div id={styles.mockExamSectionSaveandClose}>
-            {updateTestContent ? (
-              <button
-                onClick={() => {
-                  remove(TestQuestions.questionId);
-                }}
-              >
-                <Image
-                  alt="remove-icon"
-                  width={25}
-                  height={25}
-                  src="/recruiter/remove-icon.svg"
-                />
-              </button>
-            ) : null}
+    <div id={styles.mockExamSectionBlock}>
+      <header>
+        Question {questionCounter}
+        <div id={styles.mockExamSectionSaveandClose}>
+          {updateTestContent ? (
+            <button
+              onClick={() => {
+                remove(TestQuestions.questionId);
+              }}
+            >
+              <Image
+                alt="remove-icon"
+                width={25}
+                height={25}
+                src="/recruiter/remove-icon.svg"
+              />
+            </button>
+          ) : null}
+        </div>
+      </header>
+      {updateTestContent ? (
+        <>
+          <h2>Add your question here</h2>
+          <input
+            id={styles.mockExamSectionQuestion}
+            type="text"
+            value={question}
+            onChange={saveQuestion}
+            readOnly={readOnly}
+          />
+          <h2>Add your answers here</h2>
+          <div id={styles.mockExamSectionAnswer}>
+            <input
+              type="checkbox"
+              value={1}
+              checked={selectedAnswer === 1}
+              onChange={() => {
+                handleCheckBoxChange(1);
+              }}
+              disabled={readOnly}
+            />
+            <input
+              type="text"
+              value={answer1}
+              onChange={saveAnswer1}
+              readOnly={readOnly}
+            />
           </div>
-        </header>
-        <h2>Add your question here</h2>
-        <input
-          id={styles.mockExamSectionQuestion}
-          type="text"
-          value={question}
-          onChange={saveQuestion}
-          readOnly={readOnly}
-        />
-        <h2>Add your answers here</h2>
-        <div id={styles.mockExamSectionAnswer}>
-          <input
-            type="checkbox"
-            value={1}
-            checked={selectedAnswer === 1}
-            onChange={() => {
-              handleCheckBoxChange(1);
-            }}
-            disabled={readOnly}
-          />
-          <input
-            type="text"
-            value={answer1}
-            onChange={saveAnswer1}
-            readOnly={readOnly}
-          />
-        </div>
-        <div id={styles.mockExamSectionAnswer}>
-          <input
-            type="checkbox"
-            value={2}
-            checked={selectedAnswer === 2}
-            onChange={() => {
-              handleCheckBoxChange(2);
-            }}
-            disabled={readOnly}
-          />
-          <input
-            type="text"
-            value={answer2}
-            onChange={saveAnswer2}
-            readOnly={readOnly}
-          />
-        </div>
-        <div id={styles.mockExamSectionAnswer}>
-          <input
-            type="checkbox"
-            value={3}
-            checked={selectedAnswer === 3}
-            onChange={() => {
-              handleCheckBoxChange(3);
-            }}
-            disabled={readOnly}
-          />
-          <input
-            type="text"
-            value={answer3}
-            onChange={saveAnswer3}
-            readOnly={readOnly}
-          />
-        </div>
-        <div id={styles.mockExamSectionAnswer}>
-          <input
-            type="checkbox"
-            value={4}
-            checked={selectedAnswer === 4}
-            onChange={() => {
-              handleCheckBoxChange(4);
-            }}
-            disabled={readOnly}
-          />
-          <input
-            type="text"
-            value={answer4}
-            onChange={saveAnswer4}
-            readOnly={readOnly}
-          />
-        </div>
-      </div>
+          <div id={styles.mockExamSectionAnswer}>
+            <input
+              type="checkbox"
+              value={2}
+              checked={selectedAnswer === 2}
+              onChange={() => {
+                handleCheckBoxChange(2);
+              }}
+              disabled={readOnly}
+            />
+            <input
+              type="text"
+              value={answer2}
+              onChange={saveAnswer2}
+              readOnly={readOnly}
+            />
+          </div>
+          <div id={styles.mockExamSectionAnswer}>
+            <input
+              type="checkbox"
+              value={3}
+              checked={selectedAnswer === 3}
+              onChange={() => {
+                handleCheckBoxChange(3);
+              }}
+              disabled={readOnly}
+            />
+            <input
+              type="text"
+              value={answer3}
+              onChange={saveAnswer3}
+              readOnly={readOnly}
+            />
+          </div>
+          <div id={styles.mockExamSectionAnswer}>
+            <input
+              type="checkbox"
+              value={4}
+              checked={selectedAnswer === 4}
+              onChange={() => {
+                handleCheckBoxChange(4);
+              }}
+              disabled={readOnly}
+            />
+            <input
+              type="text"
+              value={answer4}
+              onChange={saveAnswer4}
+              readOnly={readOnly}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <h2>{question}</h2>
+          <div id={styles.mockExamSectionAnswer}>
+            <input
+              type="checkbox"
+              value={1}
+              checked={selectedAnswer === 1}
+              onChange={() => {
+                handleCheckBoxChange(1);
+              }}
+              disabled={readOnly}
+            />
+            <h2>{answer1}</h2>
+          </div>
+          <div id={styles.mockExamSectionAnswer}>
+            <input
+              type="checkbox"
+              value={2}
+              checked={selectedAnswer === 2}
+              onChange={() => {
+                handleCheckBoxChange(2);
+              }}
+              disabled={readOnly}
+            />
+            <h2>{answer2}</h2>
+          </div>
+          <div id={styles.mockExamSectionAnswer}>
+            <input
+              type="checkbox"
+              value={3}
+              checked={selectedAnswer === 3}
+              onChange={() => {
+                handleCheckBoxChange(3);
+              }}
+              disabled={readOnly}
+            />
+            <h2>{answer3}</h2>
+          </div>
+          <div id={styles.mockExamSectionAnswer}>
+            <input
+              type="checkbox"
+              value={4}
+              checked={selectedAnswer === 4}
+              onChange={() => {
+                handleCheckBoxChange(4);
+              }}
+              disabled={readOnly}
+            />
+            <h2>{answer4}</h2>
+          </div>
+        </>
+      )}
+    </div>
   );
 }

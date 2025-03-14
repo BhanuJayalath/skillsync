@@ -166,7 +166,7 @@ export default function JobContent({
             ))}
         </div>
       </header>
-      {loadJobPostContent ? (
+      {loadJobPostContent && updateJobPostContent ? (
         <div id={styles.jobContentSection}>
           <div id={styles.jobContentSectionBlock}>
             <div id={styles.jobContentSectionTitle}>
@@ -240,6 +240,40 @@ export default function JobContent({
                 onChange={saveJobType}
                 readOnly={readOnly}
               />
+            </div>
+          </div>
+        </div>
+      ) : loadJobPostContent && !updateJobPostContent ? (
+        <div id={styles.jobContentSection}>
+          <div id={styles.jobContentSectionBlock}>
+            <div id={styles.jobContentSectionTitle}>
+              <h1>{jobTitle}</h1>
+            </div>
+            <div id={styles.jobContentSectionDescription}>
+              <h3>{jobDescription}</h3>
+            </div>
+            <div id={styles.jobContentSectionRequiredSkills}>
+              <header>
+                <h1>Required Skills</h1>
+              </header>
+              <div id={styles.jobPostSkill}>
+                {requiredSkills.map((item: any, index: number) => {
+                  return (
+                    <div id={styles.jobPostSkillLabel} key={index}>
+                      <label>{item}</label>
+                      <Image
+                        alt="delete-icon"
+                        width={20}
+                        height={20}
+                        src="/recruiter/delete-icon.svg"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div id={styles.jobContentSectionJobType}>
+              <h1>Type - {jobType}</h1>
             </div>
           </div>
         </div>
