@@ -1054,24 +1054,6 @@ export default function QuizApp() {
     getUserDetails();
   }, []);
 
-  // Function to update user details.
-  const updateUserDetails = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      // Call the update API endpoint (PATCH request)
-      const res = await axios.patch('/api/users/update', updatedDetails);
-      toast.success("Profile updated successfully");
-      // Update local state with new details and exit edit mode
-      setUserDetails(res.data.user);
-      setEditing(false);
-    } catch (error: any) {
-      console.log(error.message);
-      toast.error(error.response?.data?.error || error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -1176,6 +1158,13 @@ export default function QuizApp() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-3xl">
+          <h1 className="text-4xl font-bold text-center mb-6" style={{ color: primaryColor }}>
+            Hello there {userDetails.username}!
+          </h1>
+          <h2 className="text-2xl font-semibold text-center mb-6">
+            Welcome to the Basic Skills Test. <br/>
+            Select the skills you want to be tested on.
+          </h2>
           <h1 className="text-4xl font-bold text-center mb-6" style={{ color: primaryColor }}>
             Select Your Skills
           </h1>
