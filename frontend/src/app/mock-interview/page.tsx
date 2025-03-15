@@ -113,28 +113,28 @@ export default function Chat() {
     try {
       const requestBody = {
         contents: [
-          { role: 'user', parts: [{ text: SYSTEM_MESSAGE }] },
+          ...(conversationHistory.length === 0 ? [{ role: 'user', parts: [{ text: SYSTEM_MESSAGE }] }] : []),
           ...conversationHistory.map(msg => ({
             role: msg.role === 'assistant' ? 'model' : 'user',
             parts: [{ text: msg.content }]
           }))
         ]
       }
-
+  
       console.log('Gemini Input:', requestBody)
-
+  
       const response = await fetch(`${GEMINI_API_ENDPOINT}?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestBody)
       })
-
+  
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
       const data = await response.json()
-
+  
       console.log('Gemini Response:', data)
-
-      return data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "I'm having trouble conecting to the servers right now."
+  
+      return data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "I'm having trouble connecting to the servers right now."
     } catch (error) {
       console.error('Error generating question:', error)
       return "I'm having trouble generating a question right now."
@@ -156,9 +156,15 @@ export default function Chat() {
 
   // Handle speech recognition errors
   const handleSpeechError = (event: SpeechRecognitionErrorEvent) => {
-    console.error('Speech recognition error:', event.error)
-    setIsRecording(false)
-  }
+    console.error('Speech recognition error:', event.error);
+    setIsRecording(false);
+  
+    if (event.error === 'no-speech') {
+      addMessage("I didn't catch that. Please try speaking again.", true);
+    } else {
+      addMessage("An error occurred with speech recognition. Please try again.", true);
+    }
+  };
 
   const handleSpeechEnd = () => {
     setIsRecording(false)
