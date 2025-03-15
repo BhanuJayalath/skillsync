@@ -57,6 +57,7 @@ export default function JobContent({
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   const storage = {
     jobId: loadJobPostContent.jobId,
+    recruiterId: loadJobPostContent.recruiterId,
     jobTitle: jobTitle,
     jobDescription: jobDescription,
     requiredSkills: requiredSkills,
@@ -143,7 +144,9 @@ export default function JobContent({
           />
         </button>
         <h1>Job Post {jobCount}</h1>
-        <h3>{loadJobPostContent.jobTitle}</h3>
+        {loadJobPostContent.jobTitle ? (
+          <h3>{loadJobPostContent.jobTitle}</h3>
+        ) : null}
         <h3>{loadJobPostContent.jobId}</h3>
         <div id={styles.jobContentSectionSaveandClose}>
           {updateJobPostContent &&

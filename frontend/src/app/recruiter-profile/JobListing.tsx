@@ -18,6 +18,7 @@ export default function JobListing({
   setUpdateJobPostContent,
   updateJobPostContent,
   setJobPostResponse,
+  recruiterDetails,
 }: {
   setJobPostState: any;
   jobPostState: any;
@@ -27,10 +28,12 @@ export default function JobListing({
   setUpdateJobPostContent: any;
   updateJobPostContent: any;
   setJobPostResponse: any;
+  recruiterDetails: any;
 }) {
   const [loadJobPosts, setLoadJobPosts] = useState<
     {
       jobId: String;
+      recruiterId: String;
       jobTitle: String;
       jobDescription: String;
       requiredSkills: String[];
@@ -43,15 +46,22 @@ export default function JobListing({
 
   useEffect(() => {
     const tempArray: any = [];
-    axios.get(`${process.env.NEXT_PUBLIC_GET_JOBS}`).then((response) => {
-      if (response.data.length != 0) {
-        setJobPostResponse(response.data);
-        response.data.map((item: any) => {
-          tempArray.push(item);
-        });
-      }
-      setLoadJobPosts(tempArray);
-    });
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_GET_JOBS_BY_RECRUITER_ID}/${recruiterDetails._id}`
+      )
+      .then((response) => {
+        if (response.data.length != 0) {
+          setJobPostResponse(response.data);
+          response.data.map((item: any) => {
+            tempArray.push(item);
+          });
+        }
+        setLoadJobPosts(tempArray);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [remove, jobPostState]);
 
   function loadJobPostComponent(jobId: string, JobCounter: number) {
@@ -66,6 +76,7 @@ export default function JobListing({
       ...loadJobPosts,
       {
         jobId: "Job" + Date.now(),
+        recruiterId: recruiterDetails._id,
         jobTitle: "",
         jobDescription: "",
         requiredSkills: [],

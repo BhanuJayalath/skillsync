@@ -3,13 +3,17 @@ import styles from "../assets/styles/recruiter.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Profile() {
+export default function Profile({
+  recruiterDetails,
+}: {
+  recruiterDetails: any;
+}) {
   const [update, setUpdate] = useState(false);
   const [recruiterId, setRecruiterId] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState(
-    "WSO2 is a leading open-source technology company that provides enterprise-grade solutions for API management, integration, and identity and access management (IAM). Its flagship products, such as WSO2 API Manager and WSO2 Identity Server, enable businesses to build, deploy, and secure digital services efficiently. With a strong focus on cloud-native and microservices architectures, WSO2 helps organizations streamline their digital transformation by offering scalable and customizable platforms. It supports various industry standards and offers both on-premise and cloud deployment options, making it a preferred choice for enterprises seeking robust and flexible integration solutions."
+    "Micro Web Global is a leading software development company based in Sri Lanka, specializing in delivering innovative and customized digital solutions to clients across various industries. With a strong focus on cutting-edge technologies, they offer a wide range of services, including web and mobile app development, software integration, and cloud solutions. Their dedicated team of experts ensures high-quality products and services tailored to meet each client's unique business needs. Micro Web Global is committed to driving digital transformation and helping businesses succeed in an ever-evolving technological landscape."
   );
   const [services, setServices] = useState(
     "FullStack Development / Mobile development"
@@ -20,16 +24,9 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_GET_RECRUITER_DETAILS}`)
-      .then((response) => {
-        setRecruiterId(response.data.recruiter._id);
-        setCompanyName(response.data.recruiter.company);
-        setEmail(response.data.recruiter.email);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    setRecruiterId(recruiterDetails._id);
+    setCompanyName(recruiterDetails.company);
+    setEmail(recruiterDetails.email);
   }, []);
 
   useEffect(() => {}, [companyName, email, description, services]);

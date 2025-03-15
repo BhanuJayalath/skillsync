@@ -54,6 +54,9 @@ export default function TestListing({
         response.data.map((item: any) => {
           tempArray.push(item);
         });
+      })
+      .catch((error) => {
+        console.log(error);
       });
     setLoadTests(tempArray);
   }, [remove]);

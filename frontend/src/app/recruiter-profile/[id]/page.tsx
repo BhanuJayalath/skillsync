@@ -9,7 +9,6 @@ import JobContent from "../JobContent";
 import TestContent from "../TestContent";
 import Dashboard from "../Dashboard";
 import Profile from "../Profile";
-import UserProfile from "../../userProfile/page";
 
 import axios from "axios";
 import TestListing from "../TestListing";
@@ -29,6 +28,7 @@ export default function RecruiterProfile() {
   const [loadJobPostContent, setLoadJobPostContent] = useState<
     {
       jobId: String;
+      recruiterId: String;
       jobTitle: String;
       jobDescription: String;
       requiredSkills: [];
@@ -46,6 +46,18 @@ export default function RecruiterProfile() {
   const [removeTestBlock, setRemoveTestBlock] = useState(false);
   const [testResponse, setTestResponse] = useState();
   const [jobPostResponse, setJobPostResponse] = useState();
+  const [recruiterDetails, setRecruiterDetails] = useState();
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_GET_RECRUITER_DETAILS}`)
+      .then((response) => {
+        setRecruiterDetails(response.data.recruiter);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   let counter = 0;
   return (
@@ -57,7 +69,11 @@ export default function RecruiterProfile() {
         </div>
         <div id={styles.contentSection}>
           <div id={styles.contentContainer1}>
-            {dashboardTab ? <Dashboard /> : profileTab ? <Profile /> : null}
+            {dashboardTab && recruiterDetails ? (
+              <Dashboard recruiterDetails={recruiterDetails} />
+            ) : profileTab ? (
+              <Profile recruiterDetails={recruiterDetails} />
+            ) : null}
           </div>
           <div id={styles.contentContainer2}>
             {jobPostState ? (
@@ -96,7 +112,7 @@ export default function RecruiterProfile() {
                 setUpdateTestContent={setUpdateTestContent}
                 testResponse={testResponse}
               />
-            ) : (
+            ) : recruiterDetails ? (
               <JobListing
                 loadJobPostContent={loadJobPostContent}
                 setLoadJobPostContent={setLoadJobPostContent}
@@ -106,8 +122,9 @@ export default function RecruiterProfile() {
                 jobPostState={jobPostState}
                 setJobCount={setJobCount}
                 setJobPostResponse={setJobPostResponse}
+                recruiterDetails={recruiterDetails}
               />
-            )}
+            ) : null}
           </div>
         </div>
       </div>

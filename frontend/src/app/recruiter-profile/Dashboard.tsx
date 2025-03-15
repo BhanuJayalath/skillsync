@@ -4,7 +4,11 @@ import ResultTab from "./ResultTab";
 import styles from "../assets/styles/recruiter.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-export default function Dashboard() {
+export default function Dashboard({
+  recruiterDetails,
+}: {
+  recruiterDetails: any;
+}) {
   const [jobs, setJobs] = useState([]);
   const [tests, setTests] = useState([]);
   const [bestPerformed, setBestPerformed] = useState([]);
@@ -14,41 +18,48 @@ export default function Dashboard() {
       userId: "1",
       jobId: "1",
       tests: [
-        { testId: "Test1741231239210", result: 25 },
-        { testId: "Test1741242062920", result: 50 },
+        { testId: "Test1742022418151", result: 25 },
+        { testId: "Test1742022418151", result: 50 },
       ],
     },
     {
       userId: "2",
       jobId: "2",
       tests: [
-        { testId: "Test1741231239210", result: 90 },
-        { testId: "Test1741242062920", result: 80 },
+        { testId: "Test1742022418151", result: 90 },
+        { testId: "Test1742022418151", result: 80 },
       ],
     },
     {
       userId: "3",
       jobId: "1",
       tests: [
-        { testId: "Test1741231239210", result: 55 },
-        { testId: "Test1741242062920", result: 70 },
+        { testId: "Test1742022418151", result: 55 },
+        { testId: "Test1742022418151", result: 70 },
       ],
     },
   ];
 
   useEffect(() => {
     const tempJobSet: any = [];
-    axios.get(`${process.env.NEXT_PUBLIC_GET_JOBS}`).then((response) => {
-      response.data.map((item: any) => {
-        tempJobSet.push(item);
-        if (onLoad) {
-          loadTests(item.jobId);
-        }
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_GET_JOBS_BY_RECRUITER_ID}/${recruiterDetails._id}`
+      )
+      .then((response) => {
+        response.data.map((item: any) => {
+          tempJobSet.push(item);
+          if (onLoad) {
+            loadTests(item.jobId);
+          }
+        });
+        setJobs(tempJobSet);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      setJobs(tempJobSet);
-      console.log(onLoad);
-    });
-  }, [onLoad,setOnLoad]);
+  }, [onLoad, setOnLoad]);
+
   function loadTests(jobId: any) {
     const tempTestsSet: any = [];
     axios
@@ -62,6 +73,9 @@ export default function Dashboard() {
           }
         });
         setTests(tempTestsSet);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }
 

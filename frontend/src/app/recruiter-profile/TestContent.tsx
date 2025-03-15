@@ -140,7 +140,9 @@ export default function TestContent({
         </button>
         <h1>Test {testCount}</h1>
         <h3>{loadTestQuestions.testId}</h3>
-        <h3>{loadJobPostContent.jobTitle}</h3>
+        {loadJobPostContent.jobTitle ? (
+          <h3>{loadJobPostContent.jobTitle}</h3>
+        ) : null}
         <h3>{loadJobPostContent.jobId}</h3>
         {updateTestContent ? (
           <>
