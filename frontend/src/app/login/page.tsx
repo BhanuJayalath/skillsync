@@ -18,6 +18,7 @@ export default function LoginPage() {
     password: "",
   });
 
+  const [loginError, setLoginError] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -32,6 +33,7 @@ export default function LoginPage() {
 
   const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoginError(""); // Reset any previous error
     try {
       setLoading(true);
 
@@ -66,7 +68,10 @@ export default function LoginPage() {
       router.push(`${redirectPath}/${userId}`);
     } catch (error: any) {
       console.log("Login failed", error.message);
-      toast.error(error.response?.data?.error || error.message);
+      const errorMsg =
+        error.response?.data?.error || error.message || "Login failed";
+      setLoginError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -88,23 +93,21 @@ export default function LoginPage() {
         <div className={styles.formContainer}>
           <h2 className={styles.title}>Login to Your Account</h2>
           <p className={styles.subtitle}>
-          Unlock your exclusive experience! Enter your email and password to dive into your personalized account.
+            Unlock your exclusive experience! Enter your email and password to dive into your personalized account.
           </p>
 
           {/* Tab Selector for login type */}
           <div className={styles.tabSelector}>
             <button
-              className={`${styles.tabButton} ${
-                loginType === "user" ? styles.activeTab : ""
-              }`}
+              type="button"
+              className={`${styles.tabButton} ${loginType === "user" ? styles.activeTab : ""}`}
               onClick={() => setLoginType("user")}
             >
               User Login
             </button>
             <button
-              className={`${styles.tabButton} ${
-                loginType === "recruiter" ? styles.activeTab : ""
-              }`}
+              type="button"
+              className={`${styles.tabButton} ${loginType === "recruiter" ? styles.activeTab : ""}`}
               onClick={() => setLoginType("recruiter")}
             >
               Recruiter Login
@@ -149,6 +152,13 @@ export default function LoginPage() {
             >
               {loading ? "Processing..." : "Login"}
             </button>
+
+            {/* Display login error if it exists */}
+            {loginError && (
+              <div className={styles.errorMessage}>
+                {loginError}
+              </div>
+            )}
           </form>
 
           {/* Additional Links */}
