@@ -11,10 +11,9 @@ export class UserProfileService {
   ) {}
 
   async findUser(userId: string): Promise<User | null> {
-    // Query the user by the 'id' field
-    return await this.userModel.findOne({ _id: userId }).exec();
+    return await this.userModel.findOne({ id: userId }).exec(); // Query by id
   }
-  //edit
+
   async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
     const updatedUser = await this.userModel
       .findOneAndUpdate({ _id: userId }, updateData, {
@@ -36,7 +35,7 @@ export class UserProfileService {
   ): Promise<User> {
     const updatedUser = await this.userModel
       .findOneAndUpdate(
-        { _id: userId },
+        { id: userId }, // Query by id
         { $push: { tests: { jobId, testId, score } } },
         { new: true },
       )

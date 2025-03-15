@@ -33,9 +33,9 @@ export default function MCQTest() {
   const [score, setScore] = useState({ correct: 0, total: 0 })
 
   //fixed userId for now
-  const userId = "006"
-  const [testId, setTestId] = useState("Test1741231239210") // Fixed testId for now
-  const jobId = "Job1741231081858" // Fixed jobId for now
+  const id = "67d5a2e764a3750a956f45a3";
+  const [testId, setTestId] = useState("Test1742022418151") // Fixed testId for now
+  const jobId = "Job1742022159253" // Fixed jobId for now
 
   useEffect(() => {
     // Fetch the test data from the backend
@@ -95,7 +95,8 @@ export default function MCQTest() {
   
     // Send the test mark to the backend
     try {
-      await axios.patch(`http://localhost:3001/saveTestMark/${userId}`, {
+      await axios.patch(`http://localhost:3001/saveTestMark`, {
+        id,
         jobId,
         testId,
         score: correctCount,
@@ -270,4 +271,3 @@ export default function MCQTest() {
     </div>
   )
 }
-
