@@ -170,12 +170,18 @@ export default function Chat() {
     setIsRecording(false)
   }
   
+  const sanitizeText = (text: string) => {
+    return text.replace(/[*`]/g, '');
+  }
+  
   // Speak the given text using the browser's speech synthesis API
   const speakText = (text: string) => {
+    const sanitizedText = sanitizeText(text);
+    
     if (synthesisRef.current) {
       synthesisRef.current.cancel() // Cancel any ongoing speech synthesis
   
-      const utterances = text.match(/[^.!?]+[.!?]+/g) || [text]; // Split text into sentences
+      const utterances = sanitizedText.match(/[^.!?]+[.!?]+/g) || [sanitizedText]; // Split text into sentences
   
       // Speak each sentence sequentially
       const speakNext = (index: number) => {
