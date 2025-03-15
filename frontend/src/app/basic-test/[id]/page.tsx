@@ -1,6 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import axios from 'axios';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
+import { useRouter, useParams } from 'next/navigation';
 
 const skills = [
   "Angular",
@@ -77,7 +81,6 @@ const questions = [
     ],
     correctAnswer: "Component-based architecture"
   },
-
   // AWS (IDs 6-10)
   {
     id: 6,
@@ -124,7 +127,6 @@ const questions = [
     ],
     correctAnswer: "Serverless computing"
   },
-
   // C# (IDs 11-15)
   {
     id: 11,
@@ -171,7 +173,6 @@ const questions = [
     ],
     correctAnswer: "Garbage Collection"
   },
-
   // CSS3 (IDs 16-20)
   {
     id: 16,
@@ -218,7 +219,6 @@ const questions = [
     options: ["Media queries", "Flexbox", "Grid", "Animations"],
     correctAnswer: "Media queries"
   },
-
   // Django (IDs 21-25)
   {
     id: 21,
@@ -270,7 +270,6 @@ const questions = [
     options: ["urls.py", "views.py", "models.py", "settings.py"],
     correctAnswer: "urls.py"
   },
-
   // Docker (IDs 26-30)
   {
     id: 26,
@@ -322,7 +321,6 @@ const questions = [
     options: ["docker stop", "docker pause", "docker kill", "docker end"],
     correctAnswer: "docker stop"
   },
-
   // Flask (IDs 31-35)
   {
     id: 31,
@@ -369,7 +367,6 @@ const questions = [
     options: ["app.py", "index.html", "main.js", "server.rb"],
     correctAnswer: "app.py"
   },
-
   // GraphQL (IDs 36-40)
   {
     id: 36,
@@ -426,7 +423,6 @@ const questions = [
     ],
     correctAnswer: "The types and relationships of data"
   },
-
   // HTML5 (IDs 41-45)
   {
     id: 41,
@@ -473,7 +469,6 @@ const questions = [
     options: ["alt", "src", "title", "caption"],
     correctAnswer: "alt"
   },
-
   // Java (IDs 46-50)
   {
     id: 46,
@@ -520,7 +515,6 @@ const questions = [
     options: ["Maven", "Webpack", "Gulp", "Bower"],
     correctAnswer: "Maven"
   },
-
   // JavaScript (IDs 51-55)
   {
     id: 51,
@@ -572,7 +566,6 @@ const questions = [
     options: ["React", "Laravel", "Django", "Rails"],
     correctAnswer: "React"
   },
-
   // Kotlin (IDs 56-60)
   {
     id: 56,
@@ -609,7 +602,6 @@ const questions = [
     options: ["Elvis operator", "NullPointerException", "Undefined operator", "Optional chaining"],
     correctAnswer: "Elvis operator"
   },
-
   // MongoDB (IDs 61-65)
   {
     id: 61,
@@ -656,7 +648,6 @@ const questions = [
     options: ["insertOne()", "INSERT", "addDocument()", "create()"],
     correctAnswer: "insertOne()"
   },
-
   // Node.js (IDs 66-70)
   {
     id: 66,
@@ -708,7 +699,6 @@ const questions = [
     ],
     correctAnswer: "http.createServer()"
   },
-
   // PHP (IDs 71-75)
   {
     id: 71,
@@ -755,7 +745,6 @@ const questions = [
     options: ["Laravel", "Django", "Ruby on Rails", "Spring"],
     correctAnswer: "Laravel"
   },
-
   // Python (IDs 76-80)
   {
     id: 76,
@@ -807,7 +796,6 @@ const questions = [
     options: ["Django", "React", "Laravel", "Spring"],
     correctAnswer: "Django"
   },
-
   // React (IDs 81-85)
   {
     id: 81,
@@ -864,7 +852,6 @@ const questions = [
     ],
     correctAnswer: "Component reusability"
   },
-
   // Ruby on Rails (IDs 86-90)
   {
     id: 86,
@@ -911,7 +898,6 @@ const questions = [
     ],
     correctAnswer: "Model-View-Controller"
   },
-
   // SQL (IDs 91-95)
   {
     id: 91,
@@ -965,7 +951,6 @@ const questions = [
     options: ["WHERE", "FILTER", "HAVING", "ORDER BY"],
     correctAnswer: "WHERE"
   },
-
   // TypeScript (IDs 96-100)
   {
     id: 96,
@@ -1014,7 +999,6 @@ const questions = [
   }
 ];
 
-
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array]
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -1025,82 +1009,168 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 export default function QuizApp() {
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([])
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [userAnswers, setUserAnswers] = useState<{ [key: number]: string }>({})
-  const [quizState, setQuizState] = useState<"selection" | "quiz" | "results">("selection")
-  const [shuffledQuestions, setShuffledQuestions] = useState<typeof questions>([])
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+  const router = useRouter();
+  const { id } = useParams(); // Get the dynamic id from the URL
+
+  const [userDetails, setUserDetails] = useState({
+    _id: '',
+    username: '',
+    email: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [editing, setEditing] = useState(false);
+
+  // Separate state for the editable fields.
+  const [updatedDetails, setUpdatedDetails] = useState({
+    username: '',
+    email: '',
+  });
+
+  const getUserDetails = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get('/api/users/me');
+      // Update state with the returned user details
+      setUserDetails({
+        _id: res.data.user._id,
+        username: res.data.user.username,
+        email: res.data.user.email,
+      });
+      // Initialize editable fields with current details
+      setUpdatedDetails({
+        username: res.data.user.username,
+        email: res.data.user.email,
+      });
+    } catch (error: any) {
+      console.log(error.message);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Call getUserDetails on component mount.
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
+  // Function to update user details.
+  const updateUserDetails = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      // Call the update API endpoint (PATCH request)
+      const res = await axios.patch('/api/users/update', updatedDetails);
+      toast.success("Profile updated successfully");
+      // Update local state with new details and exit edit mode
+      setUserDetails(res.data.user);
+      setEditing(false);
+    } catch (error: any) {
+      console.log(error.message);
+      toast.error(error.response?.data?.error || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState<{ [key: number]: string }>({});
+  const [quizState, setQuizState] = useState<"selection" | "quiz" | "results">("selection");
+  const [shuffledQuestions, setShuffledQuestions] = useState<typeof questions>([]);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
   useEffect(() => {
     if (quizState === "quiz") {
-      const shuffled = shuffleArray(questions)
+      const shuffled = shuffleArray(questions);
       const filteredAndShuffled = shuffled
         .filter((q) => selectedSkills.includes(q.skill))
-        .map((q) => ({ ...q, options: shuffleArray(q.options) }))
-      setShuffledQuestions(filteredAndShuffled)
+        .map((q) => ({ ...q, options: shuffleArray(q.options) }));
+      setShuffledQuestions(filteredAndShuffled);
     }
-  }, [quizState, selectedSkills])
+  }, [quizState, selectedSkills]);
+
+  // New useEffect to save test scores when quizState becomes "results"
+  useEffect(() => {
+    if (quizState === "results") {
+      const scores = calculateScores();
+      const totalCorrect = Object.values(scores).reduce((sum, score) => sum + score.correct, 0);
+      const totalQuestions = Object.values(scores).reduce((sum, score) => sum + score.total, 0);
+      const scoreData = {
+        userId: userDetails._id, // Ensure user is logged in; adjust if handling guests
+        score: totalCorrect,
+        totalQuestions: totalQuestions,
+        skills: selectedSkills,
+      };
+      axios.post('/api/basic-test', scoreData)
+        .then((response) => {
+          console.log("Test score saved", response.data);
+        })
+        .catch((error) => {
+          console.error("Error saving test score", error);
+        });
+    }
+  }, [quizState, selectedSkills, userDetails]);
 
   const handleSkillToggle = (skill: string) => {
     setSelectedSkills((prev) =>
       prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
-    )
-  }
+    );
+  };
 
   const startQuiz = () => {
     if (selectedSkills.length > 0) {
-      setQuizState("quiz")
+      setQuizState("quiz");
     }
-  }
+  };
 
   const handleAnswerSelection = (answer: string) => {
-    setSelectedAnswer(answer)
-  }
+    setSelectedAnswer(answer);
+  };
 
   const handleSubmitAnswer = () => {
     if (selectedAnswer !== null && currentQuestionIndex < shuffledQuestions.length) {
       setUserAnswers((prev) => ({
         ...prev,
         [shuffledQuestions[currentQuestionIndex].id]: selectedAnswer,
-      }))
+      }));
 
       if (currentQuestionIndex < shuffledQuestions.length - 1) {
-        setCurrentQuestionIndex((prev) => prev + 1)
-        setSelectedAnswer(null)
+        setCurrentQuestionIndex((prev) => prev + 1);
+        setSelectedAnswer(null);
       } else {
-        setQuizState("results")
+        setQuizState("results");
       }
     }
-  }
+  };
 
   const calculateScores = () => {
-    const scores: { [key: string]: { correct: number; total: number } } = {}
+    const scores: { [key: string]: { correct: number; total: number } } = {};
 
     shuffledQuestions.forEach((question) => {
       if (!scores[question.skill]) {
-        scores[question.skill] = { correct: 0, total: 0 }
+        scores[question.skill] = { correct: 0, total: 0 };
       }
-      scores[question.skill].total++
+      scores[question.skill].total++;
       if (userAnswers[question.id] === question.correctAnswer) {
-        scores[question.skill].correct++
+        scores[question.skill].correct++;
       }
-    })
+    });
 
-    return scores
-  }
+    return scores;
+  };
 
   const restartQuiz = () => {
-    setSelectedSkills([])
-    setCurrentQuestionIndex(0)
-    setUserAnswers({})
-    setQuizState("selection")
-    setShuffledQuestions([])
-    setSelectedAnswer(null)
-  }
+    setSelectedSkills([]);
+    setCurrentQuestionIndex(0);
+    setUserAnswers({});
+    setQuizState("selection");
+    setShuffledQuestions([]);
+    setSelectedAnswer(null);
+  };
 
-  const primaryColor = "rgb(96,166,236)" // #60A6EC
-  const primaryBgClass = "bg-[rgb(96,166,236)]"
+  const primaryColor = "rgb(96,166,236)"; // #60A6EC
+  const primaryBgClass = "bg-[rgb(96,166,236)]";
 
   if (quizState === "selection") {
     return (
@@ -1133,11 +1203,11 @@ export default function QuizApp() {
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   if (quizState === "quiz" && shuffledQuestions.length > 0) {
-    const currentQuestion = shuffledQuestions[currentQuestionIndex]
+    const currentQuestion = shuffledQuestions[currentQuestionIndex];
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-xl">
@@ -1169,14 +1239,14 @@ export default function QuizApp() {
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   if (quizState === "results") {
-    const scores = calculateScores()
-    const totalCorrect = Object.values(scores).reduce((sum, score) => sum + score.correct, 0)
-    const totalQuestions = Object.values(scores).reduce((sum, score) => sum + score.total, 0)
-    const overallPercentage = Math.round((totalCorrect / totalQuestions) * 100)
+    const scores = calculateScores();
+    const totalCorrect = Object.values(scores).reduce((sum, score) => sum + score.correct, 0);
+    const totalQuestions = Object.values(scores).reduce((sum, score) => sum + score.total, 0);
+    const overallPercentage = Math.round((totalCorrect / totalQuestions) * 100);
 
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -1189,7 +1259,7 @@ export default function QuizApp() {
           </p>
           <div className="space-y-4">
             {Object.entries(scores).map(([skill, score]) => {
-              const percentage = Math.round((score.correct / score.total) * 100)
+              const percentage = Math.round((score.correct / score.total) * 100);
               return (
                 <div key={skill}>
                   <p className="font-semibold text-gray-700">
@@ -1202,7 +1272,7 @@ export default function QuizApp() {
                     ></div>
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
           <button
@@ -1213,8 +1283,8 @@ export default function QuizApp() {
           </button>
         </div>
       </div>
-    )
+    );
   }
 
-  return <div>Loading...</div>
+  return <div>Loading...</div>;
 }
