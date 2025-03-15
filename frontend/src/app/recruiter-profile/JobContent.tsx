@@ -8,8 +8,8 @@ import styles from "../assets/styles/recruiter.module.css";
 export default function JobContent({
   loadTests,
   setLoadTests,
-  updateTestContent,
-  setUpdateTestContent,
+  // updateTestContent,
+  // setUpdateTestContent,
   removeTestBlock,
   setRemoveTestBlock,
   testState,
@@ -21,20 +21,14 @@ export default function JobContent({
   testResponse,
   setTestResponse,
   loadJobPostContent,
-  updateJobPostContent,
-  setUpdateJobPostContent,
   jobCount,
   jobPostResponse,
 }: {
   loadJobPostContent: any;
-  updateJobPostContent: any;
-  setUpdateJobPostContent: any;
   jobCount: any;
   jobPostResponse: any;
   loadTests: any;
   setLoadTests: any;
-  updateTestContent: any;
-  setUpdateTestContent: any;
   removeTestBlock: any;
   setRemoveTestBlock: any;
   testState: any;
@@ -46,14 +40,13 @@ export default function JobContent({
   testResponse: any;
   setTestResponse: any;
 }) {
+  const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
   const [jobTitle, setJobTitle] = useState<string>();
   const [jobDescription, setJobDescription] = useState<string>();
   const [requiredSkills, setRequiredSkills] = useState<string[]>([]);
   const [requiredSkillsValue, setRequiredSkillsValue] = useState<string>("");
   const [jobType, setJobType] = useState<string>();
   const [selectedAnswer, setSelectedAnswer] = useState<Number>();
-  // const [removed, setRemoved] = useState(false);
-  const [readOnly, setReadOnly] = useState(false);
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   const storage = {
     jobId: loadJobPostContent.jobId,
@@ -69,10 +62,6 @@ export default function JobContent({
     setJobDescription(loadJobPostContent.jobDescription);
     setRequiredSkills(loadJobPostContent.requiredSkills);
     setJobType(loadJobPostContent.jobType);
-
-    if (updateJobPostContent == false) {
-      setReadOnly(true);
-    }
   }, []);
   useEffect(() => {
     if (jobPostResponse) {
@@ -113,11 +102,13 @@ export default function JobContent({
         headers: { "Content-Type": "application/json" },
       }
     );
+    setUpdateJobPostContent(!updateJobPostContent);
   }
   function saveToDatabase() {
     axios.post(`${process.env.NEXT_PUBLIC_SAVE_JOB}`, storage, {
       headers: { "Content-Type": "application/json" },
     });
+    setUpdateJobPostContent(!updateJobPostContent);
   }
 
   function removeSkill(skillIndex: number) {
@@ -148,40 +139,50 @@ export default function JobContent({
           <h3>{loadJobPostContent.jobTitle}</h3>
         ) : null}
         <h3>{loadJobPostContent.jobId}</h3>
-        <div id={styles.jobContentSectionSaveandClose}>
-          {updateJobPostContent &&
-            (databaseExistingId ? (
-              <button onClick={updatetoDatabase}>
-                <Image
-                  alt="update-icon"
-                  width={20}
-                  height={20}
-                  src="/recruiter/update-icon.svg"
-                />
-              </button>
-            ) : (
-              <button onClick={saveToDatabase}>
-                <Image
-                  alt="save-icon"
-                  width={35}
-                  height={35}
-                  src="/recruiter/save-icon.svg"
-                />
-              </button>
-            ))}
-        </div>
+        {!updateJobPostContent ? (
+          <button
+            onClick={() => {
+              setUpdateJobPostContent(!updateJobPostContent);
+            }}
+          >
+            <Image
+              alt="update-icon"
+              width={20}
+              height={20}
+              src="/recruiter/update-icon.svg"
+            />
+          </button>
+        ) : (
+          <div id={styles.jobContentSectionSaveandClose}>
+            {updateJobPostContent &&
+              (databaseExistingId ? (
+                <button onClick={updatetoDatabase}>
+                  <Image
+                    alt="save-icon"
+                    width={35}
+                    height={35}
+                    src="/recruiter/save-icon.svg"
+                  />
+                </button>
+              ) : (
+                <button onClick={saveToDatabase}>
+                  <Image
+                    alt="save-icon"
+                    width={35}
+                    height={35}
+                    src="/recruiter/save-icon.svg"
+                  />
+                </button>
+              ))}
+          </div>
+        )}
       </header>
       {loadJobPostContent && updateJobPostContent ? (
         <div id={styles.jobContentSection}>
           <div id={styles.jobContentSectionBlock}>
             <div id={styles.jobContentSectionTitle}>
               <h2>Add Job Title</h2>
-              <input
-                type="text"
-                value={jobTitle}
-                onChange={saveJobTitle}
-                readOnly={readOnly}
-              />
+              <input type="text" value={jobTitle} onChange={saveJobTitle} />
             </div>
             <div id={styles.jobContentSectionDescription}>
               <h2>Add Job Description</h2>
@@ -190,7 +191,6 @@ export default function JobContent({
                 cols={50}
                 value={jobDescription}
                 onChange={saveJobDescription}
-                readOnly={readOnly}
               ></textarea>
             </div>
             <div id={styles.jobContentSectionRequiredSkills}>
@@ -202,9 +202,8 @@ export default function JobContent({
                   type="text"
                   value={requiredSkillsValue}
                   onChange={(e) => setRequiredSkillsValue(e.target.value)}
-                  readOnly={readOnly}
                 />
-                <button disabled={readOnly} type="submit">
+                <button type="submit">
                   Add
                   <Image
                     alt="plus-icon"
@@ -220,7 +219,6 @@ export default function JobContent({
                     <div id={styles.jobPostSkillLabel} key={index}>
                       <label>{item}</label>
                       <button
-                        disabled={readOnly}
                         onClick={() => {
                           removeSkill(index);
                         }}
@@ -239,12 +237,7 @@ export default function JobContent({
             </div>
             <div id={styles.jobContentSectionJobType}>
               <h2>Add Job Type</h2>
-              <input
-                type="text"
-                value={jobType}
-                onChange={saveJobType}
-                readOnly={readOnly}
-              />
+              <input type="text" value={jobType} onChange={saveJobType} />
             </div>
           </div>
         </div>
@@ -284,8 +277,6 @@ export default function JobContent({
       <TestListing
         loadTests={loadTests}
         setLoadTests={setLoadTests}
-        updateTestContent={updateTestContent}
-        setUpdateTestContent={setUpdateTestContent}
         removeTestBlock={removeTestBlock}
         setRemoveTestBlock={setRemoveTestBlock}
         testState={testState}

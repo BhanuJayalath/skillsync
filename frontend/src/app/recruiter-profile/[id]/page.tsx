@@ -41,8 +41,7 @@ export default function RecruiterProfile() {
   const [profileTab, setProfileTab] = useState(false);
   const [testCount, setTestCount] = useState(Number);
   const [jobCount, setJobCount] = useState(Number);
-  const [updateTestContent, setUpdateTestContent] = useState(false);
-  const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
+  // const [updateTestContent, setUpdateTestContent] = useState(false);
   const [removeTestBlock, setRemoveTestBlock] = useState(false);
   const [testResponse, setTestResponse] = useState();
   const [jobPostResponse, setJobPostResponse] = useState();
@@ -80,8 +79,6 @@ export default function RecruiterProfile() {
               <JobContent
                 loadTests={loadTests}
                 setLoadTests={setLoadTests}
-                updateTestContent={updateTestContent}
-                setUpdateTestContent={setUpdateTestContent}
                 removeTestBlock={removeTestBlock}
                 setRemoveTestBlock={setRemoveTestBlock}
                 testState={testState}
@@ -93,8 +90,6 @@ export default function RecruiterProfile() {
                 testResponse={testResponse}
                 setTestResponse={setTestResponse}
                 loadJobPostContent={loadJobPostContent}
-                setUpdateJobPostContent={setUpdateJobPostContent}
-                updateJobPostContent={updateJobPostContent}
                 jobPostResponse={jobPostResponse}
                 jobCount={jobCount}
               />
@@ -108,16 +103,12 @@ export default function RecruiterProfile() {
                 setTestState={setTestState}
                 loadTestQuestions={loadTestQuestions}
                 testCount={testCount}
-                updateTestContent={updateTestContent}
-                setUpdateTestContent={setUpdateTestContent}
                 testResponse={testResponse}
               />
             ) : recruiterDetails ? (
               <JobListing
                 loadJobPostContent={loadJobPostContent}
                 setLoadJobPostContent={setLoadJobPostContent}
-                setUpdateJobPostContent={setUpdateJobPostContent}
-                updateJobPostContent={updateJobPostContent}
                 setJobPostState={setJobPostState}
                 jobPostState={jobPostState}
                 setJobCount={setJobCount}

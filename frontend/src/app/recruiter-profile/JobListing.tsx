@@ -15,8 +15,6 @@ export default function JobListing({
   loadJobPostContent,
   setLoadJobPostContent,
   setJobCount,
-  setUpdateJobPostContent,
-  updateJobPostContent,
   setJobPostResponse,
   recruiterDetails,
 }: {
@@ -25,8 +23,6 @@ export default function JobListing({
   loadJobPostContent: any;
   setLoadJobPostContent: any;
   setJobCount: any;
-  setUpdateJobPostContent: any;
-  updateJobPostContent: any;
   setJobPostResponse: any;
   recruiterDetails: any;
 }) {
@@ -112,22 +108,7 @@ export default function JobListing({
         </button>
         <button
           onClick={() => {
-            setUpdateJobPostContent(!updateJobPostContent);
-            setRemoveJobPostContainers(false);
-          }}
-        >
-          {" "}
-          <Image
-            alt="update-icon"
-            width={20}
-            height={20}
-            src="/recruiter/update-icon.svg"
-          />
-        </button>
-        <button
-          onClick={() => {
             setRemoveJobPostContainers(!removeJobPostContainers);
-            setUpdateJobPostContent(false);
           }}
         >
           {" "}
@@ -167,13 +148,6 @@ export default function JobListing({
                     width={25}
                     height={25}
                     src="/recruiter/remove-icon.svg"
-                  />
-                ) : updateJobPostContent ? (
-                  <Image
-                    alt="update-icon"
-                    width={25}
-                    height={25}
-                    src="/recruiter/update-icon.svg"
                   />
                 ) : null}
               </div>
