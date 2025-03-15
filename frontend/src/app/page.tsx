@@ -9,12 +9,6 @@ import Footer from "./components/Footer"
 import ServiceModal from "./components/ServiceModal"
 import dynamic from "next/dynamic"
 
-// Dynamically import ChatBot with no SSR
-const ChatBot = dynamic(() => import("./components/ChatBot"), {
-  ssr: false,
-  loading: () => null,
-})
-
 interface Testimonial {
   id: number
   text: string
@@ -82,8 +76,6 @@ const LandingPage = () => {
     <div className={styles.container1}>
       <Navbar />
 
-      {/* Add ChatBot component */}
-      <ChatBot />
 
       {/* Hero Section */}
       <section className={`${styles.hero} container mt-5`}>
@@ -96,7 +88,9 @@ const LandingPage = () => {
               <br />
               Industry Standards
             </h1>
+            <a href="login">
             <button className="btn btn-dark btn-lg">Get Started</button>
+            </a>
           </div>
           <div className="col-md-6">
             <Image src="/girl.png" alt="Professional" width={500} height={400} className={styles.heroImage} />
