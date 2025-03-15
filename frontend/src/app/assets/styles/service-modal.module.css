@@ -1,0 +1,90 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+  
+  .modalContent {
+    background-color: white;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .modalHeader {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modalIconTitle {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .modalIcon {
+    width: 50px;
+    height: 50px;
+    background-color: #e7f1ff;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.2s;
+  }
+  
+  .closeButton:hover {
+    color: #000;
+  }
+  
+  .modalBody {
+    padding: 1.5rem;
+    line-height: 1.6;
+  }
+  
+  .modalFooter {
+    padding: 1.5rem;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .modalContent {
+      max-width: 90%;
+    }
+  }
+  
+  

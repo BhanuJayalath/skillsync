@@ -75,10 +75,13 @@ class Test {
   // xAxis: string;
 }
 
-class JobRole {
+class selectedJob {
   @Prop()
-  jobName: string;
+  jobTitle: string;
+  @Prop()
+  jobId:string;
 }
+
 
 @Schema()
 export class User {
@@ -86,16 +89,19 @@ export class User {
   email: string; // User's email address
 
   @Prop()
-  number: string; // User's number
+  contact: string; // User's number
 
   @Prop()
-  displayName: string; // User's display name
+  userName: string; // User's display name
 
   @Prop()
   fullName: string; // User's full name
 
   @Prop()
   avatar: string; // Profile picture URL
+
+  @Prop()
+  cvSummary: string;
 
   @Prop()
   gitHub: string; // User gitHub URL
@@ -124,8 +130,8 @@ export class User {
   @Prop([Test])
   tests: Test[]; // Array of tests
 
-  @Prop([JobRole])
-  jobRole: JobRole[]; // Array of job roles
+  @Prop([selectedJob])
+  selectedJob: selectedJob; // Array of job roles
 
   @Prop({ type: [Experience] })
   experience: Experience[];

@@ -1,15 +1,17 @@
 "use client";
-import Tab from "./Tab";
-import ResultTab from "./ResultTab";
+import Tab from "../JobTab";
+import ResultTab from "../ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import styles from "../assets/styles/recruiter.module.css";
-import JobListing from "./JobListing";
-import JobContent from "./JobContent";
-import TestContent from "./TestContent";
+import styles from "../../assets/styles/recruiter.module.css";
+import JobListing from "../JobListing";
+import JobContent from "../JobContent";
+import TestContent from "../TestContent";
+import Dashboard from "../Dashboard";
+import Profile from "../Profile";
 
 import axios from "axios";
-import TestListing from "./TestListing";
+import TestListing from "../TestListing";
 
 export default function RecruiterProfile() {
   const [loadTests, setLoadTests] = useState<
@@ -26,6 +28,7 @@ export default function RecruiterProfile() {
   const [loadJobPostContent, setLoadJobPostContent] = useState<
     {
       jobId: String;
+      recruiterId: String;
       jobTitle: String;
       jobDescription: String;
       requiredSkills: [];
@@ -34,11 +37,8 @@ export default function RecruiterProfile() {
   >([]);
   const [testState, setTestState] = useState(false);
   const [jobPostState, setJobPostState] = useState(false);
-
-  const [mockExamContainerId, setMockExamContainerId] = useState<any>([
-    Date.now(),
-  ]);
-
+  const [dashboardTab, setDashboardTab] = useState(true);
+  const [profileTab, setProfileTab] = useState(false);
   const [testCount, setTestCount] = useState(Number);
   const [jobCount, setJobCount] = useState(Number);
   const [updateTestContent, setUpdateTestContent] = useState(false);
@@ -46,88 +46,34 @@ export default function RecruiterProfile() {
   const [removeTestBlock, setRemoveTestBlock] = useState(false);
   const [testResponse, setTestResponse] = useState();
   const [jobPostResponse, setJobPostResponse] = useState();
+  const [recruiterDetails, setRecruiterDetails] = useState();
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_GET_RECRUITER_DETAILS}`)
+      .then((response) => {
+        setRecruiterDetails(response.data.recruiter);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   let counter = 0;
   return (
     <section className={styles.main}>
       <div className={styles.contentContainer}>
         <div className={styles.navigation}>
+          <div id={styles.pageTitle}>Recruiter Profile</div>
           <div className={styles.welcomeBar}>Welcome User</div>
-          <search className={styles.searchBar}>
-            <Image
-              alt="menu-icon"
-              width={23}
-              height={23}
-              src="/recruiter/menu.svg"
-            />
-            Search
-            <Image
-              alt="search-icon"
-              width={23}
-              height={23}
-              src="/recruiter/search.svg"
-            />
-          </search>
-          <Image
-            alt="notification-icon"
-            width={23}
-            height={23}
-            src="/recruiter/bell.svg"
-          />
         </div>
         <div id={styles.contentSection}>
           <div id={styles.contentContainer1}>
-            <div id={styles.topGraded}>
-              <h1>Top Graded</h1>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-              <div id={styles.topGradedContainer}>
-                <Tab />
-              </div>
-            </div>
-            <div id={styles.profiles}>
-              <h1>Profiles</h1>
-              <div id={styles.profilesContainer}>
-                <Tab />
-              </div>
-              <div id={styles.profilesContainer}>
-                <Tab />
-              </div>
-              <div id={styles.profilesContainer}>
-                <Tab />
-              </div>
-              <div id={styles.profilesContainer}>
-                <Tab />
-              </div>
-              <div id={styles.profilesContainer}>
-                <Tab />
-              </div>
-            </div>
-            <div id={styles.results}>
-              <h1>Results</h1>
-              <div id={styles.resultsContainer}>
-                <ResultTab />
-              </div>
-              <div id={styles.resultsContainer}>
-                <ResultTab />
-              </div>
-              <div id={styles.resultsContainer}>
-                <ResultTab />
-              </div>
-            </div>
+            {dashboardTab && recruiterDetails ? (
+              <Dashboard recruiterDetails={recruiterDetails} />
+            ) : profileTab ? (
+              <Profile recruiterDetails={recruiterDetails} />
+            ) : null}
           </div>
           <div id={styles.contentContainer2}>
             {jobPostState ? (
@@ -154,6 +100,7 @@ export default function RecruiterProfile() {
               />
             ) : testState ? (
               <TestContent
+                loadJobPostContent={loadJobPostContent}
                 setLoadTestQuestions={setLoadTestQuestions}
                 jobPostState={jobPostState}
                 setJobPostState={setJobPostState}
@@ -165,7 +112,7 @@ export default function RecruiterProfile() {
                 setUpdateTestContent={setUpdateTestContent}
                 testResponse={testResponse}
               />
-            ) : (
+            ) : recruiterDetails ? (
               <JobListing
                 loadJobPostContent={loadJobPostContent}
                 setLoadJobPostContent={setLoadJobPostContent}
@@ -175,8 +122,9 @@ export default function RecruiterProfile() {
                 jobPostState={jobPostState}
                 setJobCount={setJobCount}
                 setJobPostResponse={setJobPostResponse}
+                recruiterDetails={recruiterDetails}
               />
-            )}
+            ) : null}
           </div>
         </div>
       </div>
@@ -189,41 +137,33 @@ export default function RecruiterProfile() {
           className="logo"
         />
         <ul>
-          <li>
+          <li
+            onClick={() => {
+              setDashboardTab(true);
+              setProfileTab(false);
+            }}
+          >
             <Image
               src="/recruiter/home.svg"
               alt="home-icon"
               width={23}
               height={23}
             />
-            Home
+            Dashboard
           </li>
-          <li>
+          <li
+            onClick={() => {
+              setProfileTab(true);
+              setDashboardTab(false);
+            }}
+          >
             <Image
               src="/recruiter/message.svg"
               alt="message-icon"
               width={23}
               height={23}
             />
-            Message
-          </li>
-          <li>
-            <Image
-              src="/recruiter/add-to-favourites.svg"
-              alt="favourites-icon"
-              width={23}
-              height={23}
-            />
-            Favourites
-          </li>
-          <li>
-            <Image
-              src="/recruiter/analytics.svg"
-              alt="analytics-icon"
-              width={23}
-              height={23}
-            />
-            Analytics
+            Profile
           </li>
         </ul>
       </div>
