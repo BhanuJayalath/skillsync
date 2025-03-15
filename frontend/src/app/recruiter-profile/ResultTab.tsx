@@ -1,5 +1,5 @@
 import Image from "next/image";
-export default function Tab() {
+export default function ResultTab({ userDetails }: { userDetails: any }) {
   return (
     <>
       <Image
@@ -9,8 +9,8 @@ export default function Tab() {
         src="/recruiter/profile-icon.svg"
       />
 
-      <h1>User </h1>
-      <h1>?/100</h1>
+      <h1>User - {userDetails.userId} </h1>
+      <h1>{userDetails.testResult} / 100</h1>
     </>
   );
 }

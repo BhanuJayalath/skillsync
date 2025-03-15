@@ -1,5 +1,5 @@
 import Image from "next/image";
-export default function Tab() {
+export default function TestTab({ testId,index }: { testId: any,index:any }) {
   return (
     <>
       <Image
@@ -9,7 +9,7 @@ export default function Tab() {
         src="/recruiter/profile-icon.svg"
       />
 
-      <h1>User </h1>
+      <h1> Test {index} - {testId}</h1>
       <Image
         alt="tik-icon"
         width={15}
