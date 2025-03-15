@@ -1,47 +1,37 @@
 import { verify } from 'crypto';
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: [true,"Username is required"],
-        unique: true,
-        minlength: 3,
-        maxlength: 20
-    },
-    email: {
-        type: String,
-        required: [true,"Email is required"],
-        unique: true,
-        minlength: 5,
-        maxlength: 50
-    },
-    password: {
-        type: String,
-        required: [true,"Password is required"],
-        minlength: 6,
-        maxlength: 1024
-    },
-    company:{
-        type: String,
-        required: [true,"Company is required"],
-        minlength: 3,
-        maxlength: 50
-    },
-    isVerfiy: {
-        type: Boolean,
-        default: false
-    },
-    isAdmin: {
-        type: Boolean,
-        default: false
-    },
+// Define a sub-schema for job postings
+const jobPostingSchema = new mongoose.Schema({
+    jobId: { type: String },
+    title: { type: String },
+    description: { type: String },
+    requirements: { type: String }, // You can change this to an array if you want multiple requirements
+    location: { type: String },
+    postedDate: { type: Date, default: Date.now },
+    expiryDate: { type: Date }
+});
+
+// Define the main Recruiter schema
+const recruiterSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true , unique: true},
+    password: { type: String, required: true },
+    isVerified: { type: Boolean, default: false },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,
     verifyTokenExpiry: Date,
-})
 
-const User = mongoose.models.recruiters || mongoose.model('recruiters', userSchema);
+    description: { type: String },
+    linkedIn: { type: String },
+    companyWebsite: { type: String },
+    companyLogo: { type: String },
+    // Array of job postings created by the recruiter
+    jobPostings: [jobPostingSchema]
+});
 
-export default User;
+// Create and export the model (using a cached model if it already exists)
+const Recruiter = mongoose.models.Recruiter || mongoose.model('recruiter', recruiterSchema);
+
+export default Recruiter;
