@@ -149,10 +149,11 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     useEffect(() => {
         if (!user.country) return;
         const citiesUrl = process.env.NEXT_PUBLIC_CITIES_URL;
+        const countryName = user.country.split(' (')[0];
         fetch(`${citiesUrl}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ country: user.country }),
+            body: JSON.stringify({ country: countryName }),
         })
             .then(response => response.json())
             .then(data => {
