@@ -6,31 +6,39 @@ import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import Image from 'next/image'
 
-
 const GEMINI_API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
 const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY
 
 const SYSTEM_MESSAGE = `
-You are an AI-driven mock technical interviewer designed to help users prepare for technical internship interviews. Your role is to simulate a professional interview environment by asking technical, behavioral, and situational questions. Your responses should be conversational, encouraging, and professional, providing feedback when necessary user will anser your questions. Your only the interviewer dont give full conversations..  
+You are an AI-driven mock technical interviewer from SkillSync. Your goal is to simulate a professional interview environment by asking technical, behavioral, and situational questions.
+
+IMPORTANT CONVERSATION FLOW:
+1. Start with a welcome message introducing yourself as an AI interviewer from SkillSync
+2. After each user response, you MUST:
+   a. Acknowledge their response, even if it's "I don't have experience with that"
+   b. Provide brief feedback or a follow-up comment (4-5 sentences)
+   c. Ask a DIFFERENT question (never repeat the same question)
+3. If the user says they don't have experience with something, acknowledge this and move to a different type of question
+4. Maintain context throughout the interview - refer to previous answers when appropriate
+5. Alternate between technical and behavioral questions
 
 Guidelines:
-- dont Give *bold* text and **Interviewer:**- roles in the chat.  
-- Start the session by introducing yourself as the and explaining the structure of the interview.
-- Ask technical questions related to programming, algorithms, data structures, system design, or other relevant topics based on the user’s preferences.  
-- Conduct the interview in a natural and friendly manner.  
-- Ask one question at a time, keeping it clear and concise.  
-- Include behavioral questions (e.g., 'Tell me about a time you worked in a team') to assess soft skills.
-- After each answer, analyze the response and provide constructive feedback, including suggestions for improvement.
-- Conclude the session with a summary of the user’s performance, highlighting strengths and areas for improvement.
-- Ensure all interactions are supportive, encouraging, and focused on improving the user’s skills.
-- Provide brief, constructive feedback** after each response.  
+- Keep all responses concise and to the point (maximum 3-4 sentences total)
+- Don't use bold text or role prefixes like "Interviewer:"
+- Always structure your response as: "Acknowledgment of their answer. Brief comment. New question?"
+- Maintain a conversational, encouraging, and professional tone
+- NEVER repeat the welcome message after the interview has started
+- Technical questions should cover programming, algorithms, data structures, and system design
+- Behavioral questions should assess teamwork, problem-solving, and communication skills
 
-Example Interactions: this is only an example. dont ask in the same way every time! 
-- Start with: 'Welcome to your mock technical interview session! I'm AI interviewer from SkillSync I’ll be asking a mix of technical and behavioral questions to help you prepare. Let’s begin with an easy one. then aks with a simple question. after that continue with user response'
-- Respond to an answer: 'That’s a good attempt! You mentioned the key idea of polymorphism, but you could also elaborate on how it’s implemented in real-world applications, like using method overriding. Let’s try another question.'
-Stay adaptive to the user's responses and maintain an engaging conversation throughout the session."
+Example welcome message (ONLY use ONCE at the start):
+"Welcome to your mock technical interview session! I'm an AI interviewer from SkillSync. I'll be asking a mix of technical and behavioral questions to help you prepare. Let's begin with a fundamental concept: Can you explain the difference between an array and a linked list?"
+
+Example response to "I don't have experience with that":
+"That's perfectly fine, not everyone has had that specific experience. Let's try a different approach. Can you tell me about a technical project you've worked on that you're particularly proud of?"
+
+Remember: Your responses should be brief, focused, and ALWAYS include acknowledgment of their previous answer before asking a new question.
 `
-
 
 // Extend the Window interface to include the SpeechRecognition API
 declare global {
@@ -76,7 +84,9 @@ export default function Chat() {
   const voicesRef = useRef<SpeechSynthesisVoice[]>([])
   const [isTermsAccepted, setIsTermsAccepted] = useState(false)
   const chatMessagesRef = useRef<HTMLDivElement>(null)
-
+  const [questionType, setQuestionType] = useState<'technical' | 'behavioral'>('technical')
+  const [isFirstInteraction, setIsFirstInteraction] = useState(true)
+  const conversationHistoryRef = useRef<{ role: string; content: string }[]>([])
 
   // Initialize the speech synthesis and recognition APIs when the component mounts
   useEffect(() => {
@@ -108,50 +118,99 @@ export default function Chat() {
     }
   }, [])
 
+  // Update conversation history ref when messages change
+  useEffect(() => {
+    conversationHistoryRef.current = messages;
+  }, [messages]);
+
   // Generate a question based on the conversation history
+  const sanitizeText = (text: string) => {
+    return text.replace(/[*_`]/g, ''); // Removes *, _, and ` characters
+  };
+  
   const generateQuestion = async (conversationHistory: { role: string; content: string }[]) => {
     try {
+      // Toggle question type for variety
+      const nextQuestionType = questionType === 'technical' ? 'behavioral' : 'technical';
+      setQuestionType(nextQuestionType);
+      
+      // Add instruction to generate specific question type
+      let typeInstruction = '';
+      
+      if (isFirstInteraction) {
+        // For the first interaction, generate a welcome message with an initial question
+        typeInstruction = `Please provide a welcome message introducing yourself as an AI interviewer from SkillSync, followed by an initial ${nextQuestionType} question. Use the example welcome message format from the system prompt.`;
+        setIsFirstInteraction(false);
+      } else {
+        // Check if the user's last response indicates lack of experience
+        const lastUserMessage = conversationHistory.filter(msg => msg.role === 'user').pop()?.content.toLowerCase() || '';
+        const lacksExperience = lastUserMessage.includes("don't have") || 
+                               lastUserMessage.includes("no experience") || 
+                               lastUserMessage.includes("haven't had");
+        
+        if (lacksExperience) {
+          typeInstruction = `The user indicated they don't have experience with your previous question. Acknowledge this, be supportive, and ask a completely different ${nextQuestionType} question. Use the example response for "I don't have experience with that" as a guide.`;
+        } else {
+          // For subsequent questions, provide feedback and then a follow-up question
+          typeInstruction = `Based on the user's last answer, acknowledge their response, provide a brief comment, and then ask a new ${nextQuestionType} question that's different from any previous questions. Your response must include acknowledgment of their answer before asking a new question. Total response should be 3-4 sentences maximum.`;
+        }
+      }
+      
       const requestBody = {
         contents: [
-          ...(conversationHistory.length === 0 ? [{ role: 'user', parts: [{ text: SYSTEM_MESSAGE }] }] : []),
+          { role: 'user', parts: [{ text: SYSTEM_MESSAGE }] },
           ...conversationHistory.map(msg => ({
             role: msg.role === 'assistant' ? 'model' : 'user',
             parts: [{ text: msg.content }]
-          }))
+          })),
+          // Add the type instruction as the last message
+          { role: 'user', parts: [{ text: typeInstruction }] }
         ]
-      }
+      };
   
-      console.log('Gemini Input:', requestBody)
+      console.log('Gemini Input:', requestBody);
   
       const response = await fetch(`${GEMINI_API_ENDPOINT}?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestBody)
-      })
+      });
   
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
-      const data = await response.json()
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
   
-      console.log('Gemini Response:', data)
+      console.log('Gemini Response:', data);
   
-      return data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "I'm having trouble connecting to the servers right now."
+      let responseText = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || 
+        "I'm having trouble connecting to the servers right now.";
+  
+      // For welcome message, we allow it to be longer
+      if (!isFirstInteraction && responseText.length > 300) {
+        responseText = responseText.substring(0, 300) + "...";
+      }
+      
+      responseText = sanitizeText(responseText); // Clean the text before displaying
+  
+      return responseText;
     } catch (error) {
-      console.error('Error generating question:', error)
-      return "I'm having trouble generating a question right now."
+      console.error('Error generating question:', error);
+      return "I'm having trouble generating a question right now.";
     }
-  }
-
-  const addMessage = (message: string, isBot = false) => {
-    setMessages(prev => [...prev, { role: isBot ? 'assistant' : 'user', content: message }])
-  }
-
+  };
+  
   const handleSpeechResult = async (event: SpeechRecognitionEvent) => {
     const userAnswer = event.results[0][0].transcript
     addMessage(userAnswer)
     
-    const nextQuestion = await generateQuestion([...messages, { role: 'user', content: userAnswer }])
+    // Use the updated conversation history including the new user message
+    const updatedHistory = [...conversationHistoryRef.current, { role: 'user', content: userAnswer }];
+    const nextQuestion = await generateQuestion(updatedHistory)
     addMessage(nextQuestion, true)
     speakText(nextQuestion)
+  }
+  
+  const addMessage = (message: string, isBot = false) => {
+    setMessages(prev => [...prev, { role: isBot ? 'assistant' : 'user', content: message }])
   }
 
   // Handle speech recognition errors
@@ -168,10 +227,6 @@ export default function Chat() {
 
   const handleSpeechEnd = () => {
     setIsRecording(false)
-  }
-  
-  const sanitizeText = (text: string) => {
-    return text.replace(/[*`]/g, '');
   }
   
   // Speak the given text using the browser's speech synthesis API
@@ -208,6 +263,8 @@ export default function Chat() {
     setIsTermsAccepted(true)
     setIsInterviewStarted(true)
     setMessages([])
+    setIsFirstInteraction(true)
+    conversationHistoryRef.current = []
     const firstQuestion = await generateQuestion([])
     addMessage(firstQuestion, true)
     speakText(firstQuestion)
@@ -223,6 +280,8 @@ export default function Chat() {
   const endInterview = () => {
     setIsInterviewStarted(false)
     setMessages([])
+    setIsFirstInteraction(true)
+    conversationHistoryRef.current = []
     if (synthesisRef.current) {
       synthesisRef.current.cancel() // Cancel any ongoing speech synthesis
     }
