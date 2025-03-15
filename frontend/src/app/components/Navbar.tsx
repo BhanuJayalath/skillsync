@@ -16,17 +16,24 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const userId = localStorage.getItem("user-id")
-      if (userId) {
-        const response = await fetch("/api/users/getUser", {
+      try {
+        const response = await fetch("/api/users/me", {
           headers: {
-            "user-id": userId,
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
           },
         })
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
         const data = await response.json()
         if (data.user) {
           setUser(data.user)
+        } else {
+          console.error("User data not found")
         }
+      } catch (error) {
+        console.error("Error fetching user data:", error)
+        setUser({ username: "Linuka" }) // Set default user name as Linuka
       }
     }
 
@@ -34,7 +41,7 @@ const Navbar = () => {
   }, [])
 
   const handleLogout = () => {
-    localStorage.removeItem("user-id")
+    localStorage.removeItem("token")
     setUser(null)
     // Redirect to home or login page
   }
@@ -49,9 +56,6 @@ const Navbar = () => {
             </Link>
           </div>
           <div className={styles.desktopMenu}>
-            <Link href="/mock-interview" className={styles.navLink}>
-              Mock Interview
-            </Link>
             <Link href="/about-us" className={styles.navLink}>
               About Us
             </Link>
@@ -60,7 +64,7 @@ const Navbar = () => {
             </Link>
             {user ? (
               <div className={styles.userMenu}>
-                <span>Hi, {user.username}</span>
+                <span className={styles.Hi}>Hi, {user.username}</span>
                 <div className={styles.dropdown}>
                   <Link href="/userProfile" className={styles.dropdownItem}>Profile</Link>
                   <button onClick={handleLogout} className={styles.dropdownItem}>Logout</button>
