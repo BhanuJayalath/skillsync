@@ -2,11 +2,11 @@
 
 import Image from 'next/image';     // Importing images
 import Footer from "@/app/components/Footer";   // Importing Footer component
-import { useSearchParams, useRouter  } from 'next/navigation';
+import { useParams, useRouter  } from 'next/navigation';
 import React, {Suspense, useEffect, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
-import styles from './user.module.css';   // Importing custom styles
-import '../globals.css';
+import styles from '../user.module.css';   // Importing custom styles
+import '../../globals.css';
 import Overview from "@/app/userProfile/Overview";
 import Progress from "@/app/userProfile/Progress";
 import Courses from "@/app/userProfile/Courses";
@@ -15,10 +15,8 @@ import Settings from "@/app/userProfile/Settings";
 
 
  function UserProfile() {
-    const searchParams = useSearchParams();
-     const userId = searchParams.get("userId");
+     const { id } = useParams();
      const router = useRouter();
-    // const userId = "67d185705f4875a6efc7ff0e";
     //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
     // Initializing profile state with default user details
@@ -182,13 +180,14 @@ import Settings from "@/app/userProfile/Settings";
     const handleSubmit = async () => {
         const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
         try {
-            const response = await fetch(`${updateUserUrl}/${userId}`, {
+            const response = await fetch(`${updateUserUrl}/${id}`, {
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     email: user.email,
                     contact: user.contact,
                     fullName: user.fullName,
+                    cvSummary: user.cvSummary,
                     avatar:user.avatar,
                     gitHub: user.gitHub,
                     linkedIn: user.linkedIn,
@@ -212,10 +211,10 @@ import Settings from "@/app/userProfile/Settings";
         }
     }
     useEffect(() => {
-        if(userId){
+        if(id){
             const fetchUserDetails = async () => {
                 const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
-                const response = await fetch(`${getUserUrl}/${userId}`, {
+                const response = await fetch(`${getUserUrl}/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -237,7 +236,7 @@ import Settings from "@/app/userProfile/Settings";
         }else{
             router.push('http://localhost:3000/login');
         }
-    }, [activeTab, userId]);
+    }, [activeTab, id]);
     return (
         <><Suspense fallback={<div>Loading...</div>}>
             <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
@@ -251,7 +250,7 @@ import Settings from "@/app/userProfile/Settings";
                             <ul>
                                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                                 <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
-                                                       width={40} height={40} className={styles.navImage}/> Home</a></li>
+                                                                      width={40} height={40} className={styles.navImage}/> Home</a></li>
                                 <li
                                     onClick={() => setActiveTab(0)}
                                     className={activeTab === 0 ? styles.activeLink : ''}

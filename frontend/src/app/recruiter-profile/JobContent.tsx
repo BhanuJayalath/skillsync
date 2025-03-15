@@ -57,6 +57,7 @@ export default function JobContent({
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
   const storage = {
     jobId: loadJobPostContent.jobId,
+    recruiterId: loadJobPostContent.recruiterId,
     jobTitle: jobTitle,
     jobDescription: jobDescription,
     requiredSkills: requiredSkills,
@@ -132,41 +133,70 @@ export default function JobContent({
   }
 
   return (
-    <section className={styles.mockExam}>
-      <header id={styles.mockExamHeading}>
-        <button onClick={previousPage}>back</button>
+    <section className={styles.JobContent}>
+      <header id={styles.JobContentHeading}>
+        <button onClick={previousPage}>
+          <Image
+            alt="back-icon"
+            width={25}
+            height={25}
+            src="/recruiter/back-icon.svg"
+          />
+        </button>
         <h1>Job Post {jobCount}</h1>
-        <div id={styles.mockExamSectionSaveandClose}>
+        {loadJobPostContent.jobTitle ? (
+          <h3>{loadJobPostContent.jobTitle}</h3>
+        ) : null}
+        <h3>{loadJobPostContent.jobId}</h3>
+        <div id={styles.jobContentSectionSaveandClose}>
           {updateJobPostContent &&
             (databaseExistingId ? (
-              <button onClick={updatetoDatabase}>Update</button>
+              <button onClick={updatetoDatabase}>
+                <Image
+                  alt="update-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/update-icon.svg"
+                />
+              </button>
             ) : (
-              <button onClick={saveToDatabase}>Save</button>
+              <button onClick={saveToDatabase}>
+                <Image
+                  alt="save-icon"
+                  width={35}
+                  height={35}
+                  src="/recruiter/save-icon.svg"
+                />
+              </button>
             ))}
         </div>
       </header>
-      {loadJobPostContent ? (
-        <div id={styles.mockExamSection}>
-          <div id={styles.mockExamSectionBlock}>
-            <h2>Add Job Title</h2>
-            <input
-              id={styles.mockExamSectionQuestion}
-              type="text"
-              value={jobTitle}
-              onChange={saveJobTitle}
-              readOnly={readOnly}
-            />
-            <h2>Add Job Description</h2>
-            <div id={styles.mockExamSectionAnswer}>
+      {loadJobPostContent && updateJobPostContent ? (
+        <div id={styles.jobContentSection}>
+          <div id={styles.jobContentSectionBlock}>
+            <div id={styles.jobContentSectionTitle}>
+              <h2>Add Job Title</h2>
               <input
                 type="text"
-                value={jobDescription}
-                onChange={saveJobDescription}
+                value={jobTitle}
+                onChange={saveJobTitle}
                 readOnly={readOnly}
               />
             </div>
-            <h2>Add Required Skills</h2>
-            <div id={styles.mockExamSectionAnswer}>
+            <div id={styles.jobContentSectionDescription}>
+              <h2>Add Job Description</h2>
+              <textarea
+                rows={10}
+                cols={50}
+                value={jobDescription}
+                onChange={saveJobDescription}
+                readOnly={readOnly}
+              ></textarea>
+            </div>
+            <div id={styles.jobContentSectionRequiredSkills}>
+              <header>
+                <h2>Add Required Skills</h2>
+              </header>
               <form onSubmit={saveRequiredSkills}>
                 <input
                   type="text"
@@ -176,6 +206,12 @@ export default function JobContent({
                 />
                 <button disabled={readOnly} type="submit">
                   Add
+                  <Image
+                    alt="plus-icon"
+                    width={20}
+                    height={20}
+                    src="/recruiter/plus-icon.svg"
+                  />
                 </button>
               </form>
               <div id={styles.jobPostSkill}>
@@ -189,21 +225,54 @@ export default function JobContent({
                           removeSkill(index);
                         }}
                       >
-                        Remove
+                        <Image
+                          alt="delete-icon"
+                          width={20}
+                          height={20}
+                          src="/recruiter/delete-icon.svg"
+                        />
                       </button>
                     </div>
                   );
                 })}
               </div>
             </div>
-            <h2>Add Job Type</h2>
-            <div id={styles.mockExamSectionAnswer}>
+            <div id={styles.jobContentSectionJobType}>
+              <h2>Add Job Type</h2>
               <input
                 type="text"
                 value={jobType}
                 onChange={saveJobType}
                 readOnly={readOnly}
               />
+            </div>
+          </div>
+        </div>
+      ) : loadJobPostContent && !updateJobPostContent ? (
+        <div id={styles.jobContentSection}>
+          <div id={styles.jobContentSectionBlock}>
+            <div id={styles.jobContentSectionTitle}>
+              <h1>{jobTitle}</h1>
+            </div>
+            <div id={styles.jobContentSectionDescription}>
+              <h3>{jobDescription}</h3>
+            </div>
+            <div id={styles.jobContentSectionRequiredSkills}>
+              <header>
+                <h1>Required Skills</h1>
+              </header>
+              <div id={styles.jobPostSkill}>
+                {requiredSkills.map((item: any, index: number) => {
+                  return (
+                    <div id={styles.jobPostSkillLabel} key={index}>
+                      <label>{item}</label>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div id={styles.jobContentSectionJobType}>
+              <h1>Type - {jobType}</h1>
             </div>
           </div>
         </div>
