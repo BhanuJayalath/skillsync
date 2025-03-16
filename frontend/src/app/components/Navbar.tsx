@@ -56,12 +56,6 @@ const Navbar = () => {
             </Link>
           </div>
           <div className={styles.desktopMenu}>
-            <Link href="/mock-interview" className={styles.navLink}>
-              Mock Interview
-            </Link>
-            <Link href="/job-recommendations" className={styles.navLink}>
-              Job Recommendations
-            </Link>
             <Link href="/about-us" className={styles.navLink}>
               About Us
             </Link>
