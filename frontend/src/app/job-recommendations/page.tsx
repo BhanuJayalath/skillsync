@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
+import "./JobRecommendations.css";
 
 interface Job {
   jobId: string;
