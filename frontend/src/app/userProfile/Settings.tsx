@@ -111,38 +111,45 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
           "summary": "Your generated summary here"
         }`;
 
-        fetch(`${apiUrl}`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${apiKey}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "model": "deepseek/deepseek-r1-distill-llama-70b:free",
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
-            })
-        })
-            .then(response => {
+        const fetchSummary = async (retries = 3) => {
+            try {
+                const response = await fetch(`${apiUrl}`, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${apiKey}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "model": "deepseek/deepseek-r1-distill-llama-70b:free",
+                        "messages": [{ "role": "user", "content": prompt }]
+                    })
+                });
+
                 console.log("Response Status:", response.status);
-                return response.json();
-            }) // Convert response to JSON
-            .then(data => {
-                // Extract and log the AI's response
+
+                const data = await response.json();
                 const summary = data.choices?.[0]?.message?.content.match(/{[\s\S]*}/) || "No response";
                 console.log("AI Response:", summary);
+
                 const jsonSummary = summary
-                    ? JSON.parse(summary[0])
-                    : { summary: "error occurred" };
+                    ? JSON.parse(summary[0])  // Retry happens here if JSON fails
+                    : { summary: "Error occurred" };
+
                 const filteredSummary = jsonSummary.summary.replace(/\*\*(.*?)\*\*/g, '$1');
                 setSummary(filteredSummary);
-                handleFields(filteredSummary,"cvSummary");
-            })
-            .catch(error => console.error("Error:", error));
+                handleFields(filteredSummary, "cvSummary");
+            } catch (error) {
+                if (error instanceof SyntaxError && retries > 0) {
+                    console.warn(`Retrying... Attempts left: ${retries}`);
+                    await fetchSummary(retries - 1); // Retry if JSON parsing fails
+                } else {
+                    console.error("Failed to generate summary:", error);
+                    setSummary("An error occurred while generating the CV summary.");
+                }
+            }
+        };
+
+        await fetchSummary();
     }
 
     // Fetch cities when a country is selected
