@@ -14,8 +14,6 @@ import axios from "axios";
 export default function TestListing({
   loadTests,
   setLoadTests,
-  updateTestContent,
-  setUpdateTestContent,
   removeTestBlock,
   setRemoveTestBlock,
   testState,
@@ -30,8 +28,6 @@ export default function TestListing({
 }: {
   loadTests: any;
   setLoadTests: any;
-  updateTestContent: any;
-  setUpdateTestContent: any;
   removeTestBlock: any;
   setRemoveTestBlock: any;
   testState: any;
@@ -109,22 +105,7 @@ export default function TestListing({
         </button>
         <button
           onClick={() => {
-            setUpdateTestContent(!updateTestContent);
-            setRemoveTestBlock(false);
-          }}
-        >
-          {" "}
-          <Image
-            alt="update-icon"
-            width={20}
-            height={20}
-            src="/recruiter/update-icon.svg"
-          />
-        </button>
-        <button
-          onClick={() => {
             setRemoveTestBlock(!removeTestBlock);
-            setUpdateTestContent(false);
           }}
         >
           {" "}
@@ -164,13 +145,6 @@ export default function TestListing({
                     width={25}
                     height={25}
                     src="/recruiter/remove-icon.svg"
-                  />
-                ) : updateTestContent ? (
-                  <Image
-                    alt="update-icon"
-                    width={25}
-                    height={25}
-                    src="/recruiter/update-icon.svg"
                   />
                 ) : null}
               </div>

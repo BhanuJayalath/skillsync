@@ -3,6 +3,14 @@ import mongoose from 'mongoose';
 
 // Define sub-schemas for nested objects
 
+const courseSchema = new mongoose.Schema({
+  courseId: { type: String },
+  code: { type: String },
+  name: { type: String },
+  result: { type: String },
+  mark: { type: String }
+});
+
 const experienceSchema = new mongoose.Schema({
   jobId: { type: String },
   jobName: { type: String },
@@ -28,13 +36,14 @@ const testSchema = new mongoose.Schema({
 });
 
 const jobRoleSchema = new mongoose.Schema({
-  jobName: { type: String }
+  jobTitle: { type: String },
+  jobId: { type: String }
 });
 
 // Main User schema
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
+  userName: { type: String, required: true, unique: true },
   email: { type: String, required: true , unique: true},
   password: { type: String, required: true },
   isVerified: { type: Boolean, default: false },
@@ -43,18 +52,19 @@ const userSchema = new mongoose.Schema({
   verifyToken: String,
   verifyTokenExpiry: Date,
 
-  number: { type: String },
-  displayName: { type: String },
+  contact: { type: String },
   fullName: { type: String },
   avatar: { type: String },
   gitHub: { type: String },
   linkedIn: { type: String },
   gender: { type: String },
-  language: { type: String },
   city: { type: String },
   country: { type: String },
   timeZone: { type: String },
+  language: { type: String },
+  cvSummary: { type: String },
   
+  courses: [courseSchema],
   tests: [testSchema],
   jobRole: [jobRoleSchema],
   experience: [experienceSchema],
