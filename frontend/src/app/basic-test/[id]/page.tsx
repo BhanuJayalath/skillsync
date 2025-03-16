@@ -1,6 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import axios from 'axios';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
+import { useRouter, useParams } from 'next/navigation';
 
 const skills = [
   "Angular",
@@ -1014,98 +1018,187 @@ const questions = [
   }
 ];
 
-
 function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array]
+  const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  return shuffled
+  return shuffled;
 }
 
 export default function QuizApp() {
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([])
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [userAnswers, setUserAnswers] = useState<{ [key: number]: string }>({})
-  const [quizState, setQuizState] = useState<"selection" | "quiz" | "results">("selection")
-  const [shuffledQuestions, setShuffledQuestions] = useState<typeof questions>([])
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+  const router = useRouter();
+  const { id } = useParams();
+
+  const [userDetails, setUserDetails] = useState({
+    _id: '',
+    username: '',
+    email: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [editing, setEditing] = useState(false);
+
+  // Editable fields for profile updates.
+  const [updatedDetails, setUpdatedDetails] = useState({
+    username: '',
+    email: '',
+  });
+
+  const getUserDetails = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get('/api/users/me');
+      setUserDetails({
+        _id: res.data.user._id,
+        username: res.data.user.username,
+        email: res.data.user.email,
+      });
+      setUpdatedDetails({
+        username: res.data.user.username,
+        email: res.data.user.email,
+      });
+    } catch (error: any) {
+      console.log(error.message);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState<{ [key: number]: string }>({});
+  const [quizState, setQuizState] = useState<"selection" | "quiz" | "results">("selection");
+  const [shuffledQuestions, setShuffledQuestions] = useState<typeof questions>([]);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
   useEffect(() => {
     if (quizState === "quiz") {
-      const shuffled = shuffleArray(questions)
+      const shuffled = shuffleArray(questions);
       const filteredAndShuffled = shuffled
         .filter((q) => selectedSkills.includes(q.skill))
-        .map((q) => ({ ...q, options: shuffleArray(q.options) }))
-      setShuffledQuestions(filteredAndShuffled)
+        .map((q) => ({ ...q, options: shuffleArray(q.options) }));
+      setShuffledQuestions(filteredAndShuffled);
     }
-  }, [quizState, selectedSkills])
+  }, [quizState, selectedSkills]);
+
+  // Save test scores when quizState becomes "results" and userDetails._id is valid.
+  useEffect(() => {
+    if (quizState === "results" && userDetails._id) {
+      const scores = calculateScores();
+      const totalCorrect = Object.values(scores).reduce(
+        (sum, { correct }) => sum + correct,
+        0
+      );
+      const totalQuestions = Object.values(scores).reduce(
+        (sum, { total }) => sum + total,
+        0
+      );
+      // Convert scores object into an array of skill scores.
+      const skillScores = Object.entries(scores).map(([skill, { correct, total }]) => ({
+        skill,
+        correct,
+        total
+      }));
+
+      const scoreData = {
+        userId: userDetails._id,
+        overallScore: totalCorrect,
+        totalQuestions: totalQuestions,
+        skillScores, // e.g., [{ skill: "Angular", correct: 2, total: 5 }, ...]
+        selectedSkills,
+      };
+
+      console.log("Posting scoreData:", scoreData); // Debug log
+
+      axios.post('/api/basic-test', scoreData)
+        .then((response) => {
+          console.log("Test score saved", response.data);
+        })
+        .catch((error) => {
+          console.error("Error saving test score", error);
+          toast.error(
+            "Error saving test score: " +
+              (error.response?.data?.error || error.message)
+          );
+        });
+    }
+  }, [quizState, selectedSkills, userDetails]);
 
   const handleSkillToggle = (skill: string) => {
     setSelectedSkills((prev) =>
       prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
-    )
-  }
+    );
+  };
 
   const startQuiz = () => {
     if (selectedSkills.length > 0) {
-      setQuizState("quiz")
+      setQuizState("quiz");
     }
-  }
+  };
 
   const handleAnswerSelection = (answer: string) => {
-    setSelectedAnswer(answer)
-  }
+    setSelectedAnswer(answer);
+  };
 
   const handleSubmitAnswer = () => {
     if (selectedAnswer !== null && currentQuestionIndex < shuffledQuestions.length) {
       setUserAnswers((prev) => ({
         ...prev,
         [shuffledQuestions[currentQuestionIndex].id]: selectedAnswer,
-      }))
+      }));
 
       if (currentQuestionIndex < shuffledQuestions.length - 1) {
-        setCurrentQuestionIndex((prev) => prev + 1)
-        setSelectedAnswer(null)
+        setCurrentQuestionIndex((prev) => prev + 1);
+        setSelectedAnswer(null);
       } else {
-        setQuizState("results")
+        setQuizState("results");
       }
     }
-  }
+  };
 
   const calculateScores = () => {
-    const scores: { [key: string]: { correct: number; total: number } } = {}
-
+    const scores: { [key: string]: { correct: number; total: number } } = {};
     shuffledQuestions.forEach((question) => {
       if (!scores[question.skill]) {
-        scores[question.skill] = { correct: 0, total: 0 }
+        scores[question.skill] = { correct: 0, total: 0 };
       }
-      scores[question.skill].total++
+      scores[question.skill].total++;
       if (userAnswers[question.id] === question.correctAnswer) {
-        scores[question.skill].correct++
+        scores[question.skill].correct++;
       }
-    })
-
-    return scores
-  }
+    });
+    return scores;
+  };
 
   const restartQuiz = () => {
-    setSelectedSkills([])
-    setCurrentQuestionIndex(0)
-    setUserAnswers({})
-    setQuizState("selection")
-    setShuffledQuestions([])
-    setSelectedAnswer(null)
-  }
+    setSelectedSkills([]);
+    setCurrentQuestionIndex(0);
+    setUserAnswers({});
+    setQuizState("selection");
+    setShuffledQuestions([]);
+    setSelectedAnswer(null);
+  };
 
-  const primaryColor = "rgb(96,166,236)" // #60A6EC
-  const primaryBgClass = "bg-[rgb(96,166,236)]"
+  const primaryColor = "rgb(96,166,236)"; // #60A6EC
+  const primaryBgClass = "bg-[rgb(96,166,236)]";
 
   if (quizState === "selection") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-3xl">
+          <h1 className="text-4xl font-bold text-center mb-6" style={{ color: primaryColor }}>
+            Hello there {userDetails.username}!
+          </h1>
+          <h2 className="text-2xl font-semibold text-center mb-6">
+            Welcome to the Basic Skills Test. <br />
+            Select the skills you want to be tested on.
+          </h2>
           <h1 className="text-4xl font-bold text-center mb-6" style={{ color: primaryColor }}>
             Select Your Skills
           </h1>
@@ -1133,11 +1226,11 @@ export default function QuizApp() {
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   if (quizState === "quiz" && shuffledQuestions.length > 0) {
-    const currentQuestion = shuffledQuestions[currentQuestionIndex]
+    const currentQuestion = shuffledQuestions[currentQuestionIndex];
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-xl">
@@ -1169,14 +1262,14 @@ export default function QuizApp() {
           </button>
         </div>
       </div>
-    )
+    );
   }
 
   if (quizState === "results") {
-    const scores = calculateScores()
-    const totalCorrect = Object.values(scores).reduce((sum, score) => sum + score.correct, 0)
-    const totalQuestions = Object.values(scores).reduce((sum, score) => sum + score.total, 0)
-    const overallPercentage = Math.round((totalCorrect / totalQuestions) * 100)
+    const scores = calculateScores();
+    const totalCorrect = Object.values(scores).reduce((sum, { correct }) => sum + correct, 0);
+    const totalQuestions = Object.values(scores).reduce((sum, { total }) => sum + total, 0);
+    const overallPercentage = Math.round((totalCorrect / totalQuestions) * 100);
 
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -1189,7 +1282,7 @@ export default function QuizApp() {
           </p>
           <div className="space-y-4">
             {Object.entries(scores).map(([skill, score]) => {
-              const percentage = Math.round((score.correct / score.total) * 100)
+              const percentage = Math.round((score.correct / score.total) * 100);
               return (
                 <div key={skill}>
                   <p className="font-semibold text-gray-700">
@@ -1202,7 +1295,7 @@ export default function QuizApp() {
                     ></div>
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
           <button
@@ -1213,8 +1306,8 @@ export default function QuizApp() {
           </button>
         </div>
       </div>
-    )
+    );
   }
 
-  return <div>Loading...</div>
+  return <div>Loading...</div>;
 }

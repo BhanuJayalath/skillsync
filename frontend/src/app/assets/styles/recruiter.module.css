@@ -5,24 +5,38 @@
   z-index: -1;
   height: auto;
   width: 100%;
-  color: white;
+  color: black;
 }
 .navigation {
   display: flex;
   flex-direction: row;
-  background-color: #f9f9f9;
   width: 100%;
-  justify-content: space-evenly;
+  gap: 20px;
+  justify-content: left;
+  padding: 0px 20px 0px 20px;
   align-items: center;
   height: 100px;
 }
+.navigation #pageTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  color: #000f22;
+  box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.09);
+  width: 200px;
+  height: 60px;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
 .navigation .welcomeBar {
   display: flex;
-  padding: 20px;
+  padding-left: 20px;
   flex-direction: row;
   align-items: center;
   width: 60%;
-  height: 60%;
+  height: 60px;
   border-radius: 10px;
   background: linear-gradient(to right, #040829, #48afc9);
 }
@@ -47,6 +61,7 @@
   float: right;
   width: 84%;
   height: 100vh;
+  color: white;
 }
 .sideBar {
   position: fixed;
@@ -100,7 +115,7 @@
 }
 #contentContainer1 {
   flex-direction: row;
-  height: 70vh;
+  height: auto;
 }
 #contentContainer2 {
   flex-direction: column;
@@ -117,9 +132,9 @@
   padding: 10px;
   width: 32%;
   gap: 10px;
-  height: 100%;
+  height: 70vh;
   border-radius: 5px;
-  background-color: #d1e5f4;
+  background-color: #e3f3ff;
 }
 #topGraded > :first-child,
 #profiles > :first-child,
@@ -140,7 +155,7 @@
   gap: 20px;
   padding: 10px 20px 10px 20px;
   width: 100%;
-  height: 12%;
+  min-height: 80px;
   background-color: #000f22;
 }
 #topGradedContainer > :last-child,
@@ -149,17 +164,19 @@
   margin-left: auto;
 }
 #mockExams,
+#testListing,
 #jobListing {
   display: flex;
   padding: 20px;
+  gap: 20px;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-evenly;
   width: 100%;
-  height: 50%;
   color: black;
 }
 #mockExamscontainerHeader,
+#testListingHeader,
 #jobListingcontainerHeader {
   display: flex;
   flex-direction: row;
@@ -168,31 +185,33 @@
   text-align: left;
   font-size: 20px;
   width: 100%;
-  height: 20%;
+  height: 100px;
 }
 .mockExamscontainerSection,
+.testListingSection,
 .jobListingcontainerSection {
-  width: 100%;
-  height: 80%;
+  width: fit-content;
   gap: 10px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
 }
 
 #mockExamscontainer,
+#testListingcontainer,
 #jobListingcontainer {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-radius: 20px;
   gap: 20px;
-  width: 32%;
-  height: 100%;
-  background-color: #d1e5f4;
+  width: 300px;
+  height: 300px;
+  /* flex-grow: 1; */
+  background-color: #e3f3ff;
 }
-.sideBar li:hover,
+/* .sideBar li:hover,
 #topGradedContainer:hover,
 #profilesContainer:hover,
 #resultsContainer:hover,
@@ -200,14 +219,17 @@
 #jobListingcontainer:hover {
   transform: scale(1.02);
   transition: transform 0.3s ease-in-out;
-}
+} */
 
-.mockExam {
+.mockExam,
+.JobContent {
   width: 100%;
   height: 100%;
   color: #000f22;
 }
-#mockExamHeading {
+
+#mockExamHeading,
+#JobContentHeading {
   display: flex;
   align-items: center;
   width: 100%;
@@ -217,24 +239,26 @@
   text-align: center;
 }
 #emptyMockExamSection,
+#jobContentSection,
 #mockExamSection {
   margin-bottom: 10px;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 #emptyMockExamSection {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-#mockExamSectionBlock {
+#mockExamSectionBlock,
+#jobContentSectionBlock {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   padding: 20px;
-  background-color: #d1e5f4;
-  gap: 20px;
+  background-color: #ecfcff;
+  gap: 30px;
 }
 #mockExamSectionBlock header {
   display: flex;
@@ -243,36 +267,109 @@
   width: 100%;
 }
 #mockExamSectionQuestion,
+#jobContentSectionTitle,
+#mockExamSectionAnswer,
+#jobContentSectionJobType,
+#jobContentSectionRequiredSkills {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  gap: 20px;
+}
 #mockExamSectionAnswer {
   display: flex;
   flex-direction: row;
-  /* justify-content: center; */
   align-items: center;
   width: 100%;
-  height: 50px;
+  height: auto;
+  gap: 20px;
+}
+#jobContentSectionDescription textarea {
+  resize: none;
 }
 #mockExamSectionAnswer input[type="checkbox"] {
-  width: 10%;
-  height: 50%;
+  width: 50px;
+  height: 25px;
 }
-#mockExamSectionAnswer input[type="text"] {
-  width: 90%;
+#jobContentSectionTitle input[type="text"],
+#mockExamSectionAnswer input[type="text"],
+#mockExamSectionQuestion,
+#jobContentSectionJobType input[type="text"] {
+  width: 100%;
+  height: 50px;
+  padding: 5px;
+  outline: none;
+  border: 2px solid #d1e5f4;
+}
+#jobContentSectionRequiredSkills input[type="text"] {
+  width: 70%;
+  height: 50px;
+  padding: 5px;
+  outline: none;
+  border: 2px solid #d1e5f4;
+}
+#jobContentSectionDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  height: auto;
+  text-align: justify;
+}
+#jobContentSectionDescription textarea {
+  outline: none;
+  border: 2px solid #d1e5f4;
+  padding: 5px;
+}
+#jobContentSectionTitle h2,
+#mockExamSectionAnswer h2,
+#jobContentSectionJobType h2,
+#jobContentSectionDescription h2 {
+  width: 100%;
   height: 100%;
 }
-#mockExamscontainerButtons {
+#jobContentSectionRequiredSkills header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-direction: row;
+}
+#jobContentSectionRequiredSkills form button {
+  display: flex;
+  width: 110px;
+  height: fit-content;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  gap: 10px;
+  font-size: 12px;
+  border-radius: 50px;
+  background-color: #d1e5f4;
+}
+#jobContentSectionRequiredSkills form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+#mockExamscontainerButtons,
+#testListingButtons {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   gap: 20px;
 }
-.mockExamscontainerSection button {
+.mockExamscontainerSection button,
+.testListingSection button {
   display: flex;
   justify-content: center;
   width: 50%;
   height: 50px;
 }
-#mockExamSectionSaveandClose {
+#mockExamSectionSaveandClose,
+#jobContentSectionSaveandClose {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -282,14 +379,186 @@
 #jobPostSkill {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  /* justify-content: space-evenly; */
+  gap: 20px;
   width: 100%;
+  height: auto;
+  flex-wrap: wrap;
   /* background-color: #48afc9; */
 }
 #jobPostSkillLabel {
   display: flex;
+  width: fit-content;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  font-size: 12px;
+  border-radius: 50px;
+  background-color: #d1e5f4;
+}
+#JobContentHeading h3,
+#mockExamHeading h3 {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  align-items: center;
+  padding: 10px;
+  font-size: 12px;
+  color: white;
+  gap: 10px;
+  border-radius: 10px;
+  background-color: #00233c;
+}
+
+#companyProfile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  color: #000f22;
+  width: 100%;
+  min-height: 500px;
+  height: 100%;
+  border-radius: 20px;
+  background-color: #ecfcff;
+}
+#companyProfile header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+}
+#companyProfile header button {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  gap: 10px;
+  font-size: 12px;
+  border-radius: 50px;
+  margin-left: auto;
+  background-color: #d1e5f4;
+}
+
+#companyProfile header h1 {
+  font-weight: 550;
+  font-size: 20px;
+  margin-right: auto;
+}
+#profileCard {
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+}
+#updateProfileCard {
+  display: flex;
+  flex-direction: column;
+  text-align: justify;
+  width: 100%;
+  height: 100%;
+  gap: 40px;
+}
+#updateProfileCard header {
+  display: flex;
+  justify-content: left;
+  font-size: 20px;
+  font-weight: 550;
+}
+#profileForm {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#profileForm div {
+  width: 80%;
+  height: 50px;
+  display: flex;
   flex-direction: row;
+  row-gap: 50px;
+}
+#profileForm #companyProfileAbout {
+  height: 200px;
+}
+
+#profileForm div input,
+#profileForm div textarea,
+#profileForm div label {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  outline: none;
+
+  padding: 5px;
+}
+#profileForm div input,
+#profileForm div textarea {
+  width: 70%;
+  border: 2px solid #d1e5f4;
+}
+
+#profileForm div label {
+  align-items: center;
+  width: 30%;
+}
+#dashboardDisplayContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  gap: 10px;
+  overflow: auto;
+}
+#profileCard h1 {
+  font-size: 50px;
+}
+#profileCard h3,
+#profileCard h4 {
+  padding: 10px;
+  font-size: 12px;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 50px;
+  background-color: #d1e5f4;
+}
+#companyProfile header button {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  gap: 10px;
+  font-size: 12px;
+  border-radius: 50px;
+  background-color: #d1e5f4;
+}
+#questionContentDisplayArea {
+  width: 100%;
+  height: 100%;
+  /* background-color: #48afc9; */
+}
+#questionContentArea {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
   gap: 10px;
   width: 100%;
-  /* background-color: #48afc9; */
+  height: 100%;
+}
+#jobContentSectionBlock h1,
+#jobContentSectionBlock h2 {
+  font-weight: 600;
+}
+#mockExamSectionAnswer input[type="checkbox"]:disabled {
+  background: blue !important;
+  opacity: 1;
+  cursor: not-allowed;
+}
+#mockExamSectionBlock h2,
+#mockExamSectionBlock header {
+  font-weight: 600;
 }

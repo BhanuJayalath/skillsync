@@ -1,7 +1,7 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import MockExam from "./TestContent";
-import Tab from "./Tab";
+import Tab from "./JobTab";
 import ResultTab from "./ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -15,22 +15,21 @@ export default function JobListing({
   loadJobPostContent,
   setLoadJobPostContent,
   setJobCount,
-  setUpdateJobPostContent,
-  updateJobPostContent,
   setJobPostResponse,
+  recruiterDetails,
 }: {
   setJobPostState: any;
   jobPostState: any;
   loadJobPostContent: any;
   setLoadJobPostContent: any;
   setJobCount: any;
-  setUpdateJobPostContent: any;
-  updateJobPostContent: any;
   setJobPostResponse: any;
+  recruiterDetails: any;
 }) {
   const [loadJobPosts, setLoadJobPosts] = useState<
     {
       jobId: String;
+      recruiterId: String;
       jobTitle: String;
       jobDescription: String;
       requiredSkills: String[];
@@ -43,15 +42,22 @@ export default function JobListing({
 
   useEffect(() => {
     const tempArray: any = [];
-    axios.get(`${process.env.NEXT_PUBLIC_GET_JOBS}`).then((response) => {
-      if (response.data.length != 0) {
-        setJobPostResponse(response.data);
-        response.data.map((item: any) => {
-          tempArray.push(item);
-        });
-      }
-      setLoadJobPosts(tempArray);
-    });
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_GET_JOBS_BY_RECRUITER_ID}/${recruiterDetails._id}`
+      )
+      .then((response) => {
+        if (response.data.length != 0) {
+          setJobPostResponse(response.data);
+          response.data.map((item: any) => {
+            tempArray.push(item);
+          });
+        }
+        setLoadJobPosts(tempArray);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [remove, jobPostState]);
 
   function loadJobPostComponent(jobId: string, JobCounter: number) {
@@ -66,6 +72,7 @@ export default function JobListing({
       ...loadJobPosts,
       {
         jobId: "Job" + Date.now(),
+        recruiterId: recruiterDetails._id,
         jobTitle: "",
         jobDescription: "",
         requiredSkills: [],
@@ -101,22 +108,7 @@ export default function JobListing({
         </button>
         <button
           onClick={() => {
-            setUpdateJobPostContent(!updateJobPostContent);
-            setRemoveJobPostContainers(false);
-          }}
-        >
-          {" "}
-          <Image
-            alt="update-icon"
-            width={20}
-            height={20}
-            src="/recruiter/update-icon.svg"
-          />
-        </button>
-        <button
-          onClick={() => {
             setRemoveJobPostContainers(!removeJobPostContainers);
-            setUpdateJobPostContent(false);
           }}
         >
           {" "}
@@ -156,13 +148,6 @@ export default function JobListing({
                     width={25}
                     height={25}
                     src="/recruiter/remove-icon.svg"
-                  />
-                ) : updateJobPostContent ? (
-                  <Image
-                    alt="update-icon"
-                    width={25}
-                    height={25}
-                    src="/recruiter/update-icon.svg"
                   />
                 ) : null}
               </div>

@@ -80,6 +80,16 @@ export class JobRecommendationService {
     return this.jobModel.find().exec();
   }
 
+  // **READ jobs by Recruiter ID**
+  async getJobsByRecruiterId(recruiterId: string): Promise<Job[]> {
+    const jobs = await this.jobModel.find({ recruiterId }).exec();
+    if (!jobs.length)
+      throw new NotFoundException(
+        `Jobs with Recruiter ID ${recruiterId} not found`,
+      );
+    return jobs;
+  }
+
   // **READ a job by ID**
   async getJobById(jobId: string): Promise<Job> {
     const job = await this.jobModel.findOne({ jobId }).exec();
