@@ -14,9 +14,10 @@ const jobPostingSchema = new mongoose.Schema({
 
 // Define the main Recruiter schema
 const recruiterSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
+    userName: { type: String, required: true, unique: true },
     email: { type: String, required: true , unique: true},
     password: { type: String, required: true },
+    company: { type: String, required: true },
     isVerified: { type: Boolean, default: false },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
@@ -27,6 +28,7 @@ const recruiterSchema = new mongoose.Schema({
     linkedIn: { type: String },
     companyWebsite: { type: String },
     companyLogo: { type: String },
+    services: { type: String },
     // Array of job postings created by the recruiter
     jobPostings: [jobPostingSchema]
 });
