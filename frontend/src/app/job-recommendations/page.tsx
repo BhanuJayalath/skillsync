@@ -57,11 +57,8 @@ export default function JobRecommendations() {
     // Fetch Job Recommendations
     const fetchJobRecommendations = async (skills: string[]) => {
       try {
-        const jobResponse = await axios.post("http://localhost:3001/api/jobs/recommendations", {
-          skills,
-        });
-
-        setJobs(jobResponse.data.jobs || []);
+        const response = await axios.post("http://localhost:3001/jobs/recommendJob", { skills });
+        setJobs(response.data.jobs || []);
       } catch (err: any) {
         console.error("Error fetching jobs:", err.message);
         setError("Failed to fetch job recommendations");
