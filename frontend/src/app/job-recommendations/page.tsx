@@ -98,38 +98,25 @@ export default function JobRecommendations() {
   return (
     <>
       <Navbar />
-      <div>
+      <div className="job-recommendations">
         <h1>Job Recommendations</h1>
-
         {loading && <p>Loading job recommendations...</p>}
+        {error && <p className="error-message">{error}</p>}
+        {!loading && jobs.length === 0 && <p>No jobs found.</p>}
 
-        
-        {notLoggedIn && (
-          <div>
-            <p>You are not logged in. Please log in to see job recommendations.</p>
-            <button onClick={() => router.push("/login")}>Go to Login</button>
-          </div>
-        )}
-
-        {error && <p>Error: {error}</p>}
-        {!loading && jobs.length === 0 && !notLoggedIn && <p>No jobs found.</p>}
-
-        {!notLoggedIn && (
-          <ul>
-            {jobs.map((job, index) => (
-              <li key={index}>
-                <h2>{job.jobTitle}</h2>
-                <p>{job.jobDescription}</p>
-                <p>
-                  <strong>Type:</strong> {job.jobType}
-                </p>
-                <p>
-                  <strong>Required Skills:</strong> {job.requiredSkills?.join(", ")}
-                </p>
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul className="job-list">
+          {jobs.map((job, index) => (
+            <li key={index} className="job-item">
+              <h2>{job.jobTitle}</h2>
+              <p>{job.jobDescription}</p>
+              <p><strong>Type:</strong> {job.jobType}</p>
+              <p><strong>Required Skills:</strong> {job.requiredSkills?.join(", ")}</p>
+              <button onClick={() => selectJob(job)} className="select-job-button">
+                Select Job
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
       <Footer />
     </>
