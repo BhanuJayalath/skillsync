@@ -6,17 +6,48 @@ import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+interface Job {
+  jobId: string;
+  jobTitle: string;
+  jobDescription: string;
+  jobType: string;
+  requiredSkills: string[];
+}
+
+interface UserProfile {
+  skills: string[];
+}
+
 export default function JobRecommendations() {
   const router = useRouter();
   const [userId, setUserId] = useState<string | null>(null);
   const [skills, setSkills] = useState<string[]>([]);
-  const [jobs, setJobs] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [notLoggedIn, setNotLoggedIn] = useState(false); 
+  const [notLoggedIn, setNotLoggedIn] = useState(false);
+
+  
+  async function fetchUserProfile(userId: string) {
+    try {
+      const userResponse = await axios.get<UserProfile>(
+        `http://localhost:3001/getUser/${userId}`
+      );
+      const userData = userResponse.data;
+
+      if (!userData || !userData.skills || !Array.isArray(userData.skills)) {
+        throw new Error("User skills not found");
+      }
+
+      setSkills(userData.skills);
+    } catch (err: any) {
+      console.error("Error fetching user profile:", err.message);
+      setError("Failed to fetch user profile");
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    
     async function fetchUserId() {
       try {
         const storedUserId = localStorage.getItem("userId");
@@ -35,68 +66,48 @@ export default function JobRecommendations() {
       }
     }
 
-    fetchUserId(); 
+    fetchUserId();
   }, []);
 
+  // Fetch Job Recommendations
   useEffect(() => {
-    if (!userId) return; 
+    if (skills.length === 0) return; // Prevents API call if skills are empty
 
-    async function fetchUserProfile(userId: string) {
-    try {
-      const userResponse = await axios.get(`http://localhost:3001/getUser/${userId}`);
-      const userData = userResponse.data;
-
-      if (!userData || !userData.skills || !Array.isArray(userData.skills)) {
-        throw new Error("User skills not found");
+    async function fetchJobRecommendations() {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axios.post<{ jobs: Job[] }>(
+          "http://localhost:3001/jobs/recommendJob",
+          { skills }
+        );
+        setJobs(response.data.jobs || []);
+      } catch (err: any) {
+        console.error("Error fetching jobs:", err.message);
+        setError("Failed to fetch job recommendations");
+      } finally {
+        setLoading(false);
       }
-
-      setSkills(userData.skills);
-    } catch (err: any) {
-      console.error("Error fetching user profile:", err.message);
-      setError("Failed to fetch user profile");
-      setLoading(false);
     }
-  }
 
-  fetchUserProfile(userId); 
-}, [userId]);
+    fetchJobRecommendations();
+  }, [skills]);
 
-    
-    // Fetch Job Recommendations
-    useEffect(() => {
-      if (skills.length === 0) return; // Prevents API call if skills are empty
-  
-      async function fetchJobRecommendations() {
-        try {
-          const response = await axios.post("http://localhost:3001/jobs/recommendJob", { skills });
-          setJobs(response.data.jobs || []);
-        } catch (err: any) {
-          console.error("Error fetching jobs:", err.message);
-          setError("Failed to fetch job recommendations");
-        } finally {
-          setLoading(false);
-        }
-      }
-  
-      fetchJobRecommendations();
-    }, [skills]);
-
-     
-  const selectJob = async (job: any) => {
+  const selectJob = async (job: Job) => {
     if (!userId) return;
 
     try {
-      await axios.patch(`http://localhost:3001/updateUser/${userId}`, { 
-        selectedJob: { jobId: job.jobId, jobTitle: job.jobTitle }
+      await axios.patch(`http://localhost:3001/updateUser/${userId}`, {
+        selectedJob: { jobId: job.jobId, jobTitle: job.jobTitle },
       });
-      
+      alert(`You have selected ${job.jobTitle}`);
     } catch (err: any) {
       console.error("Error updating user job:", err.message);
       setError("Failed to update job selection");
     }
   };
 
-  //  Handle not logged-in user
+  // Handle not logged-in user
   if (notLoggedIn) {
     return (
       <div className="not-logged-in">
@@ -122,8 +133,12 @@ export default function JobRecommendations() {
             <li key={index} className="job-item">
               <h2>{job.jobTitle}</h2>
               <p>{job.jobDescription}</p>
-              <p><strong>Type:</strong> {job.jobType}</p>
-              <p><strong>Required Skills:</strong> {job.requiredSkills?.join(", ")}</p>
+              <p>
+                <strong>Type:</strong> {job.jobType}
+              </p>
+              <p>
+                <strong>Required Skills:</strong> {job.requiredSkills?.join(", ")}
+              </p>
               <button onClick={() => selectJob(job)} className="select-job-button">
                 Select Job
               </button>
@@ -135,8 +150,3 @@ export default function JobRecommendations() {
     </>
   );
 }
-
-function fetchUserProfile(storedUserId: string) {
-  throw new Error("Function not implemented.");
-}
-
