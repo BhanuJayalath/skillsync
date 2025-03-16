@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react'
 import styles from './Chat.module.css'
-import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
 import Image from 'next/image'
 
 const GEMINI_API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
@@ -296,7 +294,6 @@ export default function Chat() {
 
   return (
     <>
-      <Navbar />
       <div className={styles.chatContainer}>
         <div className={styles.header}>
           <h1 className={styles.title}>AI Mock Interview</h1>
@@ -357,7 +354,6 @@ export default function Chat() {
         </>
       )}
       </div>
-      <Footer />
     </>
   )
 }
