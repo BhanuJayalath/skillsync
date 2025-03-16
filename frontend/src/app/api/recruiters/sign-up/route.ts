@@ -9,7 +9,7 @@ connect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { username, email, password, company } = reqBody;
+    const { userName, email, password, company } = reqBody;
 
     console.log(reqBody);
 
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     // Create new recruiter
     const newRecruiter = new Recruiter({
-      username,
+      userName,
       email,
       password: hashedPassword,
       company,
