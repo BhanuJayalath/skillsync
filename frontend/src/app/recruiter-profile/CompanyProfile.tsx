@@ -3,7 +3,7 @@ import styles from "../assets/styles/recruiter.module.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Profile({
+export default function CompanyProfile({
   recruiterDetails,
 }: {
   recruiterDetails: any;

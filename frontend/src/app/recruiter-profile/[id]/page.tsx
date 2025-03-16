@@ -8,7 +8,8 @@ import JobListing from "../JobListing";
 import JobContent from "../JobContent";
 import TestContent from "../TestContent";
 import Dashboard from "../Dashboard";
-import Profile from "../Profile";
+import Profile from "../CompanyProfile";
+import UserProfile from "../UserProfile";
 
 import axios from "axios";
 import TestListing from "../TestListing";
@@ -41,8 +42,6 @@ export default function RecruiterProfile() {
   const [profileTab, setProfileTab] = useState(false);
   const [testCount, setTestCount] = useState(Number);
   const [jobCount, setJobCount] = useState(Number);
-  const [updateTestContent, setUpdateTestContent] = useState(false);
-  const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
   const [removeTestBlock, setRemoveTestBlock] = useState(false);
   const [testResponse, setTestResponse] = useState();
   const [jobPostResponse, setJobPostResponse] = useState();
@@ -71,7 +70,8 @@ export default function RecruiterProfile() {
           <div id={styles.contentContainer1}>
             {dashboardTab && recruiterDetails ? (
               <Dashboard recruiterDetails={recruiterDetails} />
-            ) : profileTab ? (
+            ) : // <UserProfile userId={"67d5a2e764a3750a956f45a3"} />
+            profileTab ? (
               <Profile recruiterDetails={recruiterDetails} />
             ) : null}
           </div>
@@ -80,8 +80,6 @@ export default function RecruiterProfile() {
               <JobContent
                 loadTests={loadTests}
                 setLoadTests={setLoadTests}
-                updateTestContent={updateTestContent}
-                setUpdateTestContent={setUpdateTestContent}
                 removeTestBlock={removeTestBlock}
                 setRemoveTestBlock={setRemoveTestBlock}
                 testState={testState}
@@ -93,8 +91,6 @@ export default function RecruiterProfile() {
                 testResponse={testResponse}
                 setTestResponse={setTestResponse}
                 loadJobPostContent={loadJobPostContent}
-                setUpdateJobPostContent={setUpdateJobPostContent}
-                updateJobPostContent={updateJobPostContent}
                 jobPostResponse={jobPostResponse}
                 jobCount={jobCount}
               />
@@ -108,16 +104,12 @@ export default function RecruiterProfile() {
                 setTestState={setTestState}
                 loadTestQuestions={loadTestQuestions}
                 testCount={testCount}
-                updateTestContent={updateTestContent}
-                setUpdateTestContent={setUpdateTestContent}
                 testResponse={testResponse}
               />
             ) : recruiterDetails ? (
               <JobListing
                 loadJobPostContent={loadJobPostContent}
                 setLoadJobPostContent={setLoadJobPostContent}
-                setUpdateJobPostContent={setUpdateJobPostContent}
-                updateJobPostContent={updateJobPostContent}
                 setJobPostState={setJobPostState}
                 jobPostState={jobPostState}
                 setJobCount={setJobCount}

@@ -9,8 +9,6 @@ export default function TestContent({
   loadTestQuestions,
   setLoadTestQuestions,
   testCount,
-  updateTestContent,
-  setUpdateTestContent,
   testResponse,
   testState,
   setTestState,
@@ -21,8 +19,6 @@ export default function TestContent({
   setLoadTestQuestions: any;
   loadTestQuestions: any;
   testCount: number;
-  updateTestContent: any;
-  setUpdateTestContent: any;
   testResponse: any;
   testState: any;
   setTestState: any;
@@ -31,6 +27,7 @@ export default function TestContent({
 }) {
   var counter = 0;
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
+  const [updateTestContent, setUpdateTestContent] = useState(false);
   useEffect(() => {
     const DatabaseExistingId = testResponse.some(
       (item: any) => item.testId === loadTestQuestions.testId
@@ -38,12 +35,7 @@ export default function TestContent({
     setDatabaseExistingId(DatabaseExistingId);
   });
 
-  useEffect(() => {
-    // localStorage.setItem(
-    //   loadTestQuestions.testId,
-    //   JSON.stringify(loadTestQuestions)
-    // );
-  }, [loadTestQuestions]);
+  useEffect(() => {}, [loadTestQuestions]);
 
   function addQuestion() {
     var temp = {
@@ -67,7 +59,6 @@ export default function TestContent({
     });
   }
   function update(id: string, questionItem: any) {
-    // console.log("trigger");
     const index = loadTestQuestions.testContent.questionContent.findIndex(
       (item: any) => item.questionId == id
     );
@@ -119,6 +110,7 @@ export default function TestContent({
         headers: { "Content-Type": "application/json" },
       }
     );
+    setUpdateTestContent(false);
   }
   function previousPage() {
     setJobPostState(!jobPostState);
@@ -144,7 +136,20 @@ export default function TestContent({
           <h3>{loadJobPostContent.jobTitle}</h3>
         ) : null}
         <h3>{loadJobPostContent.jobId}</h3>
-        {updateTestContent ? (
+        {!updateTestContent ? (
+          <button
+            onClick={() => {
+              setUpdateTestContent(true);
+            }}
+          >
+            <Image
+              alt="update-icon"
+              width={20}
+              height={20}
+              src="/recruiter/update-icon.svg"
+            />
+          </button>
+        ) : updateTestContent ? (
           <>
             <button onClick={addQuestion}>
               <Image
@@ -157,10 +162,10 @@ export default function TestContent({
             {databaseExistingId ? (
               <button onClick={updatetoDatabase}>
                 <Image
-                  alt="update-icon"
-                  width={20}
-                  height={20}
-                  src="/recruiter/update-icon.svg"
+                  alt="save-icon"
+                  width={35}
+                  height={35}
+                  src="/recruiter/save-icon.svg"
                 />
               </button>
             ) : (

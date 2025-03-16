@@ -33,6 +33,7 @@ export default function QuestionContent({
     correctAnswer: selectedAnswer,
   };
   useEffect(() => {
+    console.log(updateTestContent, "update test content");
     setQuestion(TestQuestions.question);
     setAnswer1(TestQuestions.answer1);
     setAnswer2(TestQuestions.answer2);
@@ -43,8 +44,10 @@ export default function QuestionContent({
     );
     if (updateTestContent == false) {
       setReadOnly(true);
+    } else if (updateTestContent == true) {
+      setReadOnly(false);
     }
-  }, [removed]);
+  }, [removed, updateTestContent]);
   useEffect(() => {
     update(TestQuestions.questionId, storage);
   }, [question, answer1, answer2, answer3, answer4, selectedAnswer]);
