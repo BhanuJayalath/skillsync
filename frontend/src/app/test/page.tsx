@@ -33,7 +33,7 @@ export default function MCQTest() {
   const [score, setScore] = useState({ correct: 0, total: 0 })
 
   //fixed userId for now
-  const id = "67d5a2e764a3750a956f45a3";
+  const userId = "67d7046a95c5933ae4350dbb";
   const [testId, setTestId] = useState("Test1742022418151") // Fixed testId for now
   const jobId = "Job1742022159253" // Fixed jobId for now
 
@@ -96,7 +96,7 @@ export default function MCQTest() {
     // Send the test mark to the backend
     try {
       await axios.patch(`http://localhost:3001/saveTestMark`, {
-        id,
+        userId,
         jobId,
         testId,
         score: correctCount,
