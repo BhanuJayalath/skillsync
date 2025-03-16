@@ -13,7 +13,6 @@ interface tests {
     testId: string;
     testLevel: string;
     mark: string;
-    xAxis: string;
 }
 
 const Progress = ({ user }: { user: User }) => {
