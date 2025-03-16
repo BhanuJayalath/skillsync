@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+
 interface Job {
   jobId: string;
   jobTitle: string;
@@ -29,6 +30,9 @@ export default function JobRecommendations() {
 
   
   async function fetchUserProfile(userId: string) {
+    setLoading(true); 
+    setError(null); 
+
     try {
       const userResponse = await axios.get<UserProfile>(
         `http://localhost:3001/getUser/${userId}`
@@ -54,7 +58,7 @@ export default function JobRecommendations() {
 
         if (storedUserId) {
           setUserId(storedUserId);
-          fetchUserProfile(storedUserId);
+          fetchUserProfile(storedUserId); 
         } else {
           setNotLoggedIn(true);
           setLoading(false);
@@ -74,8 +78,8 @@ export default function JobRecommendations() {
     if (skills.length === 0) return; // Prevents API call if skills are empty
 
     async function fetchJobRecommendations() {
-      setLoading(true);
-      setError(null);
+      setLoading(true); 
+      setError(null); 
       try {
         const response = await axios.post<{ jobs: Job[] }>(
           "http://localhost:3001/jobs/recommendJob",
@@ -129,8 +133,8 @@ export default function JobRecommendations() {
         {!loading && jobs.length === 0 && <p>No jobs found.</p>}
 
         <ul className="job-list">
-          {jobs.map((job, index) => (
-            <li key={index} className="job-item">
+          {jobs.map((job) => (
+            <li key={job.jobId} className="job-item">
               <h2>{job.jobTitle}</h2>
               <p>{job.jobDescription}</p>
               <p>
