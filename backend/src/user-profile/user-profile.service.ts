@@ -11,7 +11,7 @@ export class UserProfileService {
   ) {}
 
   async findUser(userId: string): Promise<User | null> {
-    return await this.userModel.findOne({ id: userId }).exec(); // Query by id
+    return await this.userModel.findOne({ _id: userId }).exec(); // Query by id
   }
 
   async updateUser(userId: string, updateData: Partial<User>): Promise<User> {
