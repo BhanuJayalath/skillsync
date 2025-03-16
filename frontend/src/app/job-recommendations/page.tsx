@@ -80,6 +80,18 @@ export default function JobRecommendations() {
     }
   };
 
+  //  Handle not logged-in user
+  if (error === "User not logged in") {
+    return (
+      <div className="not-logged-in">
+        <h2>You are not logged in</h2>
+        <button onClick={() => (window.location.href = "/login")} className="login-button">
+          Go to Login Page
+        </button>
+      </div>
+    );
+  }
+
     
   }, );
 
