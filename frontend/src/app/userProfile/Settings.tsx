@@ -147,7 +147,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
 
     // Fetch cities when a country is selected
     useEffect(() => {
-        if (!user.country) return;
+        if (!countries) return;
         const citiesUrl = process.env.NEXT_PUBLIC_CITIES_URL;
         const countryName = user.country.split(' (')[0];
         fetch(`${citiesUrl}`, {
