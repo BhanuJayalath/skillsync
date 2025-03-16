@@ -41,25 +41,25 @@ export default function JobRecommendations() {
   useEffect(() => {
     if (!userId) return; 
 
-    async function fetchUserProfile() {
-      try {
-        const userResponse = await axios.get(`http://localhost:3001/getUser/${userId}`);
-        const userData = userResponse.data;
+    async function fetchUserProfile(userId: string) {
+    try {
+      const userResponse = await axios.get(`http://localhost:3001/getUser/${userId}`);
+      const userData = userResponse.data;
 
-        if (!userData || !userData.skills || !Array.isArray(userData.skills)) {
-          throw new Error("User skills not found");
-        }
-
-        setSkills(userData.skills); 
-      } catch (err: any) {
-        console.error("Error fetching user profile:", err.message);
-        setError("Failed to fetch user profile");
-        setLoading(false);
+      if (!userData || !userData.skills || !Array.isArray(userData.skills)) {
+        throw new Error("User skills not found");
       }
-    }
 
-    fetchUserProfile();
-  }, [userId]);
+      setSkills(userData.skills);
+    } catch (err: any) {
+      console.error("Error fetching user profile:", err.message);
+      setError("Failed to fetch user profile");
+      setLoading(false);
+    }
+  }
+
+  fetchUserProfile(userId); 
+}, [userId]);
 
     
     // Fetch Job Recommendations
@@ -132,4 +132,8 @@ export default function JobRecommendations() {
       <Footer />
     </>
   );
+}
+
+function fetchUserProfile(storedUserId: string) {
+  throw new Error("Function not implemented.");
 }
