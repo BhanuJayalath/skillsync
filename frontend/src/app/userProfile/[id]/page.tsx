@@ -234,7 +234,8 @@ import Settings from "@/app/userProfile/Settings";
             };
             fetchUserDetails().then(e => console.log(e));
         }else{
-            router.push('http://localhost:3000/login');
+            const reDirectUrl = process.env.NEXT_PUBLIC_LOGIN_PAGE_URL;
+            router.push(`${reDirectUrl}`);
         }
     }, [activeTab, id]);
     return (
