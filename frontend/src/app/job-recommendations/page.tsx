@@ -67,8 +67,21 @@ export default function JobRecommendations() {
       }
     };
 
-    fetchUserId();
-  }, []);
+     // Select job and update user profile
+  const selectJob = async (job: any) => {
+    if (!userId) return;
+
+    try {
+      await axios.patch(`http://localhost:3001/updateUser/${userId}`, { selectedJob: job.jobId });
+      alert(`You have selected ${job.jobTitle}`);
+    } catch (err: any) {
+      console.error("Error updating user job:", err.message);
+      setError("Failed to update job selection");
+    }
+  };
+
+    
+  }, );
 
   return (
     <>
