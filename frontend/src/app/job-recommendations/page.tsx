@@ -38,8 +38,10 @@ export default function JobRecommendations() {
     fetchUserId(); 
   }, []);
 
-    // Fetch User Profile and Skills
-    async function fetchUserProfile(userId: string) {
+  useEffect(() => {
+    if (!userId) return; 
+
+    async function fetchUserProfile() {
       try {
         const userResponse = await axios.get(`http://localhost:3001/getUser/${userId}`);
         const userData = userResponse.data;
@@ -48,8 +50,7 @@ export default function JobRecommendations() {
           throw new Error("User skills not found");
         }
 
-        setSkills(userData.skills);
-        fetchJobRecommendations(userData.skills);
+        setSkills(userData.skills); 
       } catch (err: any) {
         console.error("Error fetching user profile:", err.message);
         setError("Failed to fetch user profile");
@@ -57,6 +58,10 @@ export default function JobRecommendations() {
       }
     }
 
+    fetchUserProfile();
+  }, [userId]);
+
+    
     // Fetch Job Recommendations
     async function fetchJobRecommendations(skills: string[]) {
       try {
