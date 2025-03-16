@@ -35,6 +35,9 @@ export default function JobRecommendations() {
       }
     }
 
+    fetchUserId(); 
+  }, []);
+
     // Fetch User Profile and Skills
     async function fetchUserProfile(userId: string) {
       try {
