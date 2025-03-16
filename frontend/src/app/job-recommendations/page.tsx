@@ -36,9 +36,9 @@ export default function JobRecommendations() {
     }
 
     // Fetch User Profile and Skills
-    const fetchUserProfile = async (userId: string) => {
+    async function fetchUserProfile(userId: string) {
       try {
-        const userResponse = await axios.get(`http://localhost:3001/api/users/${userId}`);
+        const userResponse = await axios.get(`http://localhost:3001/getUser/${userId}`);
         const userData = userResponse.data;
 
         if (!userData || !userData.skills || !Array.isArray(userData.skills)) {
@@ -52,7 +52,7 @@ export default function JobRecommendations() {
         setError("Failed to fetch user profile");
         setLoading(false);
       }
-    };
+    }
 
     // Fetch Job Recommendations
     const fetchJobRecommendations = async (skills: string[]) => {
