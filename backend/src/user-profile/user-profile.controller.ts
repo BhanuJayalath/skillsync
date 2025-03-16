@@ -28,14 +28,16 @@ export class UserProfileController {
     return updatedUser;
   }
 
-  @Patch('saveTestMark/:userId')
+  @Patch('saveTestMark')
   async saveTestMark(
-    @Param('userId') userId: string,
-    @Body() saveTestMarkDto: { jobId: string; testId: string; score: number },
+    @Body('userId') userId: string,
+    @Body('jobId') jobId: string,
+    @Body('testId') testId: string,
+    @Body('score') score: number,
   ) {
-    const { jobId, testId, score } = saveTestMarkDto;
     return this.userProfileService.saveTestMark(userId, jobId, testId, score);
   }
+
   @Get('allUsers')
   async getAllUsers(): Promise<User[]> {
     return this.userProfileService.getAllUsers();

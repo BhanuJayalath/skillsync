@@ -7,7 +7,7 @@ export async function POST(request) {
   await connect();
   try {
     const body = await request.json();
-    console.log("Request body received:", body); // Debug log
+    console.log("Request body received:", body);
 
     const { userId, overallScore, totalQuestions, skillScores, selectedSkills } = body;
     
