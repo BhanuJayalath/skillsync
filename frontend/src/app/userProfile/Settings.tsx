@@ -157,7 +157,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     useEffect(() => {
         if (!countries) return;
         const citiesUrl = process.env.NEXT_PUBLIC_CITIES_URL;
-        const countryName = user.country.split(' (')[0];
+        const countryName = user.country?.split(' (')[0];
         fetch(`${citiesUrl}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
