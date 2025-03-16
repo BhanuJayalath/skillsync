@@ -6,39 +6,62 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 export default function Dashboard({
   recruiterDetails,
+  setUserProfile,
+  setDashboardTab,
+  setUserId,
 }: {
   recruiterDetails: any;
+  setUserProfile: any;
+  setDashboardTab: any;
+  setUserId: any;
 }) {
   const [jobs, setJobs] = useState([]);
   const [tests, setTests] = useState([]);
   const [bestPerformed, setBestPerformed] = useState([]);
   const [onLoad, setOnLoad] = useState(true);
-  const users = [
-    {
-      userId: "1",
-      jobId: "1",
-      tests: [
-        { testId: "Test1742022418151", result: 25 },
-        { testId: "Test1742022418151", result: 50 },
-      ],
-    },
-    {
-      userId: "2",
-      jobId: "2",
-      tests: [
-        { testId: "Test1742022418151", result: 90 },
-        { testId: "Test1742022418151", result: 80 },
-      ],
-    },
-    {
-      userId: "3",
-      jobId: "1",
-      tests: [
-        { testId: "Test1742022418151", result: 55 },
-        { testId: "Test1742022418151", result: 70 },
-      ],
-    },
-  ];
+  const [users, setUsers] = useState<any>([]);
+  // const users = [
+  //   {
+  //     userId: "1",
+  //     jobId: "1",
+  //     tests: [
+  //       { testId: "Test1742022418151", result: 25 },
+  //       { testId: "Test1742022418151", result: 50 },
+  //     ],
+  //   },
+  //   {
+  //     userId: "67d7046a95c5933ae4350dbb",
+  //     jobId: "2",
+  //     tests: [
+  //       { testId: "Test1742022418151", result: 90 },
+  //       { testId: "Test1742022418151", result: 80 },
+  //     ],
+  //   },
+  //   {
+  //     userId: "3",
+  //     jobId: "1",
+  //     tests: [
+  //       { testId: "Test1742022418151", result: 55 },
+  //       { testId: "Test1742022418151", result: 70 },
+  //     ],
+  //   },
+  // ];
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_GET_USER_DETAILS}`, {})
+      .then((response) => {
+        response.data.users.map((item: any) => {
+          // console.log(item);
+          // item.tests.map((item: any) => {
+          setUsers([...users, item]);
+          // });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // console.log(users);
+  }, []);
 
   useEffect(() => {
     const tempJobSet: any = [];
@@ -82,6 +105,7 @@ export default function Dashboard({
   function performance(testId: string) {
     const tempMarkArray: any = [];
     users.map((item: any) => {
+      // console.log(item);
       if (item.tests) {
         const test = item.tests.find((item: any) => item.testId == testId);
         tempMarkArray.push({
@@ -140,9 +164,17 @@ export default function Dashboard({
         <div id={styles.dashboardDisplayContainer}>
           {bestPerformed.map((item: any, index: number) => {
             return (
-              <div key={index} id={styles.resultsContainer}>
+              <button
+                onClick={() => {
+                  setUserProfile(true);
+                  setDashboardTab(false);
+                  setUserId(item.userId);
+                }}
+                key={index}
+                id={styles.resultsContainer}
+              >
                 <ResultTab userDetails={item} />
-              </div>
+              </button>
             );
           })}
         </div>

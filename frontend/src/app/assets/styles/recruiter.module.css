@@ -591,5 +591,13 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height:200px;
+  height: 200px;
+}
+.userProfile header {
+  width: 100%;
+  height: 50px;
+}
+.userProfile header button {
+  display: flex;
+  margin-left: auto;
 }

@@ -46,6 +46,8 @@ export default function RecruiterProfile() {
   const [testResponse, setTestResponse] = useState();
   const [jobPostResponse, setJobPostResponse] = useState();
   const [recruiterDetails, setRecruiterDetails] = useState();
+  const [userProfile, setUserProfile] = useState(false);
+  const [userId, setUserId] = useState<string>("");
 
   useEffect(() => {
     axios
@@ -69,8 +71,18 @@ export default function RecruiterProfile() {
         <div id={styles.contentSection}>
           <div id={styles.contentContainer1}>
             {dashboardTab && recruiterDetails ? (
-              // <Dashboard recruiterDetails={recruiterDetails} />
-              <UserProfile userId={"67d6c4a1ba8020d307b10397"} />
+              <Dashboard
+                recruiterDetails={recruiterDetails}
+                setUserProfile={setUserProfile}
+                setDashboardTab={setDashboardTab}
+                setUserId={setUserId}
+              />
+            ) : userProfile && userId != "" ? (
+              <UserProfile
+                userId={userId}
+                setUserProfile={setUserProfile}
+                setDashboardTab={setDashboardTab}
+              />
             ) : profileTab ? (
               <Profile recruiterDetails={recruiterDetails} />
             ) : null}

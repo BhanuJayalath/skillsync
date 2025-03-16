@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Progress from "../userProfile/Progress";
 import Overview from "../userProfile/Overview";
+import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 
 interface UserDetails {
@@ -18,7 +19,15 @@ interface UserDetails {
   }[];
 }
 
-export default function UserProfile({ userId }: { userId: string }) {
+export default function UserProfile({
+  userId,
+  setUserProfile,
+  setDashboardTab,
+}: {
+  userId: string;
+  setUserProfile: any;
+  setDashboardTab: any;
+}) {
   const [userDetails, setUserDetails] = useState({
     fullName: "",
     email: "",
@@ -60,22 +69,37 @@ export default function UserProfile({ userId }: { userId: string }) {
   }, []);
   return (
     <section className={styles.userProfile}>
-        <div id={styles.userProfileHeading}>
-          <img src={userDetails.avatar} />
-          <h1>{userDetails.fullName}</h1>
-        </div>
-        <div id={styles.userProfileContent}>
-          <h1>{userDetails.email}</h1>
-          <h1>{userDetails.github}</h1>
-          <h1>{userDetails.linkedin}</h1>
-          <h1>{userDetails.contact}</h1>
-        </div>
-        <div id={styles.userProfileContent}>
-          <h1>{userDetails.city}</h1>
-          <h1>{userDetails.country}</h1>
-          <h1>{userDetails.language}</h1>
-          <h1>{userDetails.cvSummary}</h1>
-        </div>
+      <header>
+        <button
+          onClick={() => {
+            setUserProfile(false);
+            setDashboardTab(true);
+          }}
+        >
+          <Image
+            alt="delete-icon"
+            width={30}
+            height={30}
+            src="/recruiter/delete-icon.svg"
+          />
+        </button>
+      </header>
+      <div id={styles.userProfileHeading}>
+        {userDetails.avatar ? <img src={userDetails?.avatar} /> : null}
+        <h1>{userDetails.fullName}</h1>
+      </div>
+      <div id={styles.userProfileContent}>
+        <h1>{userDetails.email}</h1>
+        <h1>{userDetails.github}</h1>
+        <h1>{userDetails.linkedin}</h1>
+        <h1>{userDetails.contact}</h1>
+      </div>
+      <div id={styles.userProfileContent}>
+        <h1>{userDetails.city}</h1>
+        <h1>{userDetails.country}</h1>
+        <h1>{userDetails.language}</h1>
+        <h1>{userDetails.cvSummary}</h1>
+      </div>
     </section>
   );
 }
