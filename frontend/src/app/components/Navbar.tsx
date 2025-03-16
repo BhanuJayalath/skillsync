@@ -8,7 +8,7 @@ import styles from "../assets/styles/navbar.module.css"
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   interface User {
-    username: string;
+    userName: string;
     // Add other user properties if needed
   }
 
@@ -33,7 +33,7 @@ const Navbar = () => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error)
-        setUser({ username: "Linuka" }) // Set default user name as Linuka
+        setUser({ userName: "Linuka" }) // Set default user name as Linuka
       }
     }
 
@@ -64,7 +64,7 @@ const Navbar = () => {
             </Link>
             {user ? (
               <div className={styles.userMenu}>
-                <span className={styles.Hi}>Hi, {user.username}</span>
+                <span className={styles.Hi}>Hi, {user.userName}</span>
                 <div className={styles.dropdown}>
                   <Link href="/userProfile" className={styles.dropdownItem}>Profile</Link>
                   <button onClick={handleLogout} className={styles.dropdownItem}>Logout</button>
