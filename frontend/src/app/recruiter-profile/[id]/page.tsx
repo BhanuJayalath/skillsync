@@ -69,9 +69,9 @@ export default function RecruiterProfile() {
         <div id={styles.contentSection}>
           <div id={styles.contentContainer1}>
             {dashboardTab && recruiterDetails ? (
-              <Dashboard recruiterDetails={recruiterDetails} />
-            ) : // <UserProfile userId={"67d5a2e764a3750a956f45a3"} />
-            profileTab ? (
+              // <Dashboard recruiterDetails={recruiterDetails} />
+              <UserProfile userId={"67d6c4a1ba8020d307b10397"} />
+            ) : profileTab ? (
               <Profile recruiterDetails={recruiterDetails} />
             ) : null}
           </div>
