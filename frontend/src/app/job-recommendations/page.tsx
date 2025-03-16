@@ -55,7 +55,7 @@ export default function JobRecommendations() {
     }
 
     // Fetch Job Recommendations
-    const fetchJobRecommendations = async (skills: string[]) => {
+    async function fetchJobRecommendations(skills: string[]) {
       try {
         const response = await axios.post("http://localhost:3001/jobs/recommendJob", { skills });
         setJobs(response.data.jobs || []);
@@ -65,7 +65,10 @@ export default function JobRecommendations() {
       } finally {
         setLoading(false);
       }
-    };
+    }
+
+    fetchUserId(); // Start fetching user ID on component mount
+  }, []);
 
      // Select job and update user profile
   const selectJob = async (job: any) => {
