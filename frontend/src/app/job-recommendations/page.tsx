@@ -111,17 +111,24 @@ export default function JobRecommendations() {
     }
   };
 
-  // Handle not logged-in user
   if (notLoggedIn) {
     return (
-      <div className="not-logged-in">
-        <h2>You are not logged in</h2>
-        <button onClick={() => router.push("/login")} className="login-button">
-          Go to Login Page
-        </button>
-      </div>
+      <>
+        <Navbar />
+        <div className="not-logged-in-container">
+          <h1>Job Recommendations</h1>
+          <p className="not-logged-in-message">
+            You are not logged in. Please log in to see job recommendations.
+          </p>
+          <button onClick={() => router.push("/login")} className="login-button">
+            Go to Login
+          </button>
+        </div>
+        <Footer />
+      </>
     );
   }
+  
 
   return (
     <>
