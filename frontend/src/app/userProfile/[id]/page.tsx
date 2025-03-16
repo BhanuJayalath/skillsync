@@ -55,8 +55,8 @@ import Settings from "@/app/userProfile/Settings";
             {
                 jobName: 'Full-stack developer1',
                 companyName: 'codeLabs',
-                startDate: '2021',
-                endDate: 'Present',
+                startDate: '',
+                endDate: '',
                 description: ''
             },
         ],
@@ -64,8 +64,8 @@ import Settings from "@/app/userProfile/Settings";
             {
                 courseName: 'Bsc(hons) Computer Science',
                 schoolName: 'University of westminster',
-                startDate: '2022',
-                endDate: 'Present',
+                startDate: '',
+                endDate: '',
                 description: ''
             },
         ],
