@@ -12,6 +12,8 @@ import Progress from "@/app/userProfile/Progress";
 import Courses from "@/app/userProfile/Courses";
 import Resume from "@/app/userProfile/Resume";
 import Settings from "@/app/userProfile/Settings";
+import MockInterview from '@/app/mock-interview/page';
+import COURSE from '@/app/courses/page';
 
 
  function UserProfile() {
@@ -43,9 +45,9 @@ import Settings from "@/app/userProfile/Settings";
             {code: 'CS103', name: 'Data Structures and Algorithms', result: 'A-', mark: '74'}
         ],
         tests: [
-            {testId: '250106', testLevel: 'Basic', mark: '58', xAxis: '20'},
-            {testId: '250107', testLevel: 'Generated', mark: '86', xAxis: '100'},
-            {testId: '250108', testLevel: 'Interview', mark: '46', xAxis: '180'}
+            {testId: '250106', testLevel: 'Basic', mark: '58'},
+            {testId: '250107', testLevel: 'Generated', mark: '86'},
+            {testId: '250108', testLevel: 'Interview', mark: '46'}
         ],
         selectedJob: {
             jobTitle: 'Job Role ',
@@ -55,8 +57,8 @@ import Settings from "@/app/userProfile/Settings";
             {
                 jobName: 'Full-stack developer1',
                 companyName: 'codeLabs',
-                startDate: '2021',
-                endDate: 'Present',
+                startDate: '',
+                endDate: '',
                 description: ''
             },
         ],
@@ -64,8 +66,8 @@ import Settings from "@/app/userProfile/Settings";
             {
                 courseName: 'Bsc(hons) Computer Science',
                 schoolName: 'University of westminster',
-                startDate: '2022',
-                endDate: 'Present',
+                startDate: '',
+                endDate: '',
                 description: ''
             },
         ],
@@ -234,7 +236,8 @@ import Settings from "@/app/userProfile/Settings";
             };
             fetchUserDetails().then(e => console.log(e));
         }else{
-            router.push('http://localhost:3000/login');
+            const reDirectUrl = process.env.NEXT_PUBLIC_LOGIN_PAGE_URL;
+            router.push(`${reDirectUrl}`);
         }
     }, [activeTab, id]);
     return (
@@ -250,7 +253,8 @@ import Settings from "@/app/userProfile/Settings";
                             <ul>
                                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                                 <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
-                                                                      width={40} height={40} className={styles.navImage}/> Home</a></li>
+                                                       width={40} height={40} className={styles.navImage}/> Home</a>
+                                </li>
                                 <li
                                     onClick={() => setActiveTab(0)}
                                     className={activeTab === 0 ? styles.activeLink : ''}
@@ -267,7 +271,8 @@ import Settings from "@/app/userProfile/Settings";
                                     onClick={() => setActiveTab(2)}
                                     className={activeTab === 2 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
-                                                    width={50} height={40} className={styles.navImage}/> Courses</a></li>
+                                                    width={50} height={40} className={styles.navImage}/> Courses</a>
+                                </li>
                                 <li
                                     onClick={() => setActiveTab(3)}
                                     className={activeTab === 3 ? styles.activeLink : ''}
@@ -276,6 +281,11 @@ import Settings from "@/app/userProfile/Settings";
                                 <li
                                     onClick={() => setActiveTab(4)}
                                     className={activeTab === 4 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/mockInterview.svg"} alt="mockInterview"
+                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</a></li>
+                                <li
+                                    onClick={() => setActiveTab(5)}
+                                    className={activeTab === 5 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
                                                     width={30} height={40} className={styles.navImage}/> Settings</a>
                                 </li>
@@ -295,12 +305,14 @@ import Settings from "@/app/userProfile/Settings";
                             <section className={styles.tabsSection}>
                                 {activeTab === 0 && <Overview user={user}/>}
                                 {activeTab === 1 && <Progress user={user}/>}
-                                {activeTab === 2 && <Courses user={user}/>}
+                                {/*{activeTab === 2 && <Courses user={user}/>}*/}
+                                {activeTab === 2 && <COURSE/>}
                                 {activeTab === 3 && <Resume
                                     user={user} removeEducation={removeEducation}
                                     removeExperience={removeExperience}
                                     updateNestedChanges={updateNestedChanges}/>}
-                                {activeTab === 4 && <Settings
+                                {activeTab === 4 && <MockInterview/>}
+                                {activeTab === 5 && <Settings
                                     user={user}
                                     handleSubmit={handleSubmit}
                                     handleChange={handleChange}
@@ -312,8 +324,6 @@ import Settings from "@/app/userProfile/Settings";
                         </div>
                     </main>
                 </div>
-                {/*Footer component*/}
-                <Footer/>
             </div>
         </Suspense>
         </>
