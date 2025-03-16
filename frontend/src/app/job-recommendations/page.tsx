@@ -86,8 +86,10 @@ export default function JobRecommendations() {
     if (!userId) return;
 
     try {
-      await axios.patch(`http://localhost:3001/updateUser/${userId}`, { selectedJob: job.jobId });
-      alert(`You have selected ${job.jobTitle}`);
+      await axios.patch(`http://localhost:3001/updateUser/${userId}`, { 
+        selectedJob: { jobId: job.jobId, jobTitle: job.jobTitle }
+      });
+      
     } catch (err: any) {
       console.error("Error updating user job:", err.message);
       setError("Failed to update job selection");
@@ -137,3 +139,4 @@ export default function JobRecommendations() {
 function fetchUserProfile(storedUserId: string) {
   throw new Error("Function not implemented.");
 }
+
