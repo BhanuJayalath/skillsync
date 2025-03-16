@@ -63,22 +63,25 @@ export default function JobRecommendations() {
 
     
     // Fetch Job Recommendations
-    async function fetchJobRecommendations(skills: string[]) {
-      try {
-        const response = await axios.post("http://localhost:3001/jobs/recommendJob", { skills });
-        setJobs(response.data.jobs || []);
-      } catch (err: any) {
-        console.error("Error fetching jobs:", err.message);
-        setError("Failed to fetch job recommendations");
-      } finally {
-        setLoading(false);
+    useEffect(() => {
+      if (skills.length === 0) return; // Prevents API call if skills are empty
+  
+      async function fetchJobRecommendations() {
+        try {
+          const response = await axios.post("http://localhost:3001/jobs/recommendJob", { skills });
+          setJobs(response.data.jobs || []);
+        } catch (err: any) {
+          console.error("Error fetching jobs:", err.message);
+          setError("Failed to fetch job recommendations");
+        } finally {
+          setLoading(false);
+        }
       }
-    }
+  
+      fetchJobRecommendations();
+    }, [skills]);
 
-    fetchUserId(); // Start fetching user ID on component mount
-  }, []);
-
-     // Select job and update user profile
+     
   const selectJob = async (job: any) => {
     if (!userId) return;
 
