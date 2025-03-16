@@ -1,4 +1,3 @@
-
 /* General Styles */
 .job-recommendations {
     max-width: 900px;
@@ -6,33 +5,37 @@
     padding: 20px;
     font-family: Arial, sans-serif;
     text-align: center;
-  }
-  
-  /* Heading */
-  .job-recommendations h1 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  /* Loading and Error Messages */
-  p.error-message {
+    padding-left: 20px; 
+}
+
+
+.job-recommendations h1 {
+    font-size: 36px; 
+    font-weight: bold; 
+    margin-bottom: 25px; 
+    text-align: center;
+    color: #000; 
+}
+
+
+/* Loading and Error Messages */
+p.error-message {
     color: red;
     font-weight: bold;
-  }
-  
-  p {
+}
+
+p {
     font-size: 16px;
     margin-bottom: 10px;
-  }
-  
-  /* Job List */
-  .job-list {
+}
+
+/* Job List */
+.job-list {
     list-style: none;
     padding: 0;
-  }
-  
-  .job-item {
+}
+
+.job-item {
     background: #f9f9f9;
     border: 1px solid #d1edf5;
     border-radius: 8px;
@@ -40,28 +43,28 @@
     margin-bottom: 15px;
     text-align: left;
     transition: transform 0.2s ease-in-out;
-  }
-  
-  .job-item:hover {
+}
+
+.job-item:hover {
     transform: scale(1.02);
-  }
-  
-  /* Job Titles */
-  .job-item h2 {
+}
+
+/* Job Titles */
+.job-item h2 {
     font-size: 20px;
     color: #333;
     margin-bottom: 5px;
-  }
-  
-  /* Job Description */
-  .job-item p {
+}
+
+/* Job Description */
+.job-item p {
     color: #555;
     font-size: 14px;
     margin-bottom: 5px;
-  }
-  
-  /* Button */
-  .select-job-button {
+}
+
+/* Button */
+.select-job-button {
     background-color: #007bff;
     color: white;
     font-size: 16px;
@@ -70,24 +73,26 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease;
-  }
-  
-  .select-job-button:hover {
+}
+
+.select-job-button:hover {
     background-color: #0056b3;
-  }
-  
-  /* Not Logged-in Page */
-  .not-logged-in {
+}
+
+/* Not Logged-in Page */
+.not-logged-in-container {
     text-align: center;
     margin-top: 50px;
-  }
-  
-  .not-logged-in h2 {
-    font-size: 22px;
+}
+
+.not-logged-in-message {
+    font-size: 20px; 
     color: red;
-  }
-  
-  .login-button {
+    font-weight: bold;
+    margin-bottom: 20px; 
+}
+
+.login-button {
     background-color: #34b0cf;
     color: white;
     font-size: 16px;
@@ -97,9 +102,24 @@
     cursor: pointer;
     transition: background 0.3s ease;
     margin-top: 15px;
-  }
-  
-  .login-button:hover {
+}
+
+.login-button:hover {
     background-color: #82dbdb;
-  }
-  
+}
+
+/* Footer should stick to the bottom */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+footer {
+    margin-top: auto;
+    background-color: #d2e9f3;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
