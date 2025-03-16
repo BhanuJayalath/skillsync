@@ -43,9 +43,9 @@ import Settings from "@/app/userProfile/Settings";
             {code: 'CS103', name: 'Data Structures and Algorithms', result: 'A-', mark: '74'}
         ],
         tests: [
-            {testId: '250106', testLevel: 'Basic', mark: '58', xAxis: '20'},
-            {testId: '250107', testLevel: 'Generated', mark: '86', xAxis: '100'},
-            {testId: '250108', testLevel: 'Interview', mark: '46', xAxis: '180'}
+            {testId: '250106', testLevel: 'Basic', mark: '58'},
+            {testId: '250107', testLevel: 'Generated', mark: '86'},
+            {testId: '250108', testLevel: 'Interview', mark: '46'}
         ],
         selectedJob: {
             jobTitle: 'Job Role ',
