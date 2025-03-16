@@ -9,10 +9,13 @@ export async function GET(request: NextRequest) {
     const userId = request.headers.get("user-id");
 
     if (!userId) {
-      return NextResponse.json({ error: "User ID is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "User ID is required" },
+        { status: 400 }
+      );
     }
 
-    const user = await User.findById(userId).select("username email");
+    const user = await User.findById(userId).select("-password");
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
