@@ -86,6 +86,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                 .catch(error => console.error('Error fetching countries:', error));
         }
         fetchCountries();
+        setSummary(user.cvSummary);
     }, []);
 
     const handleGenerate = async (e:React.FormEvent) =>{
