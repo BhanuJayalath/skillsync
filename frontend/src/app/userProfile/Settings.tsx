@@ -258,7 +258,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <select id="language" onChange={(e) => handleChange(e, "language")}>
                         <option value="">Select Language</option>
                         {languages.map((language, index) => (
-                            <option key={index} value={user.language || ''}>
+                            <option key={index} value={language}>
                                 {language}
                             </option>
                         ))}
