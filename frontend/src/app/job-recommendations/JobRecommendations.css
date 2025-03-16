@@ -123,3 +123,12 @@ footer {
     text-align: center;
     width: 100%;
 }
+
+.not-logged-in-container h1 {
+    font-size: 30px !important; 
+    font-weight: bold !important;
+    margin-bottom: 30px !important; 
+    text-align: center !important; 
+    color: #000 !important; 
+}
+
