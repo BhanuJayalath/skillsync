@@ -1066,6 +1066,10 @@ export default function QuizApp() {
     }
   };
 
+  const goToProfile = () => {
+    router.push(`/userProfile/${userDetails._id}`);
+  }
+
   useEffect(() => {
     getUserDetails();
   }, []);
@@ -1303,6 +1307,11 @@ export default function QuizApp() {
             className="mt-6 w-full bg-[rgb(96,166,236)] text-white py-3 rounded-lg hover:bg-blue-600 transition-colors"
           >
             Take Another Quiz
+          </button>
+          <button
+            className='p-2 bg-blue-500 text-white rounded-lg'
+            onClick={goToProfile}
+          > Go to Profile
           </button>
         </div>
       </div>
