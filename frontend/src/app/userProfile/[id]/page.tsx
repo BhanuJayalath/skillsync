@@ -304,6 +304,12 @@ import {toast} from "react-hot-toast";
                                 ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
                                                     width={30} height={40} className={styles.navImage}/> Settings</a>
                                 </li>
+                                <li
+                                    onClick={logout}
+                                    className={activeTab === 6 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/logOut.svg"} alt="logOut"
+                                                    width={30} height={40} className={styles.navImage}/> Log Out </a>
+                                </li>
                             </ul>
                         </nav>
 
