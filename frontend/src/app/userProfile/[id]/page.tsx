@@ -14,6 +14,8 @@ import Resume from "@/app/userProfile/Resume";
 import Settings from "@/app/userProfile/Settings";
 import MockInterview from '@/app/mock-interview/page';
 import COURSE from '@/app/courses/page';
+import axios from "axios";
+import {toast} from "react-hot-toast";
 
 
  function UserProfile() {
@@ -240,6 +242,18 @@ import COURSE from '@/app/courses/page';
             router.push(`${reDirectUrl}`);
         }
     }, [activeTab, id]);
+
+     const logout = async () => {
+         try {
+             await axios.get('/api/users/logout');
+             toast.success('Logout successful');
+             router.push('/login');
+         } catch (error: any) {
+             console.log(error.message);
+             toast.error(error.message);
+         }
+     };
+
     return (
         <><Suspense fallback={<div>Loading...</div>}>
             <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
@@ -282,7 +296,8 @@ import COURSE from '@/app/courses/page';
                                     onClick={() => setActiveTab(4)}
                                     className={activeTab === 4 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/mockInterview.svg"} alt="mockInterview"
-                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</a></li>
+                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</a>
+                                </li>
                                 <li
                                     onClick={() => setActiveTab(5)}
                                     className={activeTab === 5 ? styles.activeLink : ''}
