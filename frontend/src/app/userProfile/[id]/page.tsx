@@ -188,7 +188,6 @@ import {toast} from "react-hot-toast";
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    email: user.email,
                     contact: user.contact,
                     fullName: user.fullName,
                     cvSummary: user.cvSummary,
@@ -201,7 +200,6 @@ import {toast} from "react-hot-toast";
                     country: user.country,
                     experience: user.experience,
                     education: user.education,
-                    skills: user.skills,
                 }),
             });
 
