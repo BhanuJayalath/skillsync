@@ -70,7 +70,6 @@ export default function JobRecommendations() {
     }
   }, [skills]);
 
-  /
   async function fetchJobRecommendations(userSkills: string[]) {
     if (userSkills.length === 0) {
       console.warn("No skills found, skipping job fetch.");
