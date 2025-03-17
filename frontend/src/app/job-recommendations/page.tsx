@@ -15,10 +15,6 @@ interface Job {
   requiredSkills: string[];
 }
 
-interface UserProfile {
-  skills: string[];
-}
-
 export default function JobRecommendations() {
   const router = useRouter();
   const [userId, setUserId] = useState<string | null>(null);
@@ -28,89 +24,111 @@ export default function JobRecommendations() {
   const [error, setError] = useState<string | null>(null);
   const [notLoggedIn, setNotLoggedIn] = useState(false);
 
+  useEffect(() => {
+    fetchUserAuthStatus();
+  }, []);
+
   
-  async function fetchUserProfile(userId: string) {
-    setLoading(true); 
-    setError(null); 
-
+  async function fetchUserAuthStatus() {
     try {
-      const userResponse = await axios.get<UserProfile>(
-        `http://localhost:3001/getUser/${userId}`
+      const response = await axios.get(
+        `http://localhost:5001/api/users/me`,
+        { withCredentials: true }
       );
-      const userData = userResponse.data;
+      setUserId(response.data.id);
+      fetchUserSkills(response.data.id);
+    } catch (err) {
+      console.error("Error verifying login:", err);
+      setNotLoggedIn(true);
+      setLoading(false);
+    }
+  }
 
-      if (!userData || !userData.skills || !Array.isArray(userData.skills)) {
-        throw new Error("User skills not found");
+  async function fetchUserSkills(userId: string) {
+    try {
+      const response = await axios.get(
+        `http://localhost:5001/testscores?userId=${userId}`, 
+        { withCredentials: true }
+      );
+
+      if (response.data && response.data.selectedSkills) {
+        const fetchedSkills = response.data.selectedSkills;
+        setSkills(fetchedSkills); 
+      } else {
+        setSkills([]);
       }
-
-      setSkills(userData.skills);
-    } catch (err: any) {
-      console.error("Error fetching user profile:", err.message);
-      setError("Failed to fetch user profile");
+    } catch (err) {
+      console.error("Error fetching user skills:", err);
+      setError("Failed to fetch user skills");
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    async function fetchUserId() {
-      try {
-        const storedUserId = localStorage.getItem("userId");
-
-        if (storedUserId) {
-          setUserId(storedUserId);
-          fetchUserProfile(storedUserId); 
-        } else {
-          setNotLoggedIn(true);
-          setLoading(false);
-        }
-      } catch (err: any) {
-        console.error("Error fetching user ID:", err.message);
-        setError("User not logged in");
-        setLoading(false);
-      }
+    if (skills.length > 0) {
+      fetchJobRecommendations(skills);
     }
-
-    fetchUserId();
-  }, []);
-
-  // Fetch Job Recommendations
-  useEffect(() => {
-    if (skills.length === 0) return; // Prevents API call if skills are empty
-
-    async function fetchJobRecommendations() {
-      setLoading(true); 
-      setError(null); 
-      try {
-        const response = await axios.post<{ jobs: Job[] }>(
-          "http://localhost:3001/jobs/recommendJob",
-          { skills }
-        );
-        setJobs(response.data.jobs || []);
-      } catch (err: any) {
-        console.error("Error fetching jobs:", err.message);
-        setError("Failed to fetch job recommendations");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchJobRecommendations();
   }, [skills]);
 
+  /
+  async function fetchJobRecommendations(userSkills: string[]) {
+    if (userSkills.length === 0) {
+      console.warn("No skills found, skipping job fetch.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.post(
+        `http://localhost:5001/jobs/recommendJob`, 
+        { skills: userSkills }, 
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      if (response.data && response.data.jobs) {
+        setJobs(response.data.jobs);
+      } else {
+        setJobs([]);
+      }
+    } catch (err: any) {
+      console.error("Error fetching jobs:", err);
+      setError("Failed to fetch job recommendations");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  
   const selectJob = async (job: Job) => {
     if (!userId) return;
 
     try {
-      await axios.patch(`http://localhost:3001/updateUser/${userId}`, {
-        selectedJob: { jobId: job.jobId, jobTitle: job.jobTitle },
-      });
-      alert(`You have selected ${job.jobTitle}`);
+      const response = await axios.patch(
+        `http://localhost:5001/users/updateUser/${userId}`,
+        {
+          selectedJob: { jobId: job.jobId, jobTitle: job.jobTitle },
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        alert(`Successfully selected job: ${job.jobTitle}`);
+      }
     } catch (err: any) {
-      console.error("Error updating user job:", err.message);
-      setError("Failed to update job selection");
+      console.error("Error updating user job:", err);
+      alert("Failed to select job");
     }
   };
 
+  
   if (notLoggedIn) {
     return (
       <>
@@ -118,7 +136,7 @@ export default function JobRecommendations() {
         <div className="not-logged-in-container">
           <h1>Job Recommendations</h1>
           <p className="not-logged-in-message">
-            You are not logged in. Please log in to see job recommendations.
+            Please log in to see job recommendations.
           </p>
           <button onClick={() => router.push("/login")} className="login-button">
             Go to Login
@@ -128,7 +146,6 @@ export default function JobRecommendations() {
       </>
     );
   }
-  
 
   return (
     <>
@@ -137,7 +154,9 @@ export default function JobRecommendations() {
         <h1>Job Recommendations</h1>
         {loading && <p>Loading job recommendations...</p>}
         {error && <p className="error-message">{error}</p>}
-        {!loading && jobs.length === 0 && <p>No jobs found.</p>}
+        {!loading && jobs.length === 0 && (
+          <p>No job recommendations found based on your skills.</p>
+        )}
 
         <ul className="job-list">
           {jobs.map((job) => (
