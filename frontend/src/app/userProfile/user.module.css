@@ -383,10 +383,6 @@
     margin-top: 25px;
 }
 
-.education:hover{
-    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-}
-
 .sectionTitle {
     font-size: 1.7rem;
     font-weight: bold;
