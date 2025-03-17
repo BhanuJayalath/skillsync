@@ -20,47 +20,16 @@ export default function Dashboard({
   const [bestPerformed, setBestPerformed] = useState([]);
   const [onLoad, setOnLoad] = useState(true);
   const [users, setUsers] = useState<any>([]);
-  // const users = [
-  //   {
-  //     userId: "1",
-  //     jobId: "1",
-  //     tests: [
-  //       { testId: "Test1742022418151", result: 25 },
-  //       { testId: "Test1742022418151", result: 50 },
-  //     ],
-  //   },
-  //   {
-  //     userId: "67d7046a95c5933ae4350dbb",
-  //     jobId: "2",
-  //     tests: [
-  //       { testId: "Test1742022418151", result: 90 },
-  //       { testId: "Test1742022418151", result: 80 },
-  //     ],
-  //   },
-  //   {
-  //     userId: "3",
-  //     jobId: "1",
-  //     tests: [
-  //       { testId: "Test1742022418151", result: 55 },
-  //       { testId: "Test1742022418151", result: 70 },
-  //     ],
-  //   },
-  // ];
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_USER_DETAILS}`, {})
       .then((response) => {
-        response.data.users.map((item: any) => {
-          // console.log(item);
-          // item.tests.map((item: any) => {
-          setUsers([...users, item]);
-          // });
-        });
+        const newUsers = response.data.users.map((item: any) => item);
+        setUsers(newUsers);
       })
       .catch((error) => {
         console.log(error);
       });
-    // console.log(users);
   }, []);
 
   useEffect(() => {
@@ -82,6 +51,7 @@ export default function Dashboard({
         console.log(error);
       });
   }, [onLoad, setOnLoad]);
+  useEffect(()=>{},[users])
 
   function loadTests(jobId: any) {
     const tempTestsSet: any = [];
@@ -92,7 +62,6 @@ export default function Dashboard({
           tempTestsSet.push(item);
           if (onLoad) {
             performance(item.testId);
-            setOnLoad(false);
           }
         });
         setTests(tempTestsSet);
@@ -104,21 +73,26 @@ export default function Dashboard({
 
   function performance(testId: string) {
     const tempMarkArray: any = [];
+    console.log(users);
     users.map((item: any) => {
-      // console.log(item);
-      if (item.tests) {
+      if (item.tests.length > 0) {
         const test = item.tests.find((item: any) => item.testId == testId);
+        // console.log(test);
         tempMarkArray.push({
-          userId: item.userId,
+          userId: item._id,
+          userName: item.userName,
+          avatar: item.avatar ? item.avatar : null,
           testId: test.testId,
-          testResult: test.result,
+          score: test.score,
         });
       }
     });
     const sortedMarkArray = tempMarkArray.sort(
-      (a: any, b: any) => b.testResult - a.testResult
+      (a: any, b: any) => b.score - a.score
     );
     setBestPerformed(sortedMarkArray);
+    setOnLoad(false);
+    // console.log(sortedMarkArray);
   }
 
   return (

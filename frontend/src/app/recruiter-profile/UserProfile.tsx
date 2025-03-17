@@ -42,6 +42,7 @@ export default function UserProfile({
   });
 
   useEffect(() => {
+    console.log(userId);
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_USER_DETAILS}`, {
         headers: {
@@ -49,6 +50,7 @@ export default function UserProfile({
         },
       })
       .then((response) => {
+        // console.log(response.data);
         const userData = {
           fullName: response.data.user.fullName,
           email: response.data.user.email,
