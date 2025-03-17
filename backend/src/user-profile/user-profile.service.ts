@@ -35,7 +35,7 @@ export class UserProfileService {
   ): Promise<User> {
     const updatedUser = await this.userModel
       .findOneAndUpdate(
-        { id: userId }, // Query by id
+        { _id: userId }, // Query by id
         { $push: { tests: { jobId, testId, score } } },
         { new: true },
       )
