@@ -9,7 +9,6 @@ import styles from '../user.module.css';   // Importing custom styles
 import '../../globals.css';
 import Overview from "@/app/userProfile/Overview";
 import Progress from "@/app/userProfile/Progress";
-import Courses from "@/app/userProfile/Courses";
 import Resume from "@/app/userProfile/Resume";
 import Settings from "@/app/userProfile/Settings";
 import MockInterview from '@/app/mock-interview/page';
@@ -24,7 +23,6 @@ import {toast} from "react-hot-toast";
     //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
     // Initializing profile state with default user details
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [user, setUser] = useState({
         email: "Name@gmail.com",   // User's email address
         contact: '(+94)12 345 6789', // number
