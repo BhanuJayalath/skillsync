@@ -36,14 +36,6 @@ import {toast} from "react-hot-toast";
         language: "Language",     //language
         city: 'City',    //city
         country: "Country", //country
-        courses: [
-            {code: 'CS101', name: 'Introduction to Computer Science', result: 'A', mark: '95'},
-            {code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark: '67'},
-            {code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark: '67'},
-            {code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark: '67'},
-            {code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark: '67'},
-            {code: 'CS103', name: 'Data Structures and Algorithms', result: 'A-', mark: '74'}
-        ],
         tests: [
             {testId: '250106', testLevel: 'Basic', mark: '58'},
             {testId: '250107', testLevel: 'Generated', mark: '86'},
