@@ -70,9 +70,6 @@ class Test {
 
   // @Prop()
   // mark: string;
-
-  // @Prop()
-  // xAxis: string;
 }
 
 class selectedJob {
