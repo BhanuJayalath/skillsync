@@ -9,6 +9,7 @@ interface User {
     selectedJob: SelectedJob;
     contact: string;
     linkedIn: string;
+    portfolio:string;
     gitHub: string;
 }
 
@@ -17,6 +18,14 @@ interface SelectedJob{
     jobId:string;
 }
 
+
+interface Education {
+    courseName: string;
+    schoolName: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}
 const Overview = ({ user }: { user: User }) => {
     const [activeTab, setActiveTab] = useState(0);
     return (
@@ -71,15 +80,6 @@ const Overview = ({ user }: { user: User }) => {
                               width={20} height={20}/>{user.gitHub}</p>
                 </div>}
                 {activeTab === 1 && <div className={styles.userDetails}>
-                    <p><Image src={"/user/email.svg"} alt="email"
-                              className={styles.overviewIcons}
-                              width={20} height={20}/>{user.email}</p>
-                    <p><Image src={"/user/linkedin.svg"} alt="linkedin"
-                              className={styles.overviewIcons}
-                              width={20} height={20}/>{user.linkedIn}</p>
-                    <p><Image src={"/user/github.svg"} alt="github"
-                              className={styles.overviewIcons}
-                              width={20} height={20}/>{user.gitHub}</p>
                 </div>}
                 {activeTab === 2 && <div className={styles.userDetails}>
                     <p><Image src={"/user/email.svg"} alt="email"
