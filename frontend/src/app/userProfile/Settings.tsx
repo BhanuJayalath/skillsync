@@ -225,6 +225,10 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                 <div className={styles.editButton}>
                     <button
                         className="btn btn-primary d-flex align-items-center"
+                        onClick={() => {
+                            handleSubmit();
+                            buttonLoad();
+                        }}
                         disabled={loading}
                     >
                         {/* Display spinner when loading */}
