@@ -268,7 +268,11 @@ import Careers from '@/app/job-recommendations/page';
          }
      };
 
-
+     const togglePopup = () => {
+         if(notifications.length>0){
+             setIsOpen(!isOpen);
+         }
+     };
 
 
 
