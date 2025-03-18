@@ -37,6 +37,7 @@ import Careers from '@/app/job-recommendations/page';
         contact: '(+94)12 345 6789', // number
         userName: "UserName",  // User's display name
         gitHub: "github",
+        portfolio:"",
         linkedIn: "linkedin",
         fullName: "Drake Winston", // User's full name
         cvSummary: "",
