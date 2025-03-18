@@ -172,6 +172,11 @@
     padding: 0;
 }
 
+.notificationPopup li {
+    padding: 8px 0;
+    color: black;
+    border-bottom: 1px solid #eee;
+}
 
 
 /* Header */
