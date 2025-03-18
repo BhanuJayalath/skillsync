@@ -81,7 +81,11 @@ const Overview = ({ user }: { user: User }) => {
                               className={styles.overviewIcons}
                               width={20} height={20}/>{user.gitHub}</p>
                 </div>}
-
+                {activeTab === 2 && <div className={styles.userDetails}>
+                    <p><Image src={"/user/email.svg"} alt="email"
+                              className={styles.overviewIcons}
+                              width={20} height={20}/>{user.email}</p>
+                </div>}
                 {/*<div className={styles.userFooter}>go to settings to edit the user profile</div>*/}
             </section>
         </section>
