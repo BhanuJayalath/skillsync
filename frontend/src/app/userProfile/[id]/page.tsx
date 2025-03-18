@@ -333,6 +333,13 @@ import Careers from '@/app/job-recommendations/page';
                                                     width={30} height={40} className={styles.navImage}/> Mock Interview</a>
                                 </li>
                                 <li
+                                    onClick={() => setActiveTab(5)}
+                                    className={activeTab === 5 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/assessments.svg"} alt="assessmentsIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Assessments
+                                </a>
+                                </li>
+                                <li
                                     onClick={() => setActiveTab(7)}
                                     className={activeTab === 7 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
