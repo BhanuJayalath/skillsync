@@ -178,6 +178,9 @@
     border-bottom: 1px solid #eee;
 }
 
+.notificationPopup li:last-child {
+    border-bottom: none;
+}
 
 /* Header */
 .header {
