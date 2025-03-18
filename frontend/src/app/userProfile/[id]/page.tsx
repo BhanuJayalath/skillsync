@@ -326,7 +326,12 @@ import Careers from '@/app/job-recommendations/page';
                                     className={activeTab === 3 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
                                                     width={30} height={40} className={styles.navImage}/> Resume</a></li>
-
+                                <li
+                                    onClick={() => setActiveTab(4)}
+                                    className={activeTab === 4 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/mockInterview.svg"} alt="mockInterviewIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</a>
+                                </li>
                                 <li
                                     onClick={() => setActiveTab(7)}
                                     className={activeTab === 7 ? styles.activeLink : ''}
