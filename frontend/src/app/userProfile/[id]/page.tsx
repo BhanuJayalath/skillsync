@@ -56,7 +56,6 @@ import Careers from '@/app/job-recommendations/page';
         },
         notifications:[
             {message:"message1"},
-            {message:"message2"},
         ],
         experience: [
             {
@@ -268,7 +267,7 @@ import Careers from '@/app/job-recommendations/page';
      };
 
      const togglePopup = () => {
-         if(notifications.length>0){
+         if(user.notifications.length>0){
              setIsOpen(!isOpen);
          }
      };
@@ -381,7 +380,7 @@ import Careers from '@/app/job-recommendations/page';
                                         </div>
                                         <div className={styles.notificationWrapper} ref={notificationRef}>
                                             <div className={styles.notificationContainer} onClick={togglePopup}>
-                                                {notifications.length > 0 ? (
+                                                {user.notifications?.length > 0 ? (
                                                     <div>
                                                         <Image
                                                             src={"/user/notificationBellRing.svg"}
@@ -391,7 +390,7 @@ import Careers from '@/app/job-recommendations/page';
                                                             className={styles.notificationIcon}
                                                         />
                                                         <span className={styles.notificationCount}>
-                                                {notifications.length}
+                                                {user.notifications?.length}
                                             </span>
                                                     </div>
                                                 ) : (
@@ -408,7 +407,7 @@ import Careers from '@/app/job-recommendations/page';
                                             {isOpen && (
                                                 <div className={styles.notificationPopup}>
                                                     <ul>
-                                                        {notifications.map((notification, index) => (
+                                                        {user.notifications.map((notification, index) => (
                                                             <li key={index}>{notification.message}</li>
                                                         ))}
                                                     </ul>
