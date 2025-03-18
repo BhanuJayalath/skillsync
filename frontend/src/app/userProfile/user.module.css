@@ -26,13 +26,14 @@
     width: 15em; /* Slightly wider sidebar */
     background-color: rgb(96, 166, 236);
     display: flex;
-    position: relative;
+    position: fixed;
     flex-direction: column;
     color: #000000; /* White text on the sidebar */
     transition: width 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
     box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow to separate from content */
     z-index: 100; /* Ensure it's above other content */
     overflow: hidden; /* Prevent content overflow during hover */
+    height: 100vh;
 }
 
 .sidebar:hover {
@@ -52,7 +53,6 @@
 
 .logo {
     font-weight: bold;
-    font-size: 1.5em; /* Larger logo text */
     color: #050505;
     text-transform: uppercase; /* Make logo text uppercase */
     letter-spacing: 1px; /* Add letter spacing for visual appeal */
@@ -121,6 +121,65 @@
     display: flex;
     flex-direction: column;
     background: #fff;
+    margin-left: 15em;
+}
+
+.notificationWrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 16em;
+}
+
+.notificationContainer {
+    position: relative;
+}
+
+.notificationIcon {
+    margin-right: 0.75em;
+    color: black;
+    filter: brightness(0) invert(1); /* Ensure icons are always white */
+}
+
+.notificationCount {
+    background-color: red;
+    font-size: 12px;
+    border-radius: 50%;
+    padding: 2px 6px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+
+.notificationPopup {
+    display: block; /* Ensure it's visible */
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #fff;  /* Visible background */
+    border: 1px solid #ddd;  /* Clear border */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    padding: 10px;
+    z-index: 999;  /* Ensure it's on top */
+}
+
+
+.notificationPopup ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notificationPopup li {
+    padding: 8px 0;
+    color: black;
+    border-bottom: 1px solid #eee;
+}
+
+.notificationPopup li:last-child {
+    border-bottom: none;
 }
 
 /* Header */
@@ -129,7 +188,10 @@
     justify-content: space-between; /*Push search to the right*/
     padding: 1em 2em;
     background: #3498db; /* Refined blue */
+    position: fixed;
     color: #fff;
+    width: 100%;
+    height: 5em;
     align-items: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -164,21 +226,52 @@
 .tabsSection {
     flex: 1 1 45%;
     display: flex;
+    margin-top: 5em;
     align-items: center;
     justify-content: center;
     max-width: 70em;
     flex-wrap: wrap;
     flex-direction: column;
-    margin: 1em;
 }
 
 
 /* User Info */
-.userInfo {
-    flex: 1 1 45%;
+.overviewNavBar{
+    display: flex;
+    flex-direction: row;
+    background-color: #3396a6;
+    width: 15em;
+    border-radius: 0.3em;
+    color: white;
+    margin:  5% 0;
+}
+.overviewNavBar ul{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.overviewNavBar ul li{
+    display: flex;
+    flex-direction: row;
+    width: 5em;
+    border-radius: 0.3em;
+    justify-content: center;
+    list-style: none;
+    cursor: pointer;
+    padding: 0.2em;
+    margin: 0;
+}
+.overviewUserContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
     background: #fff;
     border-radius: 0.5em;
     width: 50em;
+    margin: auto;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
     padding: 1em; /* Add padding inside the user info section */
 }
@@ -187,30 +280,42 @@
     background: #3498db; /* Refined blue */
     display: flex;
     flex-direction: row;
-    padding: 1.5em;
     color: white;
-    margin: -1em -1em 1em -1em; /* Adjust to align with userInfo padding */
     border-radius: 0.5em 0.5em 0 0; /* Only round the top corners */
     font-size: 1.2em;
 }
 
 /* User Details */
-.userDetails {
+.userProfile {
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin-top: 1em;
     padding: 0 1em; /* Add padding */
 }
 
-.profilePic{
+.profilePicContainer{
     display: flex;
     flex-direction: column;
 }
 
-.profilePic .userAvatar {
+.profilePicContainer .userAvatar {
     margin: 1em 1em 2em 1em ;
+    width: 10em;  /* Match container size */
+    height: 10em; /* Match container size */
+    object-fit: cover;
+    border-radius: 50%;
 }
 
+.userDetails p{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.overviewIcons {
+    margin: 0.5em;
+}
 .userFooter {
     background-color: #3498db; /* Refined blue */
     display: flex;
@@ -340,12 +445,14 @@
 .cvSection {
     font-family: Arial, sans-serif;
     width: 49.61rem;
+    min-height:70.157489153699rem ;
     padding: 2cm;
     margin: 0 auto;
     background: #ffffff;
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
     border: 1px solid #ccc;
     line-height: 1.6;
+    cursor: pointer;
 }
 
 .cvSection p{
@@ -477,17 +584,6 @@
 
 .userSettings .editButton {
     margin-left: auto;
-    background: #3498db; /* Refined blue */
-    color: white;
-    border: none;
-    padding: 0.6em 1.2em;
-    border-radius: 0.3em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.userSettings .editButton:hover {
-    background-color: #2980b9; /* Darker shade on hover */
 }
 
 .uploadContainer {

@@ -70,12 +70,9 @@ class Test {
 
   // @Prop()
   // mark: string;
-
-  // @Prop()
-  // xAxis: string;
 }
 
-class selectedJob {
+class SelectedJob {
   @Prop()
   jobTitle: string;
   @Prop()
@@ -130,8 +127,8 @@ export class User {
   @Prop([Test])
   tests: Test[]; // Array of tests
 
-  @Prop([selectedJob])
-  selectedJob: selectedJob; // Array of job roles
+  @Prop({type: SelectedJob})
+  selectedJob: SelectedJob; // selected job object
 
   @Prop({ type: [Experience] })
   experience: Experience[];

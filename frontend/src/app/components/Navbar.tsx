@@ -1,14 +1,18 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import axios from "axios"
 import Image from "next/image"
 import Link from "next/link"
 import styles from "../assets/styles/navbar.module.css"
+import { toast } from "react-toastify"
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   interface User {
-    username: string;
+    userName: string;
+    _id: string;
     // Add other user properties if needed
   }
 
@@ -32,18 +36,25 @@ const Navbar = () => {
           console.error("User data not found")
         }
       } catch (error) {
-        console.error("Error fetching user data:", error)
-        setUser({ username: "Linuka" }) // Set default user name as Linuka
+        console.log("User not loggedin", error)
+        setUser(null) // Set default user name as Linuka
       }
     }
 
     fetchUser()
   }, [])
+  const router = useRouter()
 
-  const handleLogout = () => {
-    localStorage.removeItem("token")
-    setUser(null)
-    // Redirect to home or login page
+  
+  const handleLogout = async () => {
+    try {
+      await axios.get('/api/users/logout');
+      toast.success('Logout successful');
+      setUser(null);
+    } catch (error: any) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
   }
 
   return (
@@ -56,12 +67,6 @@ const Navbar = () => {
             </Link>
           </div>
           <div className={styles.desktopMenu}>
-            <Link href="/mock-interview" className={styles.navLink}>
-              Mock Interview
-            </Link>
-            <Link href="/job-recommendations" className={styles.navLink}>
-              Job Recommendations
-            </Link>
             <Link href="/about-us" className={styles.navLink}>
               About Us
             </Link>
@@ -70,9 +75,9 @@ const Navbar = () => {
             </Link>
             {user ? (
               <div className={styles.userMenu}>
-                <span className={styles.Hi}>Hi, {user.username}</span>
+                <span className={styles.Hi}>Hi, {user.userName}</span>
                 <div className={styles.dropdown}>
-                  <Link href="/userProfile" className={styles.dropdownItem}>Profile</Link>
+                  <Link href={`/userProfile/${user._id}`} className={styles.dropdownItem}>Profile</Link>
                   <button onClick={handleLogout} className={styles.dropdownItem}>Logout</button>
                 </div>
               </div>
