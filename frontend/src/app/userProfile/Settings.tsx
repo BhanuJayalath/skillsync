@@ -61,7 +61,12 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
     const [loading, setLoading] = useState(false);
 
-
+    const buttonLoad = ()=>{
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false); // Set loading to false after 3 seconds
+        }, 3000);
+    }
     // Fetch countries and languages
     useEffect(() => {
         const fetchCountries = async ()=>{
