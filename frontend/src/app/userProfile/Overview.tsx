@@ -18,7 +18,13 @@ interface SelectedJob{
     jobId:string;
 }
 
-
+interface Experience {
+    jobName: string;
+    companyName: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}
 interface Education {
     courseName: string;
     schoolName: string;
