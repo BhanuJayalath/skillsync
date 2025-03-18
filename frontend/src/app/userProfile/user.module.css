@@ -452,6 +452,7 @@
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
     border: 1px solid #ccc;
     line-height: 1.6;
+    cursor: pointer;
 }
 
 .cvSection p{
