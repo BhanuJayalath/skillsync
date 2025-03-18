@@ -263,6 +263,18 @@
     padding: 0.2em;
     margin: 0;
 }
+.overviewUserContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    background: #fff;
+    border-radius: 0.5em;
+    width: 50em;
+    margin: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    padding: 1em; /* Add padding inside the user info section */
+}
 
 .welcomeMessage {
     background: #3498db; /* Refined blue */
