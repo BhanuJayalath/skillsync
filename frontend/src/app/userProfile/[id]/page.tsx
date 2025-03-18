@@ -37,6 +37,7 @@ import Careers from '@/app/job-recommendations/page';
     const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
     const [user, setUser] = useState({
+        _id:'',
         email: "Name@gmail.com",   // User's email address
         contact: '(+94)12 345 6789', // number
         userName: "UserName",  // User's display name
