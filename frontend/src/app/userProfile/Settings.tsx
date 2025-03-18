@@ -41,6 +41,7 @@ interface Experience {
     description: string;
 }
 
+
 interface SettingsProps {
     user: User;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, field: string) => void;
@@ -58,7 +59,14 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const [summary, setSummary] = useState("");
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
+    const [loading, setLoading] = useState(false);
 
+    const buttonLoad = ()=>{
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false); // Set loading to false after 3 seconds
+        }, 3000);
+    }
     // Fetch countries and languages
     useEffect(() => {
         const fetchCountries = async ()=>{
@@ -214,7 +222,29 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
                 </div>
-                <button className={styles.editButton} onClick={handleSubmit}>Save</button>
+                <div className={styles.editButton}>
+                    <button
+                        className="btn btn-primary d-flex align-items-center"
+                        onClick={() => {
+                            handleSubmit();
+                            buttonLoad();
+                        }}
+                        disabled={loading}
+                    >
+                        {/* Display spinner when loading */}
+                        {loading ? (
+                            <>
+                                <div className="spinner-border spinner-border-sm text-light" role="status"
+                                     style={{marginRight: '10px'}}>
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                                Loading...
+                            </>
+                        ) : (
+                            'Save'
+                        )}
+                    </button>
+                </div>
             </div>
             {/*form section*/}
             <form className={styles.form}>
@@ -228,7 +258,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <label>Contact</label>
                     <input type="text" name="contact" value={user.contact || ''}
                            onChange={(e) => handleChange(e, "contact")}
-                           placeholder={user.contact || ''}/>
+                           placeholder={user.contact || '(+94) 77 123 4567'}/>
                 </div>
                 <div>
                     <label>Github</label>

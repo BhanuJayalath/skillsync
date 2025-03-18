@@ -1,33 +1,43 @@
 "use client"; // Indicating as a client-side component
 
 import Image from 'next/image';     // Importing images
-import Footer from "@/app/components/Footer";   // Importing Footer component
-import { useParams, useRouter  } from 'next/navigation';
-import React, {Suspense, useEffect, useState} from 'react';   // Importing useState hook from React for state management
+import { useParams, useRouter, useSearchParams   } from 'next/navigation';
+import React, {Suspense, useEffect, useRef, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from '../user.module.css';   // Importing custom styles
 import '../../globals.css';
 import Overview from "@/app/userProfile/Overview";
 import Progress from "@/app/userProfile/Progress";
-import Courses from "@/app/userProfile/Courses";
 import Resume from "@/app/userProfile/Resume";
 import Settings from "@/app/userProfile/Settings";
 import MockInterview from '@/app/mock-interview/page';
 import COURSE from '@/app/courses/page';
+import axios from "axios";
+import {toast} from "react-hot-toast";
+import Assessment from '@/app/test/page';
+import Careers from '@/app/job-recommendations/page';
 
 
  function UserProfile() {
      const { id } = useParams();
-     const router = useRouter();
-    //Adding a useState for the active section
+     const router = useRouter();const searchParams = useSearchParams();
+     const message = searchParams.get('message');
+     //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
+
+    const [loading, setLoading] = useState(true);
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [user, setUser] = useState({
+        _id:'',
         email: "Name@gmail.com",   // User's email address
         contact: '(+94)12 345 6789', // number
         userName: "UserName",  // User's display name
         gitHub: "github",
+        portfolio:"",
         linkedIn: "linkedin",
         fullName: "Drake Winston", // User's full name
         cvSummary: "",
@@ -36,14 +46,6 @@ import COURSE from '@/app/courses/page';
         language: "Language",     //language
         city: 'City',    //city
         country: "Country", //country
-        courses: [
-            {code: 'CS101', name: 'Introduction to Computer Science', result: 'A', mark: '95'},
-            {code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark: '67'},
-            {code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark: '67'},
-            {code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark: '67'},
-            {code: 'CS102', name: 'Data Structures and Algorithms', result: 'B+', mark: '67'},
-            {code: 'CS103', name: 'Data Structures and Algorithms', result: 'A-', mark: '74'}
-        ],
         tests: [
             {testId: '250106', testLevel: 'Basic', mark: '58'},
             {testId: '250107', testLevel: 'Generated', mark: '86'},
@@ -53,9 +55,12 @@ import COURSE from '@/app/courses/page';
             jobTitle: 'Job Role ',
             jobId:'',
         },
+        notifications:[
+            {message:"message1"},
+        ],
         experience: [
             {
-                jobName: 'Full-stack developer1',
+                jobName: 'Full-stack developer',
                 companyName: 'codeLabs',
                 startDate: '',
                 endDate: '',
@@ -186,7 +191,6 @@ import COURSE from '@/app/courses/page';
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    email: user.email,
                     contact: user.contact,
                     fullName: user.fullName,
                     cvSummary: user.cvSummary,
@@ -195,11 +199,14 @@ import COURSE from '@/app/courses/page';
                     linkedIn: user.linkedIn,
                     gender: user.gender,
                     language: user.language,
+                    selectedJob:{
+                        jobTitle: 'Full-stack Developer ',
+                        jobId:'',
+                    },
                     city: user.city,
                     country: user.country,
                     experience: user.experience,
                     education: user.education,
-                    skills: user.skills,
                 }),
             });
 
@@ -212,6 +219,14 @@ import COURSE from '@/app/courses/page';
             console.error("Error:", error);
         }
     }
+
+     useEffect(() => {
+         // Simulate loading for 1.5 seconds
+         setTimeout(() => {
+             setLoading(false); // Set loading to false after 1.5 seconds
+         }, 1500);
+     }, []);
+
     useEffect(() => {
         if(id){
             const fetchUserDetails = async () => {
@@ -240,6 +255,37 @@ import COURSE from '@/app/courses/page';
             router.push(`${reDirectUrl}`);
         }
     }, [activeTab, id]);
+
+     const logout = async () => {
+         try {
+             await axios.get('/api/users/logout');
+             toast.success('Logout successful');
+             router.push('/login');
+         } catch (error: any) {
+             console.log(error.message);
+             toast.error(error.message);
+         }
+     };
+
+     const togglePopup = () => {
+         if(user.notifications.length>0){
+             setIsOpen(!isOpen);
+         }
+     };
+
+     useEffect(() => {
+         const handleClickOutside = (event: MouseEvent) => {
+             if (
+                 notificationRef.current &&
+                 !notificationRef.current.contains(event.target as Node)
+             ) {
+                 setIsOpen(false);
+             }
+         };
+         document.addEventListener("mousedown", handleClickOutside);
+         return () => document.removeEventListener("mousedown", handleClickOutside);
+     }, []);
+
     return (
         <><Suspense fallback={<div>Loading...</div>}>
             <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
@@ -247,7 +293,8 @@ import COURSE from '@/app/courses/page';
                     {/* Sidebar */}
                     <aside className={styles.sidebar}>
                         <div className={styles.logoContainer}>
-                            <Image src={"/logo.png"} alt="Logo" width={150} height={150} className={styles.logo} priority/>
+                            <Image src={"/logo.png"} alt="Logo" width={120} height={120} className={styles.logo}
+                                   priority/>
                         </div>
                         <nav className={styles.nav}>
                             <ul>
@@ -259,19 +306,19 @@ import COURSE from '@/app/courses/page';
                                     onClick={() => setActiveTab(0)}
                                     className={activeTab === 0 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
-                                                    width={40} height={40} className={styles.navImage}/> Overview</a>
+                                                    width={40} height={40} className={styles.navImage}/> Overview </a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(1)}
                                     className={activeTab === 1 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
-                                                    width={40} height={40} className={styles.navImage}/> Progress</a>
+                                                    width={40} height={40} className={styles.navImage}/> Progress </a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(2)}
                                     className={activeTab === 2 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
-                                                    width={50} height={40} className={styles.navImage}/> Courses</a>
+                                                    width={50} height={40} className={styles.navImage}/> Courses </a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(3)}
@@ -281,46 +328,118 @@ import COURSE from '@/app/courses/page';
                                 <li
                                     onClick={() => setActiveTab(4)}
                                     className={activeTab === 4 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/mockInterview.svg"} alt="mockInterview"
-                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</a></li>
+                                ><a href="#"><Image src={"/user/mockInterview.svg"} alt="mockInterviewIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</a>
+                                </li>
                                 <li
                                     onClick={() => setActiveTab(5)}
                                     className={activeTab === 5 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/assessments.svg"} alt="assessmentsIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Assessments
+                                </a>
+                                </li>
+                                <li
+                                    onClick={() => setActiveTab(6)}
+                                    className={activeTab === 6 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/Careers.svg"} alt="CareersIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Employment </a>
+                                </li>
+                                <li
+                                    onClick={() => setActiveTab(7)}
+                                    className={activeTab === 7 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Settings</a>
+                                                    width={30} height={40} className={styles.navImage}/> Settings </a>
+                                </li>
+                                <li
+                                    onClick={logout}
+                                    className={activeTab === 8 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/logOut.svg"} alt="logOutIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Log Out </a>
                                 </li>
                             </ul>
                         </nav>
 
                     </aside>
+
                     {/* Main Content */}
                     <main className={styles.mainContent}>
-                        <header className={styles.header}>
-                            <div className={styles.searchContainer}>
-                                <input type="text" placeholder="Search"/>
-                                <button>🔍</button>
-                            </div>
-                        </header>
-                        <div className={styles.contentWrapper}>
-                            <section className={styles.tabsSection}>
-                                {activeTab === 0 && <Overview user={user}/>}
-                                {activeTab === 1 && <Progress user={user}/>}
-                                {/*{activeTab === 2 && <Courses user={user}/>}*/}
-                                {activeTab === 2 && <COURSE/>}
-                                {activeTab === 3 && <Resume
-                                    user={user} removeEducation={removeEducation}
-                                    removeExperience={removeExperience}
-                                    updateNestedChanges={updateNestedChanges}/>}
-                                {activeTab === 4 && <MockInterview/>}
-                                {activeTab === 5 && <Settings
-                                    user={user}
-                                    handleSubmit={handleSubmit}
-                                    handleChange={handleChange}
-                                    handleNestedChange={handleNestedChange}
-                                    addEducation={addEducation}
-                                    addExperience={addExperience}
-                                    handleFields={handleFields}/>}
-                            </section>
+                        <div>
+                            {/* Show loading spinner while content is loading */}
+                            {loading ? (
+                                <div className="d-flex justify-content-center align-items-center"
+                                     style={{height: '100vh'}}>
+                                    <div className="spinner-border text-primary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            ) : (
+                                // Your main content once loading is done
+                                <div>
+                                    <header className={styles.header}>
+                                        <div className={styles.searchContainer}>
+                                            <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
+                                        </div>
+                                        <div className={styles.notificationWrapper} ref={notificationRef}>
+                                            <div className={styles.notificationContainer} onClick={togglePopup}>
+                                                {user.notifications?.length > 0 ? (
+                                                    <div>
+                                                        <Image
+                                                            src={"/user/notificationBellRing.svg"}
+                                                            alt="notificationBellRing"
+                                                            width={30}
+                                                            height={30}
+                                                            className={styles.notificationIcon}
+                                                        />
+                                                        <span className={styles.notificationCount}>
+                                                {user.notifications?.length}
+                                            </span>
+                                                    </div>
+                                                ) : (
+                                                    <Image
+                                                        src={"/user/notificationBell.svg"}
+                                                        alt="notificationBell"
+                                                        width={30}
+                                                        height={30}
+                                                        className={styles.notificationIcon}
+                                                    />
+                                                )}
+                                            </div>
+
+                                            {isOpen && (
+                                                <div className={styles.notificationPopup}>
+                                                    <ul>
+                                                        {user.notifications.map((notification, index) => (
+                                                            <li key={index}>{notification.message}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </header>
+                                    <div className={styles.contentWrapper}>
+                                        <section className={styles.tabsSection}>
+                                            {activeTab === 0 && <Overview user={user}/>}
+                                            {activeTab === 1 && <Progress user={user}/>}
+                                            {activeTab === 2 && <COURSE/>}
+                                            {activeTab === 3 && <Resume
+                                                user={user} removeEducation={removeEducation}
+                                                removeExperience={removeExperience}
+                                                updateNestedChanges={updateNestedChanges}/>}
+                                            {activeTab === 4 && <MockInterview/>}
+                                            {/*{activeTab === 5 && <Assessment user={user}/>}*/}
+                                            {/*{activeTab === 6 && <Careers user={user}/>}*/}
+                                            {activeTab === 7 && <Settings
+                                                user={user}
+                                                handleSubmit={handleSubmit}
+                                                handleChange={handleChange}
+                                                handleNestedChange={handleNestedChange}
+                                                addEducation={addEducation}
+                                                addExperience={addExperience}
+                                                handleFields={handleFields}/>}
+                                        </section>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </main>
                 </div>
@@ -328,12 +447,12 @@ import COURSE from '@/app/courses/page';
         </Suspense>
         </>
     );
-}
+ }
 
 export default function UserProfilePage() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <UserProfile />
+            <UserProfile/>
         </Suspense>
     );
 }
