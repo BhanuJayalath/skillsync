@@ -41,6 +41,24 @@ export default function UserProfile({
     cvSummary: "",
   });
 
+  function addMessages() {
+    console.log(userId);
+    axios
+      .patch(
+        "/api/users/controller",
+        { message: ["New Message"] },
+        {
+          headers: { "Content-Type": "application/json", "user-id": userId },
+        }
+      )
+      .then((response) => {
+        console.log("Updated successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error.response?.data || error.message);
+      });
+  }
+
   useEffect(() => {
     console.log(userId);
     axios
@@ -104,7 +122,7 @@ export default function UserProfile({
       </div>
       <div>
         <label>Set as selected</label>
-        <input type="checkbox"></input>
+        <input type="checkbox" onChange={addMessages}></input>
       </div>
     </section>
   );

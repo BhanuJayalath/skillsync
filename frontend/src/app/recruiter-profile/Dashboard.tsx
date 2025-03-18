@@ -90,7 +90,6 @@ export default function Dashboard({
     );
     setBestPerformed(sortedMarkArray);
     setOnLoad(false);
-    // console.log(sortedMarkArray);
   }
 
   return (
