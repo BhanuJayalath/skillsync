@@ -34,6 +34,7 @@ import Careers from '@/app/job-recommendations/page';
          {message:"message2"},
          ])
 
+    const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
     const [user, setUser] = useState({
         email: "Name@gmail.com",   // User's email address
