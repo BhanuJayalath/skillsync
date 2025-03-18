@@ -406,7 +406,15 @@ import Careers from '@/app/job-recommendations/page';
                                                 )}
                                             </div>
 
-
+                                            {isOpen && (
+                                                <div className={styles.notificationPopup}>
+                                                    <ul>
+                                                        {notifications.map((notification, index) => (
+                                                            <li key={index}>{notification.message}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
                                         </div>
                                     </header>
                                     <div className={styles.contentWrapper}>
