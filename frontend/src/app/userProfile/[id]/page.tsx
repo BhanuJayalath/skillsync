@@ -25,6 +25,8 @@ import Careers from '@/app/job-recommendations/page';
      //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
 
+    const [loading, setLoading] = useState(true);
+
 
 
     // Initializing profile state with default user details
