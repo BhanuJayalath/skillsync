@@ -124,7 +124,12 @@
     margin-left: 15em;
 }
 
-
+.notificationWrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 16em;
+}
 
 
 
