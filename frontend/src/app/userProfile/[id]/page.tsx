@@ -221,7 +221,12 @@ import Careers from '@/app/job-recommendations/page';
         }
     }
 
-
+     useEffect(() => {
+         // Simulate loading for 3 seconds (e.g., fetching data)
+         setTimeout(() => {
+             setLoading(false); // Set loading to false after 3 seconds
+         }, 1500);
+     }, []);
 
     useEffect(() => {
         if(id){
