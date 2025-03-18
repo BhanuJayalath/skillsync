@@ -445,6 +445,7 @@
 .cvSection {
     font-family: Arial, sans-serif;
     width: 49.61rem;
+    min-height:70.157489153699rem ;
     padding: 2cm;
     margin: 0 auto;
     background: #ffffff;
