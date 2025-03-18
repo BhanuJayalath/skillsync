@@ -59,6 +59,10 @@ import Careers from '@/app/job-recommendations/page';
             jobTitle: 'Job Role ',
             jobId:'',
         },
+        notifications:[
+            {message:"message1"},
+            {message:"message2"},
+        ],
         experience: [
             {
                 jobName: 'Full-stack developer',
