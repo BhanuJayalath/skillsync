@@ -29,7 +29,10 @@ import Careers from '@/app/job-recommendations/page';
 
     const [isOpen, setIsOpen] = useState(false);
 
-
+     const [notifications, setNotifications] = useState([
+         {message:"message1"},
+         {message:"message2"},
+         ])
 
     // Initializing profile state with default user details
     const [user, setUser] = useState({
