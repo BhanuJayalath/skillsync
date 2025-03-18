@@ -313,6 +313,9 @@
     align-items: center;
 }
 
+.overviewIcons {
+    margin: 0.5em;
+}
 .userFooter {
     background-color: #3498db; /* Refined blue */
     display: flex;
