@@ -223,7 +223,23 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <p>{user.email}</p>
                 </div>
                 <div className={styles.editButton}>
-
+                    <button
+                        className="btn btn-primary d-flex align-items-center"
+                        disabled={loading}
+                    >
+                        {/* Display spinner when loading */}
+                        {loading ? (
+                            <>
+                                <div className="spinner-border spinner-border-sm text-light" role="status"
+                                     style={{marginRight: '10px'}}>
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                                Loading...
+                            </>
+                        ) : (
+                            'Save'
+                        )}
+                    </button>
                 </div>
             </div>
             {/*form section*/}
