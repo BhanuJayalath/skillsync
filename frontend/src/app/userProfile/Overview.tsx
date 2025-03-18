@@ -10,6 +10,7 @@ interface User {
     contact: string;
     linkedIn: string;
     portfolio:string;
+    education: Education[];
     gitHub: string;
 }
 
