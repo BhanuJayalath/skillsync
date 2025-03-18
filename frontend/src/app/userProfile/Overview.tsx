@@ -28,6 +28,16 @@ const Overview = ({ user }: { user: User }) => {
                         className={activeTab === 0 ? styles.activeLink : ''}
                     > Profile
                     </li>
+                    <li
+                        onClick={() => setActiveTab(1)}
+                        className={activeTab === 1 ? styles.activeLink : ''}
+                    > Details
+                    </li>
+                    <li
+                        onClick={() => setActiveTab(2)}
+                        className={activeTab === 2 ? styles.activeLink : ''}
+                    > Skills
+                    </li>
                 </ul>
             </nav>
             <section className={styles.overviewUserContainer}>
