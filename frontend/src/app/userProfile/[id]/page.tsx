@@ -222,9 +222,9 @@ import Careers from '@/app/job-recommendations/page';
     }
 
      useEffect(() => {
-         // Simulate loading for 3 seconds (e.g., fetching data)
+         // Simulate loading for 1.5 seconds
          setTimeout(() => {
-             setLoading(false); // Set loading to false after 3 seconds
+             setLoading(false); // Set loading to false after 1.5 seconds
          }, 1500);
      }, []);
 
