@@ -274,7 +274,18 @@ import Careers from '@/app/job-recommendations/page';
          }
      };
 
-
+     useEffect(() => {
+         const handleClickOutside = (event: MouseEvent) => {
+             if (
+                 notificationRef.current &&
+                 !notificationRef.current.contains(event.target as Node)
+             ) {
+                 setIsOpen(false);
+             }
+         };
+         document.addEventListener("mousedown", handleClickOutside);
+         return () => document.removeEventListener("mousedown", handleClickOutside);
+     }, []);
 
     return (
         <><Suspense fallback={<div>Loading...</div>}>
