@@ -200,7 +200,10 @@ import Careers from '@/app/job-recommendations/page';
                     linkedIn: user.linkedIn,
                     gender: user.gender,
                     language: user.language,
-
+                    selectedJob:{
+                        jobTitle: 'Full-stack Developer ',
+                        jobId:'',
+                    },
                     city: user.city,
                     country: user.country,
                     experience: user.experience,
