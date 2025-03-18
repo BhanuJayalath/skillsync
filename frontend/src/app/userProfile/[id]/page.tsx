@@ -1,8 +1,8 @@
 "use client"; // Indicating as a client-side component
 
 import Image from 'next/image';     // Importing images
-import { useParams, useRouter  } from 'next/navigation';
-import React, {Suspense, useEffect, useState} from 'react';   // Importing useState hook from React for state management
+import { useParams, useRouter, useSearchParams   } from 'next/navigation';
+import React, {Suspense, useEffect, useRef, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from '../user.module.css';   // Importing custom styles
 import '../../globals.css';
@@ -14,13 +14,19 @@ import MockInterview from '@/app/mock-interview/page';
 import COURSE from '@/app/courses/page';
 import axios from "axios";
 import {toast} from "react-hot-toast";
+import Assessment from '@/app/test/page';
+import Careers from '@/app/job-recommendations/page';
 
 
  function UserProfile() {
      const { id } = useParams();
-     const router = useRouter();
-    //Adding a useState for the active section
+     const router = useRouter();const searchParams = useSearchParams();
+     const message = searchParams.get('message');
+     //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
+
+
+
     // Initializing profile state with default user details
     const [user, setUser] = useState({
         email: "Name@gmail.com",   // User's email address
@@ -46,7 +52,7 @@ import {toast} from "react-hot-toast";
         },
         experience: [
             {
-                jobName: 'Full-stack developer1',
+                jobName: 'Full-stack developer',
                 companyName: 'codeLabs',
                 startDate: '',
                 endDate: '',
@@ -185,6 +191,7 @@ import {toast} from "react-hot-toast";
                     linkedIn: user.linkedIn,
                     gender: user.gender,
                     language: user.language,
+
                     city: user.city,
                     country: user.country,
                     experience: user.experience,
@@ -201,6 +208,9 @@ import {toast} from "react-hot-toast";
             console.error("Error:", error);
         }
     }
+
+
+
     useEffect(() => {
         if(id){
             const fetchUserDetails = async () => {
@@ -241,6 +251,10 @@ import {toast} from "react-hot-toast";
          }
      };
 
+
+
+
+
     return (
         <><Suspense fallback={<div>Loading...</div>}>
             <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
@@ -248,7 +262,8 @@ import {toast} from "react-hot-toast";
                     {/* Sidebar */}
                     <aside className={styles.sidebar}>
                         <div className={styles.logoContainer}>
-                            <Image src={"/logo.png"} alt="Logo" width={150} height={150} className={styles.logo} priority/>
+                            <Image src={"/logo.png"} alt="Logo" width={120} height={120} className={styles.logo}
+                                   priority/>
                         </div>
                         <nav className={styles.nav}>
                             <ul>
@@ -260,75 +275,89 @@ import {toast} from "react-hot-toast";
                                     onClick={() => setActiveTab(0)}
                                     className={activeTab === 0 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
-                                                    width={40} height={40} className={styles.navImage}/> Overview</a>
+                                                    width={40} height={40} className={styles.navImage}/> Overview </a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(1)}
                                     className={activeTab === 1 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
-                                                    width={40} height={40} className={styles.navImage}/> Progress</a>
+                                                    width={40} height={40} className={styles.navImage}/> Progress </a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(2)}
                                     className={activeTab === 2 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
-                                                    width={50} height={40} className={styles.navImage}/> Courses</a>
+                                                    width={50} height={40} className={styles.navImage}/> Courses </a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(3)}
                                     className={activeTab === 3 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
                                                     width={30} height={40} className={styles.navImage}/> Resume</a></li>
+
                                 <li
-                                    onClick={() => setActiveTab(4)}
-                                    className={activeTab === 4 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/mockInterview.svg"} alt="mockInterview"
-                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</a>
-                                </li>
-                                <li
-                                    onClick={() => setActiveTab(5)}
-                                    className={activeTab === 5 ? styles.activeLink : ''}
+                                    onClick={() => setActiveTab(7)}
+                                    className={activeTab === 7 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Settings</a>
+                                                    width={30} height={40} className={styles.navImage}/> Settings </a>
                                 </li>
                                 <li
                                     onClick={logout}
-                                    className={activeTab === 6 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/logOut.svg"} alt="logOut"
+                                    className={activeTab === 8 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/logOut.svg"} alt="logOutIcon"
                                                     width={30} height={40} className={styles.navImage}/> Log Out </a>
                                 </li>
                             </ul>
                         </nav>
 
                     </aside>
+
                     {/* Main Content */}
                     <main className={styles.mainContent}>
-                        <header className={styles.header}>
-                            <div className={styles.searchContainer}>
-                                <input type="text" placeholder="Search"/>
-                                <button>🔍</button>
-                            </div>
-                        </header>
-                        <div className={styles.contentWrapper}>
-                            <section className={styles.tabsSection}>
-                                {activeTab === 0 && <Overview user={user}/>}
-                                {activeTab === 1 && <Progress user={user}/>}
-                                {/*{activeTab === 2 && <Courses user={user}/>}*/}
-                                {activeTab === 2 && <COURSE/>}
-                                {activeTab === 3 && <Resume
-                                    user={user} removeEducation={removeEducation}
-                                    removeExperience={removeExperience}
-                                    updateNestedChanges={updateNestedChanges}/>}
-                                {activeTab === 4 && <MockInterview/>}
-                                {activeTab === 5 && <Settings
-                                    user={user}
-                                    handleSubmit={handleSubmit}
-                                    handleChange={handleChange}
-                                    handleNestedChange={handleNestedChange}
-                                    addEducation={addEducation}
-                                    addExperience={addExperience}
-                                    handleFields={handleFields}/>}
-                            </section>
+                        <div>
+                            {/* Show loading spinner while content is loading */}
+                            {loading ? (
+                                <div className="d-flex justify-content-center align-items-center"
+                                     style={{height: '100vh'}}>
+                                    <div className="spinner-border text-primary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            ) : (
+                                // Your main content once loading is done
+                                <div>
+                                    <header className={styles.header}>
+                                        <div className={styles.searchContainer}>
+                                            <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
+                                        </div>
+                                        <div className={styles.notificationWrapper} ref={notificationRef}>
+
+
+
+                                        </div>
+                                    </header>
+                                    <div className={styles.contentWrapper}>
+                                        <section className={styles.tabsSection}>
+                                            {activeTab === 0 && <Overview user={user}/>}
+                                            {activeTab === 1 && <Progress user={user}/>}
+                                            {activeTab === 2 && <COURSE/>}
+                                            {activeTab === 3 && <Resume
+                                                user={user} removeEducation={removeEducation}
+                                                removeExperience={removeExperience}
+                                                updateNestedChanges={updateNestedChanges}/>}
+                                            {activeTab === 4 && <MockInterview/>}
+                                            {activeTab === 7 && <Settings
+                                                user={user}
+                                                handleSubmit={handleSubmit}
+                                                handleChange={handleChange}
+                                                handleNestedChange={handleNestedChange}
+                                                addEducation={addEducation}
+                                                addExperience={addExperience}
+                                                handleFields={handleFields}/>}
+                                        </section>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </main>
                 </div>
@@ -336,12 +365,12 @@ import {toast} from "react-hot-toast";
         </Suspense>
         </>
     );
-}
+ }
 
 export default function UserProfilePage() {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <UserProfile />
+            <UserProfile/>
         </Suspense>
     );
 }
