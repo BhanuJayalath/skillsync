@@ -288,6 +288,7 @@
 /* User Details */
 .userProfile {
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin-top: 1em;
     padding: 0 1em; /* Add padding */
