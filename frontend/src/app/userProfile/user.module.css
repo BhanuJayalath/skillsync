@@ -236,6 +236,15 @@
 
 
 /* User Info */
+.overviewNavBar{
+    display: flex;
+    flex-direction: row;
+    background-color: #3396a6;
+    width: 15em;
+    border-radius: 0.3em;
+    color: white;
+    margin:  5% 0;
+}
 
 .welcomeMessage {
     background: #3498db; /* Refined blue */
