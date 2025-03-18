@@ -381,7 +381,30 @@ import Careers from '@/app/job-recommendations/page';
                                             <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
                                         </div>
                                         <div className={styles.notificationWrapper} ref={notificationRef}>
-
+                                            <div className={styles.notificationContainer} >
+                                                {notifications.length > 0 ? (
+                                                    <div>
+                                                        <Image
+                                                            src={"/user/notificationBellRing.svg"}
+                                                            alt="notificationBellRing"
+                                                            width={30}
+                                                            height={30}
+                                                            className={styles.notificationIcon}
+                                                        />
+                                                        <span className={styles.notificationCount}>
+                                                {notifications.length}
+                                            </span>
+                                                    </div>
+                                                ) : (
+                                                    <Image
+                                                        src={"/user/notificationBell.svg"}
+                                                        alt="notificationBell"
+                                                        width={30}
+                                                        height={30}
+                                                        className={styles.notificationIcon}
+                                                    />
+                                                )}
+                                            </div>
 
 
                                         </div>
