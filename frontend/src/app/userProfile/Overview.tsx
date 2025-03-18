@@ -88,6 +88,9 @@ const Overview = ({ user }: { user: User }) => {
                               width={20} height={20}/>{user.gitHub}</p>
                 </div>}
                 {activeTab === 1 && <div className={styles.userDetails}>
+                    <p><Image src={"/user/email.svg"} alt="email"
+                              className={styles.overviewIcons}
+                              width={20} height={20}/>{user.portfolio}</p>
                 </div>}
                 {activeTab === 2 && <div className={styles.userDetails}>
                     <p><Image src={"/user/email.svg"} alt="email"
