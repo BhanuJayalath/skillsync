@@ -1,9 +1,9 @@
-// src/app/api/basic-test/route.js
-import { NextResponse } from "next/server";
+// src/app/api/basic-test/route.ts
+import { NextResponse, NextRequest } from "next/server";
 import { connect } from "@/dbConfig/dbConfig";
 import TestScore from "@/models/testScore";
 
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   try {
     // Connect to the database
     await connect();
@@ -33,7 +33,7 @@ export async function POST(request) {
         { status: 400 }
       );
     }
-    // If provided, selectedSkills must be an array; otherwise, default to empty array.
+    // Validate selectedSkills if provided
     if (selectedSkills && !Array.isArray(selectedSkills)) {
       return NextResponse.json(
         { success: false, error: "selectedSkills must be an array" },
@@ -50,8 +50,14 @@ export async function POST(request) {
       selectedSkills: selectedSkills || [],
     });
 
-    return NextResponse.json({ success: true, data: newTestScore }, { status: 201 });
-  } catch (error) {
+    // Convert the document to a plain object and remove extra fields from the output
+    const scoreData = newTestScore.toObject();
+    delete scoreData._id;
+    delete scoreData.__v;
+    delete scoreData.createdAt;
+
+    return NextResponse.json({ success: true, data: scoreData }, { status: 201 });
+  } catch (error: any) {
     console.error("Error in POST /api/basic-test:", error);
     return NextResponse.json(
       { success: false, error: error.message },

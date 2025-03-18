@@ -121,9 +121,10 @@ Output the result as a JSON array, where each object has the following fields: i
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                   size={20}
                 />
+
                 <Input
                   type="text"
-                  placeholder="      Search courses..."
+                  placeholder="Search courses..."
                   value={searchTerm}
                   onChange={handleSearchChange}
                   onKeyDown={handleKeyDown}
