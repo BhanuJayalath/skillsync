@@ -88,6 +88,10 @@ const Overview = ({ user }: { user: User }) => {
                               width={20} height={20}/>{user.gitHub}</p>
                 </div>}
                 {activeTab === 1 && <div className={styles.userDetails}>
+                    <h3 className={styles.degreeTitle}>{user.education[0].courseName}</h3>
+                    <p className={styles.schoolName}>{user.education[0].schoolName}</p>
+                    <p className={styles.graduationYear}>{user.education[0].startDate} {user.education[0].endDate && `-${user.education[0].endDate}`}</p>
+                    <p className={styles.jobResponsibilities}>{user.education[0].description}</p>
                     <p><Image src={"/user/email.svg"} alt="email"
                               className={styles.overviewIcons}
                               width={20} height={20}/>{user.portfolio}</p>
