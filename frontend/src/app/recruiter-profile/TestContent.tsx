@@ -123,7 +123,7 @@ export default function TestContent({
 
   return (
     <section className={styles.mockExam}>
-      <header id={styles.mockExamHeading}>
+      <header id={styles.TestContentHeading}>
         <button onClick={previousPage}>
           <Image
             alt="back-icon"
@@ -133,12 +133,8 @@ export default function TestContent({
           />
         </button>
         <h1>Test {testCount}</h1>
-        <h3>{loadTestQuestions.testId}</h3>
-        {loadJobPostContent.jobTitle ? (
-          <h3>{loadJobPostContent.jobTitle}</h3>
-        ) : null}
-        <h3>{loadJobPostContent.jobId}</h3>
-        {!updateTestContent ? (
+        {!updateTestContent &&
+        loadTestQuestions.testContent.questionContent.length > 0 ? (
           <button
             onClick={() => {
               setUpdateTestContent(true);
@@ -148,62 +144,82 @@ export default function TestContent({
               alt="update-icon"
               width={20}
               height={20}
-              src="/recruiter/update-icon.svg"
+              src="/recruiter/update-icon2.svg"
             />
+            Update Questions
+          </button>
+        ) : !updateTestContent &&
+          loadTestQuestions.testContent.questionContent.length === 0 ? (
+          <button
+            onClick={() => {
+              setUpdateTestContent(true);
+            }}
+          >
+            <Image
+              alt="tick-icon"
+              width={20}
+              height={20}
+              src="/recruiter/tik-icon.svg"
+            />
+            Get Started
           </button>
         ) : updateTestContent ? (
           <>
             <button onClick={addQuestion}>
               <Image
                 alt="plus-icon"
-                width={25}
-                height={25}
+                width={20}
+                height={20}
                 src="/recruiter/plus-icon.svg"
               />
+              Add Questions
             </button>
             {databaseExistingId ? (
               <button onClick={updatetoDatabase}>
                 <Image
                   alt="save-icon"
-                  width={35}
-                  height={35}
+                  width={20}
+                  height={20}
                   src="/recruiter/save-icon.svg"
                 />
+                Save Questions
               </button>
-            ) : (
+            ) : loadTestQuestions.testContent.questionContent.length > 0 ? (
               <button onClick={save}>
                 <Image
                   alt="save-icon"
-                  width={35}
-                  height={35}
+                  width={20}
+                  height={20}
                   src="/recruiter/save-icon.svg"
                 />
+                Save Questions
               </button>
-            )}
+            ) : null}
           </>
         ) : null}
+        <h3>{loadTestQuestions.testId}</h3>
+        {loadJobPostContent.jobTitle ? (
+          <h3>{loadJobPostContent.jobTitle}</h3>
+        ) : null}
+        <h3>{loadJobPostContent.jobId}</h3>
       </header>
       <div id={styles.questionContentDisplayArea}>
         <div id={styles.questionContentArea}>
-          {loadTestQuestions?.testContent?.questionContent.length > 0 ? (
-            loadTestQuestions.testContent.questionContent.map((item: any) => {
-              questionCounter++;
-              return (
-                <QuestionContent
-                  key={questionCounter}
-                  TestQuestions={item}
-                  questionCounter={questionCounter}
-                  update={update}
-                  removeQuestion={removeQuestion}
-                  updateTestContent={updateTestContent}
-                />
-              );
-            })
-          ) : (
-            <div id={styles.emptyMockExamSection}>
-              <h1>Add your Questions Here</h1>
-            </div>
-          )}
+          {loadTestQuestions?.testContent?.questionContent.length > 0
+            ? loadTestQuestions.testContent.questionContent.map((item: any) => {
+                questionCounter++;
+                return (
+                  <QuestionContent
+                    key={questionCounter}
+                    TestQuestions={item}
+                    questionCounter={questionCounter}
+                    update={update}
+                    removeQuestion={removeQuestion}
+                    updateTestContent={updateTestContent}
+                  />
+                );
+              })
+            : null}
         </div>
       </div>
     </section>

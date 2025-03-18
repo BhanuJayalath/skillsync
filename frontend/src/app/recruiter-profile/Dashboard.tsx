@@ -18,7 +18,7 @@ export default function Dashboard({
   const [jobs, setJobs] = useState([]);
   const [tests, setTests] = useState([]);
   const [bestPerformed, setBestPerformed] = useState([]);
-  const [onLoad, setOnLoad] = useState(true);
+  const [onLoad, setOnLoad] = useState(false);
   const [users, setUsers] = useState([]);
   useEffect(() => {
     axios
@@ -29,6 +29,7 @@ export default function Dashboard({
       .catch((error) => {
         console.log(error);
       });
+    setOnLoad(true);
   }, []);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function Dashboard({
       .catch((error) => {
         console.log(error);
       });
-  }, [onLoad, setOnLoad, users]);
+  }, [users]);
 
   function loadTests(jobId: any) {
     const tempTestsSet: any = [];
@@ -59,7 +60,7 @@ export default function Dashboard({
         response.data.map((item: any) => {
           tempTestsSet.push(item);
           if (onLoad) {
-            performance(item.testId);
+            performance(item.testId, item.testContent.questionContent.length);
           }
         });
         setTests(tempTestsSet);
@@ -69,9 +70,9 @@ export default function Dashboard({
       });
   }
 
-  function performance(testId: string) {
+  function performance(testId: string, questionSize: number) {
+    console.log(onLoad);
     const tempMarkArray: any = [];
-    console.log("Performance", users);
     users.map((item: any) => {
       if (item.tests.length > 0) {
         const test = item.tests.find((item: any) => item.testId == testId);
@@ -80,7 +81,7 @@ export default function Dashboard({
           userName: item.userName,
           avatar: item.avatar ? item.avatar : null,
           testId: test.testId,
-          score: test.score,
+          score: (test.score / questionSize) * 100,
         });
       }
     });
@@ -89,7 +90,7 @@ export default function Dashboard({
     );
     setBestPerformed(sortedMarkArray);
     setOnLoad(false);
-    console.log(sortedMarkArray);
+    // console.log(sortedMarkArray);
   }
 
   return (
@@ -119,7 +120,10 @@ export default function Dashboard({
             return (
               <button
                 onClick={() => {
-                  performance(item.testId);
+                  performance(
+                    item.testId,
+                    item.testContent.questionContent.length
+                  );
                 }}
                 key={item.testId}
                 id={styles.profilesContainer}

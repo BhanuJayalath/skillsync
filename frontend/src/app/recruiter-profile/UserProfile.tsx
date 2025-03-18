@@ -102,6 +102,10 @@ export default function UserProfile({
         <h1>{userDetails.language}</h1>
         <h1>{userDetails.cvSummary}</h1>
       </div>
+      <div>
+        <label>Set as selected</label>
+        <input type="checkbox"></input>
+      </div>
     </section>
   );
 }

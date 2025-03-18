@@ -127,7 +127,7 @@ export default function JobContent({
   return (
     <section className={styles.JobContent}>
       <header id={styles.JobContentHeading}>
-        <button onClick={previousPage}>
+        <button id={styles.buttonPreviousPage} onClick={previousPage}>
           <Image
             alt="back-icon"
             width={25}
@@ -136,12 +136,9 @@ export default function JobContent({
           />
         </button>
         <h1>Job Post {jobCount}</h1>
-        {loadJobPostContent.jobTitle ? (
-          <h3>{loadJobPostContent.jobTitle}</h3>
-        ) : null}
-        <h3>{loadJobPostContent.jobId}</h3>
-        {!updateJobPostContent ? (
+        {!updateJobPostContent && jobTitle != "" ? (
           <button
+            id={styles.buttonAddJobContent}
             onClick={() => {
               setUpdateJobPostContent(!updateJobPostContent);
             }}
@@ -150,8 +147,24 @@ export default function JobContent({
               alt="update-icon"
               width={20}
               height={20}
-              src="/recruiter/update-icon.svg"
+              src="/recruiter/update-icon2.svg"
             />
+            Update Job Post
+          </button>
+        ) : !updateJobPostContent && jobTitle == "" ? (
+          <button
+            id={styles.buttonAddJobContent}
+            onClick={() => {
+              setUpdateJobPostContent(!updateJobPostContent);
+            }}
+          >
+            <Image
+              alt="add-icon"
+              width={20}
+              height={20}
+              src="/recruiter/plus-icon.svg"
+            />
+            Add Job Post
           </button>
         ) : (
           <div id={styles.jobContentSectionSaveandClose}>
@@ -160,23 +173,29 @@ export default function JobContent({
                 <button onClick={updatetoDatabase}>
                   <Image
                     alt="save-icon"
-                    width={35}
-                    height={35}
+                    width={20}
+                    height={20}
                     src="/recruiter/save-icon.svg"
                   />
+                  Save Job Info
                 </button>
               ) : (
                 <button onClick={saveToDatabase}>
                   <Image
                     alt="save-icon"
-                    width={35}
-                    height={35}
+                    width={20}
+                    height={20}
                     src="/recruiter/save-icon.svg"
                   />
+                  Save Job Info
                 </button>
               ))}
           </div>
         )}
+        {loadJobPostContent.jobTitle ? (
+          <h3>{loadJobPostContent.jobTitle}</h3>
+        ) : null}
+        <h3>{loadJobPostContent.jobId}</h3>
       </header>
       {loadJobPostContent && updateJobPostContent ? (
         <div id={styles.jobContentSection}>
@@ -242,7 +261,7 @@ export default function JobContent({
             </div>
           </div>
         </div>
-      ) : loadJobPostContent && !updateJobPostContent ? (
+      ) : loadJobPostContent && !updateJobPostContent && !(jobTitle == "") ? (
         <div id={styles.jobContentSection}>
           <div id={styles.jobContentSectionBlock}>
             <div id={styles.jobContentSectionTitle}>
@@ -270,11 +289,7 @@ export default function JobContent({
             </div>
           </div>
         </div>
-      ) : (
-        <div id={styles.emptyMockExamSection}>
-          <h1>Add your Job Post Here</h1>
-        </div>
-      )}
+      ) : null}
       <TestListing
         loadTests={loadTests}
         setLoadTests={setLoadTests}

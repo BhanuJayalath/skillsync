@@ -95,27 +95,42 @@ export default function TestListing({
     <div id={styles.testListing}>
       <div id={styles.testListingHeader}>
         <h1>Tests</h1>
-        <button onClick={addTestComponent}>
-          <Image
-            alt="plus-icon"
-            width={23}
-            height={23}
-            src="/recruiter/plus-icon.svg"
-          />
-        </button>
-        <button
-          onClick={() => {
-            setRemoveTestBlock(!removeTestBlock);
-          }}
-        >
-          {" "}
-          <Image
-            alt="remove-icon"
-            width={23}
-            height={23}
-            src="/recruiter/remove-icon.svg"
-          />
-        </button>
+        {loadTests.length>0 ? (
+          <>
+            <button onClick={addTestComponent}>
+              <Image
+                alt="plus-icon"
+                width={23}
+                height={23}
+                src="/recruiter/plus-icon.svg"
+              />
+              Add Tests
+            </button>
+            <button
+              onClick={() => {
+                setRemoveTestBlock(!removeTestBlock);
+              }}
+            >
+              <Image
+                alt="remove-icon"
+                width={23}
+                height={23}
+                src="/recruiter/remove-icon.svg"
+              />
+              remove Tests
+            </button>
+          </>
+        ) : (
+          <button onClick={addTestComponent}>
+            <Image
+              alt="plus-icon"
+              width={23}
+              height={23}
+              src="/recruiter/plus-icon.svg"
+            />
+            Add Tests
+          </button>
+        )}
       </div>
       <div className={styles.testListingSection}>
         {loadTests?.map((item: any, index: number) => {
