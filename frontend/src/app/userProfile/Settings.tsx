@@ -258,7 +258,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <label>Contact</label>
                     <input type="text" name="contact" value={user.contact || ''}
                            onChange={(e) => handleChange(e, "contact")}
-                           placeholder={user.contact || ''}/>
+                           placeholder={user.contact || '(+94) 77 123 4567'}/>
                 </div>
                 <div>
                     <label>Github</label>
