@@ -6,15 +6,15 @@ import { UserProfileController } from './user-profile/user-profile.controller';
 import { JobRecommendationModule } from './job-recommendation/job-recommendation.module';
 import { RecruiterModule } from './recruiter/recruiter.module';
 import { TestsModule } from './tests/tests.module';
-import { AdminPageModule } from './admin-page/admin-page.module';
-import { AdminPageModule } from './admin-page/admin-page.module';
+import { AdminModule } from './admin-page/admin-page.module';
+
 @Module({
   imports: [
     RecruiterModule,
     UserProfileModule,
     JobRecommendationModule,
     TestsModule,
-    AdminPageModule,
+    AdminModule,
   ],
   controllers: [AppController, UserProfileController],
   providers: [AppService],
