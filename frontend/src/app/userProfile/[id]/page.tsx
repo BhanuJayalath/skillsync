@@ -340,6 +340,12 @@ import Careers from '@/app/job-recommendations/page';
                                 </a>
                                 </li>
                                 <li
+                                    onClick={() => setActiveTab(6)}
+                                    className={activeTab === 6 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/Careers.svg"} alt="CareersIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Employment </a>
+                                </li>
+                                <li
                                     onClick={() => setActiveTab(7)}
                                     className={activeTab === 7 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
