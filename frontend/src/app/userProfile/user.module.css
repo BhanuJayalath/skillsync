@@ -151,7 +151,19 @@
     right: -5px;
 }
 
-
+.notificationPopup {
+    display: block; /* Ensure it's visible */
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #fff;  /* Visible background */
+    border: 1px solid #ddd;  /* Clear border */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    padding: 10px;
+    z-index: 999;  /* Ensure it's on top */
+}
 
 
 
