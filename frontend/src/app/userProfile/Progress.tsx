@@ -2,17 +2,17 @@ import styles from "@/app/userProfile/user.module.css";
 import React from "react";
 
 interface User {
-    jobRole: jobRole[];
+    selectedJob: selectedJob;
     tests: tests[];
 }
-interface jobRole {
-    jobName: string;
+interface selectedJob {
+    jobTitle: string;
+    jobId:string;
 }
 interface tests {
     testId: string;
     testLevel: string;
     mark: string;
-    xAxis: string;
 }
 
 const Progress = ({ user }: { user: User }) => {
@@ -58,7 +58,7 @@ const Progress = ({ user }: { user: User }) => {
                 </svg>
             </div>
             <div className={styles.courses}>
-                <h4 className={styles.coursesTitle}>{user.jobRole[0].jobName}</h4>
+                <h4 className={styles.coursesTitle}>{user.selectedJob.jobTitle}</h4>
                 <ul className={styles.courseList}>
                     {user.tests.map((test, index) => (
                         <li key={index} className={styles.courseItem}>

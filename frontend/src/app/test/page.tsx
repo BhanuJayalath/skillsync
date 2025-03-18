@@ -31,11 +31,12 @@ export default function MCQTest() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [testStarted, setTestStarted] = useState(false)
   const [score, setScore] = useState({ correct: 0, total: 0 })
+  const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
 
   //fixed userId for now
-  const userId = "006"
-  const [testId, setTestId] = useState("Test1741231239210") // Fixed testId for now
-  const jobId = "Job1741231081858" // Fixed jobId for now
+  const userId = "67d6f7375f356696386fd534";
+  const [testId, setTestId] = useState("Test1742022418151") // Fixed testId for now
+  const jobId = "Job1742022159253" // Fixed jobId for now
 
   useEffect(() => {
     // Fetch the test data from the backend
@@ -77,34 +78,49 @@ export default function MCQTest() {
     }
   }
 
+/////////////////////////////////////
+
   // Update the handleSubmit function to calculate the score
   const handleSubmit = async () => {
     let correctCount = 0;
-  
+
     answers.forEach((answer, index) => {
-      if (answer === questions[index].correctAnswer) {
-        correctCount++;
-      }
+        if (answer === questions[index].correctAnswer) {
+            correctCount++;
+        }
     });
-  
+
     setScore({ correct: correctCount, total: questions.length });
     setIsSubmitted(true);
-  
+
     console.log("Submitted answers:", answers);
     console.log("Score:", correctCount, "out of", questions.length);
-  
-    // Send the test mark to the backend
+
+    // Send data to backend
     try {
-      await axios.patch(`http://localhost:3001/saveTestMark/${userId}`, {
-        jobId,
-        testId,
-        score: correctCount,
-      });
-      console.log("Test mark saved successfully");
+        const response = await fetch(`${updateUserUrl}/${userId}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                tests: [
+                    {
+                        testId,
+                        marks: correctCount,
+                    },
+                ],
+            }),
+        });
+
+        if (!response.ok) {
+            console.log("Failed to update user data!");
+        } else {
+            console.log("User general data updated!");
+        }
     } catch (error) {
-      console.error("Error saving test mark:", error);
+        console.error("Error submitting test results:", error);
     }
-  };
+};
+  
 
   const allQuestionsAnswered = answers.every((answer) => answer !== null)
   const progressPercentage = (answers.filter((a) => a !== null).length / questions.length) * 100
@@ -270,4 +286,3 @@ export default function MCQTest() {
     </div>
   )
 }
-

@@ -77,6 +77,22 @@
     align-items: center;
   }
   
+  .Hi {
+    border: 1px solid #021024;
+    padding: 0.5rem 1rem;
+    background-color: #f0f4f8;
+    border-radius: 0.375rem;
+    color: #021024;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  }
+
+  .Hi:hover {
+      background-color: #e2e8f0;
+      color: #1a202c;
+  }
+
   .mobileMenuButton button {
     display: inline-flex;
     align-items: center;
@@ -165,4 +181,47 @@
     }
   }
   
+  .userMenu {
+    position: relative;
+    display: inline-block;
+    
+  }
+  
+  .userMenu span {
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.15s ease-in-out;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    width: 100px;
+  }
+
+  .userMenu:hover .dropdown {
+    display: block;
+  }
+  
+  .dropdownItem {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdownItem:hover {
+    background-color: #f1f1f1;
+  }
   

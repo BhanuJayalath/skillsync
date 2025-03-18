@@ -13,172 +13,157 @@ export default function SignUpPage() {
   const [signupType, setSignupType] = useState("user");
 
   const [user, setUser] = useState({
-    username: "",
+    userName: "",
     email: "",
     password: "",
     company: "", // only used for recruiters
   });
 
+  const [passwordError, setPasswordError] = useState("");
+  const [signUpError, setSignUpError] = useState(""); // Holds error message from sign-up failure
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
+  // Validate password criteria
+  const validatePassword = (password: string): boolean => {
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters long.");
+      return false;
+    }
+    if (!/[A-Z]/.test(password)) {
+      setPasswordError("Password must contain at least one uppercase letter.");
+      return false;
+    }
+    if (!/[a-z]/.test(password)) {
+      setPasswordError("Password must contain at least one lowercase letter.");
+      return false;
+    }
+    if (!/[0-9]/.test(password)) {
+      setPasswordError("Password must contain at least one number.");
+      return false;
+    }
+    setPasswordError("");
+    return true;
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setUser({ ...user, password: newPassword });
+    validatePassword(newPassword);
+  };
+
+  useEffect(() => {
+    let isFormValid = false;
+    if (signupType === "user") {
+      isFormValid =
+        user.userName.trim() !== "" &&
+        user.email.trim() !== "" &&
+        user.password.trim() !== "" &&
+        passwordError === "";
+    } else {
+      isFormValid =
+        user.userName.trim() !== "" &&
+        user.email.trim() !== "" &&
+        user.password.trim() !== "" &&
+        user.company.trim() !== "" &&
+        passwordError === "";
+    }
+    setButtonDisabled(!isFormValid);
+  }, [user, signupType, passwordError]);
+
   const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     try {
       setLoading(true);
-      let endpoint = "";
+      setSignUpError("");
+      let signUpEndpoint = "";
+      let meEndpoint = "";
       let redirectPath = "";
       if (signupType === "user") {
-        endpoint = "/api/users/sign-up";
+        signUpEndpoint = "/api/users/sign-up";
+        meEndpoint = "/api/users/me";
         redirectPath = "/userProfile";
       } else {
-        endpoint = "/api/recruiters/sign-up";
+        signUpEndpoint = "/api/recruiters/sign-up";
+        meEndpoint = "/api/recruiters/me";
         redirectPath = "/recruiter-profile";
       }
-      const response = await axios.post(endpoint, user);
-      console.log("Signup success", response.data);
-      router.push(redirectPath);
+      await axios.post(signUpEndpoint, user);
+      toast.success("Signup success");
+
+      const res = await axios.get(meEndpoint);
+      let userId = res.data.user?._id || res.data.recruiter?._id || "";
+      router.push(`${redirectPath}/${userId}`);
     } catch (error: any) {
-      console.log("Signup failed", error.message);
-      toast.error(error.message);
+      console.log("Signup failed", error);
+      let errorMsg = "Signup failed. Please try again.";
+      if (error.response?.data?.error) {
+        errorMsg = error.response.data.error;
+      }
+      setSignUpError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (signupType === "user") {
-      // For user signup, require username, email, and password.
-      if (user.username && user.email && user.password) {
-        setButtonDisabled(false);
-      } else {
-        setButtonDisabled(true);
-      }
-    } else {
-      // For recruiter signup, also require company name.
-      if (user.username && user.email && user.password && user.company) {
-        setButtonDisabled(false);
-      } else {
-        setButtonDisabled(true);
-      }
-    }
-  }, [user, signupType]);
-
   return (
     <div className={styles.signupContainer}>
-      
-
-      {/* Left Section */}
       <div className={styles.leftSection}>
         <div className={styles.imagePlaceholder}>
-          {/* Replace with your images */}
           <img src="../logo.png" alt="logo" />
           <img src="../SignUpPageImg.png" alt="Sign Up Img" />
         </div>
       </div>
 
-      {/* Right Section */}
-      
       <div className={styles.rightSection}>
         <div className={styles.formContainer}>
           <h2 className={styles.title}>Set up your Account.</h2>
           <p className={styles.subtitle}>
-            Sign up now to access expert-curated resources, practice questions,
-            and personalized tips to boost your confidence and land your dream
-            job!
+            Sign up now to access expert resources, practice questions, and insights to boost your career or recruit top talent!
           </p>
-          {/* Tab Selector */}
+
           <div className={styles.tabSelector}>
-            <button
-              className={`${styles.tabButton} ${signupType === "user" ? styles.activeTab : ""}`}
-              onClick={() => setSignupType("user")}
-            >
+            <button type="button" className={`${styles.tabButton} ${signupType === "user" ? styles.activeTab : ""}`} onClick={() => setSignupType("user")}>
               User Signup
             </button>
-            <button
-              className={`${styles.tabButton} ${signupType === "recruiter" ? styles.activeTab : ""}`}
-              onClick={() => setSignupType("recruiter")}
-            >
+            <button type="button" className={`${styles.tabButton} ${signupType === "recruiter" ? styles.activeTab : ""}`} onClick={() => setSignupType("recruiter")}>
               Recruiter Signup
             </button>
           </div>
 
-
-          {/* Form */}
           <form onSubmit={onSignUp}>
-            {/* User Name */}
             <div className={styles.formGroup}>
-              
-              <label htmlFor="username">User Name</label>
-              <input
-                id="username"
-                type="text"
-                value={user.username}
-                onChange={(e) =>
-                  setUser({ ...user, username: e.target.value })
-                }
-                placeholder="Username"
-              />
+              <label htmlFor="userName">User Name</label>
+              <input id="userName" type="text" value={user.userName} onChange={(e) => setUser({ ...user, userName: e.target.value })} placeholder="Username" />
             </div>
 
-            {/* Email */}
             <div className={styles.formGroup}>
               <label htmlFor="email">Email</label>
-              <input
-                id="email"
-                type="email"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-                placeholder="Email"
-              />
+              <input id="email" type="email" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} placeholder="Email" />
             </div>
 
-            {/* Password */}
             <div className={styles.formGroup}>
               <label htmlFor="password">Password</label>
-              <div className={styles.passwordField}>
-                <input
-                  id="password"
-                  type="password"
-                  value={user.password}
-                  onChange={(e) =>
-                    setUser({ ...user, password: e.target.value })
-                  }
-                  placeholder="Password"
-                />
-              </div>
+              <input id="password" type="password" value={user.password} onChange={handlePasswordChange} placeholder="Password" />
+              {passwordError && <span className={styles.error}>{passwordError}</span>}
             </div>
 
-            {/* Company field for Recruiters */}
             {signupType === "recruiter" && (
               <div className={styles.formGroup}>
                 <label htmlFor="company">Company Name</label>
-                <input
-                  id="company"
-                  type="text"
-                  value={user.company}
-                  onChange={(e) =>
-                    setUser({ ...user, company: e.target.value })
-                  }
-                  placeholder="Company Name"
-                />
+                <input id="company" type="text" value={user.company} onChange={(e) => setUser({ ...user, company: e.target.value })} placeholder="Company Name" />
               </div>
             )}
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className={styles.submitButton}
-              disabled={buttonDisabled || loading}
-            >
+            <button type="submit" className={styles.submitButton} disabled={buttonDisabled || loading}>
               {loading ? "Processing..." : "Register"}
             </button>
+
+            {signUpError && <div className={styles.errorMessage}>Sign up failed: {signUpError}</div>}
           </form>
 
-          {/* Already Have Account */}
-          <p className={styles.loginText}>
-            Already have an account? <Link href="/login">Login</Link>
-          </p>
+          <p className={styles.loginText}>Already have an account? <Link href="/login">Login</Link></p>
         </div>
       </div>
     </div>

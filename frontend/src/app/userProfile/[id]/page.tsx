@@ -2,28 +2,30 @@
 
 import Image from 'next/image';     // Importing images
 import Footer from "@/app/components/Footer";   // Importing Footer component
-import { useSearchParams } from 'next/navigation';
+import { useParams, useRouter  } from 'next/navigation';
 import React, {Suspense, useEffect, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
-import styles from './user.module.css';   // Importing custom styles
-import '../globals.css';
+import styles from '../user.module.css';   // Importing custom styles
+import '../../globals.css';
 import Overview from "@/app/userProfile/Overview";
 import Progress from "@/app/userProfile/Progress";
 import Courses from "@/app/userProfile/Courses";
 import Resume from "@/app/userProfile/Resume";
 import Settings from "@/app/userProfile/Settings";
+import MockInterview from '@/app/mock-interview/page';
+import COURSE from '@/app/courses/page';
 
 
  function UserProfile() {
-    const searchParams = useSearchParams();
-    const userId = searchParams.get("userId");
+     const { id } = useParams();
+     const router = useRouter();
     //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
     // Initializing profile state with default user details
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [user, setUser] = useState({
         email: "Name@gmail.com",   // User's email address
-        number: '(+94)12 345 6789', // number
+        contact: '(+94)12 345 6789', // number
         userName: "UserName",  // User's display name
         gitHub: "github",
         linkedIn: "linkedin",
@@ -43,19 +45,20 @@ import Settings from "@/app/userProfile/Settings";
             {code: 'CS103', name: 'Data Structures and Algorithms', result: 'A-', mark: '74'}
         ],
         tests: [
-            {testId: '250106', testLevel: 'Basic', mark: '58', xAxis: '20'},
-            {testId: '250107', testLevel: 'Generated', mark: '86', xAxis: '100'},
-            {testId: '250108', testLevel: 'Interview', mark: '46', xAxis: '180'}
+            {testId: '250106', testLevel: 'Basic', mark: '58'},
+            {testId: '250107', testLevel: 'Generated', mark: '86'},
+            {testId: '250108', testLevel: 'Interview', mark: '46'}
         ],
-        jobRole: [{
-            jobName: 'Job Role '
-        }],
+        selectedJob: {
+            jobTitle: 'Job Role ',
+            jobId:'',
+        },
         experience: [
             {
                 jobName: 'Full-stack developer1',
                 companyName: 'codeLabs',
-                startDate: '2021',
-                endDate: 'Present',
+                startDate: '',
+                endDate: '',
                 description: ''
             },
         ],
@@ -63,8 +66,8 @@ import Settings from "@/app/userProfile/Settings";
             {
                 courseName: 'Bsc(hons) Computer Science',
                 schoolName: 'University of westminster',
-                startDate: '2022',
-                endDate: 'Present',
+                startDate: '',
+                endDate: '',
                 description: ''
             },
         ],
@@ -179,14 +182,14 @@ import Settings from "@/app/userProfile/Settings";
     const handleSubmit = async () => {
         const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
         try {
-            const response = await fetch(`${updateUserUrl}/${userId}`, {
+            const response = await fetch(`${updateUserUrl}/${id}`, {
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     email: user.email,
-                    number: user.number,
-                    userName: user.userName,
+                    contact: user.contact,
                     fullName: user.fullName,
+                    cvSummary: user.cvSummary,
                     avatar:user.avatar,
                     gitHub: user.gitHub,
                     linkedIn: user.linkedIn,
@@ -210,28 +213,33 @@ import Settings from "@/app/userProfile/Settings";
         }
     }
     useEffect(() => {
-        const fetchUserDetails = async () => {
-            const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
-            const response = await fetch(`${getUserUrl}/${userId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+        if(id){
+            const fetchUserDetails = async () => {
+                const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
+                const response = await fetch(`${getUserUrl}/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-                if (data.error) {
-                    console.log(data.error);  // If the backend returns an error, displaying it in the console
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.error) {
+                        console.log(data.error);  // If the backend returns an error, displaying it in the console
+                    } else {
+                        setUser(data);  // Otherwise, display the user details
+                    }
                 } else {
-                    setUser(data);  // Otherwise, display the user details
+                    console.log('Failed to fetch user details');
                 }
-            } else {
-                console.log('Failed to fetch user details');
-            }
-        };
-        fetchUserDetails().then(e => console.log(e));
-    }, [activeTab, userId]);
+            };
+            fetchUserDetails().then(e => console.log(e));
+        }else{
+            const reDirectUrl = process.env.NEXT_PUBLIC_LOGIN_PAGE_URL;
+            router.push(`${reDirectUrl}`);
+        }
+    }, [activeTab, id]);
     return (
         <><Suspense fallback={<div>Loading...</div>}>
             <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
@@ -239,40 +247,47 @@ import Settings from "@/app/userProfile/Settings";
                     {/* Sidebar */}
                     <aside className={styles.sidebar}>
                         <div className={styles.logoContainer}>
-                            <Image src={"/logo.png"} alt="Logo" width={150} height={0} className={styles.logo}/>
+                            <Image src={"/logo.png"} alt="Logo" width={150} height={150} className={styles.logo} priority/>
                         </div>
                         <nav className={styles.nav}>
                             <ul>
                                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                                 <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
-                                                       width={40} height={0} className={styles.navImage}/> Home</a></li>
+                                                       width={40} height={40} className={styles.navImage}/> Home</a>
+                                </li>
                                 <li
                                     onClick={() => setActiveTab(0)}
                                     className={activeTab === 0 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
-                                                    width={40} height={0} className={styles.navImage}/> Overview</a>
+                                                    width={40} height={40} className={styles.navImage}/> Overview</a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(1)}
                                     className={activeTab === 1 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
-                                                    width={40} height={0} className={styles.navImage}/> Progress</a>
+                                                    width={40} height={40} className={styles.navImage}/> Progress</a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(2)}
                                     className={activeTab === 2 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
-                                                    width={50} height={0} className={styles.navImage}/> Courses</a></li>
+                                                    width={50} height={40} className={styles.navImage}/> Courses</a>
+                                </li>
                                 <li
                                     onClick={() => setActiveTab(3)}
                                     className={activeTab === 3 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
-                                                    width={30} height={0} className={styles.navImage}/> Resume</a></li>
+                                                    width={30} height={40} className={styles.navImage}/> Resume</a></li>
                                 <li
                                     onClick={() => setActiveTab(4)}
                                     className={activeTab === 4 ? styles.activeLink : ''}
+                                ><a href="#"><Image src={"/user/mockInterview.svg"} alt="mockInterview"
+                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</a></li>
+                                <li
+                                    onClick={() => setActiveTab(5)}
+                                    className={activeTab === 5 ? styles.activeLink : ''}
                                 ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
-                                                    width={30} height={0} className={styles.navImage}/> Settings</a>
+                                                    width={30} height={40} className={styles.navImage}/> Settings</a>
                                 </li>
                             </ul>
                         </nav>
@@ -290,12 +305,14 @@ import Settings from "@/app/userProfile/Settings";
                             <section className={styles.tabsSection}>
                                 {activeTab === 0 && <Overview user={user}/>}
                                 {activeTab === 1 && <Progress user={user}/>}
-                                {activeTab === 2 && <Courses user={user}/>}
+                                {/*{activeTab === 2 && <Courses user={user}/>}*/}
+                                {activeTab === 2 && <COURSE/>}
                                 {activeTab === 3 && <Resume
                                     user={user} removeEducation={removeEducation}
                                     removeExperience={removeExperience}
                                     updateNestedChanges={updateNestedChanges}/>}
-                                {activeTab === 4 && <Settings
+                                {activeTab === 4 && <MockInterview/>}
+                                {activeTab === 5 && <Settings
                                     user={user}
                                     handleSubmit={handleSubmit}
                                     handleChange={handleChange}
@@ -307,8 +324,6 @@ import Settings from "@/app/userProfile/Settings";
                         </div>
                     </main>
                 </div>
-                {/*Footer component*/}
-                <Footer/>
             </div>
         </Suspense>
         </>

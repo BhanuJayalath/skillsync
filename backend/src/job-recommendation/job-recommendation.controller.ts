@@ -44,15 +44,26 @@ export class JobRecommendationController {
   ) {
     return this.jobService.createJob(jobData);
   }
+
   @Get('all-jobs')
   async getAllJobs(): Promise<Job[]> {
     return this.jobService.getAllJobs();
   }
-  // **READ a single job by ID**
+
+  // **READ a single job by Job ID**
   @Get(':jobId')
   async getJobById(@Param('jobId') jobId: string): Promise<Job> {
     return this.jobService.getJobById(jobId);
   }
+
+  // **READ jobs by Recruiter ID**
+  @Get('recruiter/:recruiterId')
+  async getJobsByRecruiterId(
+    @Param('recruiterId') recruiterId: string,
+  ): Promise<Job[]> {
+    return this.jobService.getJobsByRecruiterId(recruiterId);
+  }
+
   // **UPDATE a job by ID**
   @Patch(':jobId')
   async updateJob(

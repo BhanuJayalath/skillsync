@@ -2,7 +2,7 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import MockExam from "./TestContent";
-import Tab from "./Tab";
+import Tab from "./JobTab";
 import ResultTab from "./ResultTab";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -14,8 +14,6 @@ import axios from "axios";
 export default function TestListing({
   loadTests,
   setLoadTests,
-  updateTestContent,
-  setUpdateTestContent,
   removeTestBlock,
   setRemoveTestBlock,
   testState,
@@ -30,8 +28,6 @@ export default function TestListing({
 }: {
   loadTests: any;
   setLoadTests: any;
-  updateTestContent: any;
-  setUpdateTestContent: any;
   removeTestBlock: any;
   setRemoveTestBlock: any;
   testState: any;
@@ -54,6 +50,9 @@ export default function TestListing({
         response.data.map((item: any) => {
           tempArray.push(item);
         });
+      })
+      .catch((error) => {
+        console.log(error);
       });
     setLoadTests(tempArray);
   }, [remove]);
@@ -93,8 +92,8 @@ export default function TestListing({
   }
   let counter = 0;
   return (
-    <div id={styles.mockExams}>
-      <div id={styles.mockExamscontainerHeader}>
+    <div id={styles.testListing}>
+      <div id={styles.testListingHeader}>
         <h1>Tests</h1>
         <button onClick={addTestComponent}>
           <Image
@@ -106,22 +105,7 @@ export default function TestListing({
         </button>
         <button
           onClick={() => {
-            setUpdateTestContent(!updateTestContent);
-            setRemoveTestBlock(false);
-          }}
-        >
-          {" "}
-          <Image
-            alt="update-icon"
-            width={20}
-            height={20}
-            src="/recruiter/update-icon.svg"
-          />
-        </button>
-        <button
-          onClick={() => {
             setRemoveTestBlock(!removeTestBlock);
-            setUpdateTestContent(false);
           }}
         >
           {" "}
@@ -133,7 +117,7 @@ export default function TestListing({
           />
         </button>
       </div>
-      <div className={styles.mockExamscontainerSection}>
+      <div className={styles.testListingSection}>
         {loadTests?.map((item: any, index: number) => {
           return (
             <button
@@ -145,7 +129,7 @@ export default function TestListing({
                   loadTestContent(item.testId, index + 1);
                 }
               }}
-              id={styles.mockExamscontainer}
+              id={styles.testListingcontainer}
             >
               <Image
                 alt="exam-icon"
@@ -154,20 +138,13 @@ export default function TestListing({
                 src="/recruiter/exam-icon.svg"
               />
               <h1>Test {index + 1}</h1>
-              <div id={styles.mockExamscontainerButtons}>
+              <div id={styles.testListingButtons}>
                 {removeTestBlock ? (
                   <Image
                     alt="remove-icon"
                     width={25}
                     height={25}
                     src="/recruiter/remove-icon.svg"
-                  />
-                ) : updateTestContent ? (
-                  <Image
-                    alt="update-icon"
-                    width={25}
-                    height={25}
-                    src="/recruiter/update-icon.svg"
                   />
                 ) : null}
               </div>

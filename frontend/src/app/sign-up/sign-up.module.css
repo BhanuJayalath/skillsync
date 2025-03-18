@@ -124,6 +124,13 @@
     cursor: pointer;
     font-size: 1.2rem;
   }
+
+  .error {
+    color: #FFC107; /* red for error indication */
+    font-size: 0.875rem;
+    margin-top: 5px;
+    display: block;
+  }  
   
   .submitButton {
     width: 100%;
@@ -139,6 +146,14 @@
   .submitButton:hover {
     background-color: #333;
   }
+
+  .errorMessage {
+    color: #f44336; /* red color */
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
   
   .loginText {
     text-align: center;

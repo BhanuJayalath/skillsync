@@ -1,0 +1,161 @@
+.loginContainer {
+    display: flex;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Left Section */
+  .leftSection {
+    flex: 1;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .logo {
+    max-width: 20%;
+    height: auto;
+  }
+  
+  .imagePlaceholder img {
+    max-width: 80%;
+    height: auto;
+  }
+  
+  /* Right Section */
+  .rightSection {
+    flex: 1.5;
+    background-color: #D1E5F4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .tabSelector {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tabButton {
+    background: #f9f9f9;
+    color: #333;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .tabButton:hover {
+    background: #ececec;
+  }
+  
+  .activeTab {
+    background: #ff9f40;
+    color: #fff;
+    border-color: #ff9f40;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+
+
+  .formContainer {
+    background: #ffffff;
+    color: #000;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+  
+  .formGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .formGroup label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .formGroup input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .passwordField {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .passwordField input {
+    flex: 1;
+  }
+  
+  .passwordField button {
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .submitButton {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .submitButton:hover {
+    background-color: #333;
+  }
+
+  .errorMessage {
+    color: #f44336; /* red color */
+    font-size: 0.9rem;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  
+  .registerText {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .registerText a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
