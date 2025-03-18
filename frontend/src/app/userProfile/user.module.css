@@ -245,6 +245,13 @@
     color: white;
     margin:  5% 0;
 }
+.overviewNavBar ul{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
 .welcomeMessage {
     background: #3498db; /* Refined blue */
