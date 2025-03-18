@@ -91,7 +91,11 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
     }, [user?.cvSummary?.length, user?.skills?.length, user?.education?.length, user?.experience?.length]);
 
     return (
-        <section className={styles.cvSection}>
+        <section className={styles.cvSection} onClick={() => {
+            if (typeof window !== 'undefined') {
+                window.print();
+            }
+        }}>
             <div className={styles.contactInfo}>
                 <h1 className={styles.name}>{user.fullName}</h1>
                 <p className={styles.jobTitle}>{user.selectedJob.jobTitle}</p>
