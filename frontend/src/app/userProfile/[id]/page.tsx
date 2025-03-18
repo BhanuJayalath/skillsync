@@ -27,6 +27,8 @@ import Careers from '@/app/job-recommendations/page';
 
     const [loading, setLoading] = useState(true);
 
+    const [isOpen, setIsOpen] = useState(false);
+
 
 
     // Initializing profile state with default user details
