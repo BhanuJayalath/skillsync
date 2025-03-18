@@ -28,16 +28,6 @@ export class UserProfileController {
     return updatedUser;
   }
 
-  @Patch('saveTestMark')
-  async saveTestMark(
-    @Body('userId') userId: string,
-    @Body('jobId') jobId: string,
-    @Body('testId') testId: string,
-    @Body('score') score: number,
-  ) {
-    return this.userProfileService.saveTestMark(userId, jobId, testId, score);
-  }
-
   @Get('allUsers')
   async getAllUsers(): Promise<User[]> {
     return this.userProfileService.getAllUsers();
