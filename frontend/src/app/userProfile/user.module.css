@@ -299,6 +299,13 @@
     flex-direction: column;
 }
 
+.profilePicContainer .userAvatar {
+    margin: 1em 1em 2em 1em ;
+    width: 10em;  /* Match container size */
+    height: 10em; /* Match container size */
+    object-fit: cover;
+    border-radius: 50%;
+}
 
 .userFooter {
     background-color: #3498db; /* Refined blue */
