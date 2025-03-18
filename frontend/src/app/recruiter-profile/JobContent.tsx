@@ -70,7 +70,7 @@ export default function JobContent({
       );
       setDatabaseExistingId(DatabaseExistingId);
     }
-  }, []);
+  }, [updateJobPostContent]);
 
   function saveJobTitle(event: any) {
     setJobTitle(event.target.value);
@@ -82,7 +82,6 @@ export default function JobContent({
 
   function saveRequiredSkills(event: any) {
     event.preventDefault();
-    console.log(requiredSkills);
     setRequiredSkills([...requiredSkills, requiredSkillsValue]);
     setRequiredSkillsValue("");
   }
@@ -102,13 +101,15 @@ export default function JobContent({
         headers: { "Content-Type": "application/json" },
       }
     );
-    setUpdateJobPostContent(!updateJobPostContent);
+    setJobPostState(false);
+    setUpdateJobPostContent(false);
   }
   function saveToDatabase() {
     axios.post(`${process.env.NEXT_PUBLIC_SAVE_JOB}`, storage, {
       headers: { "Content-Type": "application/json" },
     });
-    setUpdateJobPostContent(!updateJobPostContent);
+    setJobPostState(false);
+    setUpdateJobPostContent(false);
   }
 
   function removeSkill(skillIndex: number) {

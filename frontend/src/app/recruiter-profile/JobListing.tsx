@@ -18,6 +18,7 @@ export default function JobListing({
   setJobPostResponse,
   recruiterDetails,
 }: {
+
   setJobPostState: any;
   jobPostState: any;
   loadJobPostContent: any;
@@ -58,7 +59,7 @@ export default function JobListing({
       .catch((error) => {
         console.log(error);
       });
-  }, [remove, jobPostState]);
+  }, [remove]);
 
   function loadJobPostComponent(jobId: string, JobCounter: number) {
     const jobPost = loadJobPosts.find((item: any) => item.jobId === jobId);

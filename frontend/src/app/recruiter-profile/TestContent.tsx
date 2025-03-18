@@ -110,6 +110,8 @@ export default function TestContent({
         headers: { "Content-Type": "application/json" },
       }
     );
+    setJobPostState(!jobPostState);
+    setTestState(!testState);
     setUpdateTestContent(false);
   }
   function previousPage() {

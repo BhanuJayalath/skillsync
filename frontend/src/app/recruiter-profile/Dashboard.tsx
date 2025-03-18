@@ -19,13 +19,12 @@ export default function Dashboard({
   const [tests, setTests] = useState([]);
   const [bestPerformed, setBestPerformed] = useState([]);
   const [onLoad, setOnLoad] = useState(true);
-  const [users, setUsers] = useState<any>([]);
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_GET_USER_DETAILS}`, {})
+      .get(`${process.env.NEXT_PUBLIC_GET_USER_DETAILS}`)
       .then((response) => {
-        const newUsers = response.data.users.map((item: any) => item);
-        setUsers(newUsers);
+        setUsers(response.data.users);
       })
       .catch((error) => {
         console.log(error);
@@ -41,7 +40,7 @@ export default function Dashboard({
       .then((response) => {
         response.data.map((item: any) => {
           tempJobSet.push(item);
-          if (onLoad) {
+          if (onLoad && users.length > 0) {
             loadTests(item.jobId);
           }
         });
@@ -50,8 +49,7 @@ export default function Dashboard({
       .catch((error) => {
         console.log(error);
       });
-  }, [onLoad, setOnLoad]);
-  useEffect(()=>{},[users])
+  }, [onLoad, setOnLoad, users]);
 
   function loadTests(jobId: any) {
     const tempTestsSet: any = [];
@@ -73,11 +71,10 @@ export default function Dashboard({
 
   function performance(testId: string) {
     const tempMarkArray: any = [];
-    console.log(users);
+    console.log("Performance", users);
     users.map((item: any) => {
       if (item.tests.length > 0) {
         const test = item.tests.find((item: any) => item.testId == testId);
-        // console.log(test);
         tempMarkArray.push({
           userId: item._id,
           userName: item.userName,
@@ -92,7 +89,7 @@ export default function Dashboard({
     );
     setBestPerformed(sortedMarkArray);
     setOnLoad(false);
-    // console.log(sortedMarkArray);
+    console.log(sortedMarkArray);
   }
 
   return (
