@@ -135,7 +135,11 @@
     position: relative;
 }
 
-
+.notificationIcon {
+    margin-right: 0.75em;
+    color: black;
+    filter: brightness(0) invert(1); /* Ensure icons are always white */
+}
 
 
 
