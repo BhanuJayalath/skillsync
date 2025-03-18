@@ -11,6 +11,7 @@ interface User {
     linkedIn: string;
     portfolio:string;
     education: Education[];
+    experience: Experience[];
     gitHub: string;
 }
 
