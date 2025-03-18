@@ -41,6 +41,7 @@ interface Experience {
     description: string;
 }
 
+
 interface SettingsProps {
     user: User;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, field: string) => void;
@@ -58,6 +59,8 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const [summary, setSummary] = useState("");
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
+    const [loading, setLoading] = useState(false);
+
 
     // Fetch countries and languages
     useEffect(() => {
@@ -214,7 +217,9 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
                 </div>
-                <button className={styles.editButton} onClick={handleSubmit}>Save</button>
+                <div className={styles.editButton}>
+
+                </div>
             </div>
             {/*form section*/}
             <form className={styles.form}>
