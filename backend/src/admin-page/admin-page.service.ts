@@ -1,34 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-// import { User } from ;
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Admin, AdminDocument } from './admin-page.schema';
 
 @Injectable()
-export class AdminPageService {
-  constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-  ) {}
+export class AdminService {
+  constructor(@InjectModel(Admin.name) private userModel: Model<AdminDocument>) {}
 
-  async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  async findAll(): Promise<Admin[]> {
+    return this.userModel.find().exec();
   }
 
-  async findOne(id: number): Promise<User> {
-    return this.userRepository.findOneBy({ id });
+  async findOne(id: string): Promise<Admin> {
+    return this.userModel.findById(id).exec();
   }
 
-  async create(userData: Partial<User>): Promise<User> {
-    const user = this.userRepository.create(userData);
-    return this.userRepository.save(user);
+  async create(userData: Partial<Admin>): Promise<Admin> {
+    const user = new this.userModel(userData);
+    return user.save();
   }
 
-  async update(id: number, userData: Partial<User>): Promise<User> {
-    await this.userRepository.update(id, userData);
-    return this.findOne(id);
+  async update(id: string, userData: Partial<Admin>): Promise<Admin> {
+    return this.userModel.findByIdAndUpdate(id, userData, { new: true }).exec();
   }
 
-  async delete(id: number): Promise<void> {
-    await this.userRepository.delete(id);
+  async delete(id: string): Promise<void> {
+    await this.userModel.findByIdAndDelete(id).exec();
   }
 }
