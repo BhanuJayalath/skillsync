@@ -381,7 +381,7 @@ import Careers from '@/app/job-recommendations/page';
                                             <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
                                         </div>
                                         <div className={styles.notificationWrapper} ref={notificationRef}>
-                                            <div className={styles.notificationContainer} >
+                                            <div className={styles.notificationContainer} onClick={togglePopup}>
                                                 {notifications.length > 0 ? (
                                                     <div>
                                                         <Image
