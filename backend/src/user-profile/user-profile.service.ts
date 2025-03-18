@@ -27,25 +27,6 @@ export class UserProfileService {
     return updatedUser;
   }
 
-  async saveTestMark(
-    userId: string,
-    jobId: string,
-    testId: string,
-    score: number,
-  ): Promise<User> {
-    const updatedUser = await this.userModel
-      .findOneAndUpdate(
-        { id: userId }, // Query by id
-        { $push: { tests: { jobId, testId, score } } },
-        { new: true },
-      )
-      .exec();
-
-    if (!updatedUser)
-      throw new NotFoundException(`User with ID ${userId} not found`);
-    return updatedUser;
-  }
-
   async getAllUsers(): Promise<User[]> {
     return this.userModel.find().exec();
   }

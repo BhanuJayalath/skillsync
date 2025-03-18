@@ -101,7 +101,7 @@ Output the result as a JSON array, where each object has the following fields: i
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Hero Section */}
-        <div className="bg-primary py-16 px-4 sm:px-6 lg:px-8 text-blue-800">
+        <div className="py-16 px-4 sm:px-6 lg:px-8 text-black">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">
               Discover Your Next Course
@@ -121,6 +121,7 @@ Output the result as a JSON array, where each object has the following fields: i
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                   size={20}
                 />
+
                 <Input
                   type="text"
                   placeholder="Search courses..."
@@ -132,7 +133,7 @@ Output the result as a JSON array, where each object has the following fields: i
               </div>
               <Button
                 onClick={() => searchCourses(searchTerm)}
-                className="bg-primary hover:bg-primary/90 text-white"
+                className="bg-blue-500 hover:bg-primary/90 text-white"
                 disabled={isLoading}
               >
                 {isLoading ? (
