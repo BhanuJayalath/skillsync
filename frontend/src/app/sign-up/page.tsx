@@ -82,7 +82,7 @@ export default function SignUpPage() {
       if (signupType === "user") {
         signUpEndpoint = "/api/users/sign-up";
         meEndpoint = "/api/users/me";
-        redirectPath = "/userProfile";
+        redirectPath = "/basic-test";
       } else {
         signUpEndpoint = "/api/recruiters/sign-up";
         meEndpoint = "/api/recruiters/me";

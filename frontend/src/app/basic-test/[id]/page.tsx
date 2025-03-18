@@ -1033,7 +1033,7 @@ export default function QuizApp() {
 
   const [userDetails, setUserDetails] = useState({
     _id: '',
-    username: '',
+    userName: '',
     email: '',
   });
   const [loading, setLoading] = useState(false);
@@ -1041,7 +1041,7 @@ export default function QuizApp() {
 
   // Editable fields for profile updates.
   const [updatedDetails, setUpdatedDetails] = useState({
-    username: '',
+    userName: '',
     email: '',
   });
 
@@ -1051,11 +1051,11 @@ export default function QuizApp() {
       const res = await axios.get('/api/users/me');
       setUserDetails({
         _id: res.data.user._id,
-        username: res.data.user.username,
+        userName: res.data.user.userName,
         email: res.data.user.email,
       });
       setUpdatedDetails({
-        username: res.data.user.username,
+        userName: res.data.user.userName,
         email: res.data.user.email,
       });
     } catch (error: any) {
@@ -1065,6 +1065,10 @@ export default function QuizApp() {
       setLoading(false);
     }
   };
+
+  const goToProfile = () => {
+    router.push(`/userProfile/${userDetails._id}`);
+  }
 
   useEffect(() => {
     getUserDetails();
@@ -1193,7 +1197,7 @@ export default function QuizApp() {
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-3xl">
           <h1 className="text-4xl font-bold text-center mb-6" style={{ color: primaryColor }}>
-            Hello there {userDetails.username}!
+            Hello there {userDetails.userName}!
           </h1>
           <h2 className="text-2xl font-semibold text-center mb-6">
             Welcome to the Basic Skills Test. <br />
@@ -1299,10 +1303,10 @@ export default function QuizApp() {
             })}
           </div>
           <button
-            onClick={restartQuiz}
+            onClick={goToProfile}
             className="mt-6 w-full bg-[rgb(96,166,236)] text-white py-3 rounded-lg hover:bg-blue-600 transition-colors"
           >
-            Take Another Quiz
+            Go to Profile
           </button>
         </div>
       </div>
