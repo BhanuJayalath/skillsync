@@ -16,13 +16,23 @@ interface Question {
 
 interface Test {
   testId: string
-  jobId: string
   testContent: {
     questionContent: Question[]
   }
 }
 
-const MCQTest: React.FC<{ user: { _id: string; selectedJob: { jobTitle: string; jobId: string } } }> = ({ user }) => {
+interface User {
+  _id: string;
+  selectedJob: {
+    jobId: string;
+  };
+
+}
+interface MCQTestProps {
+  user: User;
+}
+
+const MCQTest = ({user}: MCQTestProps) => {
   const userId = user._id
   // const jobId = user.selectedJob.jobId
   const jobId = "Job1742286622422" // hardcoded for now
