@@ -412,7 +412,15 @@ import Careers from '@/app/job-recommendations/page';
 
                                             {isOpen && (
                                                 <div className={styles.notificationPopup}>
-
+                                                    <ul>
+                                                        {user.notifications.filter(item => item.isSelected).map((notification, index) => (
+                                                            <li key={index}>
+                                                                <p>{notification.jobTitle}</p>
+                                                                <p>{notification.jobType}</p>
+                                                                <p>{notification.recruiterNote}</p>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
                                                 </div>
                                             )}
                                         </div>
