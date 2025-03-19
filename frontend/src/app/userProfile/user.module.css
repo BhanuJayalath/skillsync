@@ -313,6 +313,7 @@
     align-items: center;
 }
 
+
 .overviewIcons {
     margin: 0.5em;
 }
@@ -448,6 +449,8 @@
     min-height:70.157489153699rem ;
     padding: 2cm;
     margin: 0 auto;
+    justify-content: center;
+    align-items: center;
     background: #ffffff;
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
     border: 1px solid #ccc;
@@ -463,7 +466,8 @@
 
 .contactInfo {
     text-align: center;
-    margin-bottom: 20px;
+    justify-content: center;
+    margin-bottom: 2em;
 }
 
 .name {
@@ -479,7 +483,7 @@
 }
 
 .contactDetails {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-top: 10px;
     color: #777;
 }
@@ -489,6 +493,7 @@
 .skills {
     margin-top: 25px;
 }
+
 
 .sectionTitle {
     font-size: 1.7rem;
@@ -529,11 +534,10 @@
 
 .skillList {
     list-style-type: disc;
-    padding-left: 20px;
+    padding-left: 2em;
 }
 
 .skillList li {
-    margin: 5px 0;
     color: #444;
 }
 
