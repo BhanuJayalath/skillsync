@@ -52,7 +52,14 @@ import Careers from '@/app/job-recommendations/page';
             jobId:'',
         },
         notifications:[
-
+            {
+                jobId:'',
+                jobTitle:'',
+                jobType:'',
+                recruiterNote:'',
+                isSelected:false,
+                approved:false,
+            },
         ],
         experience: [
             {
