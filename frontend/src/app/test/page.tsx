@@ -20,7 +20,6 @@ interface Test {
     questionContent: Question[]
   }
 }
-
 interface User {
   _id: string;
   selectedJob: {
@@ -32,7 +31,7 @@ interface MCQTestProps {
   user: User;
 }
 
-const MCQTest = ({user}: MCQTestProps) => {
+const MCQTest = ({ user}: MCQTestProps) => {
   const userId = user._id
   // const jobId = user.selectedJob.jobId
   const jobId = "Job1742286622422" // hardcoded for now
@@ -294,4 +293,4 @@ const MCQTest = ({user}: MCQTestProps) => {
   )
 }
 
-export default MCQTest
+export default MCQTest;
