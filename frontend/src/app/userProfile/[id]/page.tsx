@@ -228,22 +228,51 @@ import Careers from '@/app/job-recommendations/page';
      }, []);
 
     useEffect(() => {
+      
         if(id){
             const fetchUserDetails = async () => {
-                const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
-                const response = await fetch(`${getUserUrl}/${id}`, {
+                //const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
+                const getUserUrl = '/api/users/getUser';
+               
+                const response = await fetch(`${getUserUrl}?user-id=${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
-
+               
                 if (response.ok) {
                     const data = await response.json();
                     if (data.error) {
                         console.log(data.error);  // If the backend returns an error, displaying it in the console
                     } else {
-                        setUser(data);  // Otherwise, display the user details
+                        const userData = data.user; 
+                        
+                        setUser({
+                            _id: userData._id || '',
+                            userName: userData.userName || '',
+                            email: userData.email || '',
+                            contact: '',
+                            gitHub: '', 
+                            portfolio: '',
+                            linkedIn: '',
+                            fullName: '',
+                            cvSummary: '',
+                            avatar: '',
+                            gender: '',
+                            language: '',
+                            city: '',
+                            country: '',
+                            tests: userData.tests || [],
+                            selectedJob: {
+                              jobTitle: '',
+                              jobId: '',
+                            },
+                            notifications: [],
+                            experience: userData.experience || [],
+                            education: userData.education || [],
+                            skills: userData.skills || []
+                          });
                     }
                 } else {
                     console.log('Failed to fetch user details');
@@ -427,7 +456,7 @@ import Careers from '@/app/job-recommendations/page';
                                                 updateNestedChanges={updateNestedChanges}/>}
                                             {activeTab === 4 && <MockInterview/>}
                                             {/*{activeTab === 5 && <Assessment user={user}/>}*/}
-                                            {/*{activeTab === 6 && <Careers user={user}/>}*/}
+                                            {activeTab === 6 && <Careers user={user}/>}
                                             {activeTab === 7 && <Settings
                                                 user={user}
                                                 handleSubmit={handleSubmit}
