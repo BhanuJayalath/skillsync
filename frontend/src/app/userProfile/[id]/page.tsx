@@ -231,8 +231,8 @@ import Careers from '@/app/job-recommendations/page';
       
         if(id){
             const fetchUserDetails = async () => {
-                const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
-               
+                const getUserUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/users/getUser`;
+                alert(getUserUrl)
                 const response = await fetch(`${getUserUrl}?user-id=${id}`, {
                     method: 'GET',
                     headers: {
