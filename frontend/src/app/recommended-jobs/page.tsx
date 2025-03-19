@@ -8,21 +8,25 @@ import { Search, Briefcase, Loader2 } from "lucide-react";
 import JobCard from "./jobcard";
 
 const DEEPSEEK_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const DEEPSEEK_API_KEY = process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY; // Now using the API key from .env.local
+const DEEPSEEK_API_KEY = process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY;
 
 export default function Page() {
+  // State for jobs from Deepseek API (online jobs)
   const [jobs, setJobs] = useState<any[]>([]);
+  // State for jobs fetched from your database
+  const [dbJobs, setDbJobs] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<number>(0);
 
+  // Fetch online jobs from Deepseek API
   const searchJobs = async (topic: string) => {
     try {
       setIsLoading(true);
       const response = await fetch(DEEPSEEK_API_URL, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${DEEPSEEK_API_KEY}`,
+          Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -39,13 +43,13 @@ Output the result as a JSON array, where each object has the following fields: i
 
       const data = await response.json();
       const generatedText = data?.choices?.[0]?.message?.content;
-      
+
       if (!generatedText) {
         console.error("No generated text received. Response data:", data);
         setJobs([]);
         return;
       }
-      
+
       let cleanedText = generatedText.trim();
 
       // Remove markdown code fences if present
@@ -60,7 +64,7 @@ Output the result as a JSON array, where each object has the following fields: i
         parsedJobs = JSON.parse(cleanedText);
       } catch (err) {
         console.error("Error parsing JSON:", err);
-        // Try extracting a JSON array using regex if the output contains extra text
+        // Try extracting a JSON array using regex if extra text is present
         const jsonMatch = cleanedText.match(/\[([\s\S]*)\]/);
         if (jsonMatch && jsonMatch[0]) {
           try {
@@ -82,7 +86,26 @@ Output the result as a JSON array, where each object has the following fields: i
     }
   };
 
+  // Fetch jobs from the database
+  const fetchDbJobs = async () => {
+    try {
+      // Adjust the API endpoint as per your backend
+      const response = await fetch("/api/jobs");
+      const data = await response.json();
+      if (data.success) {
+        // Assuming your response returns { success: true, data: { jobs: [...] } }
+        setDbJobs(data.data.jobs);
+      } else {
+        console.error("Error fetching database jobs:", data.error);
+      }
+    } catch (error) {
+      console.error("Error fetching database jobs:", error);
+    }
+  };
+
+  // On mount, fetch database jobs and do a default online job search.
   useEffect(() => {
+    fetchDbJobs();
     searchJobs("HTML");
   }, []);
 
@@ -117,8 +140,20 @@ Output the result as a JSON array, where each object has the following fields: i
           <div className="flex items-center mb-8">
             <Briefcase className="text-primary mr-2" size={24} />
             <h2 className="text-2xl font-bold text-gray-800">Recommended Jobs - SkillSync</h2>
-
           </div>
+          {dbJobs.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {dbJobs.map((job) => (
+                <JobCard key={job.id} job={job} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20 bg-gray-50 rounded-lg">
+              <p className="text-lg text-gray-600">
+                No jobs found in database.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Section Divider */}
@@ -138,11 +173,7 @@ Output the result as a JSON array, where each object has the following fields: i
           <div className="bg-white rounded-lg shadow-lg p-6">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-grow">
-                <Search
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                  size={20}
-                />
-
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <Input
                   type="text"
                   placeholder="Search jobs..."
@@ -170,7 +201,7 @@ Output the result as a JSON array, where each object has the following fields: i
           </div>
         </div>
 
-        {/* Jobs Section - Online*/}
+        {/* Jobs Section - Online */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
           <div className="flex items-center mb-8">
             <Briefcase className="text-primary mr-2" size={24} />
@@ -183,8 +214,8 @@ Output the result as a JSON array, where each object has the following fields: i
             </div>
           ) : jobs?.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {jobs.map((jobs) => (
-                <JobCard key={jobs.id} job={jobs} />
+              {jobs.map((job) => (
+                <JobCard key={job.id} job={job} />
               ))}
             </div>
           ) : (
