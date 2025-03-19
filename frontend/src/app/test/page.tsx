@@ -21,27 +21,13 @@ interface Test {
   }
 }
 
-interface User {
-  _id: string
-}
-
-interface SelectedJob {
-  jobTitle: string
-  jobId: string
-}
-
-interface MCQTestProps {
-  user: User
-  selectedJob: SelectedJob
-}
-
-const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
-  const userId = user._id
-  // const jobId = selectedJob.jobId
-  const jobId = "Job1742293988982" // hardcoded for now
+const MCQTest = () => {
+  // Hardcoded values instead of props
   const [testId, setTestId] = useState("Test1742290753151")
   const [availableTests, setAvailableTests] = useState<{ testId: string; testLevel: string; jobId: string }[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [userId, setUserId] = useState<string>("")
+  const jobId = "Job1742293988982" // hardcoded jobId
 
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
@@ -49,8 +35,23 @@ const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [testStarted, setTestStarted] = useState(false)
   const [score, setScore] = useState({ correct: 0, total: 0 })
-  const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+
+  // Fetch user data from API 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("/api/users/me")
+        if (response.data && response.data.user && response.data.user._id) {
+          setUserId(response.data.user._id)
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error)
+      }
+    }
+  
+    fetchUserData()
+  }, [])
 
   useEffect(() => {
     const fetchTestData = async () => {
@@ -71,7 +72,7 @@ const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
     }
 
     fetchTestData()
-  }, [testId])
+  }, [testId, baseUrl])
 
   useEffect(() => {
     const fetchAvailableTests = async () => {
@@ -79,18 +80,18 @@ const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
       try {
         const response = await axios.get(`${baseUrl}/tests/all-tests/${jobId}`)
         console.log("Fetched available tests response:", response) // Log the entire response
-  
+
         if (!response.data) {
           console.error("Empty response data")
           setAvailableTests([])
         } else if (Array.isArray(response.data)) {
           const testsForJob = response.data.filter((test) => test.jobId === jobId)
           setAvailableTests(testsForJob)
-  
+
           if (testsForJob.length > 0 && !testId) {
             setTestId(testsForJob[0].testId)
           }
-        } else if (response.data && typeof response.data === 'object') {
+        } else if (response.data && typeof response.data === "object") {
           // Handle the case where the response is a single object
           const test = response.data
           if (test.jobId === jobId) {
@@ -108,10 +109,9 @@ const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
         setIsLoading(false)
       }
     }
-  
+
     fetchAvailableTests()
-  }, [jobId])
-  
+  }, [jobId, baseUrl, testId])
 
   const startTest = () => {
     setCurrentQuestionIndex(0)
@@ -156,28 +156,32 @@ const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
     console.log("Score:", correctCount, "out of", questions.length)
     console.log("Mark:", mark)
 
-    try {
-      const response = await fetch(`${baseUrl}/updateUser/${userId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          tests: [
-            {
-              //jobId,
-              testId,
-              mark,
-            },
-          ],
-        }),
-      })
+    // Only submit if we have a userId
+    if (userId) {
+      try {
+        const response = await fetch(`${baseUrl}/updateUser/${userId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tests: [
+              {
+                testId,
+                mark,
+              },
+            ],
+          }),
+        })
 
-      if (!response.ok) {
-        console.log("Failed to update user data!")
-      } else {
-        console.log("User general data updated!")
+        if (!response.ok) {
+          console.log("Failed to update user data!")
+        } else {
+          console.log("User general data updated!")
+        }
+      } catch (error) {
+        console.error("Error submitting test results:", error)
       }
-    } catch (error) {
-      console.error("Error submitting test results:", error)
+    } else {
+      console.error("Cannot submit test results: userId is not available")
     }
   }
 
@@ -363,3 +367,4 @@ const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
 }
 
 export default MCQTest
+
