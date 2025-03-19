@@ -22,7 +22,7 @@ interface User {
   skills?: string[];
 }
 
-export default function JobRecommendations({ user = null }: { user?: User | null }) {
+const Careers = ({ user }: { user: User }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [userId, setUserId] = useState<string | null>(null);
@@ -37,6 +37,7 @@ export default function JobRecommendations({ user = null }: { user?: User | null
 
   // Initialize component with user data if available
   useEffect(() => {
+
    
     // Check if user prop is provided (when component is used inside UserProfile)
     if (user && user._id) {
@@ -329,3 +330,5 @@ export default function JobRecommendations({ user = null }: { user?: User | null
     </div>
   );
 }
+
+export default Careers;
