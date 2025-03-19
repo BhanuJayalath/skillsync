@@ -111,6 +111,44 @@ Output the result as a JSON array, where each object has the following fields: i
             </p>
           </div>
         </div>
+        
+        {/* Jobs Section - Database*/}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+          <div className="flex items-center mb-8">
+            <Briefcase className="text-primary mr-2" size={24} />
+            <h2 className="text-2xl font-bold text-gray-800">Available Jobs - SkillSync</h2>
+          </div>
+
+          {isLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          ) : jobs?.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {jobs.map((jobs) => (
+                <JobCard key={jobs.id} job={jobs} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20 bg-gray-50 rounded-lg">
+              <p className="text-lg text-gray-600">
+                No courses found. Try a different search term.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Section Divider */}
+        <div className="bg-gray-100 py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-gray-800">Find Your Next Job</h2>
+              <p className="text-lg text-gray-600 mt-2">
+                Search for jobs based on your skills and interests.
+              </p>
+            </div>
+          </div>
+        </div>
 
         {/* Search Section */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 w-full">
@@ -149,11 +187,11 @@ Output the result as a JSON array, where each object has the following fields: i
           </div>
         </div>
 
-        {/* Jobs Section */}
+        {/* Jobs Section - Online*/}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
           <div className="flex items-center mb-8">
             <Briefcase className="text-primary mr-2" size={24} />
-            <h2 className="text-2xl font-bold text-gray-800">Available Jobs</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Available Jobs - Online</h2>
           </div>
 
           {isLoading ? (
@@ -163,7 +201,7 @@ Output the result as a JSON array, where each object has the following fields: i
           ) : jobs?.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {jobs.map((jobs) => (
-                <JobCard key={jobs.id} course={jobs} />
+                <JobCard key={jobs.id} job={jobs} />
               ))}
             </div>
           ) : (
