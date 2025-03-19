@@ -426,7 +426,7 @@ import Careers from '@/app/job-recommendations/page';
                                                 removeExperience={removeExperience}
                                                 updateNestedChanges={updateNestedChanges}/>}
                                             {activeTab === 4 && <MockInterview/>}
-                                            {/*{activeTab === 5 && <Assessment user={user}/>}*/}
+                                            {activeTab === 5 && <Assessment user={user}/>}
                                             {/*{activeTab === 6 && <Careers user={user}/>}*/}
                                             {activeTab === 7 && <Settings
                                                 user={user}

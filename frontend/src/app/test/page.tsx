@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import styles from "./test.module.css"
+import { User } from "lucide-react"
 
 // Update the Question interface to include correctAnswer (not optional anymore)
 interface Question {
@@ -15,6 +16,13 @@ interface Question {
   correctAnswer: number // Now required for scoring
 }
 
+interface AssessmentProps {
+  user: {
+      _id: string;
+      selectedJob: { jobTitle: string; jobId: string };
+  };
+}
+
 interface Test {
   testId: string
   jobId: string
@@ -23,7 +31,7 @@ interface Test {
   }
 }
 
-export default function MCQTest() {
+export default function Assessment({ user }: AssessmentProps) {
 
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
@@ -33,10 +41,10 @@ export default function MCQTest() {
   const [score, setScore] = useState({ correct: 0, total: 0 })
   const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
 
-  //fixed userId for now
-  const userId = "67d6f7375f356696386fd534";
-  const [testId, setTestId] = useState("Test1742022418151") // Fixed testId for now
-  const jobId = "Job1742022159253" // Fixed jobId for now
+  // Check if user and user.selectedJob are defined
+  const userId = user?._id;
+  const jobId = user?.selectedJob?.jobId;
+  const [testId, setTestId] = useState("Test1742290753151") // Fixed testId for now
 
   useEffect(() => {
     // Fetch the test data from the backend
@@ -44,9 +52,13 @@ export default function MCQTest() {
       try {
         const response = await axios.get<Test>(`http://localhost:3001/tests/${testId}`)
         const test = response.data
-        setQuestions(test.testContent.questionContent)
-        setAnswers(Array(test.testContent.questionContent.length).fill(null))
-        setScore({ correct: 0, total: test.testContent.questionContent.length })
+        if (test.testContent && test.testContent.questionContent) {
+          setQuestions(test.testContent.questionContent)
+          setAnswers(Array(test.testContent.questionContent.length).fill(null))
+          setScore({ correct: 0, total: test.testContent.questionContent.length })
+        } else {
+          console.error("Test content or question content is undefined")
+        }
       } catch (error) {
         console.error("Error fetching test data:", error)
       }
@@ -78,8 +90,6 @@ export default function MCQTest() {
     }
   }
 
-/////////////////////////////////////
-
   // Update the handleSubmit function to calculate the score
   const handleSubmit = async () => {
     let correctCount = 0;
@@ -104,8 +114,9 @@ export default function MCQTest() {
             body: JSON.stringify({
                 tests: [
                     {
+                        jobId,
                         testId,
-                        marks: correctCount,
+                        mark: correctCount,
                     },
                 ],
             }),
