@@ -100,8 +100,7 @@ export default function JobRecommendations({ user = null }: { user?: User | null
     setError(null);
 
     try {
-      //const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/jobs/recommendJob`,
-      const response = await axios.post(`http://localhost:3000/api/jobs/recommendJob`,
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs/recommendJob`,
         { skills: userSkills },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -153,31 +152,31 @@ export default function JobRecommendations({ user = null }: { user?: User | null
 
   // Filter jobs based on type and search term
   const applyFilters = () => {
-    let result = [...jobs];
+  let result = [...jobs];
+
+  // Filter out jobs that don't match any of the user's skills
+  result = result.filter(job => 
+    job.requiredSkills.some(skill => skills.includes(skill))
+  );
+
+  // Apply job type filter
+  if (filterType !== "all") {
+    result = result.filter(job => job.jobType.toLowerCase() === filterType.toLowerCase());
+  }
   
-    // Filter out jobs that don't match any of the user's skills
+  // Apply search term filter
+  if (searchTerm.trim() !== "") {
+    const term = searchTerm.toLowerCase();
     result = result.filter(job => 
-      job.requiredSkills.some(skill => skills.includes(skill))
+      job.jobTitle.toLowerCase().includes(term) ||
+      job.jobDescription.toLowerCase().includes(term) ||
+      job.requiredSkills.some(skill => skill.toLowerCase().includes(term))
     );
+  }
   
-    // Apply job type filter
-    if (filterType !== "all") {
-      result = result.filter(job => job.jobType.toLowerCase() === filterType.toLowerCase());
-    }
-    
-    // Apply search term filter
-    if (searchTerm.trim() !== "") {
-      const term = searchTerm.toLowerCase();
-      result = result.filter(job => 
-        job.jobTitle.toLowerCase().includes(term) ||
-        job.jobDescription.toLowerCase().includes(term) ||
-        job.requiredSkills.some(skill => skill.toLowerCase().includes(term))
-      );
-    }
-    
-    setFilteredJobs(result);
-  };
-  
+  setFilteredJobs(result);
+};
+
 
   // Handle job type filter change
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

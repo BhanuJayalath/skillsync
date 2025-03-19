@@ -1,7 +1,7 @@
 "use client"; // Indicating as a client-side component
 
 import Image from 'next/image';     // Importing images
-import { useParams, useRouter  } from 'next/navigation';
+import { useParams, useRouter, useSearchParams   } from 'next/navigation';
 import React, {Suspense, useEffect, useRef, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from '../user.module.css';   // Importing custom styles
@@ -20,66 +20,63 @@ import Careers from '@/app/job-recommendations/page';
 
  function UserProfile() {
      const { id } = useParams();
-     const router = useRouter();
+     const router = useRouter();const searchParams = useSearchParams();
+     const message = searchParams.get('message');
      //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
+
     const [loading, setLoading] = useState(true);
+
     const [isOpen, setIsOpen] = useState(false);
+
     const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
     const [user, setUser] = useState({
         _id:'',
-        email: '',   // User's email address
-        contact: '', // number
-        userName: '',  // User's display name
-        gitHub: '',
-        portfolio:'',
-        linkedIn: '',
-        fullName: '', // User's full name
-        cvSummary: '',
-        avatar: '',  //profile picture
-        gender: '',  // User's gender
-        language: '',     //language
-        city: '',    //city
-        country: '', //country
+        email: "Name@gmail.com",   // User's email address
+        contact: '(+94)12 345 6789', // number
+        userName: "UserName",  // User's display name
+        gitHub: "github",
+        portfolio:"",
+        linkedIn: "linkedin",
+        fullName: "Drake Winston", // User's full name
+        cvSummary: "",
+        avatar: "",  //profile picture
+        gender: "Gender",  // User's gender
+        language: "Language",     //language
+        city: 'City',    //city
+        country: "Country", //country
         tests: [
-            {testId: '', testLevel: '', mark: ''},
-            {testId: '', testLevel: '', mark: ''},
-            {testId: '', testLevel: '', mark: ''},
+            {testId: '250106', testLevel: 'Basic', mark: '58'},
+            {testId: '250107', testLevel: 'Generated', mark: '86'},
+            {testId: '250108', testLevel: 'Interview', mark: '46'}
         ],
         selectedJob: {
-            jobTitle: '',
+            jobTitle: 'Job Role ',
             jobId:'',
         },
         notifications:[
-            {
-                jobId:'',
-                jobTitle:'',
-                jobType:'',
-                recruiterNote:'',
-                isSelected:false,
-                approved:false,
-            },
+            {message:"message1"},
         ],
         experience: [
             {
-                jobName: '',
-                companyName: '',
+                jobName: 'Full-stack developer',
+                companyName: 'codeLabs',
                 startDate: '',
                 endDate: '',
-                description: '',
+                description: ''
             },
         ],
         education: [
             {
-                courseName: '',
-                schoolName: '',
+                courseName: 'Bsc(hons) Computer Science',
+                schoolName: 'University of westminster',
                 startDate: '',
                 endDate: '',
-                description: '',
+                description: ''
             },
         ],
-        skills: ['']
+        skills: ['typeScript', 'javaScript', 'HTML']
     });
 
     // Education Handlers
@@ -189,8 +186,6 @@ import Careers from '@/app/job-recommendations/page';
     };
     const handleSubmit = async () => {
         const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
-        user.experience = user.experience.filter(item => item.jobName);
-        user.education = user.education.filter(item => item.courseName);
         try {
             const response = await fetch(`${updateUserUrl}/${id}`, {
                 method: "PATCH",
@@ -236,8 +231,7 @@ import Careers from '@/app/job-recommendations/page';
       
         if(id){
             const fetchUserDetails = async () => {
-                //const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
-                const getUserUrl = '/api/users/getUser';
+                const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
                
                 const response = await fetch(`${getUserUrl}?user-id=${id}`, {
                     method: 'GET',
@@ -442,12 +436,8 @@ import Careers from '@/app/job-recommendations/page';
                                             {isOpen && (
                                                 <div className={styles.notificationPopup}>
                                                     <ul>
-                                                        {user.notifications.filter(item => item.isSelected).map((notification, index) => (
-                                                            <li key={index}>
-                                                                <p>{notification.jobTitle}</p>
-                                                                <p>{notification.jobType}</p>
-                                                                <p>{notification.recruiterNote}</p>
-                                                            </li>
+                                                        {user.notifications.map((notification, index) => (
+                                                            <li key={index}>{notification.message}</li>
                                                         ))}
                                                     </ul>
                                                 </div>
