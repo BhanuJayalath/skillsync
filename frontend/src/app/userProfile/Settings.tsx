@@ -251,6 +251,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                 <div>
                     <label>Full Name</label>
                     <input type="text" name="fullName" value={user.fullName || ''}
+                           maxLength={20}
                            onChange={(e) => handleChange(e, "fullName")}
                            placeholder={user.fullName || ''}/>
                 </div>
@@ -258,7 +259,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <label>Contact</label>
                     <input type="text" name="contact" value={user.contact || ''}
                            onChange={(e) => handleChange(e, "contact")}
-                           placeholder={user.contact || '(+94) 77 123 4567'}/>
+                           placeholder={user.contact || '(+94) 77 123 4567'} maxLength={18}/>
                 </div>
                 <div>
                     <label>Github</label>
