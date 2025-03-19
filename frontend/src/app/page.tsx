@@ -13,6 +13,8 @@ interface Testimonial {
   id: number
   text: string
   name: string
+  role: string
+  image: string
 }
 
 interface Service {
@@ -49,18 +51,24 @@ const LandingPage = () => {
   const testimonials: Testimonial[] = [
     {
       id: 1,
-      text: "Thank You for your service. I am very pleased with the result. I have seen exponential growth in my business and it's all thanks to your amazing service.",
-      name: "User",
+      text: "The platform provides a well-rounded approach to skill development, offering AI-driven course suggestions, practice tests, and realistic interview simulations to enhance confidence and preparedness.",
+      name: "Inuka Mayakaduwa",
+      role: "Software Engineer",
+      image: "/feedback/inuka.jpg",
     },
     {
       id: 2,
-      text: "Thank You for your service. I am very pleased with the result. I have seen exponential growth in my business and it's all thanks to your amazing service.",
-      name: "User",
+      text: "SkillSync helps users bridge skill gaps through targeted course recommendations, interactive practice tests, and AI-powered mock interviews, creating a comprehensive learning experience that prepares them for the job market.",
+      name: "Sasindri Siriwardene",
+      role: "CO-CEO of Mishrawarna",
+      image: "/feedback/sasindri.jpg",
     },
     {
       id: 3,
-      text: "Thank You for your service. I am very pleased with the result. I have seen exponential growth in my business and it's all thanks to your amazing service.",
-      name: "User",
+      text: "My experience with SkillSync was great! The AI-driven mock interviews provided useful feedback. It’s a helpful tool for skill development, though more customization for resumes would be a nice improvement.",
+      name: "Anton Luckshman",
+      role: "Undergraduate Student",
+      image: "/feedback/anton.png",
     },
   ]
 
@@ -76,7 +84,6 @@ const LandingPage = () => {
     <div className={styles.container1}>
       <Navbar />
 
-
       {/* Hero Section */}
       <section className={`${styles.hero} container mt-5`}>
         <div className="row align-items-center">
@@ -89,7 +96,7 @@ const LandingPage = () => {
               Industry Standards
             </h1>
             <a href="login">
-            <button className="btn btn-dark btn-lg">Get Started</button>
+              <button className="btn btn-dark btn-lg">Get Started</button>
             </a>
           </div>
           <div className="col-md-6">
@@ -157,7 +164,7 @@ const LandingPage = () => {
         <section className={`${styles.testimonials} container my-5`}>
           <h2>TESTIMONIALS</h2>
           <h3 className="h2 mb-5">
-            See What Our Customers
+            See What Our Users
             <br />
             Say About Us
           </h3>
@@ -169,13 +176,16 @@ const LandingPage = () => {
                   <p>{testimonial.text}</p>
                   <div className={styles.testimonialAuthor}>
                     <Image
-                      src="https://img.icons8.com/dotty/80/user.png"
+                      src={testimonial.image}
                       alt={testimonial.name}
                       width={50}
                       height={50}
                       className={styles.avatar}
                     />
-                    <span>{testimonial.name}</span>
+                    <div className={styles.testimonialInfo}>
+                      <span className={styles.testimonialName}>{testimonial.name}</span>
+                      <span className={styles.testimonialRole}>{testimonial.role}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -230,4 +240,3 @@ const LandingPage = () => {
 }
 
 export default LandingPage
-
