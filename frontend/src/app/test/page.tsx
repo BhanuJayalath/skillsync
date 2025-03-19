@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 import styles from "./test.module.css"
-import { User } from "lucide-react"
 
 // Update the Question interface to include correctAnswer (not optional anymore)
 interface Question {
@@ -16,11 +15,9 @@ interface Question {
   correctAnswer: number // Now required for scoring
 }
 
-interface userData {
-  user: {
-      _id: string;
-      selectedJob: { jobTitle: string; jobId: string };
-  };
+interface UserData {
+  _id: string
+  selectedJob: { jobTitle: string; jobId: string }
 }
 
 interface Test {
@@ -31,21 +28,21 @@ interface Test {
   }
 }
 
-export default function Assessment({ user }: userData) {
-
+// Create a separate component for the assessment functionality
+export function Assessment({ user }: { user: UserData }) {
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState<(number | null)[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [testStarted, setTestStarted] = useState(false)
   const [score, setScore] = useState({ correct: 0, total: 0 })
-  const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
+  const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL
 
   // Check if user and user.selectedJob are defined
-  const userId = user?._id;
-  const jobId = user?.selectedJob?.jobId;
-  console.log("jobId:", jobId);
-  console.log("userId:", userId);
+  const userId = user?._id
+  const jobId = user?.selectedJob?.jobId
+  console.log("jobId:", jobId)
+  console.log("userId:", userId)
 
   const [testId, setTestId] = useState("Test1742290753151") // Fixed testId for now
 
@@ -95,46 +92,45 @@ export default function Assessment({ user }: userData) {
 
   // Update the handleSubmit function to calculate the score
   const handleSubmit = async () => {
-    let correctCount = 0;
+    let correctCount = 0
 
     answers.forEach((answer, index) => {
-        if (answer === questions[index].correctAnswer) {
-            correctCount++;
-        }
-    });
+      if (answer === questions[index].correctAnswer) {
+        correctCount++
+      }
+    })
 
-    setScore({ correct: correctCount, total: questions.length });
-    setIsSubmitted(true);
+    setScore({ correct: correctCount, total: questions.length })
+    setIsSubmitted(true)
 
-    console.log("Submitted answers:", answers);
-    console.log("Score:", correctCount, "out of", questions.length);
+    console.log("Submitted answers:", answers)
+    console.log("Score:", correctCount, "out of", questions.length)
 
     // Send data to backend
     try {
-        const response = await fetch(`${updateUserUrl}/${userId}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                tests: [
-                    {
-                        jobId,
-                        testId,
-                        mark: correctCount,
-                    },
-                ],
-            }),
-        });
+      const response = await fetch(`${updateUserUrl}/${userId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tests: [
+            {
+              jobId,
+              testId,
+              mark: correctCount,
+            },
+          ],
+        }),
+      })
 
-        if (!response.ok) {
-            console.log("Failed to update user data!");
-        } else {
-            console.log("User general data updated!");
-        }
+      if (!response.ok) {
+        console.log("Failed to update user data!")
+      } else {
+        console.log("User general data updated!")
+      }
     } catch (error) {
-        console.error("Error submitting test results:", error);
+      console.error("Error submitting test results:", error)
     }
-};
-  
+  }
 
   const allQuestionsAnswered = answers.every((answer) => answer !== null)
   const progressPercentage = (answers.filter((a) => a !== null).length / questions.length) * 100
@@ -231,7 +227,6 @@ export default function Assessment({ user }: userData) {
                       </>
                     )}
                   </div>
-
                 </div>
 
                 <div className={styles.navigationContainer}>
@@ -300,3 +295,6 @@ export default function Assessment({ user }: userData) {
     </div>
   )
 }
+
+
+
