@@ -16,7 +16,7 @@ interface Question {
   correctAnswer: number // Now required for scoring
 }
 
-interface AssessmentProps {
+interface userData {
   user: {
       _id: string;
       selectedJob: { jobTitle: string; jobId: string };
@@ -31,7 +31,7 @@ interface Test {
   }
 }
 
-export default function Assessment({ user }: AssessmentProps) {
+export default function Assessment({ user }: userData) {
 
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
