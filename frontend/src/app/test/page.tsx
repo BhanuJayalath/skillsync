@@ -18,7 +18,6 @@ interface Question {
 interface UserData {
   _id: string
   selectedJob: { jobTitle: string; jobId: string }
-  tests: any // Include test property
 }
 
 interface Test {
@@ -107,28 +106,26 @@ export default function Assessment({ user }: { user: UserData }) {
     console.log("Submitted answers:", answers)
     console.log("Score:", correctCount, "out of", questions.length)
 
-    // Update the test scores array
-    const updatedTests = user.tests ? [...user.tests] : []
-    updatedTests.push({
-      jobId,
-      testId,
-      mark: correctCount,
-    })
-
-    // Send updated data to backend
+    // Send data to backend
     try {
       const response = await fetch(`${updateUserUrl}/${userId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          test: updatedTests,
+          tests: [
+            {
+              jobId,
+              testId,
+              mark: correctCount,
+            },
+          ],
         }),
       })
 
       if (!response.ok) {
         console.log("Failed to update user data!")
       } else {
-        console.log("User data updated successfully!")
+        console.log("User general data updated!")
       }
     } catch (error) {
       console.error("Error submitting test results:", error)
@@ -298,3 +295,4 @@ export default function Assessment({ user }: { user: UserData }) {
     </div>
   )
 }
+
