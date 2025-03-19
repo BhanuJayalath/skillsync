@@ -98,7 +98,11 @@ const Overview = ({ user }: { user: User }) => {
                               width={20} height={20}/>}{user?.portfolio}</p>
                 </div>}
                 {activeTab === 2 && <div className={styles.userDetails}>
-
+                    <ul className={styles.userSkillList}>
+                        {user.skills.map((skill, index) => (
+                            <li key={index} className={styles.userSkill}>{skill}</li>
+                        ))}
+                    </ul>
                 </div>}
             </section>
         </section>
