@@ -8,7 +8,7 @@ export default function TestContent({
   loadJobPostContent,
   loadTestQuestions,
   setLoadTestQuestions,
-  testCount,
+  testLevel,
   testResponse,
   testState,
   setTestState,
@@ -18,7 +18,7 @@ export default function TestContent({
   loadJobPostContent: any;
   setLoadTestQuestions: any;
   loadTestQuestions: any;
-  testCount: number;
+  testLevel: number;
   testResponse: any;
   testState: any;
   setTestState: any;
@@ -132,7 +132,7 @@ export default function TestContent({
             src="/recruiter/back-icon.svg"
           />
         </button>
-        <h1>Test {testCount}</h1>
+        <h1>Test {loadTestQuestions.testLevel}</h1>
         {!updateTestContent &&
         loadTestQuestions.testContent.questionContent.length > 0 ? (
           <button

@@ -19,6 +19,7 @@ export default function RecruiterProfile() {
     {
       testId: string;
       jobId: string;
+      testLevel: string;
       testContent: {
         questionContent: any[];
       };
@@ -40,7 +41,7 @@ export default function RecruiterProfile() {
   const [jobPostState, setJobPostState] = useState(false);
   const [dashboardTab, setDashboardTab] = useState(true);
   const [profileTab, setProfileTab] = useState(false);
-  const [testCount, setTestCount] = useState(Number);
+  const [testLevel, setTestLevel] = useState(Number);
   const [jobCount, setJobCount] = useState(Number);
   const [removeTestBlock, setRemoveTestBlock] = useState(false);
   const [testResponse, setTestResponse] = useState();
@@ -48,7 +49,7 @@ export default function RecruiterProfile() {
   const [recruiterDetails, setRecruiterDetails] = useState();
   const [userProfile, setUserProfile] = useState(false);
   const [userId, setUserId] = useState<string>("");
-  const [jobId,setJobId]=useState<string>("");
+  const [jobId, setJobId] = useState<string>("");
 
   useEffect(() => {
     axios
@@ -102,7 +103,8 @@ export default function RecruiterProfile() {
                 setJobPostState={setJobPostState}
                 jobPostState={jobPostState}
                 setLoadTestQuestions={setLoadTestQuestions}
-                setTestCount={setTestCount}
+                setTestLevel={setTestLevel}
+                testLevel={testLevel}
                 testResponse={testResponse}
                 setTestResponse={setTestResponse}
                 loadJobPostContent={loadJobPostContent}
@@ -118,7 +120,7 @@ export default function RecruiterProfile() {
                 testState={testState}
                 setTestState={setTestState}
                 loadTestQuestions={loadTestQuestions}
-                testCount={testCount}
+                testLevel={testLevel}
                 testResponse={testResponse}
               />
             ) : recruiterDetails ? (

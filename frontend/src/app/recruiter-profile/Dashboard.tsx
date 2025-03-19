@@ -20,7 +20,7 @@ export default function Dashboard({
   const [jobs, setJobs] = useState([]);
   const [tests, setTests] = useState([]);
   const [bestPerformed, setBestPerformed] = useState([]);
-  const [onLoad, setOnLoad] = useState(false);
+  // const [onLoad, setOnLoad] = useState(false);
   const [users, setUsers] = useState([]);
   useEffect(() => {
     axios
@@ -31,7 +31,7 @@ export default function Dashboard({
       .catch((error) => {
         console.log(error);
       });
-    setOnLoad(true);
+    // setOnLoad(true);
   }, []);
 
   useEffect(() => {
@@ -43,9 +43,9 @@ export default function Dashboard({
       .then((response) => {
         response.data.map((item: any) => {
           tempJobSet.push(item);
-          if (onLoad && users.length > 0) {
-            loadTests(item.jobId);
-          }
+          // if (onLoad && users.length > 0) {
+          //   loadTests(item.jobId);
+          // }
         });
         setJobs(tempJobSet);
       })
@@ -62,9 +62,9 @@ export default function Dashboard({
       .then((response) => {
         response.data.map((item: any) => {
           tempTestsSet.push(item);
-          if (onLoad) {
-            performance(item.testId, item.testContent.questionContent.length);
-          }
+          // if (onLoad) {
+          //   performance(item.testId);
+          // }
         });
         setTests(tempTestsSet);
       })
@@ -73,8 +73,8 @@ export default function Dashboard({
       });
   }
 
-  function performance(testId: string, questionSize: number) {
-    console.log(onLoad);
+  function performance(testId: string) {
+    // console.log(onLoad);
     const tempMarkArray: any = [];
     users.map((item: any) => {
       if (item.tests.length > 0) {
@@ -84,15 +84,15 @@ export default function Dashboard({
           userName: item.userName,
           avatar: item.avatar ? item.avatar : null,
           testId: test.testId,
-          score: (test.score / questionSize) * 100,
+          mark: test.mark,
         });
       }
     });
     const sortedMarkArray = tempMarkArray.sort(
-      (a: any, b: any) => b.score - a.score
+      (a: any, b: any) => b.mark - a.mark
     );
     setBestPerformed(sortedMarkArray);
-    setOnLoad(false);
+    // setOnLoad(false);
   }
 
   return (
@@ -122,10 +122,7 @@ export default function Dashboard({
             return (
               <button
                 onClick={() => {
-                  performance(
-                    item.testId,
-                    item.testContent.questionContent.length
-                  );
+                  performance(item.testId);
                 }}
                 key={item.testId}
                 id={styles.profilesContainer}

@@ -19,7 +19,7 @@ export default function ResultTab({ userDetails }: { userDetails: any }) {
       )}
 
       <h1>{userDetails.userName} </h1>
-      <h1>{userDetails.score} / 100</h1>
+      <h1>{userDetails.mark} / 100</h1>
     </>
   );
 }

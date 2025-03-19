@@ -17,7 +17,8 @@ export default function JobContent({
   jobPostState,
   setJobPostState,
   setLoadTestQuestions,
-  setTestCount,
+  setTestLevel,
+  testLevel,
   testResponse,
   setTestResponse,
   loadJobPostContent,
@@ -36,7 +37,8 @@ export default function JobContent({
   jobPostState: any;
   setJobPostState: any;
   setLoadTestQuestions: any;
-  setTestCount: any;
+  setTestLevel: any;
+  testLevel: any;
   testResponse: any;
   setTestResponse: any;
 }) {
@@ -300,7 +302,8 @@ export default function JobContent({
         setJobPostState={setJobPostState}
         jobPostState={jobPostState}
         setLoadTestQuestions={setLoadTestQuestions}
-        setTestCount={setTestCount}
+        setTestLevel={setTestLevel}
+        testLevel={testLevel}
         testResponse={testResponse}
         setTestResponse={setTestResponse}
         loadJobPostContent={loadJobPostContent}

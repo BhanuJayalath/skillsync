@@ -31,8 +31,8 @@ const educationSchema = new mongoose.Schema({
 
 const testSchema = new mongoose.Schema({
   jobId: { type: String },
-  testId: { type: String },
-  score: { type: Number },
+  testLevel: { type: String },
+  mark: { type: Number },
 });
 
 const jobRoleSchema = new mongoose.Schema({

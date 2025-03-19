@@ -43,23 +43,7 @@ export default function UserProfile({
       jobTitle: "",
       jobId: "",
     },
-    tests: [
-      {
-        testId: "Test1742290753151",
-        testLevel: "Level 1",
-        mark: "100",
-      },
-      {
-        testId: "Test1742290753152",
-        testLevel: "Level 2",
-        mark: "40",
-      },
-      {
-        testId: "Test1742290753153",
-        testLevel: "Level 3",
-        mark: "60",
-      },
-    ],
+    tests: [{ jobId: "", testId: "", testLevel: "", mark: "" }],
   });
   useEffect(() => {
     axios
@@ -81,7 +65,13 @@ export default function UserProfile({
           linkedin: response.data.user.linkedin,
           cvSummary: response.data.user.cvSummary,
         };
+        const progressData = {
+          selectedJob: response.data.user.selectedJob,
+          tests: response.data.user.tests,
+        };
+        console.log(progressData);
         setUserDetails(userData);
+        setProgress(progressData);
         if (response.data.user.message[0].isSelected) {
           setCheckBoxValue(true);
         }
@@ -191,7 +181,7 @@ export default function UserProfile({
           </div>
         </section>
         <section id={styles.performance}>
-          <Progress user={progress} />
+          {progress ? <Progress user={progress} /> : null}
         </section>
       </section>
     </section>

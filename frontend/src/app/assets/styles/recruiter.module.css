@@ -640,3 +640,21 @@
   border-radius: 50px;
   background-color: #d1e5f4;
 }
+#addTestLevel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-size: 15px;
+  padding: 5px;
+  width: fit-content;
+  height: auto;
+}
+#addTestLevel input {
+  text-align: center;
+  width: 20%;
+  padding: 5px;
+  outline: none;
+  border: 2px solid #d1e5f4;
+}
