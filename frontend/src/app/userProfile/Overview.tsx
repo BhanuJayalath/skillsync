@@ -13,6 +13,7 @@ interface User {
     education: Education[];
     experience: Experience[];
     gitHub: string;
+    skills:string[];
 }
 
 interface SelectedJob{
@@ -74,32 +75,28 @@ const Overview = ({ user }: { user: User }) => {
                     </div>
                 </div>
                 {activeTab === 0 && <div className={styles.userDetails}>
-                    <p><Image src={"/user/email.svg"} alt="email"
+                    <p>{user?.email && <Image src={"/user/email.svg"} alt="email"
                               className={styles.overviewIcons}
-                              width={20} height={20}/>{user?.email}</p>
-                    <p><Image src={"/user/phone.svg"} alt="phone"
+                              width={20} height={20}/>}{user?.email}</p>
+                    <p>{user?.contact && <Image src={"/user/phone.svg"} alt="phone"
                               className={styles.overviewIcons}
-                              width={20} height={20}/>{user?.contact}</p>
-                    <p><Image src={"/user/linkedin.svg"} alt="linkedin"
+                              width={20} height={20}/>}{user?.contact}</p>
+                    <p>{user?.linkedIn && <Image src={"/user/linkedin.svg"} alt="linkedin"
                               className={styles.overviewIcons}
-                              width={20} height={20}/>{user?.linkedIn}</p>
-                    <p><Image src={"/user/github.svg"} alt="github"
+                              width={20} height={20}/>}{user?.linkedIn}</p>
+                    <p>{user?.gitHub && <Image src={"/user/github.svg"} alt="github"
                               className={styles.overviewIcons}
-                              width={20} height={20}/>{user?.gitHub}</p>
+                              width={20} height={20}/>}{user?.gitHub}</p>
                 </div>}
                 {activeTab === 1 && <div className={styles.userDetails}>
                     <h3 className={styles.degreeTitle}>{user?.education[0]?.courseName}</h3>
                     <p className={styles.schoolName}>{user?.education[0]?.schoolName}</p>
                     <p className={styles.graduationYear}>{user?.education[0]?.startDate} {user.education[0]?.endDate && `-${user.education[0]?.endDate}`}</p>
                     <p className={styles.jobResponsibilities}>{user?.education[0]?.description}</p>
-                    <p><Image src={"/user/portfolio.svg"} alt="portfolio"
-                              className={styles.overviewIcons}
-                              width={20} height={20}/>{user?.portfolio}</p>
+
                 </div>}
                 {activeTab === 2 && <div className={styles.userDetails}>
-                    <p><Image src={"/user/email.svg"} alt="email"
-                              className={styles.overviewIcons}
-                              width={20} height={20}/>{user?.email}</p>
+
                 </div>}
             </section>
         </section>
