@@ -14,7 +14,7 @@ import MockInterview from '@/app/mock-interview/page';
 import COURSE from '@/app/courses/page';
 import axios from "axios";
 import {toast} from "react-hot-toast";
-import { Assessment } from '@/app/test/page';
+import Assessment from '@/app/test/page';
 import Careers from '@/app/job-recommendations/page';
 
 

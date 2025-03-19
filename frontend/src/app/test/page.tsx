@@ -18,6 +18,7 @@ interface Question {
 interface UserData {
   _id: string
   selectedJob: { jobTitle: string; jobId: string }
+  tests: any // Include test property
 }
 
 interface Test {
@@ -29,7 +30,7 @@ interface Test {
 }
 
 // Create a separate component for the assessment functionality
-export function Assessment({ user }: { user: UserData }) {
+export default function Assessment({ user }: { user: UserData }) {
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState<(number | null)[]>([])
@@ -106,26 +107,28 @@ export function Assessment({ user }: { user: UserData }) {
     console.log("Submitted answers:", answers)
     console.log("Score:", correctCount, "out of", questions.length)
 
-    // Send data to backend
+    // Update the test scores array
+    const updatedTests = user.tests ? [...user.tests] : []
+    updatedTests.push({
+      jobId,
+      testId,
+      mark: correctCount,
+    })
+
+    // Send updated data to backend
     try {
       const response = await fetch(`${updateUserUrl}/${userId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          tests: [
-            {
-              jobId,
-              testId,
-              mark: correctCount,
-            },
-          ],
+          test: updatedTests,
         }),
       })
 
       if (!response.ok) {
         console.log("Failed to update user data!")
       } else {
-        console.log("User general data updated!")
+        console.log("User data updated successfully!")
       }
     } catch (error) {
       console.error("Error submitting test results:", error)
@@ -295,6 +298,3 @@ export function Assessment({ user }: { user: UserData }) {
     </div>
   )
 }
-
-
-
