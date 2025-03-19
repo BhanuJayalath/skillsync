@@ -335,9 +335,9 @@ const MCQTest = () => {
                     <p className={styles.scoreGrade}>
                       {score.correct === score.total
                         ? "Perfect Score!"
-                        : score.correct >= Math.floor(score.total * 0.8)
+                        : score.correct >= score.total * 0.8
                           ? "Excellent!"
-                          : score.correct >= Math.floor(score.total * 0.6)
+                          : score.correct >= score.total * 0.6
                             ? "Good Job!"
                             : "Keep Practicing!"}
                     </p>
