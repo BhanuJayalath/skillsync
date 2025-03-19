@@ -314,6 +314,15 @@
     align-items: center;
 }
 
+.userSkillList{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
 
 .overviewIcons {
     margin: 0.5em;
