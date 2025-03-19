@@ -16,6 +16,7 @@ import axios from "axios";
 import {toast} from "react-hot-toast";
 import Assessment from '@/app/test/page';
 import Careers from '@/app/job-recommendations/page';
+import JobContent from '@/app/recruiter-profile/JobContent';
 
 
  function UserProfile() {
@@ -426,7 +427,7 @@ import Careers from '@/app/job-recommendations/page';
                                                 removeExperience={removeExperience}
                                                 updateNestedChanges={updateNestedChanges}/>}
                                             {activeTab === 4 && <MockInterview/>}.
-                                            {activeTab === 5 && <Assessment user={user}/>}
+                                            {activeTab === 5 && <Assessment user={user} selectedJob={user.selectedJob}/>}
                                             {/*{activeTab === 6 && <Careers user={user}/>}*/}
                                             {activeTab === 7 && <Settings
                                                 user={user}

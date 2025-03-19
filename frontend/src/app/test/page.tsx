@@ -22,18 +22,20 @@ interface Test {
 }
 interface User {
   _id: string;
-  selectedJob: {
-    jobId: string;
-  };
+}
 
+interface SelectedJob {
+  jobTitle: string;
+  jobId:string;
 }
 interface MCQTestProps {
   user: User;
+  selectedJob: SelectedJob;
 }
 
-const MCQTest = ({ user}: MCQTestProps) => {
+const MCQTest = ({ user, selectedJob}: MCQTestProps) => {
   const userId = user._id
-  // const jobId = user.selectedJob.jobId
+  // const jobId = selectedJob.jobId
   const jobId = "Job1742286622422" // hardcoded for now
   const [testId, setTestId] = useState("Test1742290753151")
 
@@ -48,15 +50,13 @@ const MCQTest = ({ user}: MCQTestProps) => {
   useEffect(() => {
     const fetchTestData = async () => {
       try {
-        const response = await axios.get<Test>(`http://localhost:3001/tests/${testId}`)
-        const test = response.data
-
-        console.log("Fetched test data:", test) // Log the fetched data
+        const response = await axios.get<Test>(`http://localhost:3001/tests/${testId}`);
+        const test = response.data;
 
         if (test.testContent && test.testContent.questionContent) {
-          setQuestions(test.testContent.questionContent)
-          setAnswers(Array(test.testContent.questionContent.length).fill(null))
-          setScore({ correct: 0, total: test.testContent.questionContent.length })
+          setQuestions(test.testContent.questionContent);
+          setAnswers(Array(test.testContent.questionContent.length).fill(null));
+          setScore({ correct: 0, total: test.testContent.questionContent.length });
         } else {
           console.error("Invalid test data structure:", test)
         }
@@ -290,7 +290,7 @@ const MCQTest = ({ user}: MCQTestProps) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default MCQTest;
