@@ -38,7 +38,7 @@ interface MCQTestProps {
 const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
   const userId = user._id
   // const jobId = selectedJob.jobId
-  const jobId = "Job1742286622422" // hardcoded for now
+  const jobId = "Job1742293988982" // hardcoded for now
   const [testId, setTestId] = useState("Test1742290753151")
   const [availableTests, setAvailableTests] = useState<{ testId: string; testLevel: string; jobId: string }[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -50,11 +50,12 @@ const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
   const [testStarted, setTestStarted] = useState(false)
   const [score, setScore] = useState({ correct: 0, total: 0 })
   const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
   useEffect(() => {
     const fetchTestData = async () => {
       try {
-        const response = await axios.get<Test>(`http://localhost:3001/tests/${testId}`)
+        const response = await axios.get<Test>(`${baseUrl}/tests/${testId}`)
         const test = response.data
 
         if (test.testContent && test.testContent.questionContent) {
@@ -76,7 +77,7 @@ const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
     const fetchAvailableTests = async () => {
       setIsLoading(true)
       try {
-        const response = await axios.get(`http://localhost:3001/tests/all-tests/${jobId}`)
+        const response = await axios.get(`${baseUrl}/tests/all-tests/${jobId}`)
         console.log("Fetched available tests response:", response) // Log the entire response
   
         if (!response.data) {
@@ -156,13 +157,13 @@ const MCQTest = ({ user, selectedJob }: MCQTestProps) => {
     console.log("Mark:", mark)
 
     try {
-      const response = await fetch(`${updateUserUrl}/${userId}`, {
+      const response = await fetch(`${baseUrl}/updateUser/${userId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           tests: [
             {
-              jobId,
+              //jobId,
               testId,
               mark,
             },
