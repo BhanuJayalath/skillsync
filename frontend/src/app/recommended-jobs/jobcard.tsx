@@ -17,7 +17,7 @@ interface CourseProps {
 
 const CourseCard = ({ course }: CourseProps) => {
   // Use a default image from the public folder
-  const imageSrc = "/courses/course1.png";
+  const imageSrc = "/jobs/jobs1.png";
 
   return (
     <Link href={course.link} target="_blank" rel="noopener noreferrer">

@@ -4,19 +4,19 @@ import React, { useEffect, useState, type ChangeEvent } from "react";
 import Image from "next/image";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { Search, BookOpen, Loader2 } from "lucide-react";
-import CourseCard from "./coursecard";
+import { Search, Briefcase, Loader2 } from "lucide-react";
+import JobCard from "./jobcard";
 
 const DEEPSEEK_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 const DEEPSEEK_API_KEY = process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY; // Now using the API key from .env.local
 
 export default function Page() {
-  const [courses, setCourses] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<number>(0);
 
-  const searchCourses = async (topic: string) => {
+  const searchJobs = async (topic: string) => {
     try {
       setIsLoading(true);
       const response = await fetch(DEEPSEEK_API_URL, {
@@ -30,7 +30,7 @@ export default function Page() {
           messages: [
             {
               role: "user",
-              content: `Please provide a list of five recommended online courses for learning ${topic}. 
+              content: `Please provide a list of five recommended internship opportunities in Sri Lanka someone with ${topic} knowledge. 
 Output the result as a JSON array, where each object has the following fields: id, title, duration, category, instructor, link.`,
             },
           ],
@@ -42,7 +42,7 @@ Output the result as a JSON array, where each object has the following fields: i
       
       if (!generatedText) {
         console.error("No generated text received. Response data:", data);
-        setCourses([]);
+        setJobs([]);
         return;
       }
       
@@ -55,35 +55,35 @@ Output the result as a JSON array, where each object has the following fields: i
         cleanedText = cleanedText.replace(/^```\w*\s*/, "").replace(/\s*```$/, "");
       }
 
-      let parsedCourses = [];
+      let parsedJobs = [];
       try {
-        parsedCourses = JSON.parse(cleanedText);
+        parsedJobs = JSON.parse(cleanedText);
       } catch (err) {
         console.error("Error parsing JSON:", err);
         // Try extracting a JSON array using regex if the output contains extra text
         const jsonMatch = cleanedText.match(/\[([\s\S]*)\]/);
         if (jsonMatch && jsonMatch[0]) {
           try {
-            parsedCourses = JSON.parse(jsonMatch[0]);
+            parsedJobs = JSON.parse(jsonMatch[0]);
           } catch (innerErr) {
             console.error("Error parsing JSON from extracted match:", innerErr);
-            parsedCourses = [];
+            parsedJobs = [];
           }
         } else {
-          parsedCourses = [];
+          parsedJobs = [];
         }
       }
-      setCourses(parsedCourses);
+      setJobs(parsedJobs);
     } catch (error) {
-      console.error("Error fetching courses:", error);
-      setCourses([]);
+      console.error("Error fetching jobs:", error);
+      setJobs([]);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    searchCourses("HTML");
+    searchJobs("HTML");
   }, []);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +92,7 @@ Output the result as a JSON array, where each object has the following fields: i
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      searchCourses(searchTerm);
+      searchJobs(searchTerm);
     }
   };
 
@@ -104,10 +104,10 @@ Output the result as a JSON array, where each object has the following fields: i
         <div className="py-16 px-4 sm:px-6 lg:px-8 text-black">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">
-              Discover Your Next Course
+              Recommended Jobs for You
             </h1>
             <p className="text-xl max-w-2xl mx-auto">
-              Expand your knowledge with our extensive library of high-quality courses
+              Expand your knowledge by putting it into practice with these recommended internship opportunities.
             </p>
           </div>
         </div>
@@ -124,7 +124,7 @@ Output the result as a JSON array, where each object has the following fields: i
 
                 <Input
                   type="text"
-                  placeholder="Search courses..."
+                  placeholder="Search jobs..."
                   value={searchTerm}
                   onChange={handleSearchChange}
                   onKeyDown={handleKeyDown}
@@ -132,7 +132,7 @@ Output the result as a JSON array, where each object has the following fields: i
                 />
               </div>
               <Button
-                onClick={() => searchCourses(searchTerm)}
+                onClick={() => searchJobs(searchTerm)}
                 className="bg-blue-500 hover:bg-primary/90 text-white"
                 disabled={isLoading}
               >
@@ -149,21 +149,21 @@ Output the result as a JSON array, where each object has the following fields: i
           </div>
         </div>
 
-        {/* Courses Section */}
+        {/* Jobs Section */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
           <div className="flex items-center mb-8">
-            <BookOpen className="text-primary mr-2" size={24} />
-            <h2 className="text-2xl font-bold text-gray-800">Available Courses</h2>
+            <Briefcase className="text-primary mr-2" size={24} />
+            <h2 className="text-2xl font-bold text-gray-800">Available Jobs</h2>
           </div>
 
           {isLoading ? (
             <div className="flex justify-center items-center py-20">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
-          ) : courses?.length > 0 ? (
+          ) : jobs?.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.map((course) => (
-                <CourseCard key={course.id} course={course} />
+              {jobs.map((jobs) => (
+                <JobCard key={jobs.id} course={jobs} />
               ))}
             </div>
           ) : (
