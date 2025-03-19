@@ -513,6 +513,12 @@
     margin-top: 25px;
 }
 
+.experience,
+.education,
+.skills p {
+    margin-top: 25px;
+    text-align: justify;
+}
 
 .sectionTitle {
     font-size: 1.7rem;
