@@ -15,7 +15,7 @@ import COURSE from '@/app/courses/page';
 import axios from "axios";
 import {toast} from "react-hot-toast";
 import Assessment from '@/app/test/page';
-import Careers from '@/app/job-recommendations/page';
+import Careers from '@/app/job-recommendations/Careers';
 import JobContent from '@/app/recruiter-profile/JobContent';
 
 
