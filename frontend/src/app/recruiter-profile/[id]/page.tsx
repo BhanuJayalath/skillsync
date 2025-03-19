@@ -41,7 +41,7 @@ export default function RecruiterProfile() {
   const [jobPostState, setJobPostState] = useState(false);
   const [dashboardTab, setDashboardTab] = useState(true);
   const [profileTab, setProfileTab] = useState(false);
-  const [testLevel, setTestLevel] = useState(Number);
+  const [testLevel, setTestLevel] = useState("");
   const [jobCount, setJobCount] = useState(Number);
   const [removeTestBlock, setRemoveTestBlock] = useState(false);
   const [testResponse, setTestResponse] = useState();

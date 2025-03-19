@@ -18,7 +18,7 @@ export default function TestContent({
   loadJobPostContent: any;
   setLoadTestQuestions: any;
   loadTestQuestions: any;
-  testLevel: number;
+  testLevel: string;
   testResponse: any;
   testState: any;
   setTestState: any;

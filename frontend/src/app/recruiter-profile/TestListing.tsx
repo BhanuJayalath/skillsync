@@ -44,6 +44,7 @@ export default function TestListing({
 }) {
   const [remove, setRemove] = useState(false);
   const [addTestLevel, setAddTestLevel] = useState(false);
+  useEffect(() => {}, [testLevel]);
   useEffect(() => {
     const tempArray: any = [];
     axios
@@ -59,8 +60,18 @@ export default function TestListing({
       });
     setLoadTests(tempArray);
   }, [remove]);
+  useEffect(() => {
+    if (testLevel !== "" && loadTests.length > 0) {
+      if (!loadTests.some((item: any) => item.testLevel === testLevel)) {
+        console.log("This triggers");
+        addTestComponent();
+      }
+    } else if (testLevel !== "") {
+      addTestComponent();
+    }
+  }, [testLevel]);
 
-  function loadTestContent(testId: string, testCounter: number) {
+  function loadTestContent(testId: string) {
     loadTests.find((item: any) => {
       if (item.testId === testId) {
         setLoadTestQuestions(item);
@@ -70,13 +81,12 @@ export default function TestListing({
     setTestState(!testState);
   }
   function addTestComponent() {
-    console.log(loadTests);
     setLoadTests([
       ...loadTests,
       {
         testId: "Test" + Date.now(),
         jobId: loadJobPostContent.jobId,
-        testLevel: "Level " + testLevel,
+        testLevel: testLevel,
         testContent: {
           questionContent: [],
         },
@@ -98,27 +108,65 @@ export default function TestListing({
     <div id={styles.testListing}>
       <div id={styles.testListingHeader}>
         <h1>Tests</h1>
-        {loadTests.length > 0 || addTestLevel ? (
-          <>
-            <div id={styles.addTestLevel}>
-              <label>Add Test level</label>
-              <input
-                type="number"
-                onChange={(e) => {
-                  setTestLevel(e.target.value);
-                }}
+        {addTestLevel ? (
+          <div id={styles.addTestLevel}>
+            <button
+              onClick={() => {
+                setTestLevel("Level 1");
+              }}
+            >
+              Level 1
+              <Image
+                alt="plus-icon"
+                width={20}
+                height={20}
+                src="/recruiter/plus-icon.svg"
               />
-              <button onClick={addTestComponent}>
+            </button>
+            <button
+              onClick={() => {
+                setTestLevel("Level 2");
+              }}
+            >
+              Level 2
+              <Image
+                alt="plus-icon"
+                width={20}
+                height={20}
+                src="/recruiter/plus-icon.svg"
+              />
+            </button>
+            <button
+              onClick={() => {
+                setTestLevel("Level 3");
+              }}
+            >
+              Level 3
+              <Image
+                alt="plus-icon"
+                width={20}
+                height={20}
+                src="/recruiter/plus-icon.svg"
+              />
+            </button>
+            {loadTests.length > 0 ? (
+              <button
+                onClick={() => {
+                  setRemoveTestBlock(!removeTestBlock);
+                }}
+              >
                 <Image
-                  alt="plus-icon"
-                  width={20}
-                  height={20}
-                  src="/recruiter/plus-icon.svg"
+                  alt="remove-icon"
+                  width={23}
+                  height={23}
+                  src="/recruiter/remove-icon.svg"
                 />
-                Add Tests
+                remove Tests
               </button>
-            </div>
-            ) : (
+            ) : null}
+          </div>
+        ) : loadTests.length > 0 ? (
+          <>
             <button
               onClick={() => {
                 setAddTestLevel(true);
@@ -132,7 +180,6 @@ export default function TestListing({
               />
               Add Tests
             </button>
-            )
             <button
               onClick={() => {
                 setRemoveTestBlock(!removeTestBlock);
@@ -148,7 +195,11 @@ export default function TestListing({
             </button>
           </>
         ) : (
-          <button onClick={addTestComponent}>
+          <button
+            onClick={() => {
+              setAddTestLevel(true);
+            }}
+          >
             <Image
               alt="plus-icon"
               width={23}
@@ -168,7 +219,7 @@ export default function TestListing({
                 if (removeTestBlock) {
                   removeTestComponent(item.testId);
                 } else {
-                  loadTestContent(item.testId, index + 1);
+                  loadTestContent(item.testId);
                 }
               }}
               id={styles.testListingcontainer}
