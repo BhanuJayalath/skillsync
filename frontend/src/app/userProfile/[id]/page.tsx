@@ -189,6 +189,8 @@ import Careers from '@/app/job-recommendations/page';
     };
     const handleSubmit = async () => {
         const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
+        user.experience = user.experience.filter(item => item.jobName);
+        user.education = user.education.filter(item => item.courseName);
         try {
             const response = await fetch(`${updateUserUrl}/${id}`, {
                 method: "PATCH",
