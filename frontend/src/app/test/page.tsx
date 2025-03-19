@@ -44,6 +44,9 @@ export default function Assessment({ user }: AssessmentProps) {
   // Check if user and user.selectedJob are defined
   const userId = user?._id;
   const jobId = user?.selectedJob?.jobId;
+  console.log("jobId:", jobId);
+  console.log("userId:", userId);
+
   const [testId, setTestId] = useState("Test1742290753151") // Fixed testId for now
 
   useEffect(() => {
