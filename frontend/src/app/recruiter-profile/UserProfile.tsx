@@ -6,27 +6,16 @@ import Overview from "../userProfile/Overview";
 import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 
-interface UserDetails {
-  selectedJob: {
-    jobTitle: string;
-    jobId: string;
-  };
-  tests: {
-    testId: string;
-    testLevel: string;
-    mark: string;
-    xAxis: string;
-  }[];
-}
-
 export default function UserProfile({
   userId,
   setUserProfile,
   setDashboardTab,
+  jobId,
 }: {
   userId: string;
   setUserProfile: any;
   setDashboardTab: any;
+  jobId: any;
 }) {
   const [userDetails, setUserDetails] = useState({
     fullName: "",
@@ -40,27 +29,16 @@ export default function UserProfile({
     linkedin: "",
     cvSummary: "",
   });
-
-  function addMessages() {
-    console.log(userId);
-    axios
-      .patch(
-        "/api/users/controller",
-        { message: ["New Message"] },
-        {
-          headers: { "Content-Type": "application/json", "user-id": userId },
-        }
-      )
-      .then((response) => {
-        console.log("Updated successfully:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error.response?.data || error.message);
-      });
-  }
-
+  const [jobDetails, setJobDetails] = useState({
+    jobId: "",
+    jobTitle: "",
+    jobType: "",
+    recruiterNote: "",
+    isSelected: false,
+    approved: false,
+  });
+  const [checkBoxValue, setCheckBoxValue] = useState<boolean>(false);
   useEffect(() => {
-    console.log(userId);
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_USER_DETAILS}`, {
         headers: {
@@ -68,7 +46,6 @@ export default function UserProfile({
         },
       })
       .then((response) => {
-        // console.log(response.data);
         const userData = {
           fullName: response.data.user.fullName,
           email: response.data.user.email,
@@ -82,11 +59,68 @@ export default function UserProfile({
           cvSummary: response.data.user.cvSummary,
         };
         setUserDetails(userData);
+        if (response.data.user.message[0].isSelected) {
+          setCheckBoxValue(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    axios
+      .get(`${process.env.NEXT_PUBLIC_GET_JOB_BY_JOB_ID}/${jobId}`)
+      .then((response) => {
+        const temp = {
+          jobId: response.data.jobId,
+          jobTitle: response.data.jobTitle,
+          jobType: response.data.jobType,
+          recruiterNote: "Congratulations! You've been selected for the job!",
+          isSelected: true,
+          approved: false,
+        };
+        setJobDetails(temp);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  function Messages() {
+    if (!checkBoxValue) {
+      axios
+        .patch(
+          "/api/users/controller",
+          { message: [jobDetails] },
+          {
+            headers: { "Content-Type": "application/json", "user-id": userId },
+          }
+        )
+        .then((response) => {
+          console.log("Updated successfully:", response.data);
+          setCheckBoxValue(true);
+        })
+        .catch((error) => {
+          console.error("Error:", error.response?.data || error.message);
+        });
+    } else if (checkBoxValue) {
+      axios
+        .patch(
+          "/api/users/controller",
+          { message: [] },
+          {
+            headers: { "Content-Type": "application/json", "user-id": userId },
+          }
+        )
+        .then((response) => {
+          console.log("Updated successfully:", response.data);
+          setCheckBoxValue(false);
+        })
+        .catch((error) => {
+          console.error("Error:", error.response?.data || error.message);
+        });
+    }
+  }
+
   return (
     <section className={styles.userProfile}>
       <header>
@@ -122,7 +156,11 @@ export default function UserProfile({
       </div>
       <div>
         <label>Set as selected</label>
-        <input type="checkbox" onChange={addMessages}></input>
+        <input
+          type="checkbox"
+          checked={checkBoxValue}
+          onChange={Messages}
+        ></input>
       </div>
     </section>
   );

@@ -48,6 +48,7 @@ export default function RecruiterProfile() {
   const [recruiterDetails, setRecruiterDetails] = useState();
   const [userProfile, setUserProfile] = useState(false);
   const [userId, setUserId] = useState<string>("");
+  const [jobId,setJobId]=useState<string>("");
 
   useEffect(() => {
     axios
@@ -76,10 +77,12 @@ export default function RecruiterProfile() {
                 setUserProfile={setUserProfile}
                 setDashboardTab={setDashboardTab}
                 setUserId={setUserId}
+                setJobId={setJobId}
               />
             ) : userProfile && userId != "" ? (
               <UserProfile
                 userId={userId}
+                jobId={jobId}
                 setUserProfile={setUserProfile}
                 setDashboardTab={setDashboardTab}
               />

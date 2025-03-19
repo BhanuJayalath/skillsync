@@ -9,11 +9,13 @@ export default function Dashboard({
   setUserProfile,
   setDashboardTab,
   setUserId,
+  setJobId,
 }: {
   recruiterDetails: any;
   setUserProfile: any;
   setDashboardTab: any;
   setUserId: any;
+  setJobId: any;
 }) {
   const [jobs, setJobs] = useState([]);
   const [tests, setTests] = useState([]);
@@ -53,6 +55,7 @@ export default function Dashboard({
   }, [users]);
 
   function loadTests(jobId: any) {
+    setJobId(jobId);
     const tempTestsSet: any = [];
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_TESTS}/${jobId}`)

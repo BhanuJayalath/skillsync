@@ -1,5 +1,5 @@
-import { verify } from 'crypto';
-import mongoose from 'mongoose';
+import { verify } from "crypto";
+import mongoose from "mongoose";
 
 // Define sub-schemas for nested objects
 
@@ -8,7 +8,7 @@ const courseSchema = new mongoose.Schema({
   code: { type: String },
   name: { type: String },
   result: { type: String },
-  mark: { type: String }
+  mark: { type: String },
 });
 
 const experienceSchema = new mongoose.Schema({
@@ -17,7 +17,7 @@ const experienceSchema = new mongoose.Schema({
   companyName: { type: String },
   startDate: { type: String },
   endDate: { type: String },
-  description: { type: String }
+  description: { type: String },
 });
 
 const educationSchema = new mongoose.Schema({
@@ -26,25 +26,25 @@ const educationSchema = new mongoose.Schema({
   schoolName: { type: String },
   startDate: { type: String },
   endDate: { type: String },
-  description: { type: String }
+  description: { type: String },
 });
 
 const testSchema = new mongoose.Schema({
   jobId: { type: String },
   testId: { type: String },
-  score: { type: Number }
+  score: { type: Number },
 });
 
 const jobRoleSchema = new mongoose.Schema({
   jobTitle: { type: String },
-  jobId: { type: String }
+  jobId: { type: String },
 });
 
 // Main User schema
 
 const userSchema = new mongoose.Schema({
   userName: { type: String, required: true, unique: true },
-  email: { type: String, required: true , unique: true},
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   isVerified: { type: Boolean, default: false },
   forgotPasswordToken: String,
@@ -63,17 +63,17 @@ const userSchema = new mongoose.Schema({
   timeZone: { type: String },
   language: { type: String },
   cvSummary: { type: String },
-  
+
   courses: [courseSchema],
   tests: [testSchema],
   jobRole: [jobRoleSchema],
   experience: [experienceSchema],
   education: [educationSchema],
   skills: [{ type: String }],
-  message: [{ type: String }],
+  message: [{ type: Object }],
 });
 
 // Create and export the model
-const User = mongoose.models.users || mongoose.model('users', userSchema);
+const User = mongoose.models.users || mongoose.model("users", userSchema);
 
 export default User;
