@@ -291,6 +291,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: 1em;
+    min-width: 16em;
     padding: 0 1em; /* Add padding */
 }
 
@@ -311,6 +312,25 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.userSkillList{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+.userSkill{
+    margin: 1em;
+    padding: 0.75em;
+    max-width: 15em;
+    background: #e8e1e1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.4em;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Hover effect */
 }
 
 .overviewIcons {
@@ -448,6 +468,8 @@
     min-height:70.157489153699rem ;
     padding: 2cm;
     margin: 0 auto;
+    justify-content: center;
+    align-items: center;
     background: #ffffff;
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
     border: 1px solid #ccc;
@@ -463,7 +485,8 @@
 
 .contactInfo {
     text-align: center;
-    margin-bottom: 20px;
+    justify-content: center;
+    margin-bottom: 2em;
 }
 
 .name {
@@ -479,7 +502,7 @@
 }
 
 .contactDetails {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-top: 10px;
     color: #777;
 }
@@ -488,6 +511,13 @@
 .education,
 .skills {
     margin-top: 25px;
+}
+
+.experience,
+.education,
+.skills p {
+    margin-top: 25px;
+    text-align: justify;
 }
 
 .sectionTitle {
@@ -529,11 +559,13 @@
 
 .skillList {
     list-style-type: disc;
-    padding-left: 20px;
+    padding-left: 2em;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .skillList li {
-    margin: 5px 0;
+    margin: 1.5em;
     color: #444;
 }
 
