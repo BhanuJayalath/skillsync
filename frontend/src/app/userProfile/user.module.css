@@ -565,6 +565,7 @@
 }
 
 .skillList li {
+    margin: 1.5em;
     color: #444;
 }
 
