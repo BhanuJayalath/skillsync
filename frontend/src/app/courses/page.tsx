@@ -30,7 +30,7 @@ export default function Page() {
           messages: [
             {
               role: "user",
-              content: `Please provide a list of five recommended online courses for learning ${topic}. 
+              content: `Please provide a list of six recommended online courses for learning ${topic}. 
 Output the result as a JSON array, where each object has the following fields: id, title, duration, category, instructor, link.`,
             },
           ],
