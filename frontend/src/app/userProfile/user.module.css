@@ -560,6 +560,8 @@
 .skillList {
     list-style-type: disc;
     padding-left: 2em;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .skillList li {
