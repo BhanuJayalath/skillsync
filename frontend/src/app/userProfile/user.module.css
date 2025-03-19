@@ -323,6 +323,15 @@
     padding: 0;
     margin: 0;
 }
+.userSkill{
+    margin: 1em;
+    padding: 0.75em;
+    max-width: 15em;
+    background: #e8e1e1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.4em;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Hover effect */
+}
 
 .overviewIcons {
     margin: 0.5em;
