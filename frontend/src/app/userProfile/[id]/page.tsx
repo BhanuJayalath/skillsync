@@ -33,50 +33,50 @@ import Careers from '@/app/job-recommendations/page';
     // Initializing profile state with default user details
     const [user, setUser] = useState({
         _id:'',
-        email: "Name@gmail.com",   // User's email address
-        contact: '(+94)12 345 6789', // number
-        userName: "UserName",  // User's display name
-        gitHub: "github",
-        portfolio:"",
-        linkedIn: "linkedin",
-        fullName: "Drake Winston", // User's full name
-        cvSummary: "",
-        avatar: "",  //profile picture
-        gender: "Gender",  // User's gender
-        language: "Language",     //language
-        city: 'City',    //city
-        country: "Country", //country
+        email: '',   // User's email address
+        contact: '', // number
+        userName: '',  // User's display name
+        gitHub: '',
+        portfolio:'',
+        linkedIn: '',
+        fullName: '', // User's full name
+        cvSummary: '',
+        avatar: '',  //profile picture
+        gender: '',  // User's gender
+        language: '',     //language
+        city: '',    //city
+        country: '', //country
         tests: [
-            {testId: '250106', testLevel: 'Basic', mark: '58'},
-            {testId: '250107', testLevel: 'Generated', mark: '86'},
-            {testId: '250108', testLevel: 'Interview', mark: '46'}
+            {testId: '', testLevel: '', mark: ''},
+            {testId: '', testLevel: '', mark: ''},
+            {testId: '', testLevel: '', mark: ''},
         ],
         selectedJob: {
-            jobTitle: 'Job Role ',
+            jobTitle: '',
             jobId:'',
         },
         notifications:[
-            {message:"message1"},
+            {message:''},
         ],
         experience: [
             {
-                jobName: 'Full-stack developer',
-                companyName: 'codeLabs',
+                jobName: '',
+                companyName: '',
                 startDate: '',
                 endDate: '',
-                description: ''
+                description: '',
             },
         ],
         education: [
             {
-                courseName: 'Bsc(hons) Computer Science',
-                schoolName: 'University of westminster',
+                courseName: '',
+                schoolName: '',
                 startDate: '',
                 endDate: '',
-                description: ''
+                description: '',
             },
         ],
-        skills: ['typeScript', 'javaScript', 'HTML']
+        skills: ['']
     });
 
     // Education Handlers
