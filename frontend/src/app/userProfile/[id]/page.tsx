@@ -1,7 +1,7 @@
 "use client"; // Indicating as a client-side component
 
 import Image from 'next/image';     // Importing images
-import { useParams, useRouter, useSearchParams   } from 'next/navigation';
+import { useParams, useRouter  } from 'next/navigation';
 import React, {Suspense, useEffect, useRef, useState} from 'react';   // Importing useState hook from React for state management
 import "bootstrap/dist/css/bootstrap.min.css";  // Importing Bootstrap CSS to styles
 import styles from '../user.module.css';   // Importing custom styles
@@ -20,15 +20,11 @@ import Careers from '@/app/job-recommendations/page';
 
  function UserProfile() {
      const { id } = useParams();
-     const router = useRouter();const searchParams = useSearchParams();
-     const message = searchParams.get('message');
+     const router = useRouter();
      //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
-
     const [loading, setLoading] = useState(true);
-
     const [isOpen, setIsOpen] = useState(false);
-
     const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
     const [user, setUser] = useState({
@@ -56,7 +52,7 @@ import Careers from '@/app/job-recommendations/page';
             jobId:'',
         },
         notifications:[
-            {message:''},
+
         ],
         experience: [
             {
@@ -407,11 +403,7 @@ import Careers from '@/app/job-recommendations/page';
 
                                             {isOpen && (
                                                 <div className={styles.notificationPopup}>
-                                                    <ul>
-                                                        {user.notifications.map((notification, index) => (
-                                                            <li key={index}>{notification.message}</li>
-                                                        ))}
-                                                    </ul>
+
                                                 </div>
                                             )}
                                         </div>
