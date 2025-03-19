@@ -8,11 +8,8 @@ type MCQTestProps = {
   };
 };
 
-const Assessment: React.FC<MCQTestProps> = ({ user }) => {
-//   const userId = user._id;
-//   const jobId = user.selectedJob.jobId;
-
-  return <MCQTest user={user}/>;
+const Assessment: React.FC<MCQTestProps> = ({ user }) => {;
+  return <MCQTest user={user} />;
 };
 
 export default Assessment;
