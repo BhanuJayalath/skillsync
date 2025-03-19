@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import styles from "./test.module.css"
 
-// Update the Question interface to include correctAnswer (not optional anymore)
 interface Question {
   questionId: number
   question: string
@@ -12,12 +11,7 @@ interface Question {
   answer2: string
   answer3: string
   answer4: string
-  correctAnswer: number // Now required for scoring
-}
-
-interface UserData {
-  _id: string
-  selectedJob: { jobTitle: string; jobId: string }
+  correctAnswer: number
 }
 
 interface Test {
@@ -28,46 +22,54 @@ interface Test {
   }
 }
 
-// Create a separate component for the assessment functionality
-export default function Assessment({ user }: { user: UserData }) {
+interface MCQTestProps {
+  user: {
+    _id: string;
+    selectedJob: { jobTitle: string; jobId: string };
+  };  
+}
+
+
+
+const MCQTest: React.FC<MCQTestProps> = ({user}) => {
+  const userId = user._id
+  // const jobId = user.selectedJob.jobId
+  const jobId = "Job1742286622422"// hardcoded for now
+  const [testId, setTestId] = useState("Test1742290753151")
+
+
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState<(number | null)[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [testStarted, setTestStarted] = useState(false)
   const [score, setScore] = useState({ correct: 0, total: 0 })
-  const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL
+  const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
 
-  // Check if user and user.selectedJob are defined
-  const userId = user?._id
-  const jobId = user?.selectedJob?.jobId
-  console.log("jobId:", jobId)
-  console.log("userId:", userId)
-
-  const [testId, setTestId] = useState("Test1742290753151") // Fixed testId for now
 
   useEffect(() => {
-    // Fetch the test data from the backend
     const fetchTestData = async () => {
       try {
         const response = await axios.get<Test>(`http://localhost:3001/tests/${testId}`)
         const test = response.data
+  
+        console.log("Fetched test data:", test); // Log the fetched data
+  
         if (test.testContent && test.testContent.questionContent) {
           setQuestions(test.testContent.questionContent)
           setAnswers(Array(test.testContent.questionContent.length).fill(null))
           setScore({ correct: 0, total: test.testContent.questionContent.length })
         } else {
-          console.error("Test content or question content is undefined")
+          console.error("Invalid test data structure:", test)
         }
       } catch (error) {
         console.error("Error fetching test data:", error)
       }
     }
-
+  
     fetchTestData()
   }, [testId])
 
-  // Add this function to start the test
   const startTest = () => {
     setTestStarted(true)
   }
@@ -90,52 +92,49 @@ export default function Assessment({ user }: { user: UserData }) {
     }
   }
 
-  // Update the handleSubmit function to calculate the score
   const handleSubmit = async () => {
-    let correctCount = 0
+    let correctCount = 0;
 
     answers.forEach((answer, index) => {
-      if (answer === questions[index].correctAnswer) {
-        correctCount++
-      }
-    })
+        if (answer === questions[index].correctAnswer) {
+            correctCount++;
+        }
+    });
 
-    setScore({ correct: correctCount, total: questions.length })
-    setIsSubmitted(true)
+    setScore({ correct: correctCount, total: questions.length });
+    setIsSubmitted(true);
 
-    console.log("Submitted answers:", answers)
-    console.log("Score:", correctCount, "out of", questions.length)
+    console.log("Submitted answers:", answers);
+    console.log("Score:", correctCount, "out of", questions.length);
 
-    // Send data to backend
     try {
-      const response = await fetch(`${updateUserUrl}/${userId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          tests: [
-            {
-              jobId,
-              testId,
-              mark: correctCount,
-            },
-          ],
-        }),
-      })
+        const response = await fetch(`${updateUserUrl}/${userId}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                tests: [
+                    {
+                        jobId,
+                        testId,
+                        marks: correctCount,
+                    },
+                ],
+            }),
+        });
 
-      if (!response.ok) {
-        console.log("Failed to update user data!")
-      } else {
-        console.log("User general data updated!")
-      }
+        if (!response.ok) {
+            console.log("Failed to update user data!");
+        } else {
+            console.log("User general data updated!");
+        }
     } catch (error) {
-      console.error("Error submitting test results:", error)
+        console.error("Error submitting test results:", error);
     }
-  }
+  };
 
   const allQuestionsAnswered = answers.every((answer) => answer !== null)
   const progressPercentage = (answers.filter((a) => a !== null).length / questions.length) * 100
 
-  // Modify the return statement to conditionally render welcome screen or test
   return (
     <div className={styles.container}>
       <div className={styles.testCard}>
@@ -227,6 +226,7 @@ export default function Assessment({ user }: { user: UserData }) {
                       </>
                     )}
                   </div>
+
                 </div>
 
                 <div className={styles.navigationContainer}>
@@ -296,3 +296,4 @@ export default function Assessment({ user }: { user: UserData }) {
   )
 }
 
+export default MCQTest;
