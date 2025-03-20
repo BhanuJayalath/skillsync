@@ -60,7 +60,16 @@ const Progress = ({ user }: { user: User }) => {
                             strokeWidth="0.5"
                             points={points.join(' ')}
                         />
-
+                        {user.tests.map((test, index) => (
+                                <circle
+                                    key={index}
+                                    cx={20 + index * gap}
+                                    cy={test.mark}
+                                    r={2}
+                                    fill="blue"
+                                />
+                            )
+                        )}
                     </g>
                     <text x="-12" y="0" fontSize="7" fill="black">100</text>
                     <text x="-11" y="50" fontSize="7" fill="black">50</text>
