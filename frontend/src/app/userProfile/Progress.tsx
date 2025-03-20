@@ -16,6 +16,8 @@ interface tests {
 }
 
 const Progress = ({ user }: { user: User }) => {
+    const [points, setPoints] = useState<string[]>([]);
+
     return (
         <section className={styles.progress}>
             <h4>Dashboard Progress</h4>
