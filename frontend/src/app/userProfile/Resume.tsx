@@ -43,58 +43,58 @@ interface Experience {
 
 interface ResumeProps {
     user: User;
-    removeEducation: (index: number) => void;
-    removeExperience: (index: number) => void;
-    updateNestedChanges : (
-        index: number,
-        section: "experience" | "education"
-    ) => void;
+    // removeEducation: (index: number) => void;
+    // removeExperience: (index: number) => void;
+    // updateNestedChanges : (
+    //     index: number,
+    //     section: "experience" | "education"
+    // ) => void;
 }
 
-const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: ResumeProps) => {
-    useEffect(() => {
-        if (!user) return; // Prevent running if user is not defined
-
-        const allJobNamesAreEmpty = user.experience?.every((job) => job.jobName === "") ?? true;
-        const allCourseNamesAreEmpty = user.education?.every((course) => course.courseName === "") ?? true;
-
-        if (typeof window !== 'undefined') {
-            const educationElement = document.getElementById('educationSection');
-            const skillElement = document.getElementById('skillSection');
-            const experienceElement = document.getElementById('experienceSection');
-            const summaryElement = document.getElementById('summarySection');
-
-            user.experience?.forEach((job, index) => {
-                if (!job.jobName) {
-                    updateNestedChanges(index, "experience");
-                }
-            });
-
-            if (allJobNamesAreEmpty && experienceElement) {
-                experienceElement.style.display = 'none';
-            }
-
-            user.education?.forEach((course, index) => {
-                if (!course.courseName) {
-                    updateNestedChanges(index, "education");
-                }
-            });
-
-            if (allCourseNamesAreEmpty && educationElement) {
-                educationElement.style.display = 'none';
-            }
-
-            if (!user.skills?.length && skillElement) {
-                skillElement.style.display = 'none';
-            }
-
-            if (!user.cvSummary?.length && summaryElement) {
-                summaryElement.style.display = 'none';
-            }
-
-            console.log(user.experience);
-        }
-    }, [user?.cvSummary?.length, user?.skills?.length, user?.education?.length, user?.experience?.length]);
+const Resume = ({user}: ResumeProps) => {
+    // useEffect(() => {
+    //     if (!user) return; // Prevent running if user is not defined
+    //
+    //     const allJobNamesAreEmpty = user.experience?.every((job) => job.jobName === "") ?? true;
+    //     const allCourseNamesAreEmpty = user.education?.every((course) => course.courseName === "") ?? true;
+    //
+    //     if (typeof window !== 'undefined') {
+    //         const educationElement = document.getElementById('educationSection');
+    //         const skillElement = document.getElementById('skillSection');
+    //         const experienceElement = document.getElementById('experienceSection');
+    //         const summaryElement = document.getElementById('summarySection');
+    //
+    //         user.experience?.forEach((job, index) => {
+    //             if (!job.jobName) {
+    //                 updateNestedChanges(index, "experience");
+    //             }
+    //         });
+    //
+    //         if (allJobNamesAreEmpty && experienceElement) {
+    //             experienceElement.style.display = 'none';
+    //         }
+    //
+    //         user.education?.forEach((course, index) => {
+    //             if (!course.courseName) {
+    //                 updateNestedChanges(index, "education");
+    //             }
+    //         });
+    //
+    //         if (allCourseNamesAreEmpty && educationElement) {
+    //             educationElement.style.display = 'none';
+    //         }
+    //
+    //         if (!user.skills?.length && skillElement) {
+    //             skillElement.style.display = 'none';
+    //         }
+    //
+    //         if (!user.cvSummary?.length && summaryElement) {
+    //             summaryElement.style.display = 'none';
+    //         }
+    //
+    //         console.log(user.experience);
+    //     }
+    // }, [user?.cvSummary?.length, user?.skills?.length, user?.education?.length, user?.experience?.length]);
 
     return (
         <section className={styles.cvSection} onClick={() => {
