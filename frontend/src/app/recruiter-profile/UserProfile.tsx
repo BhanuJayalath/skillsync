@@ -19,8 +19,8 @@ interface UserDetails {
   country: string;
   contact: string;
   language: string;
-  github: string;
-  linkedin: string;
+  gitHub: string;
+  linkedIn: string;
   cvSummary: string;
   selectedJob: SelectedJob;
   skills: string[];
@@ -70,8 +70,8 @@ export default function UserProfile({
           country: response.data.user.country,
           contact: response.data.user.contact,
           language: response.data.user.language,
-          github: response.data.user.github,
-          linkedin: response.data.user.linkedin,
+          gitHub: response.data.user.gitHub,
+          linkedIn: response.data.user.linkedIn,
           cvSummary: response.data.user.cvSummary,
           selectedJob: response.data.user.selectedJob,
           skills: response.data.user.skills,
@@ -173,10 +173,38 @@ export default function UserProfile({
               <h1>{userDetails.fullName}</h1>
             </div>
             <div id={styles.userProfileContent}>
-              <h1>{userDetails.email}</h1>
-              <h1>{userDetails.github}</h1>
-              <h1>{userDetails.linkedin}</h1>
-              <h1>{userDetails.contact}</h1>
+              <a href={`mailto:${userDetails.email}`}>
+                <Image
+                  alt="email-icon"
+                  width={25}
+                  height={25}
+                  src="/recruiter/email-icon.svg"
+                />
+              </a>
+              <a href={userDetails.linkedIn}>
+                <Image
+                  alt="linkedin-icon"
+                  width={25}
+                  height={25}
+                  src="/recruiter/linkedin-icon.svg"
+                />
+              </a>
+              <a href={userDetails.gitHub}>
+                <Image
+                  alt="github-icon"
+                  width={25}
+                  height={25}
+                  src="/recruiter/github-icon.svg"
+                />
+              </a>
+              <a href={`tel:${userDetails.contact}`}>
+                <Image
+                  alt="call-icon"
+                  width={28}
+                  height={28}
+                  src="/recruiter/call-icon.svg"
+                />
+              </a>
             </div>
             <div id={styles.userProfileContent}>
               <h1>{userDetails.city}</h1>
@@ -187,7 +215,7 @@ export default function UserProfile({
               <h1>{userDetails.cvSummary}</h1>
             </div>
             <div id={styles.userProfileContent}>
-              <label>Set as selected</label>
+              <label>Set Candidate as Selected</label>
               <input
                 type="checkbox"
                 checked={checkBoxValue}

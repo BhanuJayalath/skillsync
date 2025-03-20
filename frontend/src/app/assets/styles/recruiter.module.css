@@ -615,6 +615,9 @@
   gap: 20px;
   height: auto;
 }
+#userProfileContent input{
+  width: 20px;
+}
 .userProfile header {
   width: 100%;
   height: auto;
@@ -679,3 +682,5 @@
   gap:20px;
   background-color: #c0d6e6;
 }
+
+

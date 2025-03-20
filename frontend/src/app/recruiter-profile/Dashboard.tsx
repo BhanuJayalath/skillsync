@@ -136,7 +136,7 @@ export default function Dashboard({
         </div>
       </div>
       <div id={styles.results}>
-        <h1>Results</h1>
+        <h1>Candidate's Ranks</h1>
         <div id={styles.dashboardDisplayContainer}>
           {bestPerformed.map((item: any, index: number) => {
             return (
