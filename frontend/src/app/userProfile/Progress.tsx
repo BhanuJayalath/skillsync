@@ -20,7 +20,16 @@ const Progress = ({ user }: { user: User }) => {
     const totalWidth = 200;
     const minGap = 20;
     const gap = Math.max(minGap, totalWidth / user.tests.length);
+    useEffect(() => {
+        // Calculate points for each test
+        const pointsArray = user.tests.map((test, index) => {
+            // Calculate the point for the current test
+            return `${20 + index * gap},${test.mark}`;
+        });
 
+        // Update the points state
+        setPoints(pointsArray);
+    }, [gap]);
     return (
         <section className={styles.progress}>
             <h4>Dashboard Progress</h4>
