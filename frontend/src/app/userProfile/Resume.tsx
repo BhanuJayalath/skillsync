@@ -148,6 +148,18 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
                     ))}
                 </ul>
             </div>
+            <div id="assessmentSection" className={styles.assessment}>
+                <h2 className={styles.sectionTitle}>Assessments</h2>
+                <ul className={styles.assessmentList}>
+                    {user.tests.map((test, index) => (
+                        <li key={index} className={styles.assessmentItem}>
+                            <div id={`assessment${index}`} className={styles.degree}>
+                                <p className={styles.assessmentDetails}>{test.testId}: {test.mark}%</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <div id="skillSection" className={styles.skills}>
                 <h2 className={styles.sectionTitle}>Skills</h2>
                 <ul className={styles.skillList}>
