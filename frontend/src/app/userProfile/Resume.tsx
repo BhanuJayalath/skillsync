@@ -1,5 +1,5 @@
 import styles from "@/app/userProfile/user.module.css";
-import React, {useEffect} from "react";
+import React from "react";
 
 interface User {
     fullName: string;
