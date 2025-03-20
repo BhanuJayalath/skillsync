@@ -4,7 +4,7 @@ import React, { useEffect, useState, type ChangeEvent } from "react";
 import Image from "next/image";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { Search, Briefcase, Loader2 } from "lucide-react";
+import { Search, Briefcase, Database, Loader2 } from "lucide-react";
 import JobCard from "./jobcard";
 
 const DEEPSEEK_API_URL = "https://openrouter.ai/api/v1/chat/completions";
@@ -138,7 +138,7 @@ Output the result as a JSON array, where each object has the following fields: i
         {/* Jobs Section - Database */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
           <div className="flex items-center mb-8">
-            <Briefcase className="text-primary mr-2" size={24} />
+            <Database className="text-primary mr-2" size={24} />
             <h2 className="text-2xl font-bold text-gray-800">Recommended Jobs - SkillSync</h2>
           </div>
           {dbJobs.length > 0 ? (
