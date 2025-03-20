@@ -39,7 +39,7 @@ export async function PATCH(request: NextRequest) {
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { $set: { message: updates.message } }, // Overwrite the message array
+      { $set: { notifications: updates.notifications } }, // Overwrite the message array
       { new: true, runValidators: true }
     ).select("-password");
 

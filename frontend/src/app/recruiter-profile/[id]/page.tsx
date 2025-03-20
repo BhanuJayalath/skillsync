@@ -84,6 +84,7 @@ export default function RecruiterProfile() {
               <UserProfile
                 userId={userId}
                 jobId={jobId}
+                recruiterDetails={recruiterDetails}
                 setUserProfile={setUserProfile}
                 setDashboardTab={setDashboardTab}
               />

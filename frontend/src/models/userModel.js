@@ -70,7 +70,7 @@ const userSchema = new mongoose.Schema({
   experience: [experienceSchema],
   education: [educationSchema],
   skills: [{ type: String }],
-  message: [{ type: Object }],
+  notifications: [{ type: Object }],
 });
 
 // Create and export the model

@@ -5,46 +5,55 @@ import Progress from "../userProfile/Progress";
 import Overview from "../userProfile/Overview";
 import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
+import UserProfileTab from "./UserProfileTab";
+interface SelectedJob {
+  jobTitle: string;
+  jobId: string;
+}
+
+interface UserDetails {
+  fullName: string;
+  email: string;
+  avatar: string;
+  city: string;
+  country: string;
+  contact: string;
+  language: string;
+  github: string;
+  linkedin: string;
+  cvSummary: string;
+  selectedJob: SelectedJob;
+  skills: string[];
+  tests: string[];
+  education: string[];
+  experience: string[];
+}
 
 export default function UserProfile({
   userId,
   setUserProfile,
   setDashboardTab,
   jobId,
+  recruiterDetails,
 }: {
   userId: string;
   setUserProfile: any;
   setDashboardTab: any;
   jobId: any;
+  recruiterDetails: any;
 }) {
-  const [userDetails, setUserDetails] = useState({
-    fullName: "",
-    email: "",
-    avatar: "",
-    city: "",
-    country: "",
-    contact: "",
-    language: "",
-    github: "",
-    linkedin: "",
-    cvSummary: "",
-  });
+  const [userDetails, setUserDetails] = useState<UserDetails>();
   const [jobDetails, setJobDetails] = useState({
     jobId: "",
     jobTitle: "",
     jobType: "",
+    companyName: "",
+    companyEmail: "",
     recruiterNote: "",
     isSelected: false,
     approved: false,
   });
   const [checkBoxValue, setCheckBoxValue] = useState<boolean>(false);
-  const [progress, setProgress] = useState({
-    selectedJob: {
-      jobTitle: "",
-      jobId: "",
-    },
-    tests: [{ jobId: "", testId: "", testLevel: "", mark: "" }],
-  });
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_USER_DETAILS}`, {
@@ -64,15 +73,18 @@ export default function UserProfile({
           github: response.data.user.github,
           linkedin: response.data.user.linkedin,
           cvSummary: response.data.user.cvSummary,
+          selectedJob: response.data.user.selectedJob,
+          skills: response.data.user.skills,
+          tests: response.data.user.tests,
+          education: response.data.user.education,
+          experience: response.data.user.experience,
         };
         const progressData = {
           selectedJob: response.data.user.selectedJob,
           tests: response.data.user.tests,
         };
-        console.log(progressData);
         setUserDetails(userData);
-        setProgress(progressData);
-        if (response.data.user.message[0].isSelected) {
+        if (response.data.user.notifications[0].isSelected) {
           setCheckBoxValue(true);
         }
       })
@@ -87,6 +99,8 @@ export default function UserProfile({
           jobId: response.data.jobId,
           jobTitle: response.data.jobTitle,
           jobType: response.data.jobType,
+          companyName: recruiterDetails.company,
+          companyEmail: recruiterDetails.email,
           recruiterNote: "Congratulations! You've been selected for the job!",
           isSelected: true,
           approved: false,
@@ -98,12 +112,12 @@ export default function UserProfile({
       });
   }, []);
 
-  function Messages() {
+  function Notifications() {
     if (!checkBoxValue) {
       axios
         .patch(
           "/api/users/controller",
-          { message: [jobDetails] },
+          { notifications: [jobDetails] },
           {
             headers: { "Content-Type": "application/json", "user-id": userId },
           }
@@ -119,7 +133,7 @@ export default function UserProfile({
       axios
         .patch(
           "/api/users/controller",
-          { message: [] },
+          { notifications: [] },
           {
             headers: { "Content-Type": "application/json", "user-id": userId },
           }
@@ -152,36 +166,38 @@ export default function UserProfile({
         </button>
       </header>
       <section className={styles.userProfileSection}>
-        <section className={styles.userProfileContainer}>
-          <div id={styles.userProfileHeading}>
-            {userDetails.avatar ? <img src={userDetails?.avatar} /> : null}
-            <h1>{userDetails.fullName}</h1>
-          </div>
-          <div id={styles.userProfileContent}>
-            <h1>{userDetails.email}</h1>
-            <h1>{userDetails.github}</h1>
-            <h1>{userDetails.linkedin}</h1>
-            <h1>{userDetails.contact}</h1>
-          </div>
-          <div id={styles.userProfileContent}>
-            <h1>{userDetails.city}</h1>
-            <h1>{userDetails.country}</h1>
-            <h1>{userDetails.language}</h1>
-          </div>
-          <div id={styles.userProfileContent}>
-            <h1>{userDetails.cvSummary}</h1>
-          </div>
-          <div id={styles.userProfileContent}>
-            <label>Set as selected</label>
-            <input
-              type="checkbox"
-              checked={checkBoxValue}
-              onChange={Messages}
-            ></input>
-          </div>
-        </section>
+        {userDetails ? (
+          <section className={styles.userProfileContainer}>
+            <div id={styles.userProfileHeading}>
+              {userDetails.avatar ? <img src={userDetails?.avatar} /> : null}
+              <h1>{userDetails.fullName}</h1>
+            </div>
+            <div id={styles.userProfileContent}>
+              <h1>{userDetails.email}</h1>
+              <h1>{userDetails.github}</h1>
+              <h1>{userDetails.linkedin}</h1>
+              <h1>{userDetails.contact}</h1>
+            </div>
+            <div id={styles.userProfileContent}>
+              <h1>{userDetails.city}</h1>
+              <h1>{userDetails.country}</h1>
+              <h1>{userDetails.language}</h1>
+            </div>
+            <div id={styles.userProfileContent}>
+              <h1>{userDetails.cvSummary}</h1>
+            </div>
+            <div id={styles.userProfileContent}>
+              <label>Set as selected</label>
+              <input
+                type="checkbox"
+                checked={checkBoxValue}
+                onChange={Notifications}
+              ></input>
+            </div>
+          </section>
+        ) : null}
         <section id={styles.performance}>
-          {progress ? <Progress user={progress} /> : null}
+          {userDetails ? <UserProfileTab userDetails={userDetails} /> : null}
         </section>
       </section>
     </section>

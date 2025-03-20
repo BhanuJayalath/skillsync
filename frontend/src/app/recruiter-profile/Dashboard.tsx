@@ -20,7 +20,7 @@ export default function Dashboard({
   const [jobs, setJobs] = useState([]);
   const [tests, setTests] = useState([]);
   const [bestPerformed, setBestPerformed] = useState([]);
-  // const [onLoad, setOnLoad] = useState(false);
+  const [onLoad, setOnLoad] = useState(false);
   const [users, setUsers] = useState([]);
   useEffect(() => {
     axios
@@ -74,18 +74,20 @@ export default function Dashboard({
   }
 
   function performance(testId: string) {
-    // console.log(onLoad);
+    console.log(testId);
     const tempMarkArray: any = [];
     users.map((item: any) => {
       if (item.tests.length > 0) {
         const test = item.tests.find((item: any) => item.testId == testId);
-        tempMarkArray.push({
-          userId: item._id,
-          userName: item.userName,
-          avatar: item.avatar ? item.avatar : null,
-          testId: test.testId,
-          mark: test.mark,
-        });
+        if (test) {
+          tempMarkArray.push({
+            userId: item._id,
+            userName: item.userName,
+            avatar: item.avatar ? item.avatar : null,
+            testId: test.testId,
+            mark: test.mark,
+          });
+        }
       }
     });
     const sortedMarkArray = tempMarkArray.sort(
