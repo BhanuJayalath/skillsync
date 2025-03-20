@@ -258,6 +258,16 @@ import JobContent from '@/app/recruiter-profile/JobContent';
             const reDirectUrl = process.env.NEXT_PUBLIC_LOGIN_PAGE_URL;
             router.push(`${reDirectUrl}`);
         }
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                notificationRef.current &&
+                !notificationRef.current.contains(event.target as Node)
+            ) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [activeTab, id]);
 
      const logout = async () => {
@@ -276,19 +286,6 @@ import JobContent from '@/app/recruiter-profile/JobContent';
              setIsOpen(!isOpen);
          }
      };
-
-     useEffect(() => {
-         const handleClickOutside = (event: MouseEvent) => {
-             if (
-                 notificationRef.current &&
-                 !notificationRef.current.contains(event.target as Node)
-             ) {
-                 setIsOpen(false);
-             }
-         };
-         document.addEventListener("mousedown", handleClickOutside);
-         return () => document.removeEventListener("mousedown", handleClickOutside);
-     }, []);
 
     return (
         <><Suspense fallback={<div>Loading...</div>}>
@@ -414,9 +411,7 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                                     <ul>
                                                         {user.notifications.filter(item => item.isSelected).map((notification, index) => (
                                                             <li key={index}>
-                                                                <p>{notification.jobTitle}</p>
-                                                                <p>{notification.jobType}</p>
-                                                                <p>{notification.recruiterNote}</p>
+                                                                <p>{notification.recruiterNote} <br/> {notification.jobTitle} <br/> {notification.jobType}</p>
                                                             </li>
                                                         ))}
                                                     </ul>
