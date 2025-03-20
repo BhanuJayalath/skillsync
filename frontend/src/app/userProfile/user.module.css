@@ -512,13 +512,13 @@
 
 .experience,
 .education,
-.skills {
+.skills,.assessment {
     margin-top: 25px;
 }
 
 .experience,
 .education,
-.skills p {
+.skills,.assessment p {
     margin-top: 25px;
     text-align: justify;
 }
@@ -548,7 +548,7 @@
 }
 
 .companyName,
-.schoolName {
+.schoolName,.assessmentItem {
     font-size: 1.1rem;
     color: #555;
 }
