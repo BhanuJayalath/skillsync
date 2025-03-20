@@ -54,6 +54,12 @@ const Progress = ({ user }: { user: User }) => {
                             strokeWidth="0.4"
                             points="270,-3 275,0 270,3"
                         />
+                        <polyline
+                            fill="none"
+                            stroke="black"
+                            strokeWidth="0.5"
+                            points={points.join(' ')}
+                        />
 
                     </g>
                     <text x="-12" y="0" fontSize="7" fill="black">100</text>
