@@ -82,6 +82,8 @@ const Progress = ({ user }: { user: User }) => {
                 <ul className={styles.testsList}>
                     {user.tests.map((test, index) => (
                         <li key={index} className={styles.testItem}
+                            onMouseEnter={() => setHoveredIndex(index)} // Track hovered item
+
                         >
                             <span className={styles.testCode}>{test.testId}:</span>
                             <span className={styles.testName}> {test.testLevel} </span>
