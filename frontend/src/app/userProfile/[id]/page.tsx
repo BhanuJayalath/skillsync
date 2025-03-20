@@ -22,7 +22,7 @@ interface SelectedJob {
     jobTitle: string;
     jobId:string;
 }
-interface tests {
+interface Tests {
     testId: string;
     testLevel: string;
     mark: string;
@@ -64,7 +64,7 @@ interface User {
     language: string;
     city: string;
     country: string;
-    tests: tests[];
+    tests: Tests[];
     selectedJob: SelectedJob;
     experience: Experience[];
     education: Education[];
