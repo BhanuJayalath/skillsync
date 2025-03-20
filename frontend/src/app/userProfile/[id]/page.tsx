@@ -79,10 +79,12 @@ interface User {
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
     const [messageIndex, setMessageIndex] = useState<number | null>(null);
-     const [showMessage, setShowMessage] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
     const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
      const [user, setUser] = useState<User | null>(null);
+     const filteredNotifications = user?.notifications.filter(item =>
+         item.isSelected && !item.approved) ?? [];
 
     // Education Handlers
     const addEducation = (
@@ -222,6 +224,7 @@ interface User {
                         country: user.country,
                         experience: user.experience,
                         education: user.education,
+                        notifications: user.notifications,
                     }),
                 });
 
@@ -268,6 +271,7 @@ interface User {
             const reDirectUrl = process.env.NEXT_PUBLIC_LOGIN_PAGE_URL;
             router.push(`${reDirectUrl}`);
         }
+
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 notificationRef.current &&
@@ -291,11 +295,9 @@ interface User {
          }
      };
 
-     const togglePopup = () => {
-         if(user && user.notifications.length>0){
-             setIsOpen(!isOpen);
-         }
-     };
+
+
+
 
     return (
         <><Suspense fallback={<div>Loading...</div>}>
@@ -396,7 +398,7 @@ interface User {
                                         </div>
                                         <div className={styles.notificationWrapper} ref={notificationRef}>
                                             <div className={styles.notificationContainer} onClick={togglePopup}>
-                                                {user && user.notifications?.length > 0 ? (
+                                                {filteredNotifications.length > 0 ? (
                                                     <div>
                                                         <Image
                                                             src={"/user/notificationBellRing.svg"}
@@ -406,7 +408,7 @@ interface User {
                                                             className={styles.notificationIcon}
                                                         />
                                                         <span className={styles.notificationCount}>
-                                                {user?.notifications?.length}
+                                                {filteredNotifications.length}
                                             </span>
                                                     </div>
                                                 ) : (
@@ -421,13 +423,14 @@ interface User {
                                             </div>
 
                                             {isOpen && (
-                                                <div className={styles.notificationPopup}>
+                                                <div id={"notificationContent"} className={styles.notificationPopup}>
                                                     <ul>
-                                                        {user?.notifications.filter(item => item.isSelected).map((notification, index) => (
+                                                        {user?.notifications.filter(item => item.isSelected && !item.approved).map((notification, index) => (
                                                             <li key={index}>
                                                                 {messageIndex === index && showMessage === true ? (
                                                                     <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType}</p>) : (
                                                                     <p onClick={() => {setMessageIndex(index); setShowMessage(true);}}>{notification.recruiterNote}</p>)}
+
                                                             </li>
                                                         ))}
                                                     </ul>
