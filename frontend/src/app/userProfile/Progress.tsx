@@ -67,6 +67,7 @@ const Progress = ({ user }: { user: User }) => {
                                     cx={20 + index * gap}
                                     cy={test.mark}
                                     r={2}
+                                    fill={hoveredIndex === index ? 'red' : 'blue'}
                                 />
                             )
                         )}
