@@ -15,10 +15,62 @@ import COURSE from '@/app/courses/page';
 import axios from "axios";
 import {toast} from "react-hot-toast";
 import Assessment from '@/app/test/page';
-import Careers from '@/app/job-recommendations/page';
-import JobContent from '@/app/recruiter-profile/JobContent';
+import Employment from '@/app/job-recommendations/page';
 
+interface SelectedJob {
+    jobTitle: string;
+    jobId:string;
+}
+interface Tests {
+    testId: string;
+    testLevel: string;
+    mark: string;
+}
+interface Experience {
+    jobName: string;
+    companyName: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}
+interface Education {
+    courseName: string;
+    schoolName: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}
+interface Notification {
+    jobId:string;
+    jobTitle:string;
+    jobType:string;
+    recruiterNote:string;
+    isSelected:boolean;
+    approved:boolean;
+}
+interface User {
+    _id: string;
+    email: string;
+    contact: string;
+    userName: string;
+    gitHub: string;
+    portfolio: string;
+    linkedIn: string;
+    fullName: string;
+    cvSummary: string;
+    avatar: string;
+    gender: string;
+    language: string;
+    city: string;
+    country: string;
+    tests: Tests[];
+    selectedJob: SelectedJob;
+    experience: Experience[];
+    education: Education[];
+    notifications: Notification[];
+    skills: string[];
 
+}
  function UserProfile() {
      const { id } = useParams();
      const router = useRouter();
@@ -26,147 +78,47 @@ import JobContent from '@/app/recruiter-profile/JobContent';
     const [activeTab, setActiveTab] = useState(0);
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const [messageIndex, setMessageIndex] = useState<number | null>(null);
+    const [showMessage, setShowMessage] = useState(false);
     const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
-    const [user, setUser] = useState({
-        _id:'',
-        email: '',   // User's email address
-        contact: '', // number
-        userName: '',  // User's display name
-        gitHub: '',
-        portfolio:'',
-        linkedIn: '',
-        fullName: '', // User's full name
-        cvSummary: '',
-        avatar: '',  //profile picture
-        gender: '',  // User's gender
-        language: '',     //language
-        city: '',    //city
-        country: '', //country
-        tests: [
-            {testId: '', testLevel: '', mark: ''},
-            {testId: '', testLevel: '', mark: ''},
-            {testId: '', testLevel: '', mark: ''},
-        ],
-        selectedJob: {
-            jobTitle: '',
-            jobId:'',
-        },
-        notifications:[
-            {
-                jobId:'',
-                jobTitle:'',
-                jobType:'',
-                recruiterNote:'',
-                isSelected:false,
-                approved:false,
-            },
-        ],
-        experience: [
-            {
-                jobName: '',
-                companyName: '',
-                startDate: '',
-                endDate: '',
-                description: '',
-            },
-        ],
-        education: [
-            {
-                courseName: '',
-                schoolName: '',
-                startDate: '',
-                endDate: '',
-                description: '',
-            },
-        ],
-        skills: ['']
-    });
+     const [user, setUser] = useState<User | null>(null);
+     const filteredNotifications = user?.notifications.filter(item =>
+         item.isSelected && !item.approved) ?? [];
 
     // Education Handlers
     const addEducation = (
         e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setUser(prevState => ({
+        setUser(prevState => prevState?{
             ...prevState,
-            education: [...prevState.education, { courseName: '', schoolName: '', startDate: '', endDate: '', description: '' }]
-        }));
+            education: [...prevState?.education, { courseName: '', schoolName: '', startDate: '', endDate: '', description: '' }]
+        }:null);
     };
     // Experience Handlers
     const addExperience = (
         e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setUser(prevState => ({
+        setUser(prevState =>prevState?{
             ...prevState,
             experience: [...prevState.experience, { jobName: '', companyName: '', startDate: '', endDate: '', description: '' }]
-        }));
-    };
-    const removeEducation = (index: number) => {
-        const updatedEducation = [...user.education];
-        updatedEducation.splice(index, 1);
-
-        setUser(prevState => ({
-            ...prevState,
-            education: updatedEducation
-        }));
-    };
-    const removeExperience = (index: number) => {
-        const updatedExperience = [...user.experience];
-        updatedExperience.splice(index, 1);
-
-        setUser(prevState => ({
-            ...prevState,
-            experience: updatedExperience
-        }));
+        }:null);
     };
     // Change handler
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, field: string
     ) => {
-        setUser((prev) => ({
+        setUser((prev) => prev? {
             ...prev,
             [field]: e.target.value
-        }));
-    };
-    const updateNestedChanges = (
-        index: number,
-        section: "experience" | "education"
-    ) => {
-        setUser((prev) => {
-            // Clone the section array
-            const updatedSection = [...prev[section]];
-
-            // For the specific index, update the item to keep only jobName or courseName
-            if (section === "experience") {
-                updatedSection[index] = {
-                    jobName: '',
-                    companyName: '', // Set to empty or default value
-                    startDate: '', // Set to empty or default value
-                    endDate: '', // Set to empty or default value
-                    description: '' // Set to empty or default value
-                };
-            } else if (section === "education") {
-                updatedSection[index] = {
-                    courseName: '',
-                    schoolName: '', // Set to empty or default value
-                    startDate: '', // Set to empty or default value
-                    endDate: '', // Set to empty or default value
-                    description: '' // Set to empty or default value
-                };
-            }
-
-            // Return the new state with the updated section
-            return {
-                ...prev,
-                [section]: updatedSection, // Update the specific section
-            };
-        });
+        } : null);
     };
     const handleFields = (
         value: string,
         field:string
     ) => {
-        setUser((prev) => {
+        setUser(prev => {
+            if (!prev) return null;
             console.log("Updating:", field, "with", value);
             return {
                 ...prev,
@@ -174,66 +126,68 @@ import JobContent from '@/app/recruiter-profile/JobContent';
             };
         });
     };
-    // Update nested fields (experience, education)
-    const handleNestedChange = (
-        index: number,
-        field: string,
-        value: string,
-        section: "experience" | "education"
-    ) => {
-        setUser((prev) => ({
-            ...prev,
-            [section]: prev[section].map((item, i) =>
-                i === index ? {...item, [field]: value} : item
-            ),
-        }));
-    };
+     // Update nested fields (experience, education)
+     const handleNestedChange = (
+         index: number,
+         field: string,
+         value: string,
+         section: "experience" | "education"
+     ) => {
+         setUser(prev => prev? {
+             ...prev,
+             [section]: prev[section].map((item, i) =>
+                 i === index ? {...item, [field]: value} : item
+             ),
+         } : null);
+     };
     const handleSubmit = async () => {
         const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
-        user.experience = user.experience.filter(item => item.jobName);
-        user.education = user.education.filter(item => item.courseName);
-        try {
-            const response = await fetch(`${updateUserUrl}/${id}`, {
-                method: "PATCH",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    contact: user.contact,
-                    fullName: user.fullName,
-                    cvSummary: user.cvSummary,
-                    avatar:user.avatar,
-                    gitHub: user.gitHub,
-                    linkedIn: user.linkedIn,
-                    gender: user.gender,
-                    language: user.language,
-                    selectedJob:{
-                        jobTitle: 'Full-stack Developer ',
-                        jobId:'',
-                    },
-                    city: user.city,
-                    country: user.country,
-                    experience: user.experience,
-                    education: user.education,
-                }),
-            });
+        if (user) {
+            user.experience = user.experience.filter(item => item.jobName);
+            user.education = user.education.filter(item => item.courseName);
 
-            if (!response.ok) {
-                console.log("Failed to update user data!");
-            } else {
-                console.log("User general data updated!");
+            try {
+                const response = await fetch(`${updateUserUrl}/${id}`, {
+                    method: "PATCH",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        contact: user.contact,
+                        fullName: user.fullName,
+                        cvSummary: user.cvSummary,
+                        avatar:user.avatar,
+                        gitHub: user.gitHub,
+                        linkedIn: user.linkedIn,
+                        gender: user.gender,
+                        language: user.language,
+                        selectedJob:{
+                            jobTitle: 'Full-stack Developer ',
+                            jobId:'',
+                        },
+                        city: user.city,
+                        country: user.country,
+                        experience: user.experience,
+                        education: user.education,
+                        notifications: user.notifications,
+                    }),
+                });
+
+                if (!response.ok) {
+                    console.log("Failed to update user data!");
+                } else {
+                    console.log("User general data updated!");
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
-        } catch (error) {
-            console.error("Error:", error);
         }
     }
 
-     useEffect(() => {
-         // Simulate loading for 1.5 seconds
-         setTimeout(() => {
-             setLoading(false); // Set loading to false after 1.5 seconds
-         }, 1500);
-     }, []);
-
     useEffect(() => {
+        // Simulate loading for 1.5 seconds
+        setTimeout(() => {
+            setLoading(false); // Set loading to false after 1.5 seconds
+        }, 1500);
+
         if(id){
             const fetchUserDetails = async () => {
                 const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
@@ -260,6 +214,17 @@ import JobContent from '@/app/recruiter-profile/JobContent';
             const reDirectUrl = process.env.NEXT_PUBLIC_LOGIN_PAGE_URL;
             router.push(`${reDirectUrl}`);
         }
+
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                notificationRef.current &&
+                !notificationRef.current.contains(event.target as Node)
+            ) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [activeTab, id]);
 
      const logout = async () => {
@@ -274,23 +239,23 @@ import JobContent from '@/app/recruiter-profile/JobContent';
      };
 
      const togglePopup = () => {
-         if(user.notifications.length>0){
+         if(user && filteredNotifications.length>0){
              setIsOpen(!isOpen);
          }
      };
 
-     useEffect(() => {
-         const handleClickOutside = (event: MouseEvent) => {
-             if (
-                 notificationRef.current &&
-                 !notificationRef.current.contains(event.target as Node)
-             ) {
-                 setIsOpen(false);
-             }
-         };
-         document.addEventListener("mousedown", handleClickOutside);
-         return () => document.removeEventListener("mousedown", handleClickOutside);
-     }, []);
+     const handleApprove = async (index:number) => {
+         if(user){
+                user.notifications[index].approved = true;
+                setUser({...user});
+                await handleSubmit();
+         }
+         const filteredNotifications = user?.notifications.filter(item =>
+             item.isSelected && !item.approved) ?? [];
+         if(filteredNotifications.length == 0){
+             setIsOpen(false);
+         }
+     };
 
     return (
         <><Suspense fallback={<div>Loading...</div>}>
@@ -305,62 +270,66 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                         <nav className={styles.nav}>
                             <ul>
                                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                                <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
-                                                       width={40} height={40} className={styles.navImage}/> Home</a>
+                                <li><a href="/">
+                                    <div className={styles.navTab}>
+                                        <Image src={"/user/homeIcon.svg"} alt="homeIcon"
+                                               width={40} height={40}
+                                               className={styles.navImage}/> Home </div>
+                                </a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(0)}
                                     className={activeTab === 0 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
-                                                    width={40} height={40} className={styles.navImage}/> Overview </a>
+                                ><div className={styles.navTab}><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
+                                                    width={40} height={40} className={styles.navImage}/> Overview </div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(1)}
                                     className={activeTab === 1 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
-                                                    width={40} height={40} className={styles.navImage}/> Progress </a>
+                                ><div className={styles.navTab}><Image src={"/user/progressIcon.svg"} alt="progressIcon"
+                                                    width={40} height={40} className={styles.navImage}/> Progress </div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(2)}
                                     className={activeTab === 2 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
-                                                    width={50} height={40} className={styles.navImage}/> Courses </a>
+                                ><div className={styles.navTab}><Image src={"/user/courseIcon.svg"} alt="courseIcon"
+                                                    width={50} height={40} className={styles.navImage}/> Courses </div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(3)}
                                     className={activeTab === 3 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Resume</a></li>
+                                ><div className={styles.navTab}><Image src={"/user/cvIcon.svg"} alt="cvIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Resume</div></li>
                                 <li
                                     onClick={() => setActiveTab(4)}
                                     className={activeTab === 4 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/mockInterview.svg"} alt="mockInterviewIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</a>
+                                ><div className={styles.navTab}><Image src={"/user/mockInterview.svg"} alt="mockInterviewIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(5)}
                                     className={activeTab === 5 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/assessments.svg"} alt="assessmentsIcon"
+                                ><div className={styles.navTab}><Image src={"/user/assessments.svg"} alt="assessmentsIcon"
                                                     width={30} height={40} className={styles.navImage}/> Assessments
-                                </a>
+                                </div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(6)}
                                     className={activeTab === 6 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/Careers.svg"} alt="CareersIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Employment </a>
+                                ><div className={styles.navTab}><Image src={"/user/Careers.svg"} alt="CareersIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Employment </div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(7)}
                                     className={activeTab === 7 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Settings </a>
+                                ><div className={styles.navTab}><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Settings </div>
                                 </li>
                                 <li
                                     onClick={logout}
                                     className={activeTab === 8 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/logOut.svg"} alt="logOutIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Log Out </a>
+                                ><div className={styles.navTab}><Image src={"/user/logOut.svg"} alt="logOutIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Log Out </div>
                                 </li>
                             </ul>
                         </nav>
@@ -383,11 +352,11 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                 <div>
                                     <header className={styles.header}>
                                         <div className={styles.searchContainer}>
-                                            <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
+                                            <div className={styles.welcomeMessage}>Welcome, {user?.userName}</div>
                                         </div>
                                         <div className={styles.notificationWrapper} ref={notificationRef}>
                                             <div className={styles.notificationContainer} onClick={togglePopup}>
-                                                {user.notifications?.length > 0 ? (
+                                                {filteredNotifications.length > 0 ? (
                                                     <div>
                                                         <Image
                                                             src={"/user/notificationBellRing.svg"}
@@ -397,7 +366,7 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                                             className={styles.notificationIcon}
                                                         />
                                                         <span className={styles.notificationCount}>
-                                                {user.notifications?.length}
+                                                {filteredNotifications.length}
                                             </span>
                                                     </div>
                                                 ) : (
@@ -412,13 +381,14 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                             </div>
 
                                             {isOpen && (
-                                                <div className={styles.notificationPopup}>
+                                                <div id={"notificationContent"} className={styles.notificationPopup}>
                                                     <ul>
-                                                        {user.notifications.filter(item => item.isSelected).map((notification, index) => (
+                                                        {user?.notifications.filter(item => item.isSelected && !item.approved).map((notification, index) => (
                                                             <li key={index}>
-                                                                <p>{notification.jobTitle}</p>
-                                                                <p>{notification.jobType}</p>
-                                                                <p>{notification.recruiterNote}</p>
+                                                                {messageIndex === index && showMessage === true ? (
+                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType}</p>) : (
+                                                                    <p onClick={() => {setMessageIndex(index); setShowMessage(true);}}>{notification.recruiterNote}</p>)}
+                                                                <button onClick={()=> handleApprove(index)}>Approve</button>
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -428,17 +398,19 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                     </header>
                                     <div className={styles.contentWrapper}>
                                         <section className={styles.tabsSection}>
-                                            {activeTab === 0 && <Overview user={user}/>}
-                                            {activeTab === 1 && <Progress user={user}/>}
-                                            {activeTab === 2 && <COURSE/>}
-                                            {activeTab === 3 && <Resume
-                                                user={user} removeEducation={removeEducation}
-                                                removeExperience={removeExperience}
-                                                updateNestedChanges={updateNestedChanges}/>}
-                                            {activeTab === 4 && <MockInterview/>}.
-                                            {activeTab === 5 && <Assessment/>}
-                                            {/*{activeTab === 6 && <Careers user={user}/>}*/}
-                                            {activeTab === 7 && <Settings
+                                            {activeTab === 0 && user && <Overview user={user}/>}
+                                            {activeTab === 1 && user && <Progress user={user}/>}
+                                            {activeTab === 2 && user && <COURSE/>}
+                                            {activeTab === 3 && user && <Resume
+                                                user={user}
+                                                // removeEducation={removeEducation}
+                                                // removeExperience={removeExperience}
+                                                // updateNestedChanges={updateNestedChanges}
+                                            />}
+                                            {activeTab === 4 && user && <MockInterview/>}.
+                                            {activeTab === 5 && user && <Assessment/>}
+                                            {activeTab === 6 && user && <Employment/>}
+                                            {activeTab === 7 && user && <Settings
                                                 user={user}
                                                 handleSubmit={handleSubmit}
                                                 handleChange={handleChange}
