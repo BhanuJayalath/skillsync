@@ -33,7 +33,6 @@ interface User {
 
 const Careers = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [user, setUser] = useState<User | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [skills, setSkills] = useState<string[]>([]);
