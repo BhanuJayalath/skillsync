@@ -34,7 +34,13 @@ interface Experience {
     endDate: string;
     description: string;
 }
-
+interface Education {
+    courseName: string;
+    schoolName: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}
 
 
  function UserProfile() {
