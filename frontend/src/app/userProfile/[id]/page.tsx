@@ -104,28 +104,6 @@ interface User {
             experience: [...prevState.experience, { jobName: '', companyName: '', startDate: '', endDate: '', description: '' }]
         }:null);
     };
-    const removeEducation = (index: number) => {
-        if (user){
-            const updatedEducation = [...user.education];
-            updatedEducation.splice(index, 1);
-
-            setUser(prevState => prevState?{
-                ...prevState,
-                education: updatedEducation
-            }:null);
-        }
-    };
-    const removeExperience = (index: number) => {
-        if(user){
-            const updatedExperience = [...user.experience];
-            updatedExperience.splice(index, 1);
-
-            setUser(prevState => prevState?{
-                ...prevState,
-                experience: updatedExperience
-            } : null);
-        }
-    };
     // Change handler
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, field: string
