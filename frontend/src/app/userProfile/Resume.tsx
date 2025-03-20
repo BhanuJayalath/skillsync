@@ -43,12 +43,6 @@ interface Experience {
 
 interface ResumeProps {
     user: User;
-    // removeEducation: (index: number) => void;
-    // removeExperience: (index: number) => void;
-    // updateNestedChanges : (
-    //     index: number,
-    //     section: "experience" | "education"
-    // ) => void;
 }
 
 const Resume = ({user}: ResumeProps) => {
