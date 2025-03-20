@@ -301,7 +301,15 @@ interface User {
          }
      };
 
+     const handleApprove = (index:number) => {
+         if(user){
+                user.notifications[index].approved = true;
+                setUser({...user});
+                console.log(user);
+                handleSubmit();
+         }
 
+     };
 
     return (
         <><Suspense fallback={<div>Loading...</div>}>
