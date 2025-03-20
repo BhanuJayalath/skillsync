@@ -31,9 +31,10 @@ interface User {
 
 
 
-const Careers = ({ user }: { user: User }) => {
+const Careers = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [user, setUser] = useState<User | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [skills, setSkills] = useState<string[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -44,39 +45,51 @@ const Careers = ({ user }: { user: User }) => {
   const [filterType, setFilterType] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
+
+
   // Initialize component with user data if available
   useEffect(() => {
 
    
-    // Check if user prop is provided (when component is used inside UserProfile)
-    if (user && user._id) {
-      setUserId(user._id);
-      if (user.skills && user.skills.length > 0) {
-        setSkills(user.skills);
-        fetchJobRecommendations(user.skills);
-      } else {
-        setLoading(false);
-      }
-
-    } else {
-     
-      // Standalone page - get user ID from URL
-      const userIdFromUrl = searchParams.get("user_id");
-      if (!userIdFromUrl) {
-        setNotLoggedIn(true);
-        setLoading(false);
-        return;
-      }
-      
-      setUserId(userIdFromUrl);
-      fetchUserDetails(userIdFromUrl);
-    }
+    
   }, [user]);
 
   // Apply filters whenever jobs, filterType, or searchTerm changes
   useEffect(() => {
     applyFilters();
   }, [jobs, filterType, searchTerm]);
+
+  
+useEffect(() => {
+// Check if user prop is provided (when component is used inside UserProfile)
+if (user && user._id) {
+  setUserId(user._id);
+  if (user.skills && user.skills.length > 0) {
+    setSkills(user.skills);
+    fetchJobRecommendations(user.skills);
+  } else {
+    setLoading(false);
+  }
+
+} else {
+ 
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("/api/users/me")
+      if (response.data && response.data.user && response.data.user._id) {
+        setUserId(response.data.user._id)
+        fetchUserDetails(response.data.user._id);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error)
+    }
+  }
+
+  fetchUserData()
+  
+  
+ 
+}
 
   async function fetchUserDetails(userId: string) {
     try {
@@ -86,10 +99,9 @@ const Careers = ({ user }: { user: User }) => {
       );
 
       if (response.data && response.data.skills) {
-        setSkills(response.data.skills);
+        setUser(response.data.skills);
         fetchJobRecommendations(response.data.skills);
       } else {
-        setSkills([]);
         setLoading(false);
       }
     } catch (err) {
@@ -99,7 +111,7 @@ const Careers = ({ user }: { user: User }) => {
       setLoading(false);
     }
   }
-
+  
   async function fetchJobRecommendations(userSkills: string[]) {
     if (userSkills.length === 0) {
       setLoading(false);
@@ -137,6 +149,9 @@ const Careers = ({ user }: { user: User }) => {
       setLoading(false);
     }
   }
+}, [userId]);
+
+  
 
   const selectJob = async (job: Job) => {
     if (!userId) return;
@@ -199,10 +214,10 @@ const Careers = ({ user }: { user: User }) => {
   };
 
   // Refresh job recommendations
-  const refreshJobs = () => {
-    fetchJobRecommendations(skills);
-    toast.success("Refreshing job recommendations");
-  };
+  //const refreshJobs = () => {
+   // fetchJobRecommendations(skills);
+    //toast.success("Refreshing job recommendations");
+  //};
 
   if (notLoggedIn) {
     return (
@@ -257,9 +272,9 @@ const Careers = ({ user }: { user: User }) => {
               <option value="remote">Remote</option>
             </select>
             
-            <button onClick={refreshJobs} className="refresh-button">
-              Refresh Jobs
-            </button>
+            {/*<button onClick={refreshJobs} className="refresh-button">/*}
+              {/*Refresh Jobs*/}
+            {/*</button>*/}
           </div>
         )}
       </div>

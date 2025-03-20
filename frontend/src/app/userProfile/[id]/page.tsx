@@ -409,7 +409,7 @@ interface User {
                                             />}
                                             {activeTab === 4 && user && <MockInterview/>}.
                                             {activeTab === 5 && user && <Assessment/>}
-                                            {activeTab === 6 && user && <Employment user={user}/>}
+                                            {activeTab === 6 && user && <Employment/>}
                                             {activeTab === 7 && user && <Settings
                                                 user={user}
                                                 handleSubmit={handleSubmit}
