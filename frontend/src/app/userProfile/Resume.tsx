@@ -12,6 +12,7 @@ interface User {
     skills: string[];
     education: Education[];
     experience: Experience[];
+    tests: Tests[];
 }
 
 interface Education {
