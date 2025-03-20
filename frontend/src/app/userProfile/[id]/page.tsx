@@ -413,7 +413,9 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                                     <ul>
                                                         {user.notifications.filter(item => item.isSelected).map((notification, index) => (
                                                             <li key={index}>
-
+                                                                {messageIndex === index && showMessage === true ? (
+                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType}</p>) : (
+                                                                    <p onClick={() => {setMessageIndex(index); setShowMessage(true);}}>{notification.recruiterNote}</p>)}
                                                             </li>
                                                         ))}
                                                     </ul>
