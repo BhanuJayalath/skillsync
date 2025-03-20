@@ -19,6 +19,11 @@ import Careers from '@/app/job-recommendations/page';
 import JobContent from '@/app/recruiter-profile/JobContent';
 
 
+
+
+
+
+
  function UserProfile() {
      const { id } = useParams();
      const router = useRouter();
@@ -30,111 +35,63 @@ import JobContent from '@/app/recruiter-profile/JobContent';
      const [showMessage, setShowMessage] = useState(false);
     const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
-    const [user, setUser] = useState({
-        _id:'',
-        email: '',   // User's email address
-        contact: '', // number
-        userName: '',  // User's display name
-        gitHub: '',
-        portfolio:'',
-        linkedIn: '',
-        fullName: '', // User's full name
-        cvSummary: '',
-        avatar: '',  //profile picture
-        gender: '',  // User's gender
-        language: '',     //language
-        city: '',    //city
-        country: '', //country
-        tests: [
-            {testId: '', testLevel: '', mark: ''},
-            {testId: '', testLevel: '', mark: ''},
-            {testId: '', testLevel: '', mark: ''},
-        ],
-        selectedJob: {
-            jobTitle: '',
-            jobId:'',
-        },
-        notifications:[
-            {
-                jobId:'',
-                jobTitle:'',
-                jobType:'',
-                recruiterNote:'',
-                isSelected:false,
-                approved:false,
-            },
-        ],
-        experience: [
-            {
-                jobName: '',
-                companyName: '',
-                startDate: '',
-                endDate: '',
-                description: '',
-            },
-        ],
-        education: [
-            {
-                courseName: '',
-                schoolName: '',
-                startDate: '',
-                endDate: '',
-                description: '',
-            },
-        ],
-        skills: ['']
-    });
+     const [user, setUser] = useState<User | null>(null);
 
     // Education Handlers
     const addEducation = (
         e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setUser(prevState => ({
+        setUser(prevState => prevState?{
             ...prevState,
-            education: [...prevState.education, { courseName: '', schoolName: '', startDate: '', endDate: '', description: '' }]
-        }));
+            education: [...prevState?.education, { courseName: '', schoolName: '', startDate: '', endDate: '', description: '' }]
+        }:null);
     };
     // Experience Handlers
     const addExperience = (
         e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setUser(prevState => ({
+        setUser(prevState =>prevState?{
             ...prevState,
             experience: [...prevState.experience, { jobName: '', companyName: '', startDate: '', endDate: '', description: '' }]
-        }));
+        }:null);
     };
     const removeEducation = (index: number) => {
-        const updatedEducation = [...user.education];
-        updatedEducation.splice(index, 1);
+        if (user){
+            const updatedEducation = [...user.education];
+            updatedEducation.splice(index, 1);
 
-        setUser(prevState => ({
-            ...prevState,
-            education: updatedEducation
-        }));
+            setUser(prevState => prevState?{
+                ...prevState,
+                education: updatedEducation
+            }:null);
+        }
     };
     const removeExperience = (index: number) => {
-        const updatedExperience = [...user.experience];
-        updatedExperience.splice(index, 1);
+        if(user){
+            const updatedExperience = [...user.experience];
+            updatedExperience.splice(index, 1);
 
-        setUser(prevState => ({
-            ...prevState,
-            experience: updatedExperience
-        }));
+            setUser(prevState => prevState?{
+                ...prevState,
+                experience: updatedExperience
+            } : null);
+        }
     };
     // Change handler
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, field: string
     ) => {
-        setUser((prev) => ({
+        setUser((prev) => prev? {
             ...prev,
             [field]: e.target.value
-        }));
+        } : null);
     };
     const updateNestedChanges = (
         index: number,
         section: "experience" | "education"
     ) => {
         setUser((prev) => {
+            if (!prev) return null;
             // Clone the section array
             const updatedSection = [...prev[section]];
 
@@ -168,7 +125,8 @@ import JobContent from '@/app/recruiter-profile/JobContent';
         value: string,
         field:string
     ) => {
-        setUser((prev) => {
+        setUser(prev => {
+            if (!prev) return null;
             console.log("Updating:", field, "with", value);
             return {
                 ...prev,
@@ -176,55 +134,58 @@ import JobContent from '@/app/recruiter-profile/JobContent';
             };
         });
     };
-    // Update nested fields (experience, education)
-    const handleNestedChange = (
-        index: number,
-        field: string,
-        value: string,
-        section: "experience" | "education"
-    ) => {
-        setUser((prev) => ({
-            ...prev,
-            [section]: prev[section].map((item, i) =>
-                i === index ? {...item, [field]: value} : item
-            ),
-        }));
-    };
+     // Update nested fields (experience, education)
+     const handleNestedChange = (
+         index: number,
+         field: string,
+         value: string,
+         section: "experience" | "education"
+     ) => {
+         setUser(prev => prev? {
+             ...prev,
+             [section]: prev[section].map((item, i) =>
+                 i === index ? {...item, [field]: value} : item
+             ),
+         } : null);
+     };
     const handleSubmit = async () => {
         const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
-        user.experience = user.experience.filter(item => item.jobName);
-        user.education = user.education.filter(item => item.courseName);
-        try {
-            const response = await fetch(`${updateUserUrl}/${id}`, {
-                method: "PATCH",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    contact: user.contact,
-                    fullName: user.fullName,
-                    cvSummary: user.cvSummary,
-                    avatar:user.avatar,
-                    gitHub: user.gitHub,
-                    linkedIn: user.linkedIn,
-                    gender: user.gender,
-                    language: user.language,
-                    selectedJob:{
-                        jobTitle: 'Full-stack Developer ',
-                        jobId:'',
-                    },
-                    city: user.city,
-                    country: user.country,
-                    experience: user.experience,
-                    education: user.education,
-                }),
-            });
+        if (user) {
+            user.experience = user.experience.filter(item => item.jobName);
+            user.education = user.education.filter(item => item.courseName);
 
-            if (!response.ok) {
-                console.log("Failed to update user data!");
-            } else {
-                console.log("User general data updated!");
+            try {
+                const response = await fetch(`${updateUserUrl}/${id}`, {
+                    method: "PATCH",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        contact: user.contact,
+                        fullName: user.fullName,
+                        cvSummary: user.cvSummary,
+                        avatar:user.avatar,
+                        gitHub: user.gitHub,
+                        linkedIn: user.linkedIn,
+                        gender: user.gender,
+                        language: user.language,
+                        selectedJob:{
+                            jobTitle: 'Full-stack Developer ',
+                            jobId:'',
+                        },
+                        city: user.city,
+                        country: user.country,
+                        experience: user.experience,
+                        education: user.education,
+                    }),
+                });
+
+                if (!response.ok) {
+                    console.log("Failed to update user data!");
+                } else {
+                    console.log("User general data updated!");
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
-        } catch (error) {
-            console.error("Error:", error);
         }
     }
 
@@ -284,7 +245,7 @@ import JobContent from '@/app/recruiter-profile/JobContent';
      };
 
      const togglePopup = () => {
-         if(user.notifications.length>0){
+         if(user && user.notifications.length>0){
              setIsOpen(!isOpen);
          }
      };
@@ -380,11 +341,11 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                 <div>
                                     <header className={styles.header}>
                                         <div className={styles.searchContainer}>
-                                            <div className={styles.welcomeMessage}>Welcome, {user.userName}</div>
+                                            <div className={styles.welcomeMessage}>Welcome, {user?.userName}</div>
                                         </div>
                                         <div className={styles.notificationWrapper} ref={notificationRef}>
                                             <div className={styles.notificationContainer} onClick={togglePopup}>
-                                                {user.notifications?.length > 0 ? (
+                                                {user && user.notifications?.length > 0 ? (
                                                     <div>
                                                         <Image
                                                             src={"/user/notificationBellRing.svg"}
@@ -394,7 +355,7 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                                             className={styles.notificationIcon}
                                                         />
                                                         <span className={styles.notificationCount}>
-                                                {user.notifications?.length}
+                                                {user?.notifications?.length}
                                             </span>
                                                     </div>
                                                 ) : (
@@ -411,7 +372,7 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                             {isOpen && (
                                                 <div className={styles.notificationPopup}>
                                                     <ul>
-                                                        {user.notifications.filter(item => item.isSelected).map((notification, index) => (
+                                                        {user?.notifications.filter(item => item.isSelected).map((notification, index) => (
                                                             <li key={index}>
                                                                 {messageIndex === index && showMessage === true ? (
                                                                     <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType}</p>) : (
@@ -425,17 +386,17 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                     </header>
                                     <div className={styles.contentWrapper}>
                                         <section className={styles.tabsSection}>
-                                            {activeTab === 0 && <Overview user={user}/>}
-                                            {activeTab === 1 && <Progress user={user}/>}
-                                            {activeTab === 2 && <COURSE/>}
-                                            {activeTab === 3 && <Resume
+                                            {activeTab === 0 && user && <Overview user={user}/>}
+                                            {activeTab === 1 && user && <Progress user={user}/>}
+                                            {activeTab === 2 && user && <COURSE/>}
+                                            {activeTab === 3 && user && <Resume
                                                 user={user} removeEducation={removeEducation}
                                                 removeExperience={removeExperience}
                                                 updateNestedChanges={updateNestedChanges}/>}
-                                            {activeTab === 4 && <MockInterview/>}.
-                                            {activeTab === 5 && <Assessment/>}
-                                            {/*{activeTab === 6 && <Careers user={user}/>}*/}
-                                            {activeTab === 7 && <Settings
+                                            {activeTab === 4 && user && <MockInterview/>}.
+                                            {activeTab === 5 && user && <Assessment/>}
+                                            {/*{activeTab === 6 && user && <Careers user={user}/>}*/}
+                                            {activeTab === 7 && user && <Settings
                                                 user={user}
                                                 handleSubmit={handleSubmit}
                                                 handleChange={handleChange}
