@@ -1,5 +1,5 @@
 import styles from "@/app/userProfile/user.module.css";
-import React, {useEffect, useState, useRef} from "react";
+import React, {useEffect, useState} from "react";
 
 interface User {
     selectedJob: selectedJob;
