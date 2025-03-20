@@ -305,7 +305,6 @@ interface User {
          if(user){
                 user.notifications[index].approved = true;
                 setUser({...user});
-                console.log(user);
                 handleSubmit();
          }
          const filteredNotifications = user?.notifications.filter(item =>
