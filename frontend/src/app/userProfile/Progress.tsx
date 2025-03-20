@@ -19,6 +19,7 @@ const Progress = ({ user }: { user: User }) => {
     const [points, setPoints] = useState<string[]>([]);
     const totalWidth = 200;
     const minGap = 20;
+    const gap = Math.max(minGap, totalWidth / user.tests.length);
 
     return (
         <section className={styles.progress}>
