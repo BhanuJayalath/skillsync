@@ -26,6 +26,7 @@ import JobContent from '@/app/recruiter-profile/JobContent';
     const [activeTab, setActiveTab] = useState(0);
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+    const [messageIndex, setMessageIndex] = useState<number | null>(null);
     const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
     const [user, setUser] = useState({
@@ -411,7 +412,7 @@ import JobContent from '@/app/recruiter-profile/JobContent';
                                                     <ul>
                                                         {user.notifications.filter(item => item.isSelected).map((notification, index) => (
                                                             <li key={index}>
-                                                                <p>{notification.recruiterNote} <br/> {notification.jobTitle} <br/> {notification.jobType}</p>
+
                                                             </li>
                                                         ))}
                                                     </ul>
