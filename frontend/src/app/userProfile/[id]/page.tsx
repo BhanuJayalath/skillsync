@@ -310,62 +310,66 @@ interface User {
                         <nav className={styles.nav}>
                             <ul>
                                 {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                                <li><a href="/"><Image src={"/user/homeIcon.svg"} alt="homeIcon"
-                                                       width={40} height={40} className={styles.navImage}/> Home</a>
+                                <li><a href="/">
+                                    <div className={styles.navTab}>
+                                        <Image src={"/user/homeIcon.svg"} alt="homeIcon"
+                                               width={40} height={40}
+                                               className={styles.navImage}/> Home </div>
+                                </a>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(0)}
                                     className={activeTab === 0 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
-                                                    width={40} height={40} className={styles.navImage}/> Overview </a>
+                                ><div className={styles.navTab}><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
+                                                    width={40} height={40} className={styles.navImage}/> Overview </div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(1)}
                                     className={activeTab === 1 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/progressIcon.svg"} alt="progressIcon"
-                                                    width={40} height={40} className={styles.navImage}/> Progress </a>
+                                ><div className={styles.navTab}><Image src={"/user/progressIcon.svg"} alt="progressIcon"
+                                                    width={40} height={40} className={styles.navImage}/> Progress </div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(2)}
                                     className={activeTab === 2 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/courseIcon.svg"} alt="courseIcon"
-                                                    width={50} height={40} className={styles.navImage}/> Courses </a>
+                                ><div className={styles.navTab}><Image src={"/user/courseIcon.svg"} alt="courseIcon"
+                                                    width={50} height={40} className={styles.navImage}/> Courses </div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(3)}
                                     className={activeTab === 3 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/cvIcon.svg"} alt="cvIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Resume</a></li>
+                                ><div className={styles.navTab}><Image src={"/user/cvIcon.svg"} alt="cvIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Resume</div></li>
                                 <li
                                     onClick={() => setActiveTab(4)}
                                     className={activeTab === 4 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/mockInterview.svg"} alt="mockInterviewIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</a>
+                                ><div className={styles.navTab}><Image src={"/user/mockInterview.svg"} alt="mockInterviewIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(5)}
                                     className={activeTab === 5 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/assessments.svg"} alt="assessmentsIcon"
+                                ><div className={styles.navTab}><Image src={"/user/assessments.svg"} alt="assessmentsIcon"
                                                     width={30} height={40} className={styles.navImage}/> Assessments
-                                </a>
+                                </div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(6)}
                                     className={activeTab === 6 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/Careers.svg"} alt="CareersIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Employment </a>
+                                ><div className={styles.navTab}><Image src={"/user/Careers.svg"} alt="CareersIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Employment </div>
                                 </li>
                                 <li
                                     onClick={() => setActiveTab(7)}
                                     className={activeTab === 7 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Settings </a>
+                                ><div className={styles.navTab}><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Settings </div>
                                 </li>
                                 <li
                                     onClick={logout}
                                     className={activeTab === 8 ? styles.activeLink : ''}
-                                ><a href="#"><Image src={"/user/logOut.svg"} alt="logOutIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Log Out </a>
+                                ><div className={styles.navTab}><Image src={"/user/logOut.svg"} alt="logOutIcon"
+                                                    width={30} height={40} className={styles.navImage}/> Log Out </div>
                                 </li>
                             </ul>
                         </nav>
