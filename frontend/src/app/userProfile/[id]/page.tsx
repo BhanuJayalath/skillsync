@@ -113,41 +113,6 @@ interface User {
             [field]: e.target.value
         } : null);
     };
-    const updateNestedChanges = (
-        index: number,
-        section: "experience" | "education"
-    ) => {
-        setUser((prev) => {
-            if (!prev) return null;
-            // Clone the section array
-            const updatedSection = [...prev[section]];
-
-            // For the specific index, update the item to keep only jobName or courseName
-            if (section === "experience") {
-                updatedSection[index] = {
-                    jobName: '',
-                    companyName: '', // Set to empty or default value
-                    startDate: '', // Set to empty or default value
-                    endDate: '', // Set to empty or default value
-                    description: '' // Set to empty or default value
-                };
-            } else if (section === "education") {
-                updatedSection[index] = {
-                    courseName: '',
-                    schoolName: '', // Set to empty or default value
-                    startDate: '', // Set to empty or default value
-                    endDate: '', // Set to empty or default value
-                    description: '' // Set to empty or default value
-                };
-            }
-
-            // Return the new state with the updated section
-            return {
-                ...prev,
-                [section]: updatedSection, // Update the specific section
-            };
-        });
-    };
     const handleFields = (
         value: string,
         field:string
