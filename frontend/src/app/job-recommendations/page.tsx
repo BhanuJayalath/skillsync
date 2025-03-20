@@ -17,12 +17,23 @@ interface Job {
   location?: string;
 }
 
-interface User {
-  _id: string;
-  skills?: string[];
+interface SelectedJob {
+  jobTitle: string;
+  jobId:string;
 }
 
-const Careers = ({ user }: { user: User }) => {
+interface User {
+  _id: string;
+  selectedJob: SelectedJob;
+  skills: string[];
+
+}
+
+interface JobRecommendProps {
+  user: User;
+}
+
+const Careers = ({ user}: JobRecommendProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [userId, setUserId] = useState<string | null>(null);
@@ -101,7 +112,7 @@ const Careers = ({ user }: { user: User }) => {
     setError(null);
 
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs/recommendJob`,
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/jobs/recommendJob`,
         { skills: userSkills },
         { headers: { "Content-Type": "application/json" } }
       );
