@@ -49,7 +49,29 @@ interface Notification {
     isSelected:boolean;
     approved:boolean;
 }
+interface User {
+    _id: string;
+    email: string;
+    contact: string;
+    userName: string;
+    gitHub: string;
+    portfolio: string;
+    linkedIn: string;
+    fullName: string;
+    cvSummary: string;
+    avatar: string;
+    gender: string;
+    language: string;
+    city: string;
+    country: string;
+    tests: tests[];
+    selectedJob: SelectedJob;
+    experience: Experience[];
+    education: Education[];
+    notifications: Notification[];
+    skills: string[];
 
+}
  function UserProfile() {
      const { id } = useParams();
      const router = useRouter();
