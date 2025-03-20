@@ -18,7 +18,10 @@ import Assessment from '@/app/test/page';
 import Careers from '@/app/job-recommendations/page';
 import JobContent from '@/app/recruiter-profile/JobContent';
 
-
+interface SelectedJob {
+    jobTitle: string;
+    jobId:string;
+}
 
 
 
