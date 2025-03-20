@@ -1,5 +1,5 @@
 import styles from "@/app/userProfile/user.module.css";
-import React from "react";
+import React, {useEffect, useState, useRef} from "react";
 
 interface User {
     selectedJob: selectedJob;
@@ -16,6 +16,20 @@ interface tests {
 }
 
 const Progress = ({ user }: { user: User }) => {
+    const [points, setPoints] = useState<string[]>([]);
+    const totalWidth = 200;
+    const minGap = 20;
+    const gap = Math.max(minGap, totalWidth / user.tests.length);
+    useEffect(() => {
+        // Calculate points for each test
+        const pointsArray = user.tests.map((test, index) => {
+            // Calculate the point for the current test
+            return `${20 + index * gap},${test.mark}`;
+        });
+
+        // Update the points state
+        setPoints(pointsArray);
+    }, [gap]);
     return (
         <section className={styles.progress}>
             <h4>Dashboard Progress</h4>
@@ -40,31 +54,36 @@ const Progress = ({ user }: { user: User }) => {
                             strokeWidth="0.4"
                             points="270,-3 275,0 270,3"
                         />
+                        <polyline
+                            fill="none"
+                            stroke="black"
+                            strokeWidth="0.5"
+                            points={points.join(' ')}
+                        />
                         {user.tests.map((test, index) => (
-                            <rect
-                                key={index}
-                                x={20 + index * 80}
-                                y="1"
-                                width="60"
-                                height={test.mark}
-                                fill="#007bff"
-                            />
-
-                        ))}
+                                <circle
+                                    key={index}
+                                    cx={20 + index * gap}
+                                    cy={test.mark}
+                                    r={2}
+                                    fill="blue"
+                                />
+                            )
+                        )}
                     </g>
                     <text x="-12" y="0" fontSize="7" fill="black">100</text>
                     <text x="-11" y="50" fontSize="7" fill="black">50</text>
                     <text x="-10" y="100" fontSize="7" fill="black">0</text>
                 </svg>
             </div>
-            <div className={styles.courses}>
-                <h4 className={styles.coursesTitle}>{user.selectedJob.jobTitle}</h4>
-                <ul className={styles.courseList}>
+            <div className={styles.tests}>
+                <h4 className={styles.testTitle}>{user.selectedJob.jobTitle}</h4>
+                <ul className={styles.testsList}>
                     {user.tests.map((test, index) => (
-                        <li key={index} className={styles.courseItem}>
-                            <span className={styles.courseCode}>{test.testId}:</span>
-                            <span className={styles.courseName}> {test.testLevel} Test</span> -
-                            <span className={styles.courseResult}> {test.mark}%</span>
+                        <li key={index} className={styles.testItem}>
+                            <span className={styles.testCode}>{test.testId}:</span>
+                            <span className={styles.testName}> {test.testLevel} </span>
+                            <span className={styles.testResult}> {test.mark}%</span>
                         </li>
                     ))}
                 </ul>
