@@ -17,6 +17,7 @@ interface tests {
 
 const Progress = ({ user }: { user: User }) => {
     const [points, setPoints] = useState<string[]>([]);
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const totalWidth = 200;
     const minGap = 20;
     const gap = Math.max(minGap, totalWidth / user.tests.length);
@@ -66,7 +67,6 @@ const Progress = ({ user }: { user: User }) => {
                                     cx={20 + index * gap}
                                     cy={test.mark}
                                     r={2}
-                                    fill="blue"
                                 />
                             )
                         )}
@@ -80,7 +80,8 @@ const Progress = ({ user }: { user: User }) => {
                 <h4 className={styles.testTitle}>{user.selectedJob.jobTitle}</h4>
                 <ul className={styles.testsList}>
                     {user.tests.map((test, index) => (
-                        <li key={index} className={styles.testItem}>
+                        <li key={index} className={styles.testItem}
+                        >
                             <span className={styles.testCode}>{test.testId}:</span>
                             <span className={styles.testName}> {test.testLevel} </span>
                             <span className={styles.testResult}> {test.mark}%</span>
