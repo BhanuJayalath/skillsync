@@ -308,7 +308,11 @@ interface User {
                 console.log(user);
                 handleSubmit();
          }
-
+         const filteredNotifications = user?.notifications.filter(item =>
+             item.isSelected && !item.approved) ?? [];
+         if(filteredNotifications.length == 0){
+             setIsOpen(false);
+         }
      };
 
     return (
