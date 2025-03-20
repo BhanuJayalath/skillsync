@@ -70,7 +70,10 @@
     margin: 0; /* Reset default margin */
 }
 
-.nav a {
+.nav a{
+    text-decoration: none;
+}
+.navTab {
     text-decoration: none;
     color: #ffffff;
     display: flex;
@@ -80,7 +83,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
 }
 
-.nav a:hover {
+.navTab:hover {
     background-color: rgba(255, 255, 255, 0.1); /* Lighter background on hover */
     transform: translateX(5px); /* Slightly move on hover */
 }
@@ -163,6 +166,20 @@
     width: 200px;
     padding: 10px;
     z-index: 999;  /* Ensure it's on top */
+}
+.notificationPopup button {
+    margin: 0;
+    background: #3498db; /* Refined blue */
+    color: white;
+    border: none;
+    padding: 0.2em 1em;
+    border-radius: 0.3em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.notificationPopup button:hover {
+    background-color: #2980b9; /* Darker shade on hover */
 }
 
 
@@ -291,6 +308,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: 1em;
+    min-width: 16em;
     padding: 0 1em; /* Add padding */
 }
 
@@ -311,6 +329,25 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.userSkillList{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+.userSkill{
+    margin: 1em;
+    padding: 0.75em;
+    max-width: 15em;
+    background: #e8e1e1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.4em;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Hover effect */
 }
 
 .overviewIcons {
@@ -350,66 +387,13 @@
     background-color: #2980b9; /* Darker shade on hover */
 }
 
-/* Courses Section */
-.courses {
-    display: flex;
-    flex-direction: column; /* Stack courses vertically */
-    border: 2px solid #ededed;
-    padding: 2em;
-    gap: 0.75em;
-    margin: 1em;
-}
-
-.coursesTitle {
-    font-size: 1.3em;
-    margin-bottom: 0.5em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid #ddd;
-}
-
-.courseList {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-}
-
-.courseItem {
-    margin: 1em;
-    padding: 0.75em;
-    max-width: 15em;
-    background: #f1f1f1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 0.4em;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Hover effect */
-}
-
-.courseItem:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-}
-
-.courseCode {
-    font-weight: bold;
-    color: #3498db; /* Refined blue */
-}
-
-.courseName {
-    font-style: italic;
-    color: #555;
-}
-
-.courseResult {
-    color: #27ae60;
-}
 
 /* Progress Section */
 .progress {
     background: #fff;
     padding: 1.5em;
+    margin: auto;
+    width: 45em;
     border-radius: 0.5em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -441,6 +425,62 @@
     font-size: 0.9em;
 }
 
+/* TestDetails Section */
+.tests {
+    display: flex;
+    flex-direction: column; /* Stack courses vertically */
+    border: 2px solid #ededed;
+    padding: 2em;
+    gap: 0.75em;
+    margin: 1em;
+}
+
+.testTitle {
+    font-size: 1.3em;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ddd;
+}
+
+.testsList {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.testItem {
+    margin: 1em;
+    padding: 0.75em;
+    max-width: 15em;
+    background: #f1f1f1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.4em;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Hover effect */
+}
+
+.testItem:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+}
+
+.testCode {
+    font-weight: bold;
+    color: #3498db; /* Refined blue */
+}
+
+.testName {
+    font-style: italic;
+    color: #555;
+}
+
+.testResult {
+    color: #27ae60;
+}
+
 /* CV Section */
 .cvSection {
     font-family: Arial, sans-serif;
@@ -448,6 +488,8 @@
     min-height:70.157489153699rem ;
     padding: 2cm;
     margin: 0 auto;
+    justify-content: center;
+    align-items: center;
     background: #ffffff;
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
     border: 1px solid #ccc;
@@ -463,7 +505,8 @@
 
 .contactInfo {
     text-align: center;
-    margin-bottom: 20px;
+    justify-content: center;
+    margin-bottom: 2em;
 }
 
 .name {
@@ -479,15 +522,22 @@
 }
 
 .contactDetails {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-top: 10px;
     color: #777;
 }
 
 .experience,
 .education,
-.skills {
+.skills,.assessment {
     margin-top: 25px;
+}
+
+.experience,
+.education,
+.skills,.assessment p {
+    margin-top: 25px;
+    text-align: justify;
 }
 
 .sectionTitle {
@@ -515,7 +565,7 @@
 }
 
 .companyName,
-.schoolName {
+.schoolName,.assessmentItem {
     font-size: 1.1rem;
     color: #555;
 }
@@ -529,11 +579,13 @@
 
 .skillList {
     list-style-type: disc;
-    padding-left: 20px;
+    padding-left: 2em;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .skillList li {
-    margin: 5px 0;
+    margin: 1.5em;
     color: #444;
 }
 
