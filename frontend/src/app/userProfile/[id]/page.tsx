@@ -41,7 +41,14 @@ interface Education {
     endDate: string;
     description: string;
 }
-
+interface Notification {
+    jobId:string;
+    jobTitle:string;
+    jobType:string;
+    recruiterNote:string;
+    isSelected:boolean;
+    approved:boolean;
+}
 
  function UserProfile() {
      const { id } = useParams();
