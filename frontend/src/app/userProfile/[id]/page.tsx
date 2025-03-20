@@ -244,11 +244,11 @@ interface User {
          }
      };
 
-     const handleApprove = (index:number) => {
+     const handleApprove = async (index:number) => {
          if(user){
                 user.notifications[index].approved = true;
                 setUser({...user});
-                handleSubmit();
+                await handleSubmit();
          }
          const filteredNotifications = user?.notifications.filter(item =>
              item.isSelected && !item.approved) ?? [];
