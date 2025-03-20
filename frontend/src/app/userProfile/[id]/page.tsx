@@ -27,6 +27,7 @@ import JobContent from '@/app/recruiter-profile/JobContent';
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
     const [messageIndex, setMessageIndex] = useState<number | null>(null);
+     const [showMessage, setShowMessage] = useState(false);
     const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
     const [user, setUser] = useState({
