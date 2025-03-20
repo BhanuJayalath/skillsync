@@ -6,3 +6,7 @@
 # ESLint and Prettier cache files
 /.eslintcache
 /.prettiercache
+
+#env
+.env
+.env.*

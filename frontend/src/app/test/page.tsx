@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import styles from "./test.module.css"
 
-// Update the Question interface to include correctAnswer (not optional anymore)
 interface Question {
   questionId: number
   question: string
@@ -12,51 +11,121 @@ interface Question {
   answer2: string
   answer3: string
   answer4: string
-  correctAnswer: number // Now required for scoring
+  correctAnswer: number
 }
 
 interface Test {
   testId: string
-  jobId: string
   testContent: {
     questionContent: Question[]
   }
 }
 
-export default function MCQTest() {
-
+const MCQTest = () => {
+  const [availableTests, setAvailableTests] = useState<{ testId: string; testLevel: string; jobId: string }[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [userId, setUserId] = useState<string>("")
+  const [jobId, setJobId] = useState<string>("")
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState<(number | null)[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [testStarted, setTestStarted] = useState(false)
   const [score, setScore] = useState({ correct: 0, total: 0 })
-  const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  const [testId, setTestId] = useState<string>("")
 
-  //fixed userId for now
-  const userId = "67d6f7375f356696386fd534";
-  const [testId, setTestId] = useState("Test1742022418151") // Fixed testId for now
-  const jobId = "Job1742022159253" // Fixed jobId for now
+  // Fetch user data from API 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("/api/users/me")
+        if (response.data && response.data.user && response.data.user._id) {
+          setUserId(response.data.user._id)
+          setJobId(response.data.user.selectedJob.jobId) 
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error)
+      }
+    }
+  
+    fetchUserData()
+  }, [])
 
   useEffect(() => {
-    // Fetch the test data from the backend
     const fetchTestData = async () => {
+      if (!testId) {
+        console.log("No testId available")
+        console.log("Available tests:", availableTests)
+        return
+      }
+  
+      console.log(`Fetching test data from: ${baseUrl}/tests/${testId}`)
+  
       try {
-        const response = await axios.get<Test>(`http://localhost:3001/tests/${testId}`)
+        const response = await axios.get<Test>(`${baseUrl}/tests/${testId}`)
         const test = response.data
-        setQuestions(test.testContent.questionContent)
-        setAnswers(Array(test.testContent.questionContent.length).fill(null))
-        setScore({ correct: 0, total: test.testContent.questionContent.length })
+  
+        if (test.testContent && test.testContent.questionContent) {
+          setQuestions(test.testContent.questionContent)
+          setAnswers(Array(test.testContent.questionContent.length).fill(null))
+          setScore({ correct: 0, total: test.testContent.questionContent.length })
+        } else {
+          console.log("Invalid test data structure:", test)
+        }
       } catch (error) {
         console.error("Error fetching test data:", error)
       }
     }
-
+  
     fetchTestData()
-  }, [testId])
+  }, [testId, baseUrl])
 
-  // Add this function to start the test
+  useEffect(() => {
+    if (!jobId) return
+
+    const fetchAvailableTests = async () => {
+      setIsLoading(true)
+      try {
+        const response = await axios.get(`${baseUrl}/tests/all-tests/${jobId}`)
+        console.log("Fetched available tests response:", response) // Log the entire response
+
+        if (!response.data) {
+          console.error("Empty response data")
+          setAvailableTests([])
+        } else if (Array.isArray(response.data)) {
+          const testsForJob = response.data.filter((test) => test.jobId === jobId)
+          setAvailableTests(testsForJob)
+
+          if (testsForJob.length > 0 && !testId) {
+            setTestId(testsForJob[0].testId)
+          }
+        } else if (response.data && typeof response.data === "object") {
+          // Handle the case where the response is a single object
+          const test = response.data
+          if (test.jobId === jobId) {
+            setAvailableTests([test])
+            if (!testId) {
+              setTestId(test.testId)
+            }
+          }
+        } else {
+          console.error("Unexpected response data format:", response.data)
+        }
+      } catch (error) {
+        console.error("Error fetching available tests:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchAvailableTests()
+  }, [jobId, baseUrl, testId])
+
   const startTest = () => {
+    setCurrentQuestionIndex(0)
+    setAnswers(Array(questions.length).fill(null))
+    setIsSubmitted(false)
     setTestStarted(true)
   }
 
@@ -78,85 +147,105 @@ export default function MCQTest() {
     }
   }
 
-/////////////////////////////////////
-
-  // Update the handleSubmit function to calculate the score
   const handleSubmit = async () => {
-    let correctCount = 0;
+    let correctCount = 0
 
     answers.forEach((answer, index) => {
-        if (answer === questions[index].correctAnswer) {
-            correctCount++;
-        }
-    });
+      if (answer === questions[index].correctAnswer) {
+        correctCount++
+      }
+    })
 
-    setScore({ correct: correctCount, total: questions.length });
-    setIsSubmitted(true);
+    const mark = (correctCount / questions.length) * 100
 
-    console.log("Submitted answers:", answers);
-    console.log("Score:", correctCount, "out of", questions.length);
+    setScore({ correct: correctCount, total: questions.length })
+    setIsSubmitted(true)
 
-    // Send data to backend
-    try {
-        const response = await fetch(`${updateUserUrl}/${userId}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                tests: [
-                    {
-                        testId,
-                        marks: correctCount,
-                    },
-                ],
-            }),
-        });
+    console.log("Submitted answers:", answers)
+    console.log("Score:", correctCount, "out of", questions.length)
+    console.log("Mark:", mark)
+
+    // Only submit if we have a userId
+    if (userId) {
+      try {
+        const response = await fetch(`${baseUrl}/updateUser/${userId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tests: [
+              {
+                testId,
+                mark,
+              },
+            ],
+          }),
+        })
 
         if (!response.ok) {
-            console.log("Failed to update user data!");
+          console.log("Failed to update user data!")
         } else {
-            console.log("User general data updated!");
+          console.log("User general data updated!")
         }
-    } catch (error) {
-        console.error("Error submitting test results:", error);
+      } catch (error) {
+        console.error("Error submitting test results:", error)
+      }
+    } else {
+      console.error("Cannot submit test results: userId is not available")
     }
-};
-  
+  }
 
   const allQuestionsAnswered = answers.every((answer) => answer !== null)
   const progressPercentage = (answers.filter((a) => a !== null).length / questions.length) * 100
 
-  // Modify the return statement to conditionally render welcome screen or test
   return (
     <div className={styles.container}>
       <div className={styles.testCard}>
         {!testStarted ? (
           <div className={styles.welcomeContainer}>
             <h1 className={styles.welcomeTitle}>Welcome to the MCQ Test</h1>
-            <div className={styles.welcomeContent}>
-              <p>
-                This test consists of {questions.length} multiple choice questions. You can navigate between questions
-                using the Previous and Next buttons.
-              </p>
-              <p>Once you've answered all questions, a Submit button will appear allowing you to complete the test.</p>
-            </div>
 
-            <div className={styles.termsContainer}>
-              <h3 className={styles.termsTitle}>Terms and Conditions</h3>
-              <div className={styles.termsContent}>
-                <p>By proceeding with this test, you agree to the following terms:</p>
-                <ol>
-                  <li>You will complete the test to the best of your ability.</li>
-                  <li>Your answers will be recorded for evaluation purposes.</li>
-                  <li>You will not use external resources to answer the questions.</li>
-                  <li>The test must be completed in a single session.</li>
-                  <li>Your results may be shared with relevant stakeholders.</li>
-                </ol>
+            {isLoading ? (
+              <div className={styles.loadingContainer}>
+                <p>Loading available tests...</p>
               </div>
-            </div>
+            ) : availableTests.length === 0 ? (
+              <div className={styles.noTestsContainer}>
+                <p>No tests available for this job.</p>
+              </div>
+            ) : (
+              <>
+                <div className={styles.testSelectionContainer}>
+                  <h2 className={styles.selectionTitle}>Select a Test Level</h2>
+                  <div className={styles.testLevelGrid}>
+                    {availableTests.map((test) => (
+                      <div
+                        key={test.testId}
+                        className={`${styles.testLevelCard} ${testId === test.testId ? styles.selectedTest : ""}`}
+                        onClick={() => setTestId(test.testId)}
+                      >
+                        <h3>{test.testLevel}</h3>
+                        <p>Test ID: {test.testId}</p>
+                        {testId === test.testId && <div className={styles.selectedIndicator}>Selected</div>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-            <button className={`${styles.navButton} ${styles.startButton}`} onClick={startTest}>
-              I Accept the Terms & Start Test
-            </button>
+                <div className={styles.welcomeContent}>
+                  <p>
+                    This test consists of {questions.length} multiple choice questions. You can navigate between
+                    questions using the Previous and Next buttons.
+                  </p>
+                  <p>
+                    Once you've answered all questions, a Submit button will appear allowing you to complete the test.
+                  </p>
+                </div>
+
+                <button className={`${styles.navButton} ${styles.startButton}`} onClick={startTest} disabled={!testId}>
+                  I Accept the Terms & Start Test
+                </button>
+              </>
+            )}
           </div>
         ) : (
           <>
@@ -217,7 +306,6 @@ export default function MCQTest() {
                       </>
                     )}
                   </div>
-
                 </div>
 
                 <div className={styles.navigationContainer}>
@@ -256,9 +344,9 @@ export default function MCQTest() {
                     <p className={styles.scoreGrade}>
                       {score.correct === score.total
                         ? "Perfect Score!"
-                        : score.correct >= Math.floor(score.total * 0.8)
+                        : score.correct >= score.total * 0.8
                           ? "Excellent!"
-                          : score.correct >= Math.floor(score.total * 0.6)
+                          : score.correct >= score.total * 0.6
                             ? "Good Job!"
                             : "Keep Practicing!"}
                     </p>
@@ -276,7 +364,7 @@ export default function MCQTest() {
                     setScore({ correct: 0, total: questions.length })
                   }}
                 >
-                  Take Test Again
+                  Take Another Test
                 </button>
               </div>
             )}
@@ -286,3 +374,5 @@ export default function MCQTest() {
     </div>
   )
 }
+
+export default MCQTest

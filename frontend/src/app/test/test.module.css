@@ -1,365 +1,336 @@
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f5f7fa;
-    padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-      "Helvetica Neue", sans-serif;
-  }
-  
-  .testCard {
-    width: 100%;
-    max-width: 800px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    padding: 30px;
-    transition: all 0.3s ease;
-  }
-  
-  .progressContainer {
-    margin-bottom: 30px;
-  }
-  
-  .progressBar {
-    height: 8px;
-    background-color: #edf2f7;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 8px;
-  }
-  
-  .progressFill {
-    height: 100%;
-    background: linear-gradient(90deg, #4776e6, #8e54e9);
-    border-radius: 4px;
-    transition: width 0.3s ease;
-  }
-  
-  .progressText {
-    text-align: right;
-    font-size: 14px;
-    color: #718096;
-  }
-  
-  .questionContainer {
-    margin-bottom: 30px;
-  }
-  
-  .questionNumber {
-    font-size: 16px;
-    color: #718096;
-    margin-bottom: 10px;
-    font-weight: 500;
-  }
-  
-  .questionText {
-    font-size: 22px;
-    color: #2d3748;
-    margin-bottom: 25px;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-  
-  .optionsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .optionItem {
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .optionItem:hover {
-    background-color: #f7fafc;
-    border-color: #cbd5e0;
-  }
-  
-  .selectedOption {
-    background-color: #ebf4ff;
-    border-color: #4776e6;
-  }
-  
-  .optionCircle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #cbd5e0;
-    margin-right: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s ease;
-  }
-  
-  .selectedOption .optionCircle {
-    border-color: #4776e6;
-  }
-  
-  .optionCircleFill {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #4776e6;
-  }
-  
-  .optionText {
-    font-size: 16px;
-    color: #4a5568;
-  }
-  
-  .navigationContainer {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .navButton {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: #edf2f7;
-    color: #4a5568;
-  }
-  
-  .navButton:hover {
-    background-color: #e2e8f0;
-  }
-  
-  .navButton:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
-  .submitButton {
-    background-color: #4776e6;
-    color: white;
-  }
-  
-  .submitButton:hover {
-    background-color: #3a67d7;
-  }
-  
-  .resultContainer {
-    text-align: center;
-    padding: 20px 0;
-  }
-  
-  .resultTitle {
-    font-size: 28px;
-    color: #2d3748;
-    margin-bottom: 15px;
-    font-weight: 700;
-  }
-  
-  .resultText {
-    font-size: 18px;
-    color: #4a5568;
-    margin-bottom: 30px;
-    line-height: 1.6;
-  }
-  
-  .restartButton {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: #4776e6;
-    color: white;
-  }
-  
-  .restartButton:hover {
-    background-color: #3a67d7;
-  }
-  
-  /* Add styles for welcome screen */
-  .welcomeContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-  }
-  
-  .welcomeTitle {
-    font-size: 28px;
-    color: #2d3748;
-    text-align: center;
-    margin-bottom: 5px;
-    font-weight: 700;
-  }
-  
-  .welcomeContent {
-    font-size: 16px;
-    color: #4a5568;
-    line-height: 1.6;
-  }
-  
-  .welcomeContent p {
-    margin-bottom: 15px;
-  }
-  
-  .termsContainer {
-    background-color: #f8fafc;
-    border-radius: 8px;
-    padding: 20px;
-    border: 1px solid #e2e8f0;
-  }
-  
-  .termsTitle {
-    font-size: 18px;
-    color: #2d3748;
-    margin-bottom: 15px;
-    font-weight: 600;
-  }
-  
-  .termsContent {
-    font-size: 14px;
-    color: #4a5568;
-    line-height: 1.6;
-  }
-  
-  .termsContent ol {
-    margin-top: 10px;
-    padding-left: 20px;
-  }
-  
-  .termsContent li {
-    margin-bottom: 8px;
-  }
-  
-  .startButton {
-    background-color: #4776e6;
-    color: white;
-    padding: 14px 28px;
-    margin-top: 10px;
-    align-self: center;
-    font-size: 16px;
-    font-weight: 600;
-  }
-  
-  .startButton:hover {
-    background-color: #3a67d7;
-  }
-  
-  /* Add styles for the score display */
-  .scoreCard {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin: 20px 0 30px;
-    padding: 20px;
-    background-color: #f8fafc;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-  }
-  
-  .scoreCircle {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #4776e6, #8e54e9);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .scoreNumber {
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 1;
-  }
-  
-  .scoreTotal {
-    font-size: 18px;
-    opacity: 0.9;
-  }
-  
-  .scoreText {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .scorePercentage {
-    font-size: 24px;
-    font-weight: 700;
-    color: #2d3748;
-    margin-bottom: 5px;
-  }
-  
-  .scoreGrade {
-    font-size: 18px;
-    color: #4776e6;
-    font-weight: 600;
-  }
-  
-  @media (max-width: 768px) {
-    .testCard {
-      padding: 20px;
-    }
-  
-    .questionText {
-      font-size: 20px;
-    }
-  
-    .optionItem {
-      padding: 12px 15px;
-    }
-  
-    .navButton {
-      padding: 10px 20px;
-      font-size: 14px;
-    }
-  
-    .welcomeTitle {
-      font-size: 24px;
-    }
-  
-    .termsContainer {
-      padding: 15px;
-    }
-  
-    .startButton {
-      padding: 12px 24px;
-      font-size: 14px;
-    }
-  
-    .scoreCard {
-      flex-direction: column;
-      padding: 15px;
-      gap: 15px;
-    }
-  
-    .scoreCircle {
-      width: 80px;
-      height: 80px;
-    }
-  
-    .scoreNumber {
-      font-size: 28px;
-    }
-  
-    .scoreText {
-      align-items: center;
-    }
-  }
-  
-  
+
+
+.testCard {
+  width: 100%;
+  max-width: 800px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+}
+
+.welcomeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.welcomeTitle {
+  font-size: 1.8rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.welcomeContent {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.termsContainer {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.termsTitle {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #444;
+}
+
+.termsContent {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.termsContent ol {
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.termsContent li {
+  margin-bottom: 0.5rem;
+}
+
+.progressContainer {
+  margin-bottom: 2rem;
+}
+
+.progressBar {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background-color: #4a6cf7;
+  transition: width 0.3s ease;
+}
+
+.progressText {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-top: 0.5rem;
+}
+
+.questionContainer {
+  margin-bottom: 2rem;
+}
+
+.questionNumber {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+.questionText {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.optionItem:hover {
+  background-color: #f8f9fa;
+}
+
+.selectedOption {
+  border-color: #4a6cf7;
+  background-color: rgba(74, 108, 247, 0.05);
+}
+
+.optionCircle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #adb5bd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.selectedOption .optionCircle {
+  border-color: #4a6cf7;
+}
+
+.optionCircleFill {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #4a6cf7;
+}
+
+.optionText {
+  font-size: 1rem;
+  color: #495057;
+}
+
+.navigationContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.navButton {
+  padding: 0.75rem 1.5rem;
+  background-color: #4a6cf7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.navButton:hover {
+  background-color: #3a5bd9;
+}
+
+.navButton:disabled {
+  background-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.startButton {
+  align-self: center;
+  margin-top: 1rem;
+}
+
+.submitButton {
+  background-color: #28a745;
+}
+
+.submitButton:hover {
+  background-color: #218838;
+}
+
+.resultContainer {
+  text-align: center;
+}
+
+.resultTitle {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.scoreCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.scoreCircle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.scoreNumber {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #4a6cf7;
+}
+
+.scoreTotal {
+  font-size: 1.2rem;
+  color: #6c757d;
+}
+
+.scoreText {
+  text-align: left;
+}
+
+.scorePercentage {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.scoreGrade {
+  font-size: 1.2rem;
+  color: #28a745;
+}
+
+.resultText {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+}
+
+.restartButton {
+  padding: 0.75rem 1.5rem;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.restartButton:hover {
+  background-color: #5a6268;
+}
+
+/* New styles for test selection */
+.testSelectionContainer {
+  margin-bottom: 1.5rem;
+}
+
+.selectionTitle {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.testLevelGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.testLevelCard {
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.testLevelCard:hover {
+  border-color: #4a6cf7;
+  background-color: rgba(74, 108, 247, 0.05);
+}
+
+.testLevelCard h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.testLevelCard p {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.selectedTest {
+  border-color: #4a6cf7;
+  background-color: rgba(74, 108, 247, 0.1);
+}
+
+.selectedIndicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #4a6cf7;
+  color: white;
+  padding: 0.3rem;
+  font-size: 0.8rem;
+}
+
+.loadingContainer,
+.noTestsContainer {
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+}
+
