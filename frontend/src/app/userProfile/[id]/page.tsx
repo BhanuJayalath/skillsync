@@ -226,14 +226,12 @@ import JobContent from '@/app/recruiter-profile/JobContent';
         }
     }
 
-     useEffect(() => {
-         // Simulate loading for 1.5 seconds
-         setTimeout(() => {
-             setLoading(false); // Set loading to false after 1.5 seconds
-         }, 1500);
-     }, []);
-
     useEffect(() => {
+        // Simulate loading for 1.5 seconds
+        setTimeout(() => {
+            setLoading(false); // Set loading to false after 1.5 seconds
+        }, 1500);
+
         if(id){
             const fetchUserDetails = async () => {
                 const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
