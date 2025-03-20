@@ -70,7 +70,10 @@
     margin: 0; /* Reset default margin */
 }
 
-.nav a {
+.nav a{
+    text-decoration: none;
+}
+.navTab {
     text-decoration: none;
     color: #ffffff;
     display: flex;
@@ -80,7 +83,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
 }
 
-.nav a:hover {
+.navTab:hover {
     background-color: rgba(255, 255, 255, 0.1); /* Lighter background on hover */
     transform: translateX(5px); /* Slightly move on hover */
 }
