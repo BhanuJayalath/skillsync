@@ -22,13 +22,10 @@ interface Test {
 }
 
 const MCQTest = () => {
-  // Hardcoded values instead of props
-  const [testId, setTestId] = useState("Test1742290753151")
   const [availableTests, setAvailableTests] = useState<{ testId: string; testLevel: string; jobId: string }[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [userId, setUserId] = useState<string>("")
-  const jobId = "Job1742293988982" // hardcoded jobId
-
+  const [jobId, setJobId] = useState<string>("")
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState<(number | null)[]>([])
@@ -36,6 +33,7 @@ const MCQTest = () => {
   const [testStarted, setTestStarted] = useState(false)
   const [score, setScore] = useState({ correct: 0, total: 0 })
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  const [testId, setTestId] = useState<string>("")
 
   // Fetch user data from API 
   useEffect(() => {
@@ -44,6 +42,7 @@ const MCQTest = () => {
         const response = await axios.get("/api/users/me")
         if (response.data && response.data.user && response.data.user._id) {
           setUserId(response.data.user._id)
+          setJobId(response.data.user.selectedJob.jobId) 
         }
       } catch (error) {
         console.error("Error fetching user data:", error)
@@ -55,10 +54,18 @@ const MCQTest = () => {
 
   useEffect(() => {
     const fetchTestData = async () => {
+      if (!testId) {
+        console.log("No testId available")
+        console.log("Available tests:", availableTests)
+        return
+      }
+  
+      console.log(`Fetching test data from: ${baseUrl}/tests/${testId}`)
+  
       try {
         const response = await axios.get<Test>(`${baseUrl}/tests/${testId}`)
         const test = response.data
-
+  
         if (test.testContent && test.testContent.questionContent) {
           setQuestions(test.testContent.questionContent)
           setAnswers(Array(test.testContent.questionContent.length).fill(null))
@@ -70,11 +77,13 @@ const MCQTest = () => {
         console.error("Error fetching test data:", error)
       }
     }
-
+  
     fetchTestData()
   }, [testId, baseUrl])
 
   useEffect(() => {
+    if (!jobId) return
+
     const fetchAvailableTests = async () => {
       setIsLoading(true)
       try {
@@ -367,4 +376,3 @@ const MCQTest = () => {
 }
 
 export default MCQTest
-
