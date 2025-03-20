@@ -27,7 +27,13 @@ interface tests {
     testLevel: string;
     mark: string;
 }
-
+interface Experience {
+    jobName: string;
+    companyName: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+}
 
 
 
