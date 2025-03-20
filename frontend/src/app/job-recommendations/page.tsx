@@ -29,11 +29,9 @@ interface User {
 
 }
 
-interface JobRecommendProps {
-  user: User;
-}
 
-const Careers = ({ user}: JobRecommendProps) => {
+
+const Careers = ({ user }: { user: User }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [userId, setUserId] = useState<string | null>(null);
