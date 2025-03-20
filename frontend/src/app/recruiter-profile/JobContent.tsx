@@ -8,8 +8,6 @@ import styles from "../assets/styles/recruiter.module.css";
 export default function JobContent({
   loadTests,
   setLoadTests,
-  // updateTestContent,
-  // setUpdateTestContent,
   removeTestBlock,
   setRemoveTestBlock,
   testState,
@@ -24,6 +22,7 @@ export default function JobContent({
   loadJobPostContent,
   jobCount,
   jobPostResponse,
+  setNotification,
 }: {
   loadJobPostContent: any;
   jobCount: any;
@@ -41,6 +40,7 @@ export default function JobContent({
   testLevel: any;
   testResponse: any;
   setTestResponse: any;
+  setNotification: any;
 }) {
   const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
   const [jobTitle, setJobTitle] = useState<string>();
@@ -103,15 +103,41 @@ export default function JobContent({
         headers: { "Content-Type": "application/json" },
       }
     );
+    setNotification({
+      show: true,
+      message: "Updated Sucessfully",
+      status: false,
+    });
     setJobPostState(false);
     setUpdateJobPostContent(false);
   }
   function saveToDatabase() {
-    axios.post(`${process.env.NEXT_PUBLIC_SAVE_JOB}`, storage, {
-      headers: { "Content-Type": "application/json" },
-    });
-    setJobPostState(false);
-    setUpdateJobPostContent(false);
+    if (
+      Object.values(storage).some(
+        (value) =>
+          value === undefined ||
+          value === null ||
+          value === "" ||
+          (Array.isArray(value) && value.length === 0)
+      )
+    ) {
+      setNotification({
+        show: true,
+        message: "All the fields are required",
+        status: true,
+      });
+    } else {
+      axios.post(`${process.env.NEXT_PUBLIC_SAVE_JOB}`, storage, {
+        headers: { "Content-Type": "application/json" },
+      });
+      setJobPostState(false);
+      setNotification({
+        show: true,
+        message: "Submitted Sucessfully",
+        status: false,
+      });
+      setUpdateJobPostContent(false);
+    }
   }
 
   function removeSkill(skillIndex: number) {

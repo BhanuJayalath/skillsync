@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 
 .main {
+  margin: 0 auto;
   font-family: "Montserrat", serif;
   z-index: -1;
   height: auto;
@@ -687,4 +688,20 @@
   height: 100px;
   gap: 20px;
   background-color: #c0d6e6;
+}
+
+.Notification {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 50px;
+  border-radius: 20px;
+  z-index: 999;
+  background-color: #eef5f6;
 }

@@ -10,6 +10,7 @@ import TestContent from "../TestContent";
 import Dashboard from "../Dashboard";
 import Profile from "../CompanyProfile";
 import UserProfile from "../UserProfile";
+import Notification from "../Notification";
 
 import axios from "axios";
 import TestListing from "../TestListing";
@@ -47,10 +48,15 @@ export default function RecruiterProfile() {
   const [removeTestBlock, setRemoveTestBlock] = useState(false);
   const [testResponse, setTestResponse] = useState();
   const [jobPostResponse, setJobPostResponse] = useState();
-  const [recruiterDetails, setRecruiterDetails] = useState();
+  const [recruiterDetails, setRecruiterDetails] = useState<any>();
   const [userProfile, setUserProfile] = useState(false);
   const [userId, setUserId] = useState<string>("");
   const [jobId, setJobId] = useState<string>("");
+  const [notification, setNotification] = useState({
+    show: false,
+    message: "",
+    status: "",
+  });
 
   useEffect(() => {
     axios
@@ -62,14 +68,29 @@ export default function RecruiterProfile() {
         console.log(error);
       });
   }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNotification({
+        show: false,
+        message: "",
+        status: "",
+      });
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
 
   let counter = 0;
   return (
     <section className={styles.main}>
+      {notification.show ? <Notification notification={notification} /> : null}
       <div className={styles.contentContainer}>
         <div className={styles.navigation}>
           <div id={styles.pageTitle}>Recruiter Profile</div>
-          <div className={styles.welcomeBar}>Welcome User</div>
+          <div className={styles.welcomeBar}>
+            Welcome{" "}
+            {recruiterDetails ? recruiterDetails.company : <h1>User</h1>}
+          </div>
         </div>
         <div id={styles.contentSection}>
           <div id={styles.contentContainer1}>
@@ -112,6 +133,7 @@ export default function RecruiterProfile() {
                 loadJobPostContent={loadJobPostContent}
                 jobPostResponse={jobPostResponse}
                 jobCount={jobCount}
+                setNotification={setNotification}
               />
             ) : testState ? (
               <TestContent
@@ -124,6 +146,7 @@ export default function RecruiterProfile() {
                 loadTestQuestions={loadTestQuestions}
                 testLevel={testLevel}
                 testResponse={testResponse}
+                setNotification={setNotification}
               />
             ) : recruiterDetails ? (
               <JobListing

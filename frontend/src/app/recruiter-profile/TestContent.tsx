@@ -14,6 +14,7 @@ export default function TestContent({
   setTestState,
   jobPostState,
   setJobPostState,
+  setNotification,
 }: {
   loadJobPostContent: any;
   setLoadTestQuestions: any;
@@ -24,6 +25,7 @@ export default function TestContent({
   setTestState: any;
   jobPostState: any;
   setJobPostState: any;
+  setNotification: any;
 }) {
   var counter = 0;
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
@@ -95,12 +97,32 @@ export default function TestContent({
     });
   }
   function save() {
-    axios.post(`${process.env.NEXT_PUBLIC_SAVE_TEST}`, loadTestQuestions, {
-      headers: { "Content-Type": "application/json" },
-    });
-    setJobPostState(!jobPostState);
-    setTestState(!testState);
-    setUpdateTestContent(false);
+    if (
+      loadTestQuestions.testContent.questionContent.some((question: any) =>
+        Object.values(question).some(
+          (value: any) =>
+            value === "" || value === undefined || Number.isNaN(value)
+        )
+      )
+    ) {
+      setNotification({
+        show: true,
+        message: "All the fields are required",
+        status: true,
+      });
+    } else {
+      axios.post(`${process.env.NEXT_PUBLIC_SAVE_TEST}`, loadTestQuestions, {
+        headers: { "Content-Type": "application/json" },
+      });
+      setNotification({
+        show: true,
+        message: "Submitted Sucessfully",
+        status: false,
+      });
+      setJobPostState(!jobPostState);
+      setTestState(!testState);
+      setUpdateTestContent(false);
+    }
   }
   function updatetoDatabase() {
     axios.patch(
@@ -110,6 +132,11 @@ export default function TestContent({
         headers: { "Content-Type": "application/json" },
       }
     );
+    setNotification({
+      show: true,
+      message: "Updated Sucessfully",
+      status: false,
+    });
     setJobPostState(!jobPostState);
     setTestState(!testState);
     setUpdateTestContent(false);
