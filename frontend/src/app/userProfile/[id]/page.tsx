@@ -441,9 +441,11 @@ interface User {
                                             {activeTab === 1 && user && <Progress user={user}/>}
                                             {activeTab === 2 && user && <COURSE/>}
                                             {activeTab === 3 && user && <Resume
-                                                user={user} removeEducation={removeEducation}
-                                                removeExperience={removeExperience}
-                                                updateNestedChanges={updateNestedChanges}/>}
+                                                user={user}
+                                                // removeEducation={removeEducation}
+                                                // removeExperience={removeExperience}
+                                                // updateNestedChanges={updateNestedChanges}
+                                            />}
                                             {activeTab === 4 && user && <MockInterview/>}.
                                             {activeTab === 5 && user && <Assessment/>}
                                             {activeTab === 6 && user && <Employment/>}
