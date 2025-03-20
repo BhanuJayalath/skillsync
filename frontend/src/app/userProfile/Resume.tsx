@@ -22,6 +22,11 @@ interface Education {
     description: string;
 }
 
+interface Tests {
+    testId: string;
+    mark: string;
+}
+
 interface selectedJob {
     jobTitle: string;
     jobId:string;
@@ -116,8 +121,7 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
                 <ul className={styles.jobList}>
                     {user.experience.map((experience, index) => (
                         <li key={index} className={styles.expItem}>
-                            <div id={`experience${index}`} className={styles.job}
-                                 onClick={() => removeExperience(index)}>
+                            <div id={`experience${index}`} className={styles.job}>
                                 <h3 className={styles.jobTitle}>{experience.jobName}</h3>
                                 <p className={styles.companyName}>{experience.companyName}</p>
                                 <p className={styles.jobDates}>{experience.startDate} {experience.endDate && `-${experience.endDate}`}</p>
@@ -133,8 +137,7 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
                 <ul className={styles.educationList}>
                     {user.education.map((education, index) => (
                         <li key={index} className={styles.eduItem}>
-                            <div id={`courses${index}`} className={styles.degree}
-                                 onClick={() => removeEducation(index)}>
+                            <div id={`courses${index}`} className={styles.degree}>
                                 <h3 className={styles.degreeTitle}>{education.courseName}</h3>
                                 <p className={styles.schoolName}>{education.schoolName}</p>
                                 <p className={styles.graduationYear}>{education.startDate} {education.endDate && `-${education.endDate}`}</p>
