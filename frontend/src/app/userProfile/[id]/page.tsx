@@ -22,7 +22,11 @@ interface SelectedJob {
     jobTitle: string;
     jobId:string;
 }
-
+interface tests {
+    testId: string;
+    testLevel: string;
+    mark: string;
+}
 
 
 
