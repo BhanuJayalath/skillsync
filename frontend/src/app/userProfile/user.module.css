@@ -167,6 +167,20 @@
     padding: 10px;
     z-index: 999;  /* Ensure it's on top */
 }
+.notificationPopup button {
+    margin: 0;
+    background: #3498db; /* Refined blue */
+    color: white;
+    border: none;
+    padding: 0.2em 1em;
+    border-radius: 0.3em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.notificationPopup button:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
 
 
 .notificationPopup ul {
