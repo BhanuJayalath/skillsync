@@ -27,6 +27,7 @@ export default function UserProfileTab({ userDetails }: { userDetails: any }) {
     skills: [],
     education: [],
     experience: [],
+    tests:[]
   });
   useEffect(() => {
     const tempResume = {
@@ -40,6 +41,7 @@ export default function UserProfileTab({ userDetails }: { userDetails: any }) {
       skills: userDetails.skills,
       education: userDetails.education,
       experience: userDetails.experience,
+      tests:userDetails.tests
     };
     const tempProgress = {
       selectedJob: userDetails.selectedJob,
