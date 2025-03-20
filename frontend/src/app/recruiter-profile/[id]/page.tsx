@@ -13,6 +13,7 @@ import UserProfile from "../UserProfile";
 
 import axios from "axios";
 import TestListing from "../TestListing";
+import SideBar from "../SideBar";
 
 export default function RecruiterProfile() {
   const [loadTests, setLoadTests] = useState<
@@ -138,45 +139,11 @@ export default function RecruiterProfile() {
           </div>
         </div>
       </div>
-      <div className={styles.sideBar}>
-        <Image
-          src="/logo.png"
-          alt="SkillSync"
-          width={120}
-          height={40}
-          className="logo"
-        />
-        <ul>
-          <li
-            onClick={() => {
-              setDashboardTab(true);
-              setProfileTab(false);
-            }}
-          >
-            <Image
-              src="/recruiter/home.svg"
-              alt="home-icon"
-              width={23}
-              height={23}
-            />
-            Dashboard
-          </li>
-          <li
-            onClick={() => {
-              setProfileTab(true);
-              setDashboardTab(false);
-            }}
-          >
-            <Image
-              src="/recruiter/message.svg"
-              alt="message-icon"
-              width={23}
-              height={23}
-            />
-            Profile
-          </li>
-        </ul>
-      </div>
+      <SideBar
+        setProfileTab={setProfileTab}
+        setDashboardTab={setDashboardTab}
+        setUserProfile={setUserProfile}
+      />
     </section>
   );
 }

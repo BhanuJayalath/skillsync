@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import styles from "../assets/styles/recruiter.module.css";
 export default function ResultTab({ userDetails }: { userDetails: any }) {
   return (
