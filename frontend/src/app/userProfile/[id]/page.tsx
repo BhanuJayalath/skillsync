@@ -295,7 +295,11 @@ interface User {
          }
      };
 
-
+     const togglePopup = () => {
+         if(user && filteredNotifications.length>0){
+             setIsOpen(!isOpen);
+         }
+     };
 
 
 
