@@ -446,7 +446,7 @@ interface User {
                                                                 {messageIndex === index && showMessage === true ? (
                                                                     <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType}</p>) : (
                                                                     <p onClick={() => {setMessageIndex(index); setShowMessage(true);}}>{notification.recruiterNote}</p>)}
-
+                                                                <button onClick={()=> handleApprove(index)}>Approve</button>
                                                             </li>
                                                         ))}
                                                     </ul>
