@@ -25,10 +25,10 @@ interface JobProps {
 const JobCard = ({ job }: JobProps) => {
   // Use a default image from the public folder
   const imageSrc = job.company?.toLowerCase().includes("google")
-    ? "/jobs/google.png"
+    ? "/jobs/jobs.png"
     : job.company?.toLowerCase().includes("microsoft")
-      ? "/jobs/microsoft.png"
-      : "/jobs/jobs1.png"
+      ? "/jobs/jobs.png"
+      : "/jobs/jobs.png"
 
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg border border-gray-200 h-full flex flex-col group">

@@ -26,12 +26,10 @@ const CourseCard = ({ course }: CourseProps) => {
   const getImageSrc = () => {
     if (course.category?.toLowerCase().includes("programming")) {
       return "/courses/programming.png"
-    } else if (course.category?.toLowerCase().includes("design")) {
-      return "/courses/design.png"
     } else if (course.category?.toLowerCase().includes("business")) {
       return "/courses/business.png"
     }
-    return "/courses/course1.png"
+    return "/courses/course.png"
   }
 
   const imageSrc = getImageSrc()
@@ -87,13 +85,6 @@ const CourseCard = ({ course }: CourseProps) => {
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
-
-          {/* Play button overlay */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="bg-black/60 rounded-full p-3 transform group-hover:scale-110 transition-transform">
-              <Play className="h-8 w-8 text-white fill-white" />
-            </div>
-          </div>
 
           {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
