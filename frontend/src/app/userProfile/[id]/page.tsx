@@ -15,7 +15,7 @@ import COURSE from '@/app/courses/page';
 import axios from "axios";
 import {toast} from "react-hot-toast";
 import Assessment from '@/app/test/page';
-import Employment from '@/app/job-recommendations/page';
+import Employment from '@/app/job-recommendations/[id]/page';
 
 interface SelectedJob {
     jobTitle: string;
