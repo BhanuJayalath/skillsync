@@ -70,7 +70,10 @@
     margin: 0; /* Reset default margin */
 }
 
-.nav a {
+.nav a{
+    text-decoration: none;
+}
+.navTab {
     text-decoration: none;
     color: #ffffff;
     display: flex;
@@ -80,7 +83,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
 }
 
-.nav a:hover {
+.navTab:hover {
     background-color: rgba(255, 255, 255, 0.1); /* Lighter background on hover */
     transform: translateX(5px); /* Slightly move on hover */
 }
@@ -163,6 +166,20 @@
     width: 200px;
     padding: 10px;
     z-index: 999;  /* Ensure it's on top */
+}
+.notificationPopup button {
+    margin: 0;
+    background: #3498db; /* Refined blue */
+    color: white;
+    border: none;
+    padding: 0.2em 1em;
+    border-radius: 0.3em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.notificationPopup button:hover {
+    background-color: #2980b9; /* Darker shade on hover */
 }
 
 
@@ -376,7 +393,8 @@
     background: #fff;
     padding: 1.5em;
     margin: auto;
-    width: 45em;
+    width: 100%;
+    max-width: 45em;
     border-radius: 0.5em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -467,16 +485,16 @@
 /* CV Section */
 .cvSection {
     font-family: Arial, sans-serif;
-    width: 49.61rem;
+    width: 60%;
     min-height:70.157489153699rem ;
-    padding: 2cm;
+    padding: 4em;
     margin: 0 auto;
     justify-content: center;
     align-items: center;
     background: #ffffff;
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-    border: 1px solid #ccc;
-    line-height: 1.6;
+    border: 0.1em solid #ccc;
+    line-height: 1.5;
     cursor: pointer;
 }
 
@@ -493,33 +511,33 @@
 }
 
 .name {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
     color: #333;
 }
 
 .jobTitle {
-    font-size: 1.3rem;
+    font-size: 1rem;
     color: #555;
     margin-bottom: 0.5em;
 }
 
 .contactDetails {
-    font-size: 0.9rem;
-    margin-top: 10px;
+    font-size: 0.8rem;
+    margin-top: 1em;
     color: #777;
 }
 
 .experience,
 .education,
-.skills {
-    margin-top: 25px;
+.skills,.assessment {
+    margin-top: 2.5em;
 }
 
 .experience,
 .education,
-.skills p {
-    margin-top: 25px;
+.skills,.assessment p {
+    margin-top: 2.5em;
     text-align: justify;
 }
 
@@ -548,7 +566,7 @@
 }
 
 .companyName,
-.schoolName {
+.schoolName,.assessmentItem {
     font-size: 1.1rem;
     color: #555;
 }

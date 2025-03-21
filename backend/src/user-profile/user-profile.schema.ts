@@ -55,6 +55,33 @@ class Education {
   description: string;
 }
 
+class Notifications {
+  @Prop()
+  jobId: string;
+
+  @Prop()
+  jobTitle: string;
+
+  @Prop()
+  jobType: string;
+
+  @Prop()
+  companyName: string;
+
+  @Prop()
+  companyEmail: string;
+
+  @Prop()
+  recruiterNote: string;
+
+  @Prop()
+  isSelected: boolean;
+
+  @Prop()
+  approved: boolean;
+
+}
+
 class Test {
   @Prop()
   jobId: string;
@@ -63,13 +90,10 @@ class Test {
   testId: string;
 
   @Prop()
-  score: number;
+  testLevel: string;
 
-  // @Prop()
-  // testLevel: string;
-
-  // @Prop()
-  // mark: string;
+  @Prop()
+  mark: string;
 }
 
 class SelectedJob {
@@ -135,6 +159,9 @@ export class User {
 
   @Prop({ type: [Education] })
   education: Education[];
+
+  @Prop({ type: [Notifications] })
+  notifications: Notifications[];
 
   @Prop({ type: [String] })
   skills: string[];

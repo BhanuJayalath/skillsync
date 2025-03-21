@@ -58,7 +58,7 @@ export default function JobListing({
       .catch((error) => {
         console.log(error);
       });
-  }, [remove, jobPostState]);
+  }, [remove]);
 
   function loadJobPostComponent(jobId: string, JobCounter: number) {
     const jobPost = loadJobPosts.find((item: any) => item.jobId === jobId);
@@ -98,27 +98,41 @@ export default function JobListing({
     <div id={styles.jobListing}>
       <div id={styles.jobListingcontainerHeader}>
         <h1>Job Listing</h1>
-        <button onClick={addJobPostContainers}>
-          <Image
-            alt="plus-icon"
-            width={23}
-            height={23}
-            src="/recruiter/plus-icon.svg"
-          />
-        </button>
-        <button
-          onClick={() => {
-            setRemoveJobPostContainers(!removeJobPostContainers);
-          }}
-        >
-          {" "}
-          <Image
-            alt="remove-icon"
-            width={23}
-            height={23}
-            src="/recruiter/remove-icon.svg"
-          />
-        </button>
+        {loadJobPosts ? (
+          <>
+            <button onClick={addJobPostContainers}>
+              <Image
+                alt="plus-icon"
+                width={20}
+                height={20}
+                src="/recruiter/plus-icon.svg"
+              />
+              Add Jobs
+            </button>
+            <button
+              onClick={() => {
+                setRemoveJobPostContainers(!removeJobPostContainers);
+              }}
+            >
+              <Image
+                alt="remove-icon"
+                width={20}
+                height={20}
+                src="/recruiter/remove-icon.svg"
+              />
+              Remove Jobs
+            </button>
+          </>
+        ) : (
+          <button onClick={addJobPostContainers}>
+            <Image
+              alt="plus-icon"
+              width={23}
+              height={23}
+              src="/recruiter/plus-icon.svg"
+            />
+          </button>
+        )}
       </div>
       <div className={styles.mockExamscontainerSection}>
         {loadJobPosts?.map((item: any, index: number) => {
