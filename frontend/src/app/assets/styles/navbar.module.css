@@ -43,7 +43,18 @@
     color: #1a202c;
   }
   
-  .signInButton {
+  .signInButton{
+    background-color: white;
+    color: #021024;
+    border: 1px solid #021024;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.15s ease-in-out;
+  }
+
+  .fn {
     background-color: white;
     color: #021024;
     border: 1px solid #021024;
