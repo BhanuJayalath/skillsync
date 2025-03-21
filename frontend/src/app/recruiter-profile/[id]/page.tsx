@@ -162,11 +162,11 @@ export default function RecruiterProfile() {
           </div>
         </div>
       </div>
-      <SideBar
+      {/* <SideBar
         setProfileTab={setProfileTab}
         setDashboardTab={setDashboardTab}
         setUserProfile={setUserProfile}
-      />
+      /> */}
     </section>
   );
 }

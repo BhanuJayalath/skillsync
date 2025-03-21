@@ -60,11 +60,12 @@
 
 .contentContainer {
   float: right;
-  width: 84%;
-  height: 100vh;
+  width: 80%;
+  min-height: 100vh;
   color: white;
+  background-color: #00233c;
 }
-.sideBar {
+/* .sideBar {
   position: fixed;
   padding: 10px;
   display: flex;
@@ -79,7 +80,7 @@
   float: left;
   height: 100vh;
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-}
+} */
 
 .sideBar ul {
   display: flex;
@@ -704,4 +705,29 @@
   border-radius: 20px;
   z-index: 999;
   background-color: #eef5f6;
+}
+
+@media only screen and (max-width: 1090px) {
+  #contentContainer1 {
+    flex-direction: column;
+    gap: 10px;
+    /* height: auto; */
+  }
+  .contentContainer {
+    width: 100%;
+  }
+
+  #topGraded,
+  #profiles,
+  #results {
+    /* display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 10px; */
+    width: 100%;
+    gap: 10px;
+    height: auto;
+    border-radius: 5px;
+    background-color: #e3f3ff;
+  }
 }
