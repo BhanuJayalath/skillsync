@@ -21,7 +21,8 @@ export default function TestListing({
   setJobPostState,
   jobPostState,
   setLoadTestQuestions,
-  setTestCount,
+  setTestLevel,
+  testLevel,
   testResponse,
   setTestResponse,
   loadJobPostContent,
@@ -35,12 +36,15 @@ export default function TestListing({
   jobPostState: any;
   setJobPostState: any;
   setLoadTestQuestions: any;
-  setTestCount: any;
+  setTestLevel: any;
+  testLevel: any;
   testResponse: any;
   setTestResponse: any;
   loadJobPostContent: any;
 }) {
   const [remove, setRemove] = useState(false);
+  const [addTestLevel, setAddTestLevel] = useState(false);
+  useEffect(() => {}, [testLevel]);
   useEffect(() => {
     const tempArray: any = [];
     axios
@@ -56,24 +60,33 @@ export default function TestListing({
       });
     setLoadTests(tempArray);
   }, [remove]);
+  useEffect(() => {
+    if (testLevel !== "" && loadTests.length > 0) {
+      if (!loadTests.some((item: any) => item.testLevel === testLevel)) {
+        console.log("This triggers");
+        addTestComponent();
+      }
+    } else if (testLevel !== "") {
+      addTestComponent();
+    }
+  }, [testLevel]);
 
-  function loadTestContent(testId: string, testCounter: number) {
+  function loadTestContent(testId: string) {
     loadTests.find((item: any) => {
       if (item.testId === testId) {
         setLoadTestQuestions(item);
-        setTestCount(testCounter);
       }
     });
     setJobPostState(!jobPostState);
     setTestState(!testState);
   }
   function addTestComponent() {
-    console.log(loadTests);
     setLoadTests([
       ...loadTests,
       {
         testId: "Test" + Date.now(),
         jobId: loadJobPostContent.jobId,
+        testLevel: testLevel,
         testContent: {
           questionContent: [],
         },
@@ -95,38 +108,118 @@ export default function TestListing({
     <div id={styles.testListing}>
       <div id={styles.testListingHeader}>
         <h1>Tests</h1>
-        <button onClick={addTestComponent}>
-          <Image
-            alt="plus-icon"
-            width={23}
-            height={23}
-            src="/recruiter/plus-icon.svg"
-          />
-        </button>
-        <button
-          onClick={() => {
-            setRemoveTestBlock(!removeTestBlock);
-          }}
-        >
-          {" "}
-          <Image
-            alt="remove-icon"
-            width={23}
-            height={23}
-            src="/recruiter/remove-icon.svg"
-          />
-        </button>
+        {addTestLevel ? (
+          <div id={styles.addTestLevel}>
+            <button
+              onClick={() => {
+                setTestLevel("Level 1");
+              }}
+            >
+              Level 1
+              <Image
+                alt="plus-icon"
+                width={20}
+                height={20}
+                src="/recruiter/plus-icon.svg"
+              />
+            </button>
+            <button
+              onClick={() => {
+                setTestLevel("Level 2");
+              }}
+            >
+              Level 2
+              <Image
+                alt="plus-icon"
+                width={20}
+                height={20}
+                src="/recruiter/plus-icon.svg"
+              />
+            </button>
+            <button
+              onClick={() => {
+                setTestLevel("Level 3");
+              }}
+            >
+              Level 3
+              <Image
+                alt="plus-icon"
+                width={20}
+                height={20}
+                src="/recruiter/plus-icon.svg"
+              />
+            </button>
+            {loadTests.length > 0 ? (
+              <button
+                onClick={() => {
+                  setRemoveTestBlock(!removeTestBlock);
+                }}
+              >
+                <Image
+                  alt="remove-icon"
+                  width={23}
+                  height={23}
+                  src="/recruiter/remove-icon.svg"
+                />
+                remove Tests
+              </button>
+            ) : null}
+          </div>
+        ) : loadTests.length > 0 ? (
+          <>
+            <button
+              onClick={() => {
+                setAddTestLevel(true);
+              }}
+            >
+              <Image
+                alt="plus-icon"
+                width={23}
+                height={23}
+                src="/recruiter/plus-icon.svg"
+              />
+              Add Tests
+            </button>
+            <button
+              onClick={() => {
+                setRemoveTestBlock(!removeTestBlock);
+              }}
+            >
+              <Image
+                alt="remove-icon"
+                width={23}
+                height={23}
+                src="/recruiter/remove-icon.svg"
+              />
+              remove Tests
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={() => {
+              setAddTestLevel(true);
+            }}
+          >
+            <Image
+              alt="plus-icon"
+              width={23}
+              height={23}
+              src="/recruiter/plus-icon.svg"
+            />
+            Add Tests
+          </button>
+        )}
       </div>
       <div className={styles.testListingSection}>
         {loadTests?.map((item: any, index: number) => {
           return (
             <button
-              key={item.testId} // Ensure key is directly on the button
+              key={item.testId}
               onClick={() => {
                 if (removeTestBlock) {
                   removeTestComponent(item.testId);
                 } else {
-                  loadTestContent(item.testId, index + 1);
+                  loadTestContent(item.testId);
                 }
               }}
               id={styles.testListingcontainer}
@@ -137,7 +230,7 @@ export default function TestListing({
                 height={60}
                 src="/recruiter/exam-icon.svg"
               />
-              <h1>Test {index + 1}</h1>
+              <h1>{item.testLevel}</h1>
               <div id={styles.testListingButtons}>
                 {removeTestBlock ? (
                   <Image

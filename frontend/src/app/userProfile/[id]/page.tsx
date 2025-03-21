@@ -44,6 +44,8 @@ interface Notification {
     jobId:string;
     jobTitle:string;
     jobType:string;
+    companyName:string;
+    companyEmail:string;
     recruiterNote:string;
     isSelected:boolean;
     approved:boolean;
@@ -244,11 +246,11 @@ interface User {
          }
      };
 
-     const handleApprove = async (index:number) => {
+     const handleApprove = (index:number) => {
          if(user){
                 user.notifications[index].approved = true;
                 setUser({...user});
-                await handleSubmit();
+                 handleSubmit();
          }
          const filteredNotifications = user?.notifications.filter(item =>
              item.isSelected && !item.approved) ?? [];
@@ -386,7 +388,7 @@ interface User {
                                                         {user?.notifications.filter(item => item.isSelected && !item.approved).map((notification, index) => (
                                                             <li key={index}>
                                                                 {messageIndex === index && showMessage === true ? (
-                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType}</p>) : (
+                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType} <br/> {notification.companyName} <br/> {notification.companyEmail}</p>) : (
                                                                     <p onClick={() => {setMessageIndex(index); setShowMessage(true);}}>{notification.recruiterNote}</p>)}
                                                                 <button onClick={()=> handleApprove(index)}>Approve</button>
                                                             </li>
@@ -398,6 +400,7 @@ interface User {
                                     </header>
                                     <div className={styles.contentWrapper}>
                                         <section className={styles.tabsSection}>
+
                                             {activeTab === 0 && user && <Overview user={user}/>}
                                             {activeTab === 1 && user && <Progress user={user}/>}
                                             {activeTab === 2 && user && <COURSE/>}
