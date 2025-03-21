@@ -1,4 +1,5 @@
 import styles from "@/app/userProfile/user.module.css";
+
 import React from "react";
 
 interface User {
@@ -13,14 +14,15 @@ interface User {
     education: Education[];
     experience: Experience[];
     tests: Tests[];
+
 }
 
 interface Education {
-    courseName: string;
-    schoolName: string;
-    startDate: string;
-    endDate: string;
-    description: string;
+  courseName: string;
+  schoolName: string;
+  startDate: string;
+  endDate: string;
+  description: string;
 }
 
 interface Tests {
@@ -29,19 +31,20 @@ interface Tests {
 }
 
 interface selectedJob {
-    jobTitle: string;
-    jobId:string;
+  jobTitle: string;
+  jobId: string;
 }
 
 interface Experience {
-    jobName: string;
-    companyName: string;
-    startDate: string;
-    endDate: string;
-    description: string;
+  jobName: string;
+  companyName: string;
+  startDate: string;
+  endDate: string;
+  description: string;
 }
 
 interface ResumeProps {
+
     user: User;
 }
 

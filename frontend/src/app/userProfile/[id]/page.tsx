@@ -400,6 +400,7 @@ interface User {
                                     </header>
                                     <div className={styles.contentWrapper}>
                                         <section className={styles.tabsSection}>
+
                                             {activeTab === 0 && user && <Overview user={user}/>}
                                             {activeTab === 1 && user && <Progress user={user}/>}
                                             {activeTab === 2 && user && <COURSE/>}
