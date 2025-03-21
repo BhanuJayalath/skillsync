@@ -3,10 +3,9 @@
 .main {
   margin: 0 auto;
   font-family: "Montserrat", serif;
-  z-index: -1;
   height: auto;
   width: 100%;
-  color: black;
+  color: rgb(255, 255, 255);
 }
 .navigation {
   display: flex;
@@ -59,27 +58,11 @@
 }
 
 .contentContainer {
-  float: right;
-  width: 80%;
+  flex: 1;
   min-height: 100vh;
+  margin-left: 15.5em;
   color: white;
 }
-/* .sideBar {
-  position: fixed;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  top: 0%;
-  gap: 50px;
-  padding-top: 20px;
-  background-color: #ffffff;
-  width: 15%;
-  color: black;
-  float: left;
-  height: 100vh;
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-} */
 
 .sideBar ul {
   display: flex;
@@ -120,7 +103,7 @@
 }
 #contentContainer2 {
   flex-direction: column;
-  min-height: 90vh;
+  height: auto;
   border-radius: 20px 20px 0px 0px;
   background-color: #ffffff;
 }
@@ -157,7 +140,7 @@
   padding: 10px 20px 10px 20px;
   width: 100%;
   min-height: 80px;
-  background-color: #000f22;
+  background-color: #0a4d66;
 }
 #topGradedContainer > :last-child,
 #profilesContainer > :last-child,
@@ -228,6 +211,9 @@
 
 .mockExam,
 .JobContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
   height: 100%;
   color: #000f22;
@@ -242,7 +228,6 @@
   min-height: 50px;
   gap: 30px;
   font-size: 20px;
-  margin-bottom: 20px;
   text-align: center;
 }
 #jobContentSection,
@@ -331,13 +316,13 @@
   border: 2px solid #d1e5f4;
   padding: 5px;
 }
-#jobContentSectionTitle h2,
+/* #jobContentSectionTitle h2,
 #mockExamSectionAnswer h2,
 #jobContentSectionJobType h2,
 #jobContentSectionDescription h2 {
   width: 100%;
   height: 100%;
-}
+} */
 #jobContentSectionRequiredSkills header {
   display: flex;
   align-items: center;
@@ -416,7 +401,7 @@
   color: white;
   gap: 10px;
   border-radius: 10px;
-  background-color: #00233c;
+  background-color: #0a4d66;
 }
 
 #companyProfile {
@@ -695,7 +680,7 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  top: 10%;
+  top: 50px;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
@@ -703,12 +688,14 @@
   border-radius: 20px;
   z-index: 999;
   background-color: #eef5f6;
+  color: #000f22;
 }
 
 #jobListingHeaderButtonsSection,
 #testListingHeaderButtons,
 #TestContentHeadingButtons,
-#JobContentHeadingTags {
+#JobContentHeadingTags,
+#TestContentHeadingTags {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -719,22 +706,45 @@
 #JobContentHeadingTitleButton,
 #TestContentTitleButton {
   display: flex;
-  width: 250px;
+  width: fit-content;
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
 }
-@media only screen and (max-width: 1190px) {
+
+@media only screen and (max-width: 1150px) {
+  .testListingSection {
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  #TestContentHeading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    gap: 30px;
+    font-size: 20px;
+    text-align: center;
+    align-items: flex-start;
+  }
+  #TestContentTitleButton {
+    margin-bottom: 30px;
+  }
+}
+@media only screen and (max-width: 1090px) {
   #contentContainer1 {
     flex-direction: column;
     gap: 10px;
   }
   #contentContainer2 {
     border-radius: 20px 20px 0px 0px;
-  }
-  .contentContainer {
-    width: 100%;
   }
 
   #topGraded,
@@ -743,6 +753,7 @@
     width: 100%;
     gap: 10px;
     height: auto;
+    max-height: 500px;
     border-radius: 5px;
     background-color: #e3f3ff;
   }
@@ -758,7 +769,6 @@
     color: black;
   }
   .mockExamscontainerSection,
-  .testListingSection,
   .jobListingcontainerSection {
     width: 100%;
     gap: 10px;
@@ -767,21 +777,10 @@
     flex-wrap: wrap;
     align-items: center;
   }
-
-  #mockExamscontainer,
-  #testListingcontainer,
-  #jobListingcontainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    height: 300px;
-    /* flex-grow: 1; */
-    background-color: #e3f3ff;
+  #JobContentHeadingTitleButton {
+    margin-bottom: 30px;
   }
-  #TestContentHeading,
+
   #JobContentHeading {
     display: flex;
     flex-direction: column;
@@ -790,9 +789,15 @@
     height: auto;
     gap: 30px;
     font-size: 20px;
-    margin-bottom: 20px;
     text-align: center;
     align-items: flex-start;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .contentContainer {
+    width: 100%;
+    margin-left: 0%;
   }
 }
 
@@ -845,6 +850,31 @@
     width: 100%;
   }
 }
+@media only screen and (max-width: 650px) {
+  .mockExamscontainerSection,
+  .testListingSection {
+    height: fit-content;
+    overflow: auto;
+    flex-wrap: nowrap;
+  }
+  #mockExamscontainerDisplaySection,
+  #testListingDisplaySection {
+    width: 100%;
+    height: fit-content;
+  }
+  #mockExamscontainer,
+  #testListingcontainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 300px;
+    height: 350px;
+    /* flex-grow: 1; */
+    background-color: #e3f3ff;
+  }
+}
 
 @media only screen and (max-width: 600px) {
   #companyProfile header {
@@ -879,6 +909,26 @@
   #testListing {
     gap: 20px;
   }
+  #mockExamscontainerHeader,
+  #jobListingcontainerHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #mockExams,
+  #jobListing {
+    gap: 20px;
+  }
+  #mockExamSectionBlock h3 {
+    font-size: 12px;
+  }
+  #userProfileContent {
+    justify-content: center;
+  }
+  #userProfileHeading {
+    flex-direction: column;
+    font-size: 25px;
+  }
 }
 
 @media only screen and (max-width: 500px) {
@@ -902,16 +952,6 @@
     display: flex;
     flex-direction: row;
     gap: 30px;
-  }
-  #mockExamscontainerHeader,
-  #jobListingcontainerHeader {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  #mockExams,
-  #jobListing {
-    gap: 20px;
   }
 }
 @media only screen and (max-width: 400px) {

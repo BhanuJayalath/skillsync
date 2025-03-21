@@ -84,6 +84,11 @@ export default function RecruiterProfile() {
   return (
     <section className={styles.main}>
       {notification.show ? <Notification notification={notification} /> : null}
+      <SideBar
+        setProfileTab={setProfileTab}
+        setDashboardTab={setDashboardTab}
+        setUserProfile={setUserProfile}
+      />
       <div className={styles.contentContainer}>
         <div className={styles.navigation}>
           <div id={styles.pageTitle}>Recruiter Profile</div>
@@ -162,11 +167,6 @@ export default function RecruiterProfile() {
           </div>
         </div>
       </div>
-      {/* <SideBar
-        setProfileTab={setProfileTab}
-        setDashboardTab={setDashboardTab}
-        setUserProfile={setUserProfile}
-      /> */}
     </section>
   );
 }

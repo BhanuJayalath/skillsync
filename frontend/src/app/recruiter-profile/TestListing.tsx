@@ -215,35 +215,37 @@ export default function TestListing({
       <div className={styles.testListingSection}>
         {loadTests?.map((item: any, index: number) => {
           return (
-            <button
-              key={item.testId}
-              onClick={() => {
-                if (removeTestBlock) {
-                  removeTestComponent(item.testId);
-                } else {
-                  loadTestContent(item.testId);
-                }
-              }}
-              id={styles.testListingcontainer}
-            >
-              <Image
-                alt="exam-icon"
-                width={60}
-                height={60}
-                src="/recruiter/exam-icon.svg"
-              />
-              <h1>{item.testLevel}</h1>
-              <div id={styles.testListingButtons}>
-                {removeTestBlock ? (
-                  <Image
-                    alt="remove-icon"
-                    width={25}
-                    height={25}
-                    src="/recruiter/remove-icon.svg"
-                  />
-                ) : null}
-              </div>
-            </button>
+            <div id={styles.testListingDisplaySection}>
+              <button
+                key={item.testId}
+                onClick={() => {
+                  if (removeTestBlock) {
+                    removeTestComponent(item.testId);
+                  } else {
+                    loadTestContent(item.testId);
+                  }
+                }}
+                id={styles.testListingcontainer}
+              >
+                <Image
+                  alt="exam-icon"
+                  width={60}
+                  height={60}
+                  src="/recruiter/exam-icon.svg"
+                />
+                <h1>{item.testLevel}</h1>
+                <div id={styles.testListingButtons}>
+                  {removeTestBlock ? (
+                    <Image
+                      alt="remove-icon"
+                      width={25}
+                      height={25}
+                      src="/recruiter/remove-icon.svg"
+                    />
+                  ) : null}
+                </div>
+              </button>
+            </div>
           );
         })}
       </div>

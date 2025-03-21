@@ -97,7 +97,7 @@ export default function JobListing({
   return (
     <div id={styles.jobListing}>
       <div id={styles.jobListingcontainerHeader}>
-        <h1>Job Listing</h1>
+        <h1>Open Positions</h1>
         {loadJobPosts ? (
           <div id={styles.jobListingHeaderButtonsSection}>
             <button onClick={addJobPostContainers}>
@@ -107,7 +107,7 @@ export default function JobListing({
                 height={20}
                 src="/recruiter/plus-icon.svg"
               />
-              Add Jobs
+              Add Positions
             </button>
             <button
               onClick={() => {
@@ -120,7 +120,7 @@ export default function JobListing({
                 height={20}
                 src="/recruiter/remove-icon.svg"
               />
-              Remove Jobs
+              Remove Positions
             </button>
           </div>
         ) : (
@@ -137,35 +137,36 @@ export default function JobListing({
       <div className={styles.mockExamscontainerSection}>
         {loadJobPosts?.map((item: any, index: number) => {
           return (
-            <button
-              key={index} // Ensure key is directly on the button element
-              onClick={() => {
-                if (removeJobPostContainers) {
-                  removeJobPostComponent(item.jobId); // Use jobId here instead of mockExamId
-                } else {
-                  loadJobPostComponent(item.jobId, index + 1);
-                }
-              }}
-              id={styles.mockExamscontainer}
-            >
-              <Image
-                alt="exam-icon"
-                width={60}
-                height={60}
-                src="/recruiter/exam-icon.svg"
-              />
-              <h1>Job Post {index + 1}</h1>
-              <div id={styles.mockExamscontainerButtons}>
-                {removeJobPostContainers ? (
-                  <Image
-                    alt="remove-icon"
-                    width={25}
-                    height={25}
-                    src="/recruiter/remove-icon.svg"
-                  />
-                ) : null}
-              </div>
-            </button>
+            <div key={index} id={styles.mockExamscontainerDisplaySection}>
+              <button
+                onClick={() => {
+                  if (removeJobPostContainers) {
+                    removeJobPostComponent(item.jobId); // Use jobId here instead of mockExamId
+                  } else {
+                    loadJobPostComponent(item.jobId, index + 1);
+                  }
+                }}
+                id={styles.mockExamscontainer}
+              >
+                <Image
+                  alt="exam-icon"
+                  width={60}
+                  height={60}
+                  src="/recruiter/exam-icon.svg"
+                />
+                <h1>Open Position {index + 1}</h1>
+                <div id={styles.mockExamscontainerButtons}>
+                  {removeJobPostContainers ? (
+                    <Image
+                      alt="remove-icon"
+                      width={25}
+                      height={25}
+                      src="/recruiter/remove-icon.svg"
+                    />
+                  ) : null}
+                </div>
+              </button>
+            </div>
           );
         })}
       </div>

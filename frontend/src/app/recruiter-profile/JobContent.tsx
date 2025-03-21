@@ -164,9 +164,7 @@ export default function JobContent({
               src="/recruiter/back-icon.svg"
             />
           </button>
-          <h1>Job Post {jobCount}</h1>
-        </div>
-        <div id={styles.JobContentHeadingTags}>
+          <h1>Open Position {jobCount}</h1>
           {!updateJobPostContent && jobTitle != "" ? (
             <button
               id={styles.buttonAddJobContent}
@@ -180,7 +178,7 @@ export default function JobContent({
                 height={20}
                 src="/recruiter/update-icon2.svg"
               />
-              Update Job Post
+              Update Position
             </button>
           ) : !updateJobPostContent && jobTitle == "" ? (
             <button
@@ -195,7 +193,7 @@ export default function JobContent({
                 height={20}
                 src="/recruiter/plus-icon.svg"
               />
-              Add Job Post
+              Add Position
             </button>
           ) : (
             <div id={styles.jobContentSectionSaveandClose}>
@@ -208,7 +206,7 @@ export default function JobContent({
                       height={20}
                       src="/recruiter/save-icon.svg"
                     />
-                    Save Job Info
+                    Save Position
                   </button>
                 ) : (
                   <button onClick={saveToDatabase}>
@@ -218,11 +216,13 @@ export default function JobContent({
                       height={20}
                       src="/recruiter/save-icon.svg"
                     />
-                    Save Job Info
+                    Save Position
                   </button>
                 ))}
             </div>
           )}
+        </div>
+        <div id={styles.JobContentHeadingTags}>
           {loadJobPostContent.jobTitle ? (
             <h3>{loadJobPostContent.jobTitle}</h3>
           ) : null}

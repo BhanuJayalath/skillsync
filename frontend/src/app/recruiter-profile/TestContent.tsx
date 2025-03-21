@@ -161,72 +161,74 @@ export default function TestContent({
             />
           </button>
           <h1>Test {loadTestQuestions.testLevel}</h1>
-        </div>
-        <div id={styles.TestContentHeadingButtons}>
-          {!updateTestContent &&
-          loadTestQuestions.testContent.questionContent.length > 0 ? (
-            <button
-              onClick={() => {
-                setUpdateTestContent(true);
-              }}
-            >
-              <Image
-                alt="update-icon"
-                width={20}
-                height={20}
-                src="/recruiter/update-icon2.svg"
-              />
-              Update Questions
-            </button>
-          ) : !updateTestContent &&
-            loadTestQuestions.testContent.questionContent.length === 0 ? (
-            <button
-              onClick={() => {
-                setUpdateTestContent(true);
-              }}
-            >
-              <Image
-                alt="tick-icon"
-                width={20}
-                height={20}
-                src="/recruiter/tik-icon.svg"
-              />
-              Get Started
-            </button>
-          ) : updateTestContent ? (
-            <>
-              <button onClick={addQuestion}>
+          <div id={styles.TestContentHeadingButtons}>
+            {!updateTestContent &&
+            loadTestQuestions.testContent.questionContent.length > 0 ? (
+              <button
+                onClick={() => {
+                  setUpdateTestContent(true);
+                }}
+              >
                 <Image
-                  alt="plus-icon"
+                  alt="update-icon"
                   width={20}
                   height={20}
-                  src="/recruiter/plus-icon.svg"
+                  src="/recruiter/update-icon2.svg"
                 />
-                Add Questions
+                Update Questions
               </button>
-              {databaseExistingId ? (
-                <button onClick={updatetoDatabase}>
+            ) : !updateTestContent &&
+              loadTestQuestions.testContent.questionContent.length === 0 ? (
+              <button
+                onClick={() => {
+                  setUpdateTestContent(true);
+                }}
+              >
+                <Image
+                  alt="tick-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/tik-icon.svg"
+                />
+                Get Started
+              </button>
+            ) : updateTestContent ? (
+              <>
+                <button onClick={addQuestion}>
                   <Image
-                    alt="save-icon"
+                    alt="plus-icon"
                     width={20}
                     height={20}
-                    src="/recruiter/save-icon.svg"
+                    src="/recruiter/plus-icon.svg"
                   />
-                  Save Questions
+                  Add Questions
                 </button>
-              ) : loadTestQuestions.testContent.questionContent.length > 0 ? (
-                <button onClick={save}>
-                  <Image
-                    alt="save-icon"
-                    width={20}
-                    height={20}
-                    src="/recruiter/save-icon.svg"
-                  />
-                  Save Questions
-                </button>
-              ) : null}
-            </>
-          ) : null}
+                {databaseExistingId ? (
+                  <button onClick={updatetoDatabase}>
+                    <Image
+                      alt="save-icon"
+                      width={20}
+                      height={20}
+                      src="/recruiter/save-icon.svg"
+                    />
+                    Save Questions
+                  </button>
+                ) : loadTestQuestions.testContent.questionContent.length > 0 ? (
+                  <button onClick={save}>
+                    <Image
+                      alt="save-icon"
+                      width={20}
+                      height={20}
+                      src="/recruiter/save-icon.svg"
+                    />
+                    Save Questions
+                  </button>
+                ) : null}
+              </>
+            ) : null}
+          </div>
+        </div>
+        <div id={styles.TestContentHeadingTags}>
           <h3>{loadTestQuestions.testId}</h3>
           {loadJobPostContent.jobTitle ? (
             <h3>{loadJobPostContent.jobTitle}</h3>
