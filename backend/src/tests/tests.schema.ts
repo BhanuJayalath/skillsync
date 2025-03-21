@@ -1,15 +1,18 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
 
 export type TestDocument = Tests & Document;
 
-@Schema({ collection: 'tests' })
+@Schema({ collection: "tests" })
 export class Tests {
   @Prop({ required: true })
   testId: String;
 
   @Prop({ required: true })
   jobId: String;
+
+  @Prop({ required: true })
+  testLevel: String;
 
   @Prop({
     type: {
