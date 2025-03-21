@@ -215,9 +215,8 @@ export default function TestListing({
       <div className={styles.testListingSection}>
         {loadTests?.map((item: any, index: number) => {
           return (
-            <div id={styles.testListingDisplaySection}>
+            <div key={item.testId} id={styles.testListingDisplaySection}>
               <button
-                key={item.testId}
                 onClick={() => {
                   if (removeTestBlock) {
                     removeTestComponent(item.testId);
