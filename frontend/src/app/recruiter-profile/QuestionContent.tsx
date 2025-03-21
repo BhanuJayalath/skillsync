@@ -33,7 +33,6 @@ export default function QuestionContent({
     correctAnswer: selectedAnswer,
   };
   useEffect(() => {
-    console.log(updateTestContent, "update test content");
     setQuestion(TestQuestions.question);
     setAnswer1(TestQuestions.answer1);
     setAnswer2(TestQuestions.answer2);

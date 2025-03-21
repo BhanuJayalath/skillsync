@@ -55,4 +55,6 @@ export async function PATCH(request: NextRequest) {
     console.error("Error updating user:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
 }
+
