@@ -5,12 +5,12 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 
 const teamMembers = [
-  { name: "Bhanu Jayalath", role: "Full Stack Developer", image: "/team/bhanu.png", linkedin: "https://www.linkedin.com/in/bhanu-jayalath", github: "https://github.com/BhanuJayalath" },
-  { name: "Dishika Veruwantha", role: "Full Stack Developer", image: "/team/dishika.png", linkedin: "https://www.linkedin.com/in/dishika-veruwantha", github: "https://github.com/DishikaVeruwantha" },
-  { name: "Linuka Arambawela", role: "Full Stack Developer", image: "/team/linuka.png", linkedin: "https://www.linkedin.com/in/linuka-arambawela", github: "https://github.com/LinukaAr" },
-  { name: "Dulith Mayakaduwa", role: "Full Stack Developer", image: "/team/dulith.png", linkedin: "https://www.linkedin.com/in/dulith-mayakaduwa", github: "https://github.com/DulithM" },
-  { name: "Ashmirah Bandaranaike", role: "Full Stack Developer", image: "/team/ashmira.png", linkedin: "https://www.linkedin.com/in/ashmirah-bandaranaike", github: "https://github.com/Ashmirah" },
-  { name: "Pesandu De Alwis", role: "Full Stack Developer", image: "/team/pesadu.png", linkedin: "https://www.linkedin.com/in/pesandu-de-alwis", github: "https://github.com/Pesandu-De-Alwis" },
+  { name: "Bhanu Jayalath", role: "Team Leader | Project Manager", image: "/team/bhanu.png", linkedin: "https://www.linkedin.com/in/bhanu-jayalath-660091265/", github: "https://github.com/BhanuJayalath" },
+  { name: "Dishika Veruwantha", role: "Backend Developer", image: "/team/dishika.png", linkedin: "https://www.linkedin.com/in/dishika-veruwantha", github: "https://github.com/DishikaVeruwantha" },
+  { name: "Linuka Arambawela", role: "Technical Lead", image: "/team/linuka.png", linkedin: "https://www.linkedin.com/in/linuka-arambawela", github: "https://github.com/LinukaAr" },
+  { name: "Dulith Mayakaduwa", role: "Full Stack Developer", image: "/team/dulith.png", linkedin: "https://www.linkedin.com/in/dulith-mayakaduwa-a5108827b/", github: "https://github.com/DulithM" },
+  { name: "Ashmirah Bandaranaike", role: "Frontend Developer", image: "/team/ashmira.png", linkedin: "https://www.linkedin.com/in/ashmirah-bandaranayake-a59171332/", github: "https://github.com/Ashmirah" },
+  { name: "Pesandu De Alwis", role: "Frontend Developer", image: "/team/pesadu.png", linkedin: "https://www.linkedin.com/in/pesandu-de-alwis-43ab25282/", github: "https://github.com/Pesandu-De-Alwis" },
 ]
 
 export default function AboutUs() {
