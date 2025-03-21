@@ -393,7 +393,8 @@
     background: #fff;
     padding: 1.5em;
     margin: auto;
-    width: 45em;
+    width: 100%;
+    max-width: 45em;
     border-radius: 0.5em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -484,16 +485,16 @@
 /* CV Section */
 .cvSection {
     font-family: Arial, sans-serif;
-    width: 49.61rem;
+    width: 60%;
     min-height:70.157489153699rem ;
-    padding: 2cm;
+    padding: 4em;
     margin: 0 auto;
     justify-content: center;
     align-items: center;
     background: #ffffff;
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-    border: 1px solid #ccc;
-    line-height: 1.6;
+    border: 0.1em solid #ccc;
+    line-height: 1.5;
     cursor: pointer;
 }
 
@@ -510,33 +511,33 @@
 }
 
 .name {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
     color: #333;
 }
 
 .jobTitle {
-    font-size: 1.3rem;
+    font-size: 1rem;
     color: #555;
     margin-bottom: 0.5em;
 }
 
 .contactDetails {
-    font-size: 0.9rem;
-    margin-top: 10px;
+    font-size: 0.8rem;
+    margin-top: 1em;
     color: #777;
 }
 
 .experience,
 .education,
 .skills,.assessment {
-    margin-top: 25px;
+    margin-top: 2.5em;
 }
 
 .experience,
 .education,
 .skills,.assessment p {
-    margin-top: 25px;
+    margin-top: 2.5em;
     text-align: justify;
 }
 
