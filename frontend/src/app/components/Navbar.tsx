@@ -136,7 +136,7 @@ const Navbar = () => {
           </Link>
           {user ? (
             <>
-              <Link href="/userProfile" className={styles.mobileNavLink}>Profile</Link>
+              <Link href={`/userProfile/${user._id}`} className={styles.mobileNavLink}>Profile</Link>
               <button onClick={handleLogout} className={styles.mobileNavLink}>Logout</button>
             </>
           ) : (
