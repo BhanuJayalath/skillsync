@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import {  Database} from "lucide-react";
 import "./JobRecommendations.css";
 
 interface Job {
@@ -202,8 +203,10 @@ const Careers = () => {
   return (
     <div className="job-recommendations">
       <div className="job-recommendations-header">
-        <h1>Job Recommendations</h1>
-
+      <div className="flex items-center mb-8">
+            <Database className="text-primary mr-2" size={24} />
+            <h2 className="text-2xl font-bold text-gray-800">Recommended Jobs - SkillSync</h2>
+          </div>
         {skills.length > 0 && (
           <div className="skills-container">
             <h3>Your Skills</h3>
@@ -239,9 +242,11 @@ const Careers = () => {
       {loading && <p className="loading-message">Loading job recommendations...</p>}
 
       {!loading && jobs.length === 0 && (
-        <div className="no-jobs-container">
-          <p>No job recommendations found based on your skills.</p>
-        </div>
+        <div className="text-center py-20 bg-gray-50 rounded-lg">
+        <p className="text-lg text-gray-600">
+          No jobs found in database.
+        </p>
+      </div>
       )}
 
       {!loading && jobs.length > 0 && (
