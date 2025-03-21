@@ -6,6 +6,7 @@ import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { Search, Briefcase, Database, Loader2 } from "lucide-react";
 import JobCard from "./jobcard";
+import Career from "../job-recommendations/[id]/page";
 
 const DEEPSEEK_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 const DEEPSEEK_API_KEY = process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY;
@@ -138,26 +139,12 @@ Output the result as a JSON array, where each object has the following fields: i
         {/* Jobs Section - Database */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
           <div className="flex items-center mb-8">
-            <Database className="text-primary mr-2" size={24} />
-            <h2 className="text-2xl font-bold text-gray-800">Recommended Jobs - SkillSync</h2>
+            <Career/>
           </div>
-          {dbJobs.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {dbJobs.map((job) => (
-                <JobCard key={job.id} job={job} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20 bg-gray-50 rounded-lg">
-              <p className="text-lg text-gray-600">
-                No jobs found in database.
-              </p>
-            </div>
-          )}
         </div>
 
         {/* Section Divider */}
-        <div className="bg-gray-100 py-12">
+        <div className="bg-blue-300 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h2 className="text-2xl font-bold text-gray-800">Find Your Next Job</h2>
