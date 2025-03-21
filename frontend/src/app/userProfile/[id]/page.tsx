@@ -44,6 +44,8 @@ interface Notification {
     jobId:string;
     jobTitle:string;
     jobType:string;
+    companyName:string;
+    companyEmail:string;
     recruiterNote:string;
     isSelected:boolean;
     approved:boolean;
