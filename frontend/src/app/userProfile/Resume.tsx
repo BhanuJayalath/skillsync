@@ -1,6 +1,5 @@
 import styles from "@/app/userProfile/user.module.css";
-
-import React from "react";
+import React, { useEffect } from "react";
 
 interface User {
     fullName: string;
@@ -50,6 +49,37 @@ interface ResumeProps {
 
 const Resume = ({user}: ResumeProps) => {
 
+    useEffect(() => {
+        if (!user) return; // Prevent running if user is not defined
+
+        const allJobNamesAreEmpty = user.experience?.every((job) => job.jobName === "") ?? true;
+        const allCourseNamesAreEmpty = user.education?.every((course) => course.courseName === "") ?? true;
+
+        if (typeof window !== 'undefined') {
+            const educationElement = document.getElementById('educationSection');
+            const skillElement = document.getElementById('skillSection');
+            const experienceElement = document.getElementById('experienceSection');
+            const summaryElement = document.getElementById('summarySection');
+
+            if (allJobNamesAreEmpty && experienceElement) {
+                experienceElement.style.display = 'none';
+            }
+
+            if (allCourseNamesAreEmpty && educationElement) {
+                educationElement.style.display = 'none';
+            }
+
+            if (!user.skills?.length && skillElement) {
+                skillElement.style.display = 'none';
+            }
+
+            if (!user.cvSummary?.length && summaryElement) {
+                summaryElement.style.display = 'none';
+            }
+
+            console.log(user.experience);
+        }
+    }, [user?.cvSummary?.length, user?.skills?.length, user?.education?.length, user?.experience?.length]);
     return (
         <section className={styles.cvSection} onClick={() => {
             if (typeof window !== 'undefined') {

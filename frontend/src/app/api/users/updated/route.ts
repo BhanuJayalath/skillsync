@@ -12,10 +12,10 @@ export async function PATCH(request: NextRequest) {
     // Parse the request body for updated details.
     const reqBody = await request.json();
 
-    // Update the user details (only allowing updates for userName and email here)
+    // Update the user details using all provided fields from the request body.
     const updatedUser = await User.findOneAndUpdate(
       { _id: userId },
-      { $set: { userName: reqBody.userName, email: reqBody.email } },
+      { $set: { ...reqBody } },
       { new: true, runValidators: true }
     ).select("-password");
 

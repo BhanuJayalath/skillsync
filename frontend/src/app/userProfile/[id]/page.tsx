@@ -15,7 +15,7 @@ import COURSE from '@/app/courses/page';
 import axios from "axios";
 import {toast} from "react-hot-toast";
 import Assessment from '@/app/test/page';
-import Employment from '@/app/job-recommendations/page';
+import JobRecommendations from '@/app/recommended-jobs/page';
 
 interface SelectedJob {
     jobTitle: string;
@@ -44,6 +44,8 @@ interface Notification {
     jobId:string;
     jobTitle:string;
     jobType:string;
+    companyName:string;
+    companyEmail:string;
     recruiterNote:string;
     isSelected:boolean;
     approved:boolean;
@@ -244,11 +246,11 @@ interface User {
          }
      };
 
-     const handleApprove = async (index:number) => {
+     const handleApprove = (index:number) => {
          if(user){
                 user.notifications[index].approved = true;
                 setUser({...user});
-                await handleSubmit();
+                 handleSubmit();
          }
          const filteredNotifications = user?.notifications.filter(item =>
              item.isSelected && !item.approved) ?? [];
@@ -386,7 +388,7 @@ interface User {
                                                         {user?.notifications.filter(item => item.isSelected && !item.approved).map((notification, index) => (
                                                             <li key={index}>
                                                                 {messageIndex === index && showMessage === true ? (
-                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType}</p>) : (
+                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType} <br/> {notification.companyName} <br/> {notification.companyEmail}</p>) : (
                                                                     <p onClick={() => {setMessageIndex(index); setShowMessage(true);}}>{notification.recruiterNote}</p>)}
                                                                 <button onClick={()=> handleApprove(index)}>Approve</button>
                                                             </li>
@@ -410,7 +412,7 @@ interface User {
                                             />}
                                             {activeTab === 4 && user && <MockInterview/>}.
                                             {activeTab === 5 && user && <Assessment/>}
-                                            {activeTab === 6 && user && <Employment/>}
+                                            {activeTab === 6 && user && <JobRecommendations/>}
                                             {activeTab === 7 && user && <Settings
                                                 user={user}
                                                 handleSubmit={handleSubmit}

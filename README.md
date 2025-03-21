@@ -1,12 +1,12 @@
 <div align="center">
 
-# SkillScync
+# SkillSync
 ![image](https://github.com/user-attachments/assets/8259cf4c-8b45-4609-bfd5-a9f02aec7cf9)
 
 
 
 
-<i>Personal Skill Assesment Tool</i>
+<i>Personal Skill Assessment Tool</i>
 
 </div>
 
@@ -97,5 +97,5 @@ You can view the Figma design for this project [here](https://www.figma.com/desi
 ⭐️ Support Our Project
 If you find this project helpful, please consider giving it a star on GitHub! Your support helps to grow the project.
 
-### Show some ❤️ by starring this awesome repository!
+### Show some ❤️ by liking this awesome repository!
 </div>
