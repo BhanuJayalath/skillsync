@@ -388,7 +388,7 @@ interface User {
                                                         {user?.notifications.filter(item => item.isSelected && !item.approved).map((notification, index) => (
                                                             <li key={index}>
                                                                 {messageIndex === index && showMessage === true ? (
-                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType} </p>) : (
+                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType} <br/> {notification.companyName} <br/> {notification.companyEmail}</p>) : (
                                                                     <p onClick={() => {setMessageIndex(index); setShowMessage(true);}}>{notification.recruiterNote}</p>)}
                                                                 <button onClick={()=> handleApprove(index)}>Approve</button>
                                                             </li>
