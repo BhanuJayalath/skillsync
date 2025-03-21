@@ -108,48 +108,79 @@ export default function TestListing({
     <div id={styles.testListing}>
       <div id={styles.testListingHeader}>
         <h1>Tests</h1>
-        {addTestLevel ? (
-          <div id={styles.addTestLevel}>
-            <button
-              onClick={() => {
-                setTestLevel("Level 1");
-              }}
-            >
-              Level 1
-              <Image
-                alt="plus-icon"
-                width={20}
-                height={20}
-                src="/recruiter/plus-icon.svg"
-              />
-            </button>
-            <button
-              onClick={() => {
-                setTestLevel("Level 2");
-              }}
-            >
-              Level 2
-              <Image
-                alt="plus-icon"
-                width={20}
-                height={20}
-                src="/recruiter/plus-icon.svg"
-              />
-            </button>
-            <button
-              onClick={() => {
-                setTestLevel("Level 3");
-              }}
-            >
-              Level 3
-              <Image
-                alt="plus-icon"
-                width={20}
-                height={20}
-                src="/recruiter/plus-icon.svg"
-              />
-            </button>
-            {loadTests.length > 0 ? (
+        <div id={styles.testListingHeaderButtons}>
+          {addTestLevel ? (
+            <div id={styles.addTestLevel}>
+              <button
+                onClick={() => {
+                  setTestLevel("Level 1");
+                }}
+              >
+                Level 1
+                <Image
+                  alt="plus-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/plus-icon.svg"
+                />
+              </button>
+              <button
+                onClick={() => {
+                  setTestLevel("Level 2");
+                }}
+              >
+                Level 2
+                <Image
+                  alt="plus-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/plus-icon.svg"
+                />
+              </button>
+              <button
+                onClick={() => {
+                  setTestLevel("Level 3");
+                }}
+              >
+                Level 3
+                <Image
+                  alt="plus-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/plus-icon.svg"
+                />
+              </button>
+              {loadTests.length > 0 ? (
+                <button
+                  onClick={() => {
+                    setRemoveTestBlock(!removeTestBlock);
+                  }}
+                >
+                  <Image
+                    alt="remove-icon"
+                    width={23}
+                    height={23}
+                    src="/recruiter/remove-icon.svg"
+                  />
+                  remove Tests
+                </button>
+              ) : null}
+            </div>
+          ) : loadTests.length > 0 ? (
+            <>
+              <button
+                onClick={() => {
+                  setAddTestLevel(true);
+                }}
+              >
+                <Image
+                  alt="plus-icon"
+                  width={23}
+                  height={23}
+                  src="/recruiter/plus-icon.svg"
+                />
+                Add Tests
+              </button>
               <button
                 onClick={() => {
                   setRemoveTestBlock(!removeTestBlock);
@@ -163,10 +194,8 @@ export default function TestListing({
                 />
                 remove Tests
               </button>
-            ) : null}
-          </div>
-        ) : loadTests.length > 0 ? (
-          <>
+            </>
+          ) : (
             <button
               onClick={() => {
                 setAddTestLevel(true);
@@ -180,35 +209,8 @@ export default function TestListing({
               />
               Add Tests
             </button>
-            <button
-              onClick={() => {
-                setRemoveTestBlock(!removeTestBlock);
-              }}
-            >
-              <Image
-                alt="remove-icon"
-                width={23}
-                height={23}
-                src="/recruiter/remove-icon.svg"
-              />
-              remove Tests
-            </button>
-          </>
-        ) : (
-          <button
-            onClick={() => {
-              setAddTestLevel(true);
-            }}
-          >
-            <Image
-              alt="plus-icon"
-              width={23}
-              height={23}
-              src="/recruiter/plus-icon.svg"
-            />
-            Add Tests
-          </button>
-        )}
+          )}
+        </div>
       </div>
       <div className={styles.testListingSection}>
         {loadTests?.map((item: any, index: number) => {

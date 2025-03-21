@@ -99,7 +99,7 @@ export default function JobListing({
       <div id={styles.jobListingcontainerHeader}>
         <h1>Job Listing</h1>
         {loadJobPosts ? (
-          <>
+          <div id={styles.jobListingHeaderButtonsSection}>
             <button onClick={addJobPostContainers}>
               <Image
                 alt="plus-icon"
@@ -122,7 +122,7 @@ export default function JobListing({
               />
               Remove Jobs
             </button>
-          </>
+          </div>
         ) : (
           <button onClick={addJobPostContainers}>
             <Image

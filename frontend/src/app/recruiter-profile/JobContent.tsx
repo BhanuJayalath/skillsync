@@ -155,75 +155,79 @@ export default function JobContent({
   return (
     <section className={styles.JobContent}>
       <header id={styles.JobContentHeading}>
-        <button id={styles.buttonPreviousPage} onClick={previousPage}>
-          <Image
-            alt="back-icon"
-            width={25}
-            height={25}
-            src="/recruiter/back-icon.svg"
-          />
-        </button>
-        <h1>Job Post {jobCount}</h1>
-        {!updateJobPostContent && jobTitle != "" ? (
-          <button
-            id={styles.buttonAddJobContent}
-            onClick={() => {
-              setUpdateJobPostContent(!updateJobPostContent);
-            }}
-          >
+        <div id={styles.JobContentHeadingTitleButton}>
+          <button id={styles.buttonPreviousPage} onClick={previousPage}>
             <Image
-              alt="update-icon"
-              width={20}
-              height={20}
-              src="/recruiter/update-icon2.svg"
+              alt="back-icon"
+              width={25}
+              height={25}
+              src="/recruiter/back-icon.svg"
             />
-            Update Job Post
           </button>
-        ) : !updateJobPostContent && jobTitle == "" ? (
-          <button
-            id={styles.buttonAddJobContent}
-            onClick={() => {
-              setUpdateJobPostContent(!updateJobPostContent);
-            }}
-          >
-            <Image
-              alt="add-icon"
-              width={20}
-              height={20}
-              src="/recruiter/plus-icon.svg"
-            />
-            Add Job Post
-          </button>
-        ) : (
-          <div id={styles.jobContentSectionSaveandClose}>
-            {updateJobPostContent &&
-              (databaseExistingId ? (
-                <button onClick={updatetoDatabase}>
-                  <Image
-                    alt="save-icon"
-                    width={20}
-                    height={20}
-                    src="/recruiter/save-icon.svg"
-                  />
-                  Save Job Info
-                </button>
-              ) : (
-                <button onClick={saveToDatabase}>
-                  <Image
-                    alt="save-icon"
-                    width={20}
-                    height={20}
-                    src="/recruiter/save-icon.svg"
-                  />
-                  Save Job Info
-                </button>
-              ))}
-          </div>
-        )}
-        {loadJobPostContent.jobTitle ? (
-          <h3>{loadJobPostContent.jobTitle}</h3>
-        ) : null}
-        <h3>{loadJobPostContent.jobId}</h3>
+          <h1>Job Post {jobCount}</h1>
+        </div>
+        <div id={styles.JobContentHeadingTags}>
+          {!updateJobPostContent && jobTitle != "" ? (
+            <button
+              id={styles.buttonAddJobContent}
+              onClick={() => {
+                setUpdateJobPostContent(!updateJobPostContent);
+              }}
+            >
+              <Image
+                alt="update-icon"
+                width={20}
+                height={20}
+                src="/recruiter/update-icon2.svg"
+              />
+              Update Job Post
+            </button>
+          ) : !updateJobPostContent && jobTitle == "" ? (
+            <button
+              id={styles.buttonAddJobContent}
+              onClick={() => {
+                setUpdateJobPostContent(!updateJobPostContent);
+              }}
+            >
+              <Image
+                alt="add-icon"
+                width={20}
+                height={20}
+                src="/recruiter/plus-icon.svg"
+              />
+              Add Job Post
+            </button>
+          ) : (
+            <div id={styles.jobContentSectionSaveandClose}>
+              {updateJobPostContent &&
+                (databaseExistingId ? (
+                  <button onClick={updatetoDatabase}>
+                    <Image
+                      alt="save-icon"
+                      width={20}
+                      height={20}
+                      src="/recruiter/save-icon.svg"
+                    />
+                    Save Job Info
+                  </button>
+                ) : (
+                  <button onClick={saveToDatabase}>
+                    <Image
+                      alt="save-icon"
+                      width={20}
+                      height={20}
+                      src="/recruiter/save-icon.svg"
+                    />
+                    Save Job Info
+                  </button>
+                ))}
+            </div>
+          )}
+          {loadJobPostContent.jobTitle ? (
+            <h3>{loadJobPostContent.jobTitle}</h3>
+          ) : null}
+          <h3>{loadJobPostContent.jobId}</h3>
+        </div>
       </header>
       {loadJobPostContent && updateJobPostContent ? (
         <div id={styles.jobContentSection}>
