@@ -151,7 +151,6 @@ const LandingPage = () => {
             >
               <div className={styles.heroImageWrapper}>
                 <div className={`${styles.bgCircle} ${styles.bgCircleTop}`}></div>
-                <div className={`${styles.bgCircle} ${styles.bgCircleBottom}`}></div>
                 <Image
                   src="/girl.png"
                   alt="Professional"
