@@ -7,12 +7,12 @@ import {
   Param,
   Patch,
 } from '@nestjs/common';
-import { JobRecommendationService } from './job-recommendation.service';
+import { JobsService } from './jobs.service';
 import { Job } from './job.schema';
 
 @Controller('jobs')
-export class JobRecommendationController {
-  constructor(private readonly jobService: JobRecommendationService) {}
+export class JobsController {
+  constructor(private readonly jobService: JobsService) {}
 
   @Post('recommendJob') //define the POST route /getUser
   async getJob(@Body() body: { skills: string; jobs: any }) {
