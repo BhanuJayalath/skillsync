@@ -159,8 +159,8 @@ export default function UserProfile({
         >
           <Image
             alt="delete-icon"
-            width={30}
-            height={30}
+            width={50}
+            height={50}
             src="/recruiter/delete-icon.svg"
           />
         </button>

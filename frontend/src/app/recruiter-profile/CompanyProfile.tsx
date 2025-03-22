@@ -48,10 +48,10 @@ export default function CompanyProfile({
           <h1>Update Your Company Info</h1>
           <button onClick={updateRecruiterInfo}>
             <Image
-              alt="update-icon2"
+              alt="save-icon"
               width={20}
               height={20}
-              src="/recruiter/update-icon2.svg"
+              src="/recruiter/save-icon.svg"
             />
             Save Company Info
           </button>
