@@ -34,6 +34,7 @@ const MCQTest = () => {
   const [score, setScore] = useState({ correct: 0, total: 0 })
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
   const [testId, setTestId] = useState<string>("")
+    
 
   // Fetch user data from API 
   useEffect(() => {
@@ -149,38 +150,47 @@ const MCQTest = () => {
 
   const handleSubmit = async () => {
     let correctCount = 0
-
+  
     answers.forEach((answer, index) => {
       if (answer === questions[index].correctAnswer) {
         correctCount++
       }
     })
-
+  
     const mark = (correctCount / questions.length) * 100
-
+  
     setScore({ correct: correctCount, total: questions.length })
     setIsSubmitted(true)
-
+  
     console.log("Submitted answers:", answers)
     console.log("Score:", correctCount, "out of", questions.length)
     console.log("Mark:", mark)
-
+  
     // Only submit if we have a userId
     if (userId) {
       try {
+        // Fetch current user data to get existing tests
+        const userResponse = await axios.get(`/api/users/me`)
+        const currentTests = userResponse.data.user.tests || []
+  
+        // Append the new test result
+        const updatedTests = [
+          ...currentTests,
+          {
+            testId,
+            mark,
+          },
+        ]
+  
+        // Update user data with the new tests array
         const response = await fetch(`${baseUrl}/updateUser/${userId}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            tests: [
-              {
-                testId,
-                mark,
-              },
-            ],
+            tests: updatedTests,
           }),
         })
-
+  
         if (!response.ok) {
           console.log("Failed to update user data!")
         } else {
@@ -193,7 +203,7 @@ const MCQTest = () => {
       console.error("Cannot submit test results: userId is not available")
     }
   }
-
+  
   const allQuestionsAnswered = answers.every((answer) => answer !== null)
   const progressPercentage = (answers.filter((a) => a !== null).length / questions.length) * 100
 

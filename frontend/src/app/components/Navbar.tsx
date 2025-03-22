@@ -125,9 +125,6 @@ const Navbar = () => {
       {/* Mobile menu, show/hide based on menu state. */}
       <div className={`${styles.mobileMenu} ${isOpen ? styles.mobileMenuOpen : ""}`}>
         <div className={styles.mobileMenuContent}>
-          <Link href="/userProfile" className={styles.mobileNavLink}>
-            User Profile
-          </Link>
           <Link href="/about-us" className={styles.mobileNavLink}>
             About Us
           </Link>
@@ -136,17 +133,17 @@ const Navbar = () => {
           </Link>
           {user ? (
             <>
-              <Link href="/userProfile" className={styles.mobileNavLink}>Profile</Link>
-              <button onClick={handleLogout} className={styles.mobileNavLink}>Logout</button>
+              <Link href={`/userProfile/${user._id}`} className={styles.mobileNavLink}>Profile</Link>
+              <Link href="#" onClick={handleLogout} className={`${styles.mobileNavLink} ${styles.fn}`}>Logout</Link>
             </>
           ) : (
             <>
-              <Link href="/login" className={styles.mobileNavLink}>
+              <Link href="/login" className={`${styles.mobileNavLink} ${styles.fn}`}>
                 Sign In
               </Link>
-              <Link href="/sign-up" className={styles.mobileNavLink}>
+              {/* <Link href="/sign-up" className={`${styles.mobileNavLink} ${styles.fn}`}>
                 Sign Up
-              </Link>
+              </Link> */}
             </>
           )}
         </div>
