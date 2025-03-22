@@ -100,7 +100,7 @@ export default function Dashboard({
   return (
     <>
       <div id={styles.topGraded}>
-        <h1>Job Post</h1>
+        <h1>Open Positions</h1>
         <div id={styles.dashboardDisplayContainer}>
           {jobs.map((item: any) => {
             return (
@@ -129,14 +129,14 @@ export default function Dashboard({
                 key={item.testId}
                 id={styles.profilesContainer}
               >
-                <TestTab testId={item.testId} index={index + 1} />
+                <TestTab testLevel={item.testLevel} />
               </button>
             );
           })}
         </div>
       </div>
       <div id={styles.results}>
-        <h1>Candidate's Ranks</h1>
+        <h1>Best Grades</h1>
         <div id={styles.dashboardDisplayContainer}>
           {bestPerformed.map((item: any, index: number) => {
             return (
