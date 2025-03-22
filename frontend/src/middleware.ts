@@ -5,7 +5,22 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
   // Define public paths in an array
-  const publicPaths = ['/login', '/sign-up', '/courses']
+  const publicPaths = [
+
+    '/home',
+    '/basic-test',
+    '/courses',
+    '/job-recommendations',
+    '/job-recommendations/:path*',
+    '/mock-interview',
+    '/recommended-jobs',
+    '/recruiter-profile',
+    '/test',
+
+
+    '/login',
+    '/sign-up',
+]
   const isPublicPath = publicPaths.includes(path)
 
   const token = request.cookies.get('token')?.value || ''
@@ -22,10 +37,17 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/home',
+    '/basic-test',
+    '/courses',
+    '/job-recommendations',
+    '/job-recommendations/:path*',
+    '/mock-interview',
+    '/recommended-jobs',
+    '/recruiter-profile',
+    '/test',
     '/userProfile',
-    '/userProfile/',
+
     '/login',
     '/sign-up',
-    '/courses',
   ]
 }
