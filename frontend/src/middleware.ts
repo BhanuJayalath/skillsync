@@ -4,25 +4,21 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
-  // Define public paths in an array
-  const publicPaths = [
+  // Define public paths using regex patterns
+  const publicPathPatterns = [
+    /^\/home$/,
+    /^\/basic-test$/,
+    /^\/courses$/,
+    /^\/job-recommendations(\/.*)?$/,
+    /^\/mock-interview$/,
+    /^\/recommended-jobs$/,
+    /^\/recruiter-profile$/,
+    /^\/test$/,
+    /^\/login$/,
+    /^\/sign-up$/,
+  ]
 
-    '/home',
-    '/basic-test',
-    '/courses',
-    '/job-recommendations',
-    '/job-recommendations/:path*',
-    '/mock-interview',
-    '/recommended-jobs',
-    '/recruiter-profile',
-    '/test',
-
-
-    '/login',
-    '/sign-up',
-]
-  const isPublicPath = publicPaths.includes(path)
-
+  const isPublicPath = publicPathPatterns.some((pattern) => pattern.test(path))
   const token = request.cookies.get('token')?.value || ''
 
   if (isPublicPath && token) {
@@ -32,6 +28,8 @@ export function middleware(request: NextRequest) {
   if (!isPublicPath && !token) {
     return NextResponse.redirect(new URL('/login', request.nextUrl))
   }
+
+  return NextResponse.next() // Always good to return next if no redirect occurs
 }
  
 export const config = {
@@ -39,14 +37,12 @@ export const config = {
     '/home',
     '/basic-test',
     '/courses',
-    '/job-recommendations',
     '/job-recommendations/:path*',
     '/mock-interview',
     '/recommended-jobs',
     '/recruiter-profile',
     '/test',
     '/userProfile',
-
     '/login',
     '/sign-up',
   ]
