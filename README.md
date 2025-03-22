@@ -71,6 +71,14 @@ This project aims to create a comprehensive platform that empowers users to effe
 
 ![Next.js](https://img.shields.io/badge/Next.js-%23000000.svg?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![NestJS](https://img.shields.io/badge/NestJS-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%2347A248.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Gemini API](https://img.shields.io/badge/Gemini%20API-%23000000.svg?style=for-the-badge&logo=gemini&logoColor=white)
+![DeepSeek R1](https://img.shields.io/badge/DeepSeek-%230000FF.svg?style=for-the-badge&logo=deepseek&logoColor=white)
+
+### ☁️ **Hosting**
+![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
+![Render](https://img.shields.io/badge/Render-%23000000.svg?style=for-the-badge&logo=render&logoColor=white)
+
 
 ### 🎨 **UI Design**
 
