@@ -15,7 +15,7 @@ import COURSE from '@/app/courses/page';
 import axios from "axios";
 import {toast} from "react-hot-toast";
 import Assessment from '@/app/test/page';
-import Employment from '@/app/job-recommendations/[id]/page';
+import JobRecommendations from '@/app/recommended-jobs/page';
 
 interface SelectedJob {
     jobTitle: string;
@@ -412,7 +412,7 @@ interface User {
                                             />}
                                             {activeTab === 4 && user && <MockInterview/>}.
                                             {activeTab === 5 && user && <Assessment/>}
-                                            {activeTab === 6 && user && <Employment/>}
+                                            {activeTab === 6 && user && <JobRecommendations/>}
                                             {activeTab === 7 && user && <Settings
                                                 user={user}
                                                 handleSubmit={handleSubmit}
