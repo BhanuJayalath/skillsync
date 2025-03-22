@@ -1,0 +1,12 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+#idea
+.idea
+*.iml
+# ESLint and Prettier cache files
+/.eslintcache
+/.prettiercache
+
+#env
+.env
+.env.*

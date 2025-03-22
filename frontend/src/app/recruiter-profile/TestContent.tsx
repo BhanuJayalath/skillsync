@@ -5,30 +5,31 @@ import Image from "next/image";
 import styles from "../assets/styles/recruiter.module.css";
 import QuestionContent from "./QuestionContent";
 export default function TestContent({
+  loadJobPostContent,
   loadTestQuestions,
   setLoadTestQuestions,
-  testCount,
-  updateTestContent,
-  setUpdateTestContent,
+  testLevel,
   testResponse,
   testState,
   setTestState,
   jobPostState,
   setJobPostState,
+  setNotification,
 }: {
+  loadJobPostContent: any;
   setLoadTestQuestions: any;
   loadTestQuestions: any;
-  testCount: number;
-  updateTestContent: any;
-  setUpdateTestContent: any;
+  testLevel: string;
   testResponse: any;
   testState: any;
   setTestState: any;
   jobPostState: any;
   setJobPostState: any;
+  setNotification: any;
 }) {
   var counter = 0;
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
+  const [updateTestContent, setUpdateTestContent] = useState(false);
   useEffect(() => {
     const DatabaseExistingId = testResponse.some(
       (item: any) => item.testId === loadTestQuestions.testId
@@ -36,12 +37,7 @@ export default function TestContent({
     setDatabaseExistingId(DatabaseExistingId);
   });
 
-  useEffect(() => {
-    // localStorage.setItem(
-    //   loadTestQuestions.testId,
-    //   JSON.stringify(loadTestQuestions)
-    // );
-  }, [loadTestQuestions]);
+  useEffect(() => {}, [loadTestQuestions]);
 
   function addQuestion() {
     var temp = {
@@ -65,7 +61,6 @@ export default function TestContent({
     });
   }
   function update(id: string, questionItem: any) {
-    // console.log("trigger");
     const index = loadTestQuestions.testContent.questionContent.findIndex(
       (item: any) => item.questionId == id
     );
@@ -102,12 +97,32 @@ export default function TestContent({
     });
   }
   function save() {
-    axios.post(`${process.env.NEXT_PUBLIC_SAVE_TEST}`, loadTestQuestions, {
-      headers: { "Content-Type": "application/json" },
-    });
-    setJobPostState(!jobPostState);
-    setTestState(!testState);
-    setUpdateTestContent(false);
+    if (
+      loadTestQuestions.testContent.questionContent.some((question: any) =>
+        Object.values(question).some(
+          (value: any) =>
+            value === "" || value === undefined || Number.isNaN(value)
+        )
+      )
+    ) {
+      setNotification({
+        show: true,
+        message: "All the fields are required",
+        status: true,
+      });
+    } else {
+      axios.post(`${process.env.NEXT_PUBLIC_SAVE_TEST}`, loadTestQuestions, {
+        headers: { "Content-Type": "application/json" },
+      });
+      setNotification({
+        show: true,
+        message: "Submitted Sucessfully",
+        status: false,
+      });
+      setJobPostState(!jobPostState);
+      setTestState(!testState);
+      setUpdateTestContent(false);
+    }
   }
   function updatetoDatabase() {
     axios.patch(
@@ -117,6 +132,14 @@ export default function TestContent({
         headers: { "Content-Type": "application/json" },
       }
     );
+    setNotification({
+      show: true,
+      message: "Updated Sucessfully",
+      status: false,
+    });
+    setJobPostState(!jobPostState);
+    setTestState(!testState);
+    setUpdateTestContent(false);
   }
   function previousPage() {
     setJobPostState(!jobPostState);
@@ -127,46 +150,111 @@ export default function TestContent({
 
   return (
     <section className={styles.mockExam}>
-      <header id={styles.mockExamHeading}>
-        <button onClick={previousPage}>back</button>
-        <h1>Test {testCount}</h1>
-        {updateTestContent ? (
-          <>
-            <button onClick={addQuestion}>
-              <Image
-                alt="plus-icon"
-                width={25}
-                height={25}
-                src="/recruiter/plus-icon.svg"
-              />
-            </button>
-            {databaseExistingId ? (
-              <button onClick={updatetoDatabase}>Update</button>
-            ) : (
-              <button onClick={save}>Save</button>
-            )}
-          </>
-        ) : null}
-      </header>
-      {loadTestQuestions?.testContent?.questionContent.length > 0 ? (
-        loadTestQuestions.testContent.questionContent.map((item: any) => {
-          questionCounter++;
-          return (
-            <QuestionContent
-              key={questionCounter}
-              TestQuestions={item}
-              questionCounter={questionCounter}
-              update={update}
-              removeQuestion={removeQuestion}
-              updateTestContent={updateTestContent}
+      <header id={styles.TestContentHeading}>
+        <div id={styles.TestContentTitleButton}>
+          <button onClick={previousPage}>
+            <Image
+              alt="back-icon"
+              width={25}
+              height={25}
+              src="/recruiter/back-icon.svg"
             />
-          );
-        })
-      ) : (
-        <div id={styles.emptyMockExamSection}>
-          <h1>Add your Questions Here</h1>
+          </button>
+          <h1>Test {loadTestQuestions.testLevel}</h1>
+          <div id={styles.TestContentHeadingButtons}>
+            {!updateTestContent &&
+            loadTestQuestions.testContent.questionContent.length > 0 ? (
+              <button
+                onClick={() => {
+                  setUpdateTestContent(true);
+                }}
+              >
+                <Image
+                  alt="update-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/update-icon2.svg"
+                />
+                Update Questions
+              </button>
+            ) : !updateTestContent &&
+              loadTestQuestions.testContent.questionContent.length === 0 ? (
+              <button
+                onClick={() => {
+                  setUpdateTestContent(true);
+                }}
+              >
+                <Image
+                  alt="tick-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/tik-icon.svg"
+                />
+                Get Started
+              </button>
+            ) : updateTestContent ? (
+              <>
+                <button onClick={addQuestion}>
+                  <Image
+                    alt="plus-icon"
+                    width={20}
+                    height={20}
+                    src="/recruiter/plus-icon.svg"
+                  />
+                  Add Questions
+                </button>
+                {databaseExistingId ? (
+                  <button onClick={updatetoDatabase}>
+                    <Image
+                      alt="save-icon"
+                      width={20}
+                      height={20}
+                      src="/recruiter/save-icon.svg"
+                    />
+                    Save Questions
+                  </button>
+                ) : loadTestQuestions.testContent.questionContent.length > 0 ? (
+                  <button onClick={save}>
+                    <Image
+                      alt="save-icon"
+                      width={20}
+                      height={20}
+                      src="/recruiter/save-icon.svg"
+                    />
+                    Save Questions
+                  </button>
+                ) : null}
+              </>
+            ) : null}
+          </div>
         </div>
-      )}
+        <div id={styles.TestContentHeadingTags}>
+          <h3>{loadTestQuestions.testId}</h3>
+          {loadJobPostContent.jobTitle ? (
+            <h3>{loadJobPostContent.jobTitle}</h3>
+          ) : null}
+          <h3>{loadJobPostContent.jobId}</h3>
+        </div>
+      </header>
+      <div id={styles.questionContentDisplayArea}>
+        <div id={styles.questionContentArea}>
+          {loadTestQuestions?.testContent?.questionContent.length > 0
+            ? loadTestQuestions.testContent.questionContent.map((item: any) => {
+                questionCounter++;
+                return (
+                  <QuestionContent
+                    key={questionCounter}
+                    TestQuestions={item}
+                    questionCounter={questionCounter}
+                    update={update}
+                    removeQuestion={removeQuestion}
+                    updateTestContent={updateTestContent}
+                  />
+                );
+              })
+            : null}
+        </div>
+      </div>
     </section>
   );
 }

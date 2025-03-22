@@ -1,50 +1,54 @@
 import styles from "@/app/userProfile/user.module.css";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
 interface User {
     fullName: string;
     email: string;
-    number: string;
+    contact: string;
     city: string;
     country: string;
     cvSummary: string;
-    jobRole: jobRole[];
+    selectedJob: selectedJob;
     skills: string[];
     education: Education[];
     experience: Experience[];
+    tests: Tests[];
+
 }
 
 interface Education {
-    courseName: string;
-    schoolName: string;
-    startDate: string;
-    endDate: string;
-    description: string;
+  courseName: string;
+  schoolName: string;
+  startDate: string;
+  endDate: string;
+  description: string;
 }
 
-interface jobRole {
-    jobName: string;
+interface Tests {
+    testId: string;
+    mark: string;
+}
+
+interface selectedJob {
+  jobTitle: string;
+  jobId: string;
 }
 
 interface Experience {
-    jobName: string;
-    companyName: string;
-    startDate: string;
-    endDate: string;
-    description: string;
+  jobName: string;
+  companyName: string;
+  startDate: string;
+  endDate: string;
+  description: string;
 }
 
 interface ResumeProps {
+
     user: User;
-    removeEducation: (index: number) => void;
-    removeExperience: (index: number) => void;
-    updateNestedChanges : (
-        index: number,
-        section: "experience" | "education"
-    ) => void;
 }
 
-const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: ResumeProps) => {
+const Resume = ({user}: ResumeProps) => {
+
     useEffect(() => {
         if (!user) return; // Prevent running if user is not defined
 
@@ -57,21 +61,9 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
             const experienceElement = document.getElementById('experienceSection');
             const summaryElement = document.getElementById('summarySection');
 
-            user.experience?.forEach((job, index) => {
-                if (!job.jobName) {
-                    updateNestedChanges(index, "experience");
-                }
-            });
-
             if (allJobNamesAreEmpty && experienceElement) {
                 experienceElement.style.display = 'none';
             }
-
-            user.education?.forEach((course, index) => {
-                if (!course.courseName) {
-                    updateNestedChanges(index, "education");
-                }
-            });
 
             if (allCourseNamesAreEmpty && educationElement) {
                 educationElement.style.display = 'none';
@@ -88,16 +80,19 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
             console.log(user.experience);
         }
     }, [user?.cvSummary?.length, user?.skills?.length, user?.education?.length, user?.experience?.length]);
-
     return (
-        <section className={styles.cvSection}>
+        <section className={styles.cvSection} onClick={() => {
+            if (typeof window !== 'undefined') {
+                window.print();
+            }
+        }}>
             <div className={styles.contactInfo}>
                 <h1 className={styles.name}>{user.fullName}</h1>
-                <p className={styles.jobTitle}>{user.jobRole[0].jobName}</p>
+                <p className={styles.jobTitle}>{user.selectedJob.jobTitle}</p>
                 <div className={styles.contactDetails}>
                     <p>Email: {user.email}</p>
-                    <p>Phone: {user.number}</p>
-                    <p>Location: {user.city}, {user.country}</p>
+                    <p>Phone: {user.contact}</p>
+                    <p>Location: {user.city}, {user.country?.split(' (')[0]}</p>
                 </div>
             </div>
             <div id="summarySection" className={styles.experience}>
@@ -111,10 +106,10 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
                 <ul className={styles.jobList}>
                     {user.experience.map((experience, index) => (
                         <li key={index} className={styles.expItem}>
-                            <div id={`experience${index}`} className={styles.job} onClick={() => removeExperience(index)}>
+                            <div id={`experience${index}`} className={styles.job}>
                                 <h3 className={styles.jobTitle}>{experience.jobName}</h3>
                                 <p className={styles.companyName}>{experience.companyName}</p>
-                                <p className={styles.jobDates}>{experience.startDate}  {experience.endDate && `-${experience.endDate}`}</p>
+                                <p className={styles.jobDates}>{experience.startDate} {experience.endDate && `-${experience.endDate}`}</p>
                                 <p className={styles.jobResponsibilities}>{experience.description}</p>
                             </div>
                         </li>
@@ -127,11 +122,23 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
                 <ul className={styles.educationList}>
                     {user.education.map((education, index) => (
                         <li key={index} className={styles.eduItem}>
-                            <div id={`courses${index}`} className={styles.degree} onClick={() => removeEducation(index)}>
+                            <div id={`courses${index}`} className={styles.degree}>
                                 <h3 className={styles.degreeTitle}>{education.courseName}</h3>
                                 <p className={styles.schoolName}>{education.schoolName}</p>
-                                <p className={styles.graduationYear}>{education.startDate}  {education.endDate && `-${education.endDate}`}</p>
+                                <p className={styles.graduationYear}>{education.startDate} {education.endDate && `-${education.endDate}`}</p>
                                 <p className={styles.jobResponsibilities}>{education.description}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div id="assessmentSection" className={styles.assessment}>
+                <h2 className={styles.sectionTitle}>Assessments</h2>
+                <ul className={styles.assessmentList}>
+                    {user.tests.map((test, index) => (
+                        <li key={index} className={styles.assessmentItem}>
+                            <div id={`assessment${index}`} className={styles.degree}>
+                                <p className={styles.assessmentDetails}>{test.testId}: {test.mark}%</p>
                             </div>
                         </li>
                     ))}
@@ -145,12 +152,6 @@ const Resume = ({user, removeEducation, removeExperience, updateNestedChanges}: 
                     ))}
                 </ul>
             </div>
-            <button onClick={() => {
-                if (typeof window !== 'undefined') {
-                    window.print();
-                }
-            }}>Print Preview / Save as PDF
-            </button>
         </section>
     );
 };

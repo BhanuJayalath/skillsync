@@ -1,16 +1,26 @@
-import Image from "next/image";
-export default function Tab() {
+
+import styles from "../assets/styles/recruiter.module.css";
+export default function ResultTab({ userDetails }: { userDetails: any }) {
   return (
     <>
-      <Image
-        alt="profile-icon"
-        width={20}
-        height={20}
-        src="/recruiter/profile-icon.svg"
-      />
+      {userDetails.avatar ? (
+        <img
+          className={styles.profileImage}
+          alt="profile-icon"
+          width={20}
+          height={20}
+          src={userDetails.avatar}
+        />
+      ) : (
+        <img
+          className={styles.profileImage}
+          alt="profile-icon"
+          src="/recruiter/profile-icon.svg"
+        />
+      )}
 
-      <h1>User </h1>
-      <h1>?/100</h1>
+      <h1>{userDetails.userName}</h1>
+      <h1>{userDetails.mark} / 100</h1>
     </>
   );
 }

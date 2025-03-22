@@ -55,6 +55,33 @@ class Education {
   description: string;
 }
 
+class Notifications {
+  @Prop()
+  jobId: string;
+
+  @Prop()
+  jobTitle: string;
+
+  @Prop()
+  jobType: string;
+
+  @Prop()
+  companyName: string;
+
+  @Prop()
+  companyEmail: string;
+
+  @Prop()
+  recruiterNote: string;
+
+  @Prop()
+  isSelected: boolean;
+
+  @Prop()
+  approved: boolean;
+
+}
+
 class Test {
   @Prop()
   jobId: string;
@@ -63,22 +90,19 @@ class Test {
   testId: string;
 
   @Prop()
-  score: number;
+  testLevel: string;
 
-  // @Prop()
-  // testLevel: string;
-
-  // @Prop()
-  // mark: string;
-
-  // @Prop()
-  // xAxis: string;
-}
-
-class JobRole {
   @Prop()
-  jobName: string;
+  mark: string;
 }
+
+class SelectedJob {
+  @Prop()
+  jobTitle: string;
+  @Prop()
+  jobId:string;
+}
+
 
 @Schema()
 export class User {
@@ -86,16 +110,19 @@ export class User {
   email: string; // User's email address
 
   @Prop()
-  number: string; // User's number
+  contact: string; // User's number
 
   @Prop()
-  displayName: string; // User's display name
+  userName: string; // User's display name
 
   @Prop()
   fullName: string; // User's full name
 
   @Prop()
   avatar: string; // Profile picture URL
+
+  @Prop()
+  cvSummary: string;
 
   @Prop()
   gitHub: string; // User gitHub URL
@@ -124,14 +151,17 @@ export class User {
   @Prop([Test])
   tests: Test[]; // Array of tests
 
-  @Prop([JobRole])
-  jobRole: JobRole[]; // Array of job roles
+  @Prop({type: SelectedJob})
+  selectedJob: SelectedJob; // selected job object
 
   @Prop({ type: [Experience] })
   experience: Experience[];
 
   @Prop({ type: [Education] })
   education: Education[];
+
+  @Prop({ type: [Notifications] })
+  notifications: Notifications[];
 
   @Prop({ type: [String] })
   skills: string[];

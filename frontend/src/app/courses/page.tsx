@@ -30,7 +30,7 @@ export default function Page() {
           messages: [
             {
               role: "user",
-              content: `Please provide a list of five recommended online courses for learning ${topic}. 
+              content: `Please provide a list of six recommended online courses for learning ${topic}. 
 Output the result as a JSON array, where each object has the following fields: id, title, duration, category, instructor, link.`,
             },
           ],
@@ -98,81 +98,10 @@ Output the result as a JSON array, where each object has the following fields: i
 
   return (
     <div className="min-h-screen bg-white flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-gray-100 p-4 hidden md:block">
-        <div className="mb-8 flex items-center justify-center">
-          <Image
-            src="/logo.png"
-            alt="Logo"
-            width={150}
-            height={50}
-            className="object-contain"
-          />
-        </div>
-        <nav>
-          <ul className="space-y-4">
-            <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 0 ? "text-blue-600 font-semibold" : ""
-              }`}
-              onClick={() => setActiveTab(0)}
-            >
-              <Image src="/user/homeIcon.svg" alt="homeIcon" width={40} height={40} />
-              <span>Home</span>
-            </li>
-            <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 1 ? "text-blue-600 font-semibold" : ""
-              }`}
-              onClick={() => setActiveTab(1)}
-            >
-              <Image src="/user/overviewIcon.svg" alt="OverviewIcon" width={40} height={40} />
-              <span>Overview</span>
-            </li>
-            <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 2 ? "text-blue-600 font-semibold" : ""
-              }`}
-              onClick={() => setActiveTab(2)}
-            >
-              <Image src="/user/progressIcon.svg" alt="progressIcon" width={40} height={40} />
-              <span>Progress</span>
-            </li>
-            <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 3 ? "text-blue-600 font-semibold" : ""
-              }`}
-              onClick={() => setActiveTab(3)}
-            >
-              <Image src="/user/courseIcon.svg" alt="courseIcon" width={40} height={40} />
-              <span>Courses</span>
-            </li>
-            <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 4 ? "text-blue-600 font-semibold" : ""
-              }`}
-              onClick={() => setActiveTab(4)}
-            >
-              <Image src="/user/cvIcon.svg" alt="cvIcon" width={30} height={30} />
-              <span>Resume</span>
-            </li>
-            <li
-              className={`flex items-center gap-2 cursor-pointer ${
-                activeTab === 5 ? "text-blue-600 font-semibold" : ""
-              }`}
-              onClick={() => setActiveTab(5)}
-            >
-              <Image src="/user/settingsIcon.svg" alt="settingsIcon" width={30} height={30} />
-              <span>Settings</span>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Hero Section */}
-        <div className="bg-primary py-16 px-4 sm:px-6 lg:px-8 text-blue-800">
+        <div className="py-16 px-4 sm:px-6 lg:px-8 text-black">
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">
               Discover Your Next Course
@@ -192,6 +121,7 @@ Output the result as a JSON array, where each object has the following fields: i
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                   size={20}
                 />
+
                 <Input
                   type="text"
                   placeholder="Search courses..."
@@ -203,7 +133,7 @@ Output the result as a JSON array, where each object has the following fields: i
               </div>
               <Button
                 onClick={() => searchCourses(searchTerm)}
-                className="bg-primary hover:bg-primary/90 text-white"
+                className="bg-blue-500 hover:bg-primary/90 text-white"
                 disabled={isLoading}
               >
                 {isLoading ? (

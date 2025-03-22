@@ -7,17 +7,17 @@ import { upload } from '@vercel/blob/client';
 interface User {
     fullName: string;
     userName: string;
+    contact: string;
     avatar: string;
     gitHub: string;
     linkedIn: string;
     email: string;
-    number: string;
     city: string;
     language: string;
     gender: string;
     country: string;
     cvSummary: string;
-    jobRole: jobRole[];
+    selectedJob: selectedJob;
     skills: string[];
     education: Education[];
     experience: Experience[];
@@ -29,8 +29,9 @@ interface Education {
     endDate: string;
     description: string;
 }
-interface jobRole {
-    jobName: string;
+interface selectedJob {
+    jobTitle: string;
+    jobId:string;
 }
 interface Experience {
     jobName: string;
@@ -39,6 +40,7 @@ interface Experience {
     endDate: string;
     description: string;
 }
+
 
 interface SettingsProps {
     user: User;
@@ -51,36 +53,48 @@ interface SettingsProps {
 }
 
 const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEducation, addExperience, handleFields }: SettingsProps) => {
-    const [countries, setCountries] = useState<{ name: string }[]>([]);
+    const [countries, setCountries] = useState<{ name: string; code: string }[]>([]);
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
     const [summary, setSummary] = useState("");
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
+    const [loading, setLoading] = useState(false);
 
+    const buttonLoad = ()=>{
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false); // Set loading to false after 3 seconds
+        }, 3000);
+    }
     // Fetch countries and languages
     useEffect(() => {
-        const countriesUrl = process.env.NEXT_PUBLIC_COUNTRIES_URL;
-        fetch(`${countriesUrl}`)
-            .then(response => response.json())
-            .then(data => {
-                const countryList = data.map((country: any) => ({
-                    name: country.name.common,
-                }));
+        const fetchCountries = async ()=>{
+            const countriesUrl = process.env.NEXT_PUBLIC_COUNTRIES_URL;
+            fetch(`${countriesUrl}`)
+                .then(response => response.json())
+                .then(data => {
+                    const countryList = data.map((country: any) => ({
+                        name: country.name.common,
+                        code: country.idd?.root + (country.idd?.suffixes ? country.idd.suffixes[0] : '')
+                    }));
 
-                const languageSet = new Set<string>();
-                data.forEach((country: any) => {
-                    if (country.languages) {
-                        Object.values(country.languages).forEach((lang: any) =>
-                            languageSet.add(lang)
-                        );
-                    }
-                });
-
-                setCountries(countryList);
-                setLanguages(Array.from(languageSet));
-            })
-            .catch(error => console.error('Error fetching countries:', error));
+                    const languageSet = new Set<string>();
+                    data.forEach((country: any) => {
+                        if (country.languages) {
+                            Object.values(country.languages).forEach((lang: any) =>
+                                languageSet.add(lang)
+                            );
+                        }
+                    });
+                    console.log(countryList);
+                    setCountries(countryList);
+                    setLanguages(Array.from(languageSet));
+                })
+                .catch(error => console.error('Error fetching countries:', error));
+        }
+        fetchCountries();
+        setSummary(user.cvSummary);
     }, []);
 
     const handleGenerate = async (e:React.FormEvent) =>{
@@ -106,48 +120,56 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
           "summary": "Your generated summary here"
         }`;
 
-        fetch(`${apiUrl}`, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${apiKey}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "model": "deepseek/deepseek-r1-distill-llama-70b:free",
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
-            })
-        })
-            .then(response => {
+        const fetchSummary = async (retries = 3) => {
+            try {
+                const response = await fetch(`${apiUrl}`, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${apiKey}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "model": "deepseek/deepseek-r1-distill-llama-70b:free",
+                        "messages": [{ "role": "user", "content": prompt }]
+                    })
+                });
+
                 console.log("Response Status:", response.status);
-                return response.json();
-            }) // Convert response to JSON
-            .then(data => {
-                // Extract and log the AI's response
+
+                const data = await response.json();
                 const summary = data.choices?.[0]?.message?.content.match(/{[\s\S]*}/) || "No response";
                 console.log("AI Response:", summary);
+
                 const jsonSummary = summary
-                    ? JSON.parse(summary[0])
-                    : { summary: "error occurred" };
+                    ? JSON.parse(summary[0])  // Retry happens here if JSON fails
+                    : { summary: "Error occurred" };
+
                 const filteredSummary = jsonSummary.summary.replace(/\*\*(.*?)\*\*/g, '$1');
                 setSummary(filteredSummary);
-                handleFields(filteredSummary,"cvSummary");
-            })
-            .catch(error => console.error("Error:", error));
+                handleFields(filteredSummary, "cvSummary");
+            } catch (error) {
+                if (error instanceof SyntaxError && retries > 0) {
+                    console.warn(`Retrying... Attempts left: ${retries}`);
+                    await fetchSummary(retries - 1); // Retry if JSON parsing fails
+                } else {
+                    console.error("Failed to generate summary:", error);
+                    setSummary("An error occurred while generating the CV summary.");
+                }
+            }
+        };
+
+        await fetchSummary();
     }
 
     // Fetch cities when a country is selected
     useEffect(() => {
-        if (!user.country) return;
+        if (!countries) return;
         const citiesUrl = process.env.NEXT_PUBLIC_CITIES_URL;
+        const countryName = user.country?.split(' (')[0];
         fetch(`${citiesUrl}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ country: user.country }),
+            body: JSON.stringify({ country: countryName }),
         })
             .then(response => response.json())
             .then(data => {
@@ -157,7 +179,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     }, [user.country]);
     const handleUpload = async (e:React.FormEvent) =>{
         e.preventDefault();
-        const blobUrl = process.env.NEXT_PUBLIC_BLOB_UPLOAD_URL;
+        const blobUrl = process.env.NEXT_PUBLIC_BLOB_UPLOAD_PATH;
         if (!inputFileRef.current?.files) {
             throw new Error('No file selected');
         }
@@ -181,11 +203,11 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <div className={styles.profilePic}>
                         {user.avatar ? (
                             <span><Image src={user.avatar} alt="userIcon"
-                                         width={100} height={0} className={styles.profilePic}/></span>
+                                         width={100} height={100} className={styles.profilePic}/></span>
                         ) : (
                             <span><Image src={"/user/userIcon.svg"}
                                          alt="userIcon"
-                                         width={100} height={0}
+                                         width={100} height={100}
                                          className={styles.profilePic}/></span>
                         )}
                     </div>
@@ -200,40 +222,63 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
                 </div>
-                <button className={styles.editButton} onClick={handleSubmit}>Save</button>
+                <div className={styles.editButton}>
+                    <button
+                        className="btn btn-primary d-flex align-items-center"
+                        onClick={() => {
+                            handleSubmit();
+                            buttonLoad();
+                        }}
+                        disabled={loading}
+                    >
+                        {/* Display spinner when loading */}
+                        {loading ? (
+                            <>
+                                <div className="spinner-border spinner-border-sm text-light" role="status"
+                                     style={{marginRight: '10px'}}>
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                                Loading...
+                            </>
+                        ) : (
+                            'Save'
+                        )}
+                    </button>
+                </div>
             </div>
             {/*form section*/}
             <form className={styles.form}>
                 <div>
-                    <label>User Name</label>
-                    <input type="text" name="fullName" value={user.fullName}
+                    <label>Full Name</label>
+                    <input type="text" name="fullName" value={user.fullName || ''}
+                           maxLength={20}
                            onChange={(e) => handleChange(e, "fullName")}
-                           placeholder={user.fullName}/>
+                           placeholder={user.fullName || ''}/>
                 </div>
                 <div>
-                    <label>Full Name</label>
-                    <input type="text" name="userName" value={user.userName}
-                           onChange={(e) => handleChange(e, "userName")}
-                           placeholder={user.userName}/>
+                    <label>Contact</label>
+                    <input type="text" name="contact" value={user.contact || ''}
+                           onChange={(e) => handleChange(e, "contact")}
+                           placeholder={user.contact || '(+94) 77 123 4567'} maxLength={18}/>
                 </div>
                 <div>
                     <label>Github</label>
-                    <input type="text" name="gitHub" value={user.gitHub}
+                    <input type="text" name="gitHub" value={user.gitHub || ''}
                            onChange={(e) => handleChange(e, "gitHub")}
-                           placeholder={user.gitHub}/>
+                           placeholder={user.gitHub || ''}/>
                 </div>
                 <div>
                     <label>LinkedIn</label>
-                    <input type="text" name="linkedIn" value={user.linkedIn}
+                    <input type="text" name="linkedIn" value={user.linkedIn || ''}
                            onChange={(e) => handleChange(e, "linkedIn")}
-                           placeholder={user.linkedIn}/>
+                           placeholder={user.linkedIn || ''}/>
                 </div>
                 <div>
                     <label>Gender</label>
                     <select>
                         <option value="">Select Gender</option>
-                        <option value={user.gender}>Male</option>
-                        <option value={user.gender}>Female</option>
+                        <option value={user.gender || ''}>Male</option>
+                        <option value={user.gender || ''}>Female</option>
                     </select>
                 </div>
                 <div>
@@ -241,8 +286,8 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <select id="country" onChange={(e) => handleChange(e, "country")}>
                         <option value="">Select Country</option>
                         {countries.map((country, index) => (
-                            <option key={index} value={country.name}>
-                                {country.name}
+                            <option key={index} value={`${country.name} (${country.code})`}>
+                                {country.name} ({country.code})
                             </option>
                         ))}
                     </select>
@@ -252,7 +297,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     <select id="language" onChange={(e) => handleChange(e, "language")}>
                         <option value="">Select Language</option>
                         {languages.map((language, index) => (
-                            <option key={index} value={user.language}>
+                            <option key={index} value={language}>
                                 {language}
                             </option>
                         ))}
@@ -293,7 +338,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 <input
                                     type="text"
                                     id={`jobName-${index}`}
-                                    value={exp.jobName}
+                                    value={exp.jobName || ''}
                                     onChange={(e) => handleNestedChange(index, "jobName", e.target.value, "experience")}
                                 />
                             </div>
@@ -302,7 +347,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 <input
                                     type="text"
                                     id={`companyName-${index}`}
-                                    value={exp.companyName}
+                                    value={exp.companyName || ''}
                                     onChange={(e) => handleNestedChange(index, "companyName", e.target.value, "experience")}
                                 />
                             </div>
@@ -311,7 +356,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 <input
                                     type="date" // Use type="date"
                                     id={`startDate-${index}`}
-                                    value={exp.startDate}
+                                    value={exp.startDate || ''}
                                     onChange={(e) => handleNestedChange(index, "startDate", e.target.value, "experience")}
                                 />
                             </div>
@@ -320,7 +365,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 <input
                                     type="date" // Use type="date"
                                     id={`endDate-${index}`}
-                                    value={exp.endDate}
+                                    value={exp.endDate || ''}
                                     onChange={(e) => handleNestedChange(index, "endDate", e.target.value, "experience")}
                                 />
                             </div>
@@ -328,7 +373,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                 <label htmlFor={`description-${index}`}>Description</label>
                                 <textarea
                                     id={`description-${index}`}
-                                    value={exp.description}
+                                    value={exp.description || ''}
                                     onChange={(e) => handleNestedChange(index, "description", e.target.value, "experience")}
                                 />
                             </div>
@@ -347,34 +392,34 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             <input
                                 type="text"
                                 id={`courseName-${index}`}
-                                value={edu.courseName}
+                                value={edu.courseName || ''}
                                 onChange={(e) => handleNestedChange(index, "courseName", e.target.value, "education")}
                             />
                             <label htmlFor={`schoolName-${index}`}>School Name</label>
                             <input
                                 type="text"
                                 id={`schoolName-${index}`}
-                                value={edu.schoolName}
+                                value={edu.schoolName || ''}
                                 onChange={(e) => handleNestedChange(index, "schoolName", e.target.value, "education")}
                             />
                             <label htmlFor={`startDate-${index}`}>Start Date</label>
                             <input
                                 type="date"
                                 id={`startDate-${index}`}
-                                value={edu.startDate}
+                                value={edu.startDate || ''}
                                 onChange={(e) => handleNestedChange(index, "startDate", e.target.value, "education")}
                             />
                             <label htmlFor={`endDate-${index}`}>End Date</label>
                             <input
                                 type="date"
                                 id={`endDate-${index}`}
-                                value={edu.endDate}
+                                value={edu.endDate || ''}
                                 onChange={(e) => handleNestedChange(index, "endDate", e.target.value, "education")}
                             />
                             <label htmlFor={`description-${index}`}>Description</label>
                             <textarea
                                 id={`description-${index}`}
-                                value={edu.description}
+                                value={edu.description || ''}
                                 onChange={(e) => handleNestedChange(index, "description", e.target.value, "education")}
                             />
                         </div>

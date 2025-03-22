@@ -1,226 +1,366 @@
 /* General Styles */
 .pageContainer {
-    font-family: Arial, sans-serif;
-    font-size: 16px; /* Increased base font size */
-    line-height: 1.6;
-    color: #222; /* Darker text for better readability */
-    background-color: #ecf0f1; /* Light gray background */
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  font-size: 16px; /* Increased base font size */
+  line-height: 1.6;
+  color: #222; /* Darker text for better readability */
+  background-color: #ecf0f1; /* Light gray background */
+  margin: 0;
+  padding: 0;
 }
 
 /* Page Container */
 .outerContainer {
-    display: grid;
-    height: 100vh;
+  display: grid;
+  height: 100vh;
 }
 
 .innerContainer {
-    display: flex;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
 /* Sidebar */
 .sidebar {
-    width: 15em; /* Slightly wider sidebar */
-    background-color: rgb(96, 166, 236);
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    color: #000000; /* White text on the sidebar */
-    transition: width 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
-    box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow to separate from content */
-    z-index: 100; /* Ensure it's above other content */
-    overflow: hidden; /* Prevent content overflow during hover */
+  width: 15em; /* Slightly wider sidebar */
+  background-color: rgb(96, 166, 236);
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  color: #000000; /* White text on the sidebar */
+  transition: width 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+  box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow to separate from content */
+  z-index: 100; /* Ensure it's above other content */
+  overflow: hidden; /* Prevent content overflow during hover */
+  height: 100vh;
 }
 
 .sidebar:hover {
-    width: 16em; /*Expand on hover*/
-    box-shadow: 7px 0 7px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+  width: 16em; /*Expand on hover*/
+  box-shadow: 7px 0 7px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
 }
 
 .logoContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 5em;
-    background-color: rgba(115, 80, 80, 0.1); /* Lighter background */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    padding: 0.5em; /* Add some padding */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5em;
+  background-color: rgba(115, 80, 80, 0.1); /* Lighter background */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 0.5em; /* Add some padding */
 }
 
 .logo {
-    font-weight: bold;
-    font-size: 1.5em; /* Larger logo text */
-    color: #050505;
-    text-transform: uppercase; /* Make logo text uppercase */
-    letter-spacing: 1px; /* Add letter spacing for visual appeal */
+  font-weight: bold;
+  color: #050505;
+  text-transform: uppercase; /* Make logo text uppercase */
+  letter-spacing: 1px; /* Add letter spacing for visual appeal */
 }
 
 .nav {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .nav ul {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    padding: 0;
-    margin: 0; /* Reset default margin */
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0; /* Reset default margin */
 }
 
 .nav a {
-    text-decoration: none;
-    color: #ffffff;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0.75em 1.5em; /* More padding */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
+  text-decoration: none;
+}
+.navTab {
+  text-decoration: none;
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.75em 1.5em; /* More padding */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
 }
 
-.nav a:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Lighter background on hover */
-    transform: translateX(5px); /* Slightly move on hover */
+.navTab:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Lighter background on hover */
+  transform: translateX(5px); /* Slightly move on hover */
 }
 
 .nav li {
-    font-size: 1.1em;
-    cursor: pointer;
-    text-align: left; /* Align text to the left */
-    margin: 0; /* Remove default margins */
-    width: 100%; /* Full width for each list item */
+  font-size: 1.1em;
+  cursor: pointer;
+  text-align: left; /* Align text to the left */
+  margin: 0; /* Remove default margins */
+  width: 100%; /* Full width for each list item */
 }
 
 .activeLink {
-    background-color: rgba(0, 0, 0, 0.2); /* Darker background for active link */
-    border-left: 3px solid #3498db; /* Highlight active link */
+  background-color: rgba(0, 0, 0, 0.2); /* Darker background for active link */
+  border-left: 3px solid #3498db; /* Highlight active link */
 }
 
 .navImage {
-    margin-right: 0.75em;
-    width: 24px; /* Standardize image sizes */
-    height: 24px;
-    color: black;
-    filter: brightness(0) invert(1); /* Ensure icons are always white */
+  margin-right: 0.75em;
+  width: 24px; /* Standardize image sizes */
+  height: 24px;
+  color: black;
+  filter: brightness(0) invert(1); /* Ensure icons are always white */
 }
 
 /*Add a line under each of the elements*/
 .nav li {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Add a subtle border */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Add a subtle border */
 }
 
 .nav li:last-child {
-    border-bottom: none; /* Remove the border from the last item */
+  border-bottom: none; /* Remove the border from the last item */
 }
 
 /* Main Content */
 .mainContent {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  margin-left: 15em;
+}
+
+.notificationWrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 16em;
+}
+
+.notificationContainer {
+  position: relative;
+}
+
+.notificationIcon {
+  margin-right: 0.75em;
+  color: black;
+  filter: brightness(0) invert(1); /* Ensure icons are always white */
+}
+
+.notificationCount {
+  background-color: red;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+}
+
+.notificationPopup {
+  display: block; /* Ensure it's visible */
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: #fff; /* Visible background */
+  border: 1px solid #ddd; /* Clear border */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  padding: 10px;
+  z-index: 999; /* Ensure it's on top */
+}
+.notificationPopup button {
+  margin: 0;
+  background: #3498db; /* Refined blue */
+  color: white;
+  border: none;
+  padding: 0.2em 1em;
+  border-radius: 0.3em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.notificationPopup button:hover {
+  background-color: #2980b9; /* Darker shade on hover */
+}
+
+.notificationPopup ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notificationPopup li {
+  padding: 8px 0;
+  color: black;
+  border-bottom: 1px solid #eee;
+}
+
+.notificationPopup li:last-child {
+  border-bottom: none;
 }
 
 /* Header */
 .header {
-    display: flex;
-    justify-content: space-between; /*Push search to the right*/
-    padding: 1em 2em;
-    background: #3498db; /* Refined blue */
-    color: #fff;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between; /*Push search to the right*/
+  padding: 1em 2em;
+  background: #3498db; /* Refined blue */
+  position: fixed;
+  color: #fff;
+  width: 100%;
+  height: 5em;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .searchContainer {
-    display: flex;
+  display: flex;
 }
 
 .searchContainer input {
-    padding: 0.5em;
-    border: none;
-    border-radius: 0.3em;
-    margin-right: 0.5em;
+  padding: 0.5em;
+  border: none;
+  border-radius: 0.3em;
+  margin-right: 0.5em;
 }
 
 .searchContainer button {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.2em;
-    cursor: pointer;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
 }
 
 /* Content Wrapper */
 .contentWrapper {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-    padding: 1em; /* Add padding around the content */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 1em; /* Add padding around the content */
 }
 .tabsSection {
-    flex: 1 1 45%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 70em;
-    flex-wrap: wrap;
-    flex-direction: column;
-    margin: 1em;
+  flex: 1 1 45%;
+  display: flex;
+  margin-top: 5em;
+  align-items: center;
+  justify-content: center;
+  max-width: 70em;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
-
 /* User Info */
-.userInfo {
-    flex: 1 1 45%;
-    background: #fff;
-    border-radius: 0.5em;
-    width: 50em;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-    padding: 1em; /* Add padding inside the user info section */
+.overviewNavBar {
+  display: flex;
+  flex-direction: row;
+  background-color: #3396a6;
+  width: 15em;
+  border-radius: 0.3em;
+  color: white;
+  margin: 5% 0;
+}
+.overviewNavBar ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.overviewNavBar ul li {
+  display: flex;
+  flex-direction: row;
+  width: 5em;
+  border-radius: 0.3em;
+  justify-content: center;
+  list-style: none;
+  cursor: pointer;
+  padding: 0.2em;
+  margin: 0;
+}
+.overviewUserContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  background: #fff;
+  border-radius: 0.5em;
+  width: 50em;
+  margin: auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  padding: 1em; /* Add padding inside the user info section */
 }
 
 .welcomeMessage {
-    background: #3498db; /* Refined blue */
-    display: flex;
-    flex-direction: row;
-    padding: 1.5em;
-    color: white;
-    margin: -1em -1em 1em -1em; /* Adjust to align with userInfo padding */
-    border-radius: 0.5em 0.5em 0 0; /* Only round the top corners */
-    font-size: 1.2em;
+  background: #3498db; /* Refined blue */
+  display: flex;
+  flex-direction: row;
+  color: white;
+  border-radius: 0.5em 0.5em 0 0; /* Only round the top corners */
+  font-size: 1.2em;
 }
 
 /* User Details */
-.userDetails {
-    display: flex;
-    align-items: center;
-    margin-top: 1em;
-    padding: 0 1em; /* Add padding */
+.userProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+  min-width: 16em;
+  padding: 0 1em; /* Add padding */
 }
 
-.profilePic{
-    display: flex;
-    flex-direction: column;
+.profilePicContainer {
+  display: flex;
+  flex-direction: column;
 }
 
-.profilePic .userAvatar {
-    margin: 1em 1em 2em 1em ;
+.profilePicContainer .userAvatar {
+  margin: 1em 1em 2em 1em;
+  width: 10em; /* Match container size */
+  height: 10em; /* Match container size */
+  object-fit: cover;
+  border-radius: 50%;
 }
 
+.userDetails p {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.userSkillList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+.userSkill {
+  margin: 1em;
+  padding: 0.75em;
+  max-width: 15em;
+  background: #e8e1e1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0.4em;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Hover effect */
+}
+
+.overviewIcons {
+  margin: 0.5em;
+}
 .userFooter {
-    background-color: #3498db; /* Refined blue */
-    display: flex;
-    flex-direction: row;
-    color: white;
-    padding: 0.3em;
-    justify-content: center;
-    margin: 1em -1em -1em -1em; /* Adjust to align with userInfo padding */
-    border-radius: 0 0 0.5em 0.5em; /* Only round the top corners */
-    font-size: 0.9em;
+  background-color: #3498db; /* Refined blue */
+  display: flex;
+  flex-direction: row;
+  color: white;
+  padding: 0.3em;
+  justify-content: center;
+  margin: 1em -1em -1em -1em; /* Adjust to align with userInfo padding */
+  border-radius: 0 0 0.5em 0.5em; /* Only round the top corners */
+  font-size: 0.9em;
 }
 
 /*.customSection {*/
@@ -231,412 +371,423 @@
 /*}*/
 
 .form2 button {
-    margin-top: 1em;
-    background: #3498db; /* Refined blue */
-    color: white;
-    border: none;
-    padding: 0.7em 1.3em;
-    border-radius: 0.3em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  margin-top: 1em;
+  background: #3498db; /* Refined blue */
+  color: white;
+  border: none;
+  padding: 0.7em 1.3em;
+  border-radius: 0.3em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .form2 button:hover {
-    background-color: #2980b9; /* Darker shade on hover */
-}
-
-/* Courses Section */
-.courses {
-    display: flex;
-    flex-direction: column; /* Stack courses vertically */
-    border: 2px solid #ededed;
-    padding: 2em;
-    gap: 0.75em;
-    margin: 1em;
-}
-
-.coursesTitle {
-    font-size: 1.3em;
-    margin-bottom: 0.5em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid #ddd;
-}
-
-.courseList {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-}
-
-.courseItem {
-    margin: 1em;
-    padding: 0.75em;
-    max-width: 15em;
-    background: #f1f1f1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 0.4em;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Hover effect */
-}
-
-.courseItem:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-}
-
-.courseCode {
-    font-weight: bold;
-    color: #3498db; /* Refined blue */
-}
-
-.courseName {
-    font-style: italic;
-    color: #555;
-}
-
-.courseResult {
-    color: #27ae60;
+  background-color: #2980b9; /* Darker shade on hover */
 }
 
 /* Progress Section */
 .progress {
+
     background: #fff;
     padding: 1.5em;
+    margin: auto;
+    width: 100%;
+    max-width: 45em;
     border-radius: 0.5em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
 }
 
 /* Chart Section */
 .chart {
-    margin-top: 0.5em;
-    background: #fff;
-    border-radius: 0.5em;
-    overflow: hidden;
-    flex: 1;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 0.5em;
+  background: #fff;
+  border-radius: 0.5em;
+  overflow: hidden;
+  flex: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .chart svg {
-    height: 100%;
+  height: 100%;
 }
 
 .chart polyline {
-    padding: 0.5em;
-    justify-content: center;
+  padding: 0.5em;
+  justify-content: center;
 }
 
 .chartLabels {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 0.5em;
-    color: #777;
-    font-size: 0.9em;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.5em;
+  color: #777;
+  font-size: 0.9em;
+}
+
+/* TestDetails Section */
+.tests {
+  display: flex;
+  flex-direction: column; /* Stack courses vertically */
+  border: 2px solid #ededed;
+  padding: 2em;
+  gap: 0.75em;
+  margin: 1em;
+}
+
+.testTitle {
+  font-size: 1.3em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid #ddd;
+}
+
+.testsList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.testItem {
+  margin: 1em;
+  padding: 0.75em;
+  max-width: 15em;
+  background: #f1f1f1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0.4em;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Hover effect */
+}
+
+.testItem:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+}
+
+.testCode {
+  font-weight: bold;
+  color: #3498db; /* Refined blue */
+}
+
+.testName {
+  font-style: italic;
+  color: #555;
+}
+
+.testResult {
+  color: #27ae60;
 }
 
 /* CV Section */
 .cvSection {
+
     font-family: Arial, sans-serif;
-    width: 49.61rem;
-    padding: 2cm;
+    width: 60%;
+    min-height:70.157489153699rem ;
+    padding: 4em;
     margin: 0 auto;
+    justify-content: center;
+    align-items: center;
     background: #ffffff;
     box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
-    border: 1px solid #ccc;
-    line-height: 1.6;
+    border: 0.1em solid #ccc;
+    line-height: 1.5;
+    cursor: pointer;
+
 }
 
-.cvSection p{
-    white-space: normal; /* Ensures text wraps */
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+.cvSection p {
+  white-space: normal; /* Ensures text wraps */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .contactInfo {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 2em;
 }
 
 .name {
-    font-size: 2.5rem;
+
+    font-size: 2rem;
     font-weight: bold;
     color: #333;
 }
 
 .jobTitle {
-    font-size: 1.3rem;
+    font-size: 1rem;
     color: #555;
     margin-bottom: 0.5em;
 }
 
 .contactDetails {
-    font-size: 1rem;
-    margin-top: 10px;
+    font-size: 0.8rem;
+    margin-top: 1em;
     color: #777;
 }
 
 .experience,
 .education,
-.skills {
-    margin-top: 25px;
+
+.skills,.assessment {
+    margin-top: 2.5em;
+
 }
 
-.education:hover{
-    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+.experience,
+.education,
+
+.skills,.assessment p {
+    margin-top: 2.5em;
+    text-align: justify;
+
 }
 
 .sectionTitle {
-    font-size: 1.7rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 0.5em;
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5em;
 }
 
 .job,
 .degree {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
 }
 
 .jobTitle,
 .degreeTitle {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 0.3em;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.3em;
 }
 
 .companyName,
-.schoolName {
-    font-size: 1.1rem;
-    color: #555;
+.schoolName,
+.assessmentItem {
+  font-size: 1.1rem;
+  color: #555;
 }
 
 .jobDates,
 .graduationYear {
-    font-size: 1rem;
-    color: #777;
-    margin-bottom: 0.5em;
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 0.5em;
 }
 
 .skillList {
-    list-style-type: disc;
-    padding-left: 20px;
+  list-style-type: disc;
+  padding-left: 2em;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .skillList li {
-    margin: 5px 0;
-    color: #444;
+  margin: 1.5em;
+  color: #444;
 }
 
 .skill {
-    font-size: 1rem;
-    color: #333;
+  font-size: 1rem;
+  color: #333;
 }
 
 /*settings section*/
 .userSettings {
-    flex: 1 1 45%;
-    background: #fff;
-    border-radius: 0.5em;
-    width: 50em;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-    padding: 1em;
+  flex: 1 1 45%;
+  background: #fff;
+  border-radius: 0.5em;
+  width: 50em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  padding: 1em;
 }
 .userSettings .userDetails {
-    display: flex;
-    align-items: center;
-    margin-top: 1em;
-    padding: 0 1em;
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+  padding: 0 1em;
 }
 
-.userSettings .profileHeader{
-    margin: 1em 1em 1em 0 ;
+.userSettings .profileHeader {
+  margin: 1em 1em 1em 0;
 }
 
 .userSettings .profilePicContainer {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #000000;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #000000;
 }
 
 .userSettings .profilePic {
-    width: 100px;  /* Match container size */
-    height: 100px; /* Match container size */
-    object-fit: cover;
-    border-radius: 50%;
-    margin: 1em 1em 1em 1em ;
+  width: 100px; /* Match container size */
+  height: 100px; /* Match container size */
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 1em 1em 1em 1em;
 }
-
 
 .userSettings .editButton {
-    margin-left: auto;
-    background: #3498db; /* Refined blue */
-    color: white;
-    border: none;
-    padding: 0.6em 1.2em;
-    border-radius: 0.3em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.userSettings .editButton:hover {
-    background-color: #2980b9; /* Darker shade on hover */
+  margin-left: auto;
 }
 
 .uploadContainer {
-    position: relative;
-    display: inline-block;
-    margin:  1em 1em 0 0;
+  position: relative;
+  display: inline-block;
+  margin: 1em 1em 0 0;
 }
 
 .hiddenInput {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 1; /* Add z-index */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1; /* Add z-index */
 }
 
 .customUploadButton {
-    background: #3498db; /* Refined blue */
-    border: none;
-    color: white;
-    padding: 0.5em 1em;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 0.9em;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+  background: #3498db; /* Refined blue */
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.9em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .customUploadButton:hover {
-    background-color: #2980b9; /* Darker shade on hover */
+  background-color: #2980b9; /* Darker shade on hover */
 }
 
 /* Form_1 */
 .form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em 2em;
-    margin-top: 0.5em;
-    width: 100%;
-    padding: 0 1em; /* Add padding */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em 2em;
+  margin-top: 0.5em;
+  width: 100%;
+  padding: 0 1em; /* Add padding */
 }
 
 .form div {
-    margin: 0; /* Remove default margins */
+  margin: 0; /* Remove default margins */
 }
 
 .form label {
-    font-size: 0.9em;
-    display: block;
-    margin-bottom: 0.3em;
+  font-size: 0.9em;
+  display: block;
+  margin-bottom: 0.3em;
 }
 
 .form input,
 .form select {
-    padding: 0.6em;
-    border: 1px solid #ccc;
-    border-radius: 0.3em;
-    width: 100%; /* Ensure full width */
-    box-sizing: border-box;
+  padding: 0.6em;
+  border: 1px solid #ccc;
+  border-radius: 0.3em;
+  width: 100%; /* Ensure full width */
+  box-sizing: border-box;
 }
 /* Form_2*/
 .form2 {
-    margin: 1em auto;
+  margin: 1em auto;
 }
 
 .formSection {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    background-color: #fff;
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background-color: #fff;
 }
 
 .formSection h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #333;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 5px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
 }
 
 .formGroup {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .formGroup label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
 }
 
 .formGroup input[type="text"],
 .formGroup textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 14px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
 }
 
 .formGroup textarea {
-    resize: vertical; /* Allows vertical resizing */
-    height: 100px;
+  resize: vertical; /* Allows vertical resizing */
+  height: 100px;
 }
 
 /*Animations*/
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .welcomeMessage {
-    animation: fadeIn 1s ease-out;
+  animation: fadeIn 1s ease-out;
 }
 /*downloading the pdf*/
 @media print {
-    /* making the CV section and its contents visible */
-    .cvSection,
-    .cvSection * {
-        visibility: visible;
-    }
+  /* making the CV section and its contents visible */
+  .cvSection,
+  .cvSection * {
+    visibility: visible;
+  }
 
-    /* Position the CV section at the top-left of the printed page */
-    .cvSection {
-        position: absolute;
-        left: 0;
-        top: 0;
-        margin: 0; /* Reset any margins */
-        padding: 1cm; /* Keep the padding */
-        width: 21cm; /* Ensure it takes the full page width */
-        height: auto; /* expanding to the full height needed */
-        box-shadow: none; /* Remove shadow for printing */
-        border: none; /*Remove the border*/
-    }
+  /* Position the CV section at the top-left of the printed page */
+  .cvSection {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0; /* Reset any margins */
+    padding: 1cm; /* Keep the padding */
+    width: 21cm; /* Ensure it takes the full page width */
+    height: auto; /* expanding to the full height needed */
+    box-shadow: none; /* Remove shadow for printing */
+    border: none; /*Remove the border*/
+  }
 }
