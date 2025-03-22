@@ -114,9 +114,10 @@ export default function TestContent({
       axios.post(`${process.env.NEXT_PUBLIC_SAVE_TEST}`, loadTestQuestions, {
         headers: { "Content-Type": "application/json" },
       });
+      console.log(testLevel);
       setNotification({
         show: true,
-        message: "Submitted Sucessfully",
+        message: `${loadTestQuestions.testLevel} Saved Successfully`,
         status: false,
       });
       setJobPostState(!jobPostState);
@@ -134,7 +135,7 @@ export default function TestContent({
     );
     setNotification({
       show: true,
-      message: "Updated Sucessfully",
+      message: `${loadTestQuestions.testLevel} Updated Successfully`,
       status: false,
     });
     setJobPostState(!jobPostState);

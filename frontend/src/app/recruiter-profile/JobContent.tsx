@@ -105,7 +105,7 @@ export default function JobContent({
     );
     setNotification({
       show: true,
-      message: "Updated Sucessfully",
+      message: `Open Position ${jobCount} Saved Successfully`,
       status: false,
     });
     setJobPostState(false);
@@ -133,7 +133,7 @@ export default function JobContent({
       setJobPostState(false);
       setNotification({
         show: true,
-        message: "Submitted Sucessfully",
+        message: `Open Position ${jobCount} Saved Successfully`,
         status: false,
       });
       setUpdateJobPostContent(false);
@@ -337,6 +337,7 @@ export default function JobContent({
         testResponse={testResponse}
         setTestResponse={setTestResponse}
         loadJobPostContent={loadJobPostContent}
+        setNotification={setNotification}
       />
     </section>
   );

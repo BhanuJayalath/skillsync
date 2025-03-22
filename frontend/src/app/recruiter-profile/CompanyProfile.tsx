@@ -43,7 +43,7 @@ export default function CompanyProfile({
     );
     setNotification({
       show: true,
-      message: "Updated Sucessfully",
+      message: "Company Profile Updated Sucessfully",
       status: false,
     });
     setUpdate(!update);

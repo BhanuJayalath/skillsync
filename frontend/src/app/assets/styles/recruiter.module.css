@@ -2,7 +2,7 @@
 
 .main {
   margin: 0 auto;
-  font-family: "Montserrat", serif;
+  font-family: "Montserrat", Arial, sans-serif;
   height: auto;
   width: 100%;
   color: rgb(255, 255, 255);
@@ -227,7 +227,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: auto;
   padding: 20px;
   background-color: #ecfcff;
   gap: 30px;
@@ -510,7 +510,7 @@
 }
 #questionContentDisplayArea {
   width: 100%;
-  height: 100%;
+  height: 500px;
 }
 #questionContentArea {
   display: flex;
@@ -687,7 +687,7 @@
   width: 300px;
   height: 300px;
   background-color: #0a4d66;
-  color:#bee3ff;
+  color: #bee3ff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
@@ -759,12 +759,14 @@
   top: 50px;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
-  height: 50px;
-  border-radius: 20px;
+  width: fit-content;
+  height: fit-content;
+  padding: 20px;
+  gap: 20px;
+  border-radius: 5px;
   z-index: 999;
-  background-color: #eef5f6;
-  color: #000f22;
+  background-color: #040829;
+  color: #bee3ff;
 }
 
 #jobListingHeaderButtonsSection,
@@ -775,7 +777,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  gap: 30px;
+  gap: 10px;
   width: fit-content;
   height: auto;
 }
@@ -805,7 +807,7 @@
     align-items: center;
     width: 100%;
     height: auto;
-    gap: 30px;
+    gap: 10px;
     font-size: 20px;
     text-align: center;
     align-items: flex-start;
@@ -863,7 +865,7 @@
     align-items: center;
     width: 100%;
     height: auto;
-    gap: 30px;
+    gap: 10px;
     font-size: 20px;
     text-align: center;
     align-items: flex-start;
@@ -924,6 +926,10 @@
   #profileForm div label {
     align-items: flex-start;
     width: 100%;
+  }
+  .Notification {
+    font-size: 12px;
+    width: 300px;
   }
 }
 @media only screen and (max-width: 650px) {

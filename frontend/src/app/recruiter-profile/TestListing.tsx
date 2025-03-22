@@ -26,6 +26,7 @@ export default function TestListing({
   testResponse,
   setTestResponse,
   loadJobPostContent,
+  setNotification,
 }: {
   loadTests: any;
   setLoadTests: any;
@@ -41,6 +42,7 @@ export default function TestListing({
   testResponse: any;
   setTestResponse: any;
   loadJobPostContent: any;
+  setNotification: any;
 }) {
   const [remove, setRemove] = useState(false);
   const [addTestLevel, setAddTestLevel] = useState(false);
@@ -198,7 +200,15 @@ export default function TestListing({
           ) : (
             <button
               onClick={() => {
-                setAddTestLevel(true);
+                if (loadJobPostContent.jobTitle !== "") {
+                  setAddTestLevel(true);
+                } else {
+                  setNotification({
+                    show: true,
+                    message: "Add Position Before Editing the Test",
+                    status: true,
+                  });
+                }
               }}
             >
               <Image
@@ -213,41 +223,41 @@ export default function TestListing({
         </div>
       </div>
       <div className={styles.testListingSection}>
-          <div id={styles.testListingOverflowSection}>
-            {loadTests?.map((item: any, index: number) => {
-              return (
-                <button
-                  key={item.testId}
-                  onClick={() => {
-                    if (removeTestBlock) {
-                      removeTestComponent(item.testId);
-                    } else {
-                      loadTestContent(item.testId);
-                    }
-                  }}
-                  id={styles.testListingcontainer}
-                >
-                  <Image
-                    alt="exam-icon"
-                    width={60}
-                    height={60}
-                    src="/recruiter/exam-icon.svg"
-                  />
-                  <h1>{item.testLevel}</h1>
-                  <div id={styles.testListingButtons}>
-                    {removeTestBlock ? (
-                      <Image
-                        alt="remove-icon"
-                        width={25}
-                        height={25}
-                        src="/recruiter/remove-icon.svg"
-                      />
-                    ) : null}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+        <div id={styles.testListingOverflowSection}>
+          {loadTests?.map((item: any, index: number) => {
+            return (
+              <button
+                key={item.testId}
+                onClick={() => {
+                  if (removeTestBlock) {
+                    removeTestComponent(item.testId);
+                  } else {
+                    loadTestContent(item.testId);
+                  }
+                }}
+                id={styles.testListingcontainer}
+              >
+                <Image
+                  alt="exam-icon"
+                  width={60}
+                  height={60}
+                  src="/recruiter/exam-icon.svg"
+                />
+                <h1>{item.testLevel}</h1>
+                <div id={styles.testListingButtons}>
+                  {removeTestBlock ? (
+                    <Image
+                      alt="remove-icon"
+                      width={25}
+                      height={25}
+                      src="/recruiter/remove-icon.svg"
+                    />
+                  ) : null}
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

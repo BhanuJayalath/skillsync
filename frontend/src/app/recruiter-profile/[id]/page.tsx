@@ -76,7 +76,7 @@ export default function RecruiterProfile() {
         message: "",
         status: "",
       });
-    }, 5000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [notification]);
@@ -85,11 +85,11 @@ export default function RecruiterProfile() {
   return (
     <section className={styles.main}>
       {notification.show ? <Notification notification={notification} /> : null}
-      <SideBar
+      {/* <SideBar
         setProfileTab={setProfileTab}
         setDashboardTab={setDashboardTab}
         setUserProfile={setUserProfile}
-      />
+      /> */}
       <div className={styles.contentContainer}>
         <div className={styles.navigation}>
           <div id={styles.pageTitle}>Recruiter Profile</div>
@@ -115,6 +115,7 @@ export default function RecruiterProfile() {
                 recruiterDetails={recruiterDetails}
                 setUserProfile={setUserProfile}
                 setDashboardTab={setDashboardTab}
+                setNotification={setNotification}
               />
             ) : profileTab ? (
               <CompanyProfile
