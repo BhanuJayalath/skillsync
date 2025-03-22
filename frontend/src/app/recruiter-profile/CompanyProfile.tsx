@@ -5,28 +5,30 @@ import axios from "axios";
 
 export default function CompanyProfile({
   recruiterDetails,
+  setNotification,
 }: {
   recruiterDetails: any;
+  setNotification: any;
 }) {
   const [update, setUpdate] = useState(false);
-  const [recruiterId, setRecruiterId] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [email, setEmail] = useState("");
-  const [description, setDescription] = useState(
-    "Micro Web Global is a leading software development company based in Sri Lanka, specializing in delivering innovative and customized digital solutions to clients across various industries. With a strong focus on cutting-edge technologies, they offer a wide range of services, including web and mobile app development, software integration, and cloud solutions. Their dedicated team of experts ensures high-quality products and services tailored to meet each client's unique business needs. Micro Web Global is committed to driving digital transformation and helping businesses succeed in an ever-evolving technological landscape."
-  );
-  const [services, setServices] = useState(
-    "FullStack Development / Mobile development"
-  );
+  const [recruiterId, setRecruiterId] = useState();
+  const [companyName, setCompanyName] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [description, setDescription] = useState<string>();
+  const [services, setServices] = useState<string>();
   const companyInfo = {
     email: email,
     company: companyName,
+    description: description,
+    services: services,
   };
 
   useEffect(() => {
     setRecruiterId(recruiterDetails._id);
     setCompanyName(recruiterDetails.company);
     setEmail(recruiterDetails.email);
+    setDescription(recruiterDetails.description);
+    setServices(recruiterDetails.services);
   }, []);
 
   useEffect(() => {}, [companyName, email, description, services]);
@@ -39,6 +41,11 @@ export default function CompanyProfile({
         headers: { "Content-Type": "application/json" },
       }
     );
+    setNotification({
+      show: true,
+      message: "Updated Sucessfully",
+      status: false,
+    });
     setUpdate(!update);
   }
   return (
@@ -122,10 +129,10 @@ export default function CompanyProfile({
         </div>
       ) : (
         <div id={styles.profileCard}>
-          <h1>{companyName}</h1>
-          <h2>{description}</h2>
-          <h3>{email}</h3>
-          <h4>{services}</h4>
+          {companyName ? <h1>{companyName}</h1> : null}
+          {description ? <h2>{description}</h2> : null}
+          {email ? <h3>{email}</h3> : null}
+          {services ? <h4>{services}</h4> : null}
         </div>
       )}
     </section>

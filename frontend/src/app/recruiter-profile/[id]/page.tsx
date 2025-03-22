@@ -15,6 +15,7 @@ import Notification from "../Notification";
 import axios from "axios";
 import TestListing from "../TestListing";
 import SideBar from "../SideBar";
+import CompanyProfile from "../CompanyProfile";
 
 export default function RecruiterProfile() {
   const [loadTests, setLoadTests] = useState<
@@ -116,7 +117,10 @@ export default function RecruiterProfile() {
                 setDashboardTab={setDashboardTab}
               />
             ) : profileTab ? (
-              <Profile recruiterDetails={recruiterDetails} />
+              <CompanyProfile
+                setNotification={setNotification}
+                recruiterDetails={recruiterDetails}
+              />
             ) : null}
           </div>
           <div id={styles.contentContainer2}>
