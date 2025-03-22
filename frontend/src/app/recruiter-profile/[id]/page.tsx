@@ -85,11 +85,11 @@ export default function RecruiterProfile() {
   return (
     <section className={styles.main}>
       {notification.show ? <Notification notification={notification} /> : null}
-      {/* <SideBar
+      <SideBar
         setProfileTab={setProfileTab}
         setDashboardTab={setDashboardTab}
         setUserProfile={setUserProfile}
-      /> */}
+      />
       <div className={styles.contentContainer}>
         <div className={styles.navigation}>
           <div id={styles.pageTitle}>Recruiter Profile</div>
