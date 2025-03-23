@@ -7,22 +7,27 @@ import {
   Param,
   Patch,
 } from '@nestjs/common';
-import { JobRecommendationService } from './job-recommendation.service';
+import { JobsService } from './jobs.service';
 import { Job } from './job.schema';
-
+// Define the JobsController class
 @Controller('jobs')
-export class JobRecommendationController {
-  constructor(private readonly jobService: JobRecommendationService) {}
+export class JobsController {
+  constructor(private readonly jobService: JobsService) {}
 
+  // recommend jobs based on user's skills
   @Post('recommendJob') //define the POST route /getUser
   async getJob(@Body() body: { skills: string; jobs: any }) {
     const skills = body.skills;
+    //get all jobs
     const jobs = await this.jobService.getAllJobs();
+    //get all job titles
     const jobTitles = jobs.map((job) => job.jobTitle);
+    //get recommended jobs titles based on user's skills
     const selectedJobs = await this.jobService.getRecommendations(
       skills,
       jobTitles,
     );
+    //filter all jobs based on recommended job titles
     const matchingJobs = {
       jobs: jobs.filter((job) => selectedJobs.includes(job.jobTitle)),
     };
@@ -31,6 +36,7 @@ export class JobRecommendationController {
     }
     return matchingJobs;
   }
+  // **CREATE a new job
   @Post('create-job')
   async createJob(
     @Body()
@@ -45,6 +51,7 @@ export class JobRecommendationController {
     return this.jobService.createJob(jobData);
   }
 
+  // **READ all jobs**
   @Get('all-jobs')
   async getAllJobs(): Promise<Job[]> {
     return this.jobService.getAllJobs();

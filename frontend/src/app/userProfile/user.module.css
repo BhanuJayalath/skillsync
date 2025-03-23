@@ -31,33 +31,54 @@
   color: #000000; /* White text on the sidebar */
   transition: width 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
   box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow to separate from content */
-  z-index: 100; /* Ensure it's above other content */
+  z-index: 100;
   overflow: hidden; /* Prevent content overflow during hover */
   height: 100vh;
 }
 
-.sidebar:hover {
-  width: 16em; /*Expand on hover*/
-  box-shadow: 7px 0 7px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+/* Sidebar Collapsed */
+.sidebar.collapsed {
+  width: 5em;
 }
 
+.menuButton {
+  border: none;
+  color: black;
+  filter: brightness(0) invert(1);
+  text-align: center;
+  margin-left: 1em;
+  cursor: pointer;
+}
+.menuButton.collapsed{
+  margin-left: 0;
+}
+
+/* Logo with menu button*/
 .logoContainer {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   height: 5em;
-  background-color: rgba(115, 80, 80, 0.1); /* Lighter background */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  padding: 0.5em; /* Add some padding */
+  padding: 0.5em;
+}
+
+.logoContainer.collapsed{
+  justify-content: center;
 }
 
 .logo {
   font-weight: bold;
   color: #050505;
+  margin-left: 1em;
   text-transform: uppercase; /* Make logo text uppercase */
   letter-spacing: 1px; /* Add letter spacing for visual appeal */
 }
 
+.logo.collapsed{
+  margin-left: 0;
+}
+
+/* Navigation */
 .nav {
   margin-top: 0;
 }
@@ -67,19 +88,20 @@
   flex-direction: column;
   list-style: none;
   padding: 0;
-  margin: 0; /* Reset default margin */
+  margin: 0;
 }
 
 .nav a {
   text-decoration: none;
 }
+
 .navTab {
   text-decoration: none;
   color: #ffffff;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0.75em 1.5em; /* More padding */
+  padding: 0.75em 1.5em;
   transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
 }
 
@@ -91,11 +113,12 @@
 .nav li {
   font-size: 1.1em;
   cursor: pointer;
-  text-align: left; /* Align text to the left */
-  margin: 0; /* Remove default margins */
-  width: 100%; /* Full width for each list item */
+  text-align: left;
+  margin: 0;
+  width: 100%;
 }
 
+/* Active Link */
 .activeLink {
   background-color: rgba(0, 0, 0, 0.2); /* Darker background for active link */
   border-left: 3px solid #3498db; /* Highlight active link */
@@ -103,10 +126,19 @@
 
 .navImage {
   margin-right: 0.75em;
-  width: 24px; /* Standardize image sizes */
+  width: 24px;
   height: 24px;
   color: black;
   filter: brightness(0) invert(1); /* Ensure icons are always white */
+}
+
+/*Add a line under each of the elements*/
+.nav li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Add a subtle border */
+}
+
+.nav li:last-child {
+  border-bottom: none; /* Remove the border from the last item */
 }
 
 /*Add a line under each of the elements*/
@@ -125,13 +157,23 @@
   flex-direction: column;
   background: #fff;
   margin-left: 15em;
+  transition: margin-left 0.3s ease, box-shadow 0.3s ease;
 }
 
+.mainContent.collapsed {
+  margin-left: 3em;
+}
+
+/* Notification Popup */
 .notificationWrapper {
   position: relative;
   display: inline-block;
   cursor: pointer;
   margin-right: 16em;
+}
+
+.notificationWrapper.collapsed{
+  margin-right: 6em;
 }
 
 .notificationContainer {
@@ -201,15 +243,25 @@
 /* Header */
 .header {
   display: flex;
-  justify-content: space-between; /*Push search to the right*/
+  justify-content: right;
   padding: 1em 2em;
-  background: #3498db; /* Refined blue */
+  background-color: rgb(96, 166, 236);
   position: fixed;
   color: #fff;
   width: 100%;
   height: 5em;
+  z-index: 999;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header.collapsed{
+  margin-left: 2em;
+  justify-content: space-between;
+}
+
+.headerMenuButton{
+  display: none;
 }
 
 .searchContainer {
@@ -239,6 +291,7 @@
   width: 100%;
   padding: 1em; /* Add padding around the content */
 }
+
 .tabsSection {
   flex: 1 1 45%;
   display: flex;
@@ -260,6 +313,7 @@
   color: white;
   margin: 5% 0;
 }
+
 .overviewNavBar ul {
   display: flex;
   flex-direction: row;
@@ -267,6 +321,7 @@
   padding: 0;
   margin: 0;
 }
+
 .overviewNavBar ul li {
   display: flex;
   flex-direction: row;
@@ -278,6 +333,7 @@
   padding: 0.2em;
   margin: 0;
 }
+
 .overviewUserContainer {
   display: flex;
   flex-direction: row;
@@ -285,19 +341,10 @@
   align-items: center;
   background: #fff;
   border-radius: 0.5em;
-  width: 50em;
+  width: 48em;
   margin: auto;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
   padding: 1em; /* Add padding inside the user info section */
-}
-
-.welcomeMessage {
-  background: #3498db; /* Refined blue */
-  display: flex;
-  flex-direction: row;
-  color: white;
-  border-radius: 0.5em 0.5em 0 0; /* Only round the top corners */
-  font-size: 1.2em;
 }
 
 /* User Details */
@@ -350,39 +397,6 @@
 
 .overviewIcons {
   margin: 0.5em;
-}
-.userFooter {
-  background-color: #3498db; /* Refined blue */
-  display: flex;
-  flex-direction: row;
-  color: white;
-  padding: 0.3em;
-  justify-content: center;
-  margin: 1em -1em -1em -1em; /* Adjust to align with userInfo padding */
-  border-radius: 0 0 0.5em 0.5em; /* Only round the top corners */
-  font-size: 0.9em;
-}
-
-/*.customSection {*/
-/*    margin: 1em;*/
-/*    padding: 1em;*/
-/*    border: 1px solid #ddd;*/
-/*    border-radius: 0.4em;*/
-/*}*/
-
-.form2 button {
-  margin-top: 1em;
-  background: #3498db; /* Refined blue */
-  color: white;
-  border: none;
-  padding: 0.7em 1.3em;
-  border-radius: 0.3em;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.form2 button:hover {
-  background-color: #2980b9; /* Darker shade on hover */
 }
 
 /* Progress Section */
@@ -483,9 +497,8 @@
 
 /* CV Section */
 .cvSection {
-
     font-family: Arial, sans-serif;
-    width: 60%;
+    width: 75%;
     min-height:70.157489153699rem ;
     padding: 4em;
     margin: 0 auto;
@@ -512,27 +525,25 @@
 }
 
 .name {
-
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
 }
 
-.jobTitle {
-    font-size: 1rem;
+.jobTitle1 {
+    font-size: 1.4rem;
     color: #555;
     margin-bottom: 0.5em;
 }
 
 .contactDetails {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     margin-top: 1em;
     color: #777;
 }
 
 .experience,
 .education,
-
 .skills,.assessment {
     margin-top: 2.5em;
 
@@ -540,41 +551,44 @@
 
 .experience,
 .education,
-
-.skills,.assessment p {
+.summary,
+.skills p {
     margin-top: 2.5em;
     text-align: justify;
 
 }
 
 .sectionTitle {
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: #333;
   margin-bottom: 15px;
   border-bottom: 2px solid #3498db;
-  padding-bottom: 0.5em;
+  padding-bottom: 1em;
 }
-
+.assessmentDetails {
+  padding: -1em;
+  margin-top: -1em;
+}
 .job,
 .degree {
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #eee;
+  margin-bottom: 2em;
+  padding-bottom: 1.5em;
+  border-bottom: 0.1em solid #eee;
 }
 
 .jobTitle,
 .degreeTitle {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #333;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.5em;
 }
 
 .companyName,
 .schoolName,
 .assessmentItem {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #555;
 }
 
@@ -607,7 +621,8 @@
   flex: 1 1 45%;
   background: #fff;
   border-radius: 0.5em;
-  width: 50em;
+  width: 80%;
+  min-width: 40em;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
   padding: 1em;
 }
@@ -634,15 +649,40 @@
 }
 
 .userSettings .profilePic {
-  width: 100px; /* Match container size */
-  height: 100px; /* Match container size */
+  width: 9em; /* Match container size */
+  height: 9em; /* Match container size */
   object-fit: cover;
   border-radius: 50%;
   margin: 1em 1em 1em 1em;
 }
 
-.userSettings .editButton {
+.userSettings .editButtonContainer {
   margin-left: auto;
+}
+.saveButton{
+  background: #3498db; /* Refined blue */
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.saveButton:hover {
+  background-color: #2980b9; /* Darker shade on hover */
+}
+.saveSpinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.saveSpinner-border {
+  margin-right: 10px;
 }
 
 .uploadContainer {
@@ -662,6 +702,7 @@
   z-index: 1; /* Add z-index */
 }
 
+/* Custom Upload Button */
 .customUploadButton {
   background: #3498db; /* Refined blue */
   border: none;
@@ -674,10 +715,6 @@
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-}
-
-.customUploadButton:hover {
-  background-color: #2980b9; /* Darker shade on hover */
 }
 
 /* Form_1 */
@@ -708,9 +745,25 @@
   width: 100%; /* Ensure full width */
   box-sizing: border-box;
 }
+
 /* Form_2*/
 .form2 {
   margin: 1em auto;
+}
+
+.form2 button {
+  margin-top: 1em;
+  background: #3498db; /* Refined blue */
+  color: white;
+  border: none;
+  padding: 0.7em 1.3em;
+  border-radius: 0.3em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form2 button:hover {
+  background-color: #2980b9; /* Darker shade on hover */
 }
 
 .formSection {
@@ -755,39 +808,753 @@
   height: 100px;
 }
 
-/*Animations*/
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.welcomeMessage {
-  animation: fadeIn 1s ease-out;
-}
 /*downloading the pdf*/
 @media print {
-  /* making the CV section and its contents visible */
+  /* Make the CV section and all its children visible for print */
   .cvSection,
   .cvSection * {
-    visibility: visible;
+    visibility: visible; /* Ensure all contents are visible */
   }
 
-  /* Position the CV section at the top-left of the printed page */
+  /* Position the CV section at the center of the printed page */
   .cvSection {
     position: absolute;
-    left: 0;
     top: 0;
-    margin: 0; /* Reset any margins */
-    padding: 1cm; /* Keep the padding */
-    width: 21cm; /* Ensure it takes the full page width */
-    height: auto; /* expanding to the full height needed */
-    box-shadow: none; /* Remove shadow for printing */
-    border: none; /*Remove the border*/
+    width: 219cm; /* Full width of the A4 page */
+    height: auto; /* Auto height to fit content */
+    box-shadow: none; /* Remove any shadow for print */
+    border: none;
+    background-color: white;
+  }
+}
+
+/* Media Queries */
+@media (max-width: 1063px){
+  .overviewUserContainer {
+    width: 40em;
+  }
+
+}
+
+@media (max-width: 919px){
+  .header.collapsed{
+    width: 100vw;
+    height: 5em;
+    padding-left: 0;
+    margin-left: 0;
+    z-index: 10001;
+    justify-content: space-between;
+  }
+
+  .mainContent{
+    margin-left: 0;
+  }
+  .contentWrapper{
+    margin: 0;
+    width: 100vw
+  }
+
+  .notificationWrapper.collapsed{
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .tabsSection{
+    margin: 0;
+    padding: 0;
+  }
+  .sidebar{
+    width:100vw;
+    height: 100vh;
+    z-index: 1000;
+  }
+  .sidebar.collapsed{
+    display: none;
+  }
+
+  .headerMenuButton.collapsed{
+    display: flex;
+    filter: brightness(0) invert(1);
+  }
+
+  .mainContent{
+    margin-left: 0;
+  }
+
+  .mainContent.collapsed {
+    margin-left: 0;
+    transition: margin-left 0s;
+  }
+
+  .notificationWrapper.collapsed{
+    margin-right: 0;
+  }
+
+  .logoContainer.collapsed{
+    background: transparent; /* Refined blue */
+  }
+
+  .logo.collapsed{
+    margin-left: 0;
+  }
+
+  .tabsSection{
+    margin-top: 5em;
+  }
+
+  .overviewNavBar {
+    margin: 1em auto;
+  }
+  .overviewUserContainer {
+    flex-direction: column;
+    width: 35em;
+    margin: 1em auto;
+  }
+  .userProfile div{
+    text-align: center;
+  }
+
+  .progress {
+    padding: 1em;
+    margin: auto;
+    width: 90%;
+  }
+  .progress h4{
+    font-size: 1.5em;
+    text-align: center;
+  }
+  /* Chart Section */
+  .chart {
+    flex: 1;
+    width: 90%;
+    margin: auto;
+  }
+
+  /* TestDetails Section */
+  .tests {
+    display: flex;
+    flex-direction: column; /* Stack courses vertically */
+    border: 2px solid #ededed;
+    padding: 2em;
+    gap: 0.75em;
+    margin: 1em;
+  }
+
+  .progress  .testTitle {
+    font-size: 1.3em;
+    text-align: center;
+  }
+
+  .testItem {
+    margin: 0.5em;
+    padding: 0.5em;
+    max-width: 12em;
+    font-size: 0.9em;
+  }
+
+  .cvSection {
+    width: 90%;
+    min-height: auto;
+    margin: 1em auto;
+  }
+
+  .contactInfo {
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 1em;
+  }
+
+  .name {
+    font-size: 2rem;
+  }
+
+  .jobTitle1 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5em;
+  }
+
+  .contactDetails {
+    font-size: 0.8rem;
+  }
+
+  .experience,
+  .education,
+  .skills,.assessment {
+    margin-top: 1em;
+
+  }
+
+  .summary p{
+    font-size: 0.9em;
+  }
+
+  .sectionTitle {
+    font-size: 1.2rem;
+    margin-bottom: 0.7em;
+    padding-bottom: 0.2em;
+  }
+  .assessmentDetails {
+    padding: 0.1em;
+    margin-top: 0.1em;
+  }
+  .job,
+  .degree {
+    margin-bottom: 0.6em;
+    padding-bottom: 1em;
+  }
+
+  .jobTitle,
+  .degreeTitle {
+    font-size: 1rem;
+  }
+
+  .companyName,
+  .schoolName,
+  .assessmentItem {
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .jobDates,
+  .graduationYear {
+    font-size: 0.8rem;
+    margin-bottom: 0.4em;
+  }
+
+  .skillList {
+    padding-left: 1em;
+  }
+
+  .skillList li {
+    margin: 0.7em;
+  }
+
+  .skill {
+    font-size: 0.9rem;
+    color: #333;
+  }
+
+  .userSettings {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    justify-content: center;
+    width: 90%;
+    margin:0.8em auto;
+    flex-wrap: wrap;
+    padding: 0.8em;
+  }
+
+  .userSettings .profilePic{
+    margin-left: 0.5em;
+    height: 10em;
+    width: 10em;
+    margin-bottom: 0;
+  }
+  .userSettings .userDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.8em auto;
+    padding: 0 0.7em;
+  }
+
+  .userDetailsText {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .userSettings .editButtonContainer {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .saveButton{
+    padding: 0.4em 1em;
+    font-size: 0.9em;
+    margin-left: 4em;
+    margin-top: 1.1em;
+    height: 2.4em;
+  }
+
+  .saveSpinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .saveSpinner-border {
+    margin-right: 10px;
+  }
+
+  .customUploadButton {
+    padding: 0.4em 0.8em;
+    margin-right: 4em;
+    font-size: 0.9em;
+  }
+
+  /* Form_1 */
+  .form {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-left: 0;
+  }
+
+  .form label {
+    font-weight: bold;
+    font-size: 1em;
+  }
+
+  .form input,
+  .form select {
+    font-size: 0.9em;
+  }
+
+  .formSection h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  .formSection {
+    width: 36em;
+    margin-left: 0;
+  }
+
+  .formSection label{
+    font-size: 1em;
+    margin: 0.5em;
+  }
+
+  .formSection input{
+    font-size: 0.9em;
+  }
+
+  .dateInput{
+    font-size: 0.8em;
+    margin-left: 0.9em;
+  }
+
+  .formSection button{
+    padding: 0.4em 1em;
+    font-size: 0.8em;
+  }
+
+  .formGroup input[type="text"],
+  .formGroup textarea {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 682px){
+  .overviewUserContainer {
+    width: 100%;
+  }
+
+  .userSettings{
+    min-width: 10em;
+  }
+  .userSettings {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    justify-content: center;
+    min-width: 20em;
+    margin:0.8em auto;
+    flex-wrap: wrap;
+    padding: 0.8em;
+  }
+
+  .userSettings .profilePic{
+    margin-left: 0.5em;
+    margin-bottom: 0;
+  }
+  .userSettings .userDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.8em auto;
+    padding: 0 0.7em;
+  }
+
+  .userDetailsText {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .userSettings .editButtonContainer {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .saveButton{
+    padding: 0.4em 1em;
+    font-size: 0.8em;
+    margin-left: 4em;
+    margin-top: 1.1em;
+    height: 2.4em;
+  }
+
+  .saveButton:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+  }
+  .saveSpinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .saveSpinner-border {
+    margin-right: 10px;
+  }
+
+  .customUploadButton {
+    padding: 0.4em 0.8em;
+    margin-right: 4em;
+    font-size: 0.8em;
+  }
+
+  .formGroup label {
+    font-size: 0.9em;
+  }
+
+  .formSection {
+    width:30em;
+    margin-left: 0;
+  }
+
+}
+@media (max-width: 597px){
+  .formSection {
+    width:20em;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 520px){
+  .overviewUserContainer {
+    width: 100%;
+  }
+
+  .userSettings{
+    min-width: 20em;
+  }
+
+}
+
+@media (max-width: 508px){
+  .formSection {
+    width:22em;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar{
+    width:100vw;
+    height: 100vh;
+    z-index: 1000;
+  }
+  .sidebar.collapsed{
+    display: none;
+  }
+
+  .header.collapsed{
+    width: 100%;
+    margin-left: 0;
+    padding-left: 0.1em;
+    justify-content: space-between;
+  }
+
+  .headerMenuButton.collapsed{
+    display: flex;
+    filter: brightness(0) invert(1);
+  }
+
+  .mainContent{
+    margin-left: 0;
+  }
+
+  .mainContent.collapsed {
+    margin-left: 0;
+    transition: margin-left 0s;
+  }
+
+  .notificationWrapper.collapsed{
+    margin-right: 0;
+  }
+
+  .logoContainer.collapsed{
+    background: transparent; /* Refined blue */
+  }
+
+  .logo.collapsed{
+    margin-left: 0;
+  }
+  .contentWrapper{
+    margin: 0;
+    width: 100vw;
+    padding: 0;
+  }
+
+  .tabsSection{
+    margin-top: 5em;
+  }
+
+  .overviewNavBar {
+    margin: 1em auto;
+  }
+  .overviewUserContainer {
+    flex-direction: column;
+    width: 20em;
+    margin: auto;
+  }
+
+
+  .progress {
+    background: #fff;
+    padding: 1.5em;
+    margin: auto;
+    width: 23em;
+  }
+  .progress h4{
+    font-size: 1.3em;
+    text-align: center;
+  }
+  /* Chart Section */
+  .chart {
+    background: #fff;
+    flex: 1;
+    width: 21em;
+    margin: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* TestDetails Section */
+  .tests {
+    display: flex;
+    flex-direction: column; /* Stack courses vertically */
+    border: 2px solid #ededed;
+    padding: 2em;
+    gap: 0.75em;
+    margin: 1em;
+  }
+
+  .progress  .testTitle {
+    font-size: 1.1em;
+    text-align: center;
+  }
+
+  .testItem {
+    margin: 0.5em;
+    padding: 0.5em;
+    max-width: 12em;
+    font-size: 0.9em;
+  }
+
+  .cvSection {
+    width: 90%;
+    min-width: 21.5em;
+    padding: 2em;
+  }
+
+  .contactInfo {
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 1em;
+  }
+
+  .name {
+    font-size: 1.9rem;
+  }
+
+  .jobTitle {
+    font-size: 0.7rem;
+    margin-bottom: 0.5em;
+  }
+
+  .contactDetails {
+    font-size: 0.7rem;
+  }
+
+  .experience,
+  .education,
+  .skills,.assessment {
+    margin-top: 1em;
+
+  }
+
+  .summary p{
+    font-size: 0.8em;
+  }
+
+  .sectionTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.7em;
+    padding-bottom: 0.2em;
+  }
+  .assessmentDetails {
+    padding: 0.1em;
+    margin-top: 0.1em;
+  }
+  .job,
+  .degree {
+    margin-bottom: 0.6em;
+    padding-bottom: 1em;
+  }
+
+  .jobTitle,
+  .degreeTitle {
+    font-size: 0.9rem;
+  }
+
+  .companyName,
+  .schoolName,
+  .assessmentItem {
+    font-size: 0.8rem;
+    color: #555;
+  }
+
+  .jobDates,
+  .graduationYear {
+    font-size: 0.6rem;
+    margin-bottom: 0.4em;
+  }
+
+  .skillList {
+    padding-left: 1em;
+  }
+
+  .skillList li {
+    margin: 0.7em;
+  }
+
+  .skill {
+    font-size: 0.8rem;
+    color: #333;
+  }
+
+  .userSettings {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    justify-content: center;
+    width: 10em;
+    margin:0.8em auto;
+    flex-wrap: wrap;
+    padding: 0.8em;
+  }
+
+  .userSettings .profilePic{
+    margin-left: 0.5em;
+    margin-bottom: 0;
+  }
+  .userSettings .userDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.8em auto;
+    padding: 0 0.7em;
+  }
+
+  .userDetailsText {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .userSettings .editButtonContainer {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .saveButton{
+    padding: 0.4em 1em;
+    font-size: 0.8em;
+    margin-left: 4em;
+    margin-top: 1.1em;
+    height: 2.4em;
+  }
+
+  .saveButton:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+  }
+  .saveSpinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .saveSpinner-border {
+    margin-right: 10px;
+  }
+
+  .customUploadButton {
+    padding: 0.4em 0.8em;
+    margin-right: 4em;
+    font-size: 0.8em;
+  }
+
+  /* Form_1 */
+  .form {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-left: 0;
+  }
+
+  .form label {
+    font-weight: bold;
+    font-size: 0.8em;
+  }
+
+  .form input,
+  .form select {
+    font-size: 0.7em;
+  }
+
+  .formSection h3 {
+    margin-top: 0;
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+
+  .formGroup label {
+    font-size: 0.9em;
+  }
+
+  .formSection {
+    width: 16em;
+    margin-left: 0;
+  }
+
+  .formSection label{
+    font-size: 0.8em;
+    margin: 0.5em;
+  }
+
+  .formSection input{
+    font-size: 0.7em;
+  }
+
+  .dateInput{
+    font-size: 0.7em;
+    margin-left: 0.9em;
+  }
+
+  .formSection button{
+    padding: 0.4em 1em;
+    font-size: 0.8em;
+  }
+
+  .formGroup input[type="text"],
+  .formGroup textarea {
+    font-size: 0.7em;
   }
 }

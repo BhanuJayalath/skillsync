@@ -5,19 +5,22 @@ import { Model } from 'mongoose';
 import { Job } from './job.schema';
 
 @Injectable()
-export class JobRecommendationService {
+export class JobsService {
   constructor(
     private configService: ConfigService,
     @InjectModel(Job.name) private jobModel: Model<Job>,
   ) {}
 
+  // recommend jobs based on user's skills
   async getRecommendations(
     skills: string,
     jobRoles: string[],
   ): Promise<string> {
+    // Fetch the API key and URL from the environment variables
     const apiKey = this.configService.get<string>('DEEPSEEK_API_KEY');
     const apiUrl = this.configService.get<string>('DEEPSEEK_API_URL');
 
+    // Define the prompt to send to the API
     const prompt = `
   I have the following skills: ${skills}.
   Based on these skills, please analyze which job roles are relevant to me. Carefully compare the skills I provided with each job title in the following list of job roles: ${jobRoles}.
@@ -33,6 +36,7 @@ export class JobRecommendationService {
   Only return the JSON object with no extra explanation, comments, or additional text.
 `;
 
+    // Send the prompt to the API and return the recommended jobs
     try {
       const response = await fetch(`${apiUrl}`, {
         method: 'POST',
@@ -51,12 +55,16 @@ export class JobRecommendationService {
         }),
       });
 
+      // Parse the response
       const result = await response.json();
+      // Extract the recommended jobs from the response
       const filteredJobString =
         result.choices[0].message?.content.match(/{[\s\S]*}/);
+      // Parse the JSON string to get the recommended jobs
       const filteredJobs = filteredJobString
         ? JSON.parse(filteredJobString[0])
         : { jobs: [] };
+      // Return the recommended jobs
       return filteredJobs.jobs || 'No recommendations found.';
     } catch (error) {
       console.error('Error fetching job recommendations:', error);
@@ -64,6 +72,7 @@ export class JobRecommendationService {
     }
   }
 
+  // **CREATE a new job**
   async createJob(jobData: {
     jobId: string;
     jobTitle: string;

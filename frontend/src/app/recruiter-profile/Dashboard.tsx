@@ -62,9 +62,6 @@ export default function Dashboard({
       .then((response) => {
         response.data.map((item: any) => {
           tempTestsSet.push(item);
-          // if (onLoad) {
-          //   performance(item.testId);
-          // }
         });
         setTests(tempTestsSet);
       })
