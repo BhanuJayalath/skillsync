@@ -55,34 +55,33 @@ const Resume = ({user}: ResumeProps) => {
         const allJobNamesAreEmpty = user.experience?.every((job) => job.jobName === "") ?? true;
         const allCourseNamesAreEmpty = user.education?.every((course) => course.courseName === "") ?? true;
 
-        if (typeof window !== 'undefined') {
-            const educationElement = document.getElementById('educationSection');
-            const skillElement = document.getElementById('skillSection');
-            const experienceElement = document.getElementById('experienceSection');
-            const summaryElement = document.getElementById('summarySection');
+        const educationElement = document.getElementById('educationSection');
+        const skillElement = document.getElementById('skillSection');
+        const experienceElement = document.getElementById('experienceSection');
+        const summaryElement = document.getElementById('summarySection');
 
-            if (allJobNamesAreEmpty && experienceElement) {
-                experienceElement.style.display = 'none';
-            }
-
-            if (allCourseNamesAreEmpty && educationElement) {
-                educationElement.style.display = 'none';
-            }
-
-            if (!user.skills?.length && skillElement) {
-                skillElement.style.display = 'none';
-            }
-
-            if (!user.cvSummary?.length && summaryElement) {
-                summaryElement.style.display = 'none';
-            }
-
-            console.log(user.experience);
+        if (allJobNamesAreEmpty && experienceElement) {
+            experienceElement.style.display = 'none';
         }
+
+        if (allCourseNamesAreEmpty && educationElement) {
+            educationElement.style.display = 'none';
+        }
+
+        if (!user.skills?.length && skillElement) {
+            skillElement.style.display = 'none';
+        }
+
+        if (!user.cvSummary?.length && summaryElement) {
+            summaryElement.style.display = 'none';
+        }
+
+        console.log(user.experience);
+
     }, [user?.cvSummary?.length, user?.skills?.length, user?.education?.length, user?.experience?.length]);
     return (
         <section className={styles.cvSection} onClick={() => {
-            if (typeof window !== 'undefined') {
+            if (typeof window !== "undefined") {
                 window.print();
             }
         }}>
