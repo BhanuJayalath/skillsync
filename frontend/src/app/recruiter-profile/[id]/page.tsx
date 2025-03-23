@@ -57,7 +57,7 @@ export default function RecruiterProfile() {
     message: "",
     status: "",
   });
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     axios
@@ -104,7 +104,16 @@ export default function RecruiterProfile() {
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
       />
-      <div className={styles.contentContainer }>
+      <div
+        className={`${styles.contentContainer} ${
+          isCollapsed ? styles.collapsed : ""
+        }`}
+        style={
+          !isCollapsed
+            ? { marginLeft: "15em", transition: "margin-left 0.3s ease-in-out" }
+            : {}
+        }
+      >
         <div className={styles.navigation}>
           {isVisible && (
             <div id={styles.HamburgerIcon} style={{ display: "flex" }}>
