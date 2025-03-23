@@ -290,6 +290,19 @@ interface User {
          }
      };
 
+     const handleMouseMove = (e: React.MouseEvent, text: string) => {
+         if (isCollapsed){
+             setTooltip({
+                 text,
+                 x: e.clientX + 10, // Slight offset for better visibility
+                 y: e.clientY + 10,
+             });
+         }
+     };
+
+     const handleMouseLeave = () => setTooltip(null);
+
+
      const handleApprove = (index:number) => {
          if(user){
                 user.notifications[index].approved = true;
