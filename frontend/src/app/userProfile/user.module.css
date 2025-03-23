@@ -245,7 +245,7 @@
   display: flex;
   justify-content: right;
   padding: 1em 2em;
-  background: #3498db; /* Refined blue */
+  background-color: rgb(96, 166, 236);
   position: fixed;
   color: #fff;
   width: 100%;
