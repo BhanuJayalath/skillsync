@@ -38,7 +38,7 @@ interface Education {
 const Overview = ({ user }: { user: User }) => {
     const [activeTab, setActiveTab] = useState(0);
     return (
-        <section className={styles.overviewContainer} >
+        <section className={styles.overviewContainer}>
             <nav className={styles.overviewNavBar}>
                 <ul>
                     <li
@@ -76,17 +76,17 @@ const Overview = ({ user }: { user: User }) => {
                 </div>
                 {activeTab === 0 && <div className={styles.userDetails}>
                     <p>{user?.email && <Image src={"/user/email.svg"} alt="email"
-                              className={styles.overviewIcons}
-                              width={20} height={20}/>}{user?.email}</p>
+                                              className={styles.overviewIcons}
+                                              width={20} height={20}/>}{user?.email}</p>
                     <p>{user?.contact && <Image src={"/user/phone.svg"} alt="phone"
-                              className={styles.overviewIcons}
-                              width={20} height={20}/>}{user?.contact}</p>
+                                                className={styles.overviewIcons}
+                                                width={20} height={20}/>}{user?.contact}</p>
                     <p>{user?.linkedIn && <Image src={"/user/linkedin.svg"} alt="linkedin"
-                              className={styles.overviewIcons}
-                              width={20} height={20}/>}{user?.linkedIn}</p>
+                                                 className={styles.overviewIcons}
+                                                 width={20} height={20}/>}{user?.linkedIn}</p>
                     <p>{user?.gitHub && <Image src={"/user/github.svg"} alt="github"
-                              className={styles.overviewIcons}
-                              width={20} height={20}/>}{user?.gitHub}</p>
+                                               className={styles.overviewIcons}
+                                               width={20} height={20}/>}{user?.gitHub}</p>
                 </div>}
                 {activeTab === 1 && <div className={styles.userDetails}>
                     <h3 className={styles.degreeTitle}>{user?.education[0]?.courseName}</h3>
@@ -94,8 +94,8 @@ const Overview = ({ user }: { user: User }) => {
                     <p className={styles.graduationYear}>{user?.education[0]?.startDate} {user.education[0]?.endDate && `-${user.education[0]?.endDate}`}</p>
                     <p className={styles.jobResponsibilities}>{user?.education[0]?.description}</p>
                     <p>{user?.portfolio && <Image src={"/user/portfolio.svg"} alt="portfolio"
-                              className={styles.overviewIcons}
-                              width={20} height={20}/>}{user?.portfolio}</p>
+                                                  className={styles.overviewIcons}
+                                                  width={20} height={20}/>}{user?.portfolio}</p>
                 </div>}
                 {activeTab === 2 && <div className={styles.userDetails}>
                     <ul className={styles.userSkillList}>
