@@ -121,7 +121,9 @@ interface User {
      }, [activeTab,window.innerWidth]);
 
 
-
+     const toggleSidebar = () => {
+         setIsCollapsed(!isCollapsed);
+     };
     // Education Handlers
     const addEducation = (
         e: React.MouseEvent<HTMLButtonElement>) => {
