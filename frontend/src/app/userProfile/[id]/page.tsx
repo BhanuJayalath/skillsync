@@ -80,14 +80,50 @@ interface User {
     const [activeTab, setActiveTab] = useState(0);
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
+     const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
     const [messageIndex, setMessageIndex] = useState<number | null>(null);
     const [showMessage, setShowMessage] = useState(false);
     const notificationRef = useRef<HTMLDivElement>(null);
     // Initializing profile state with default user details
      const [user, setUser] = useState<User | null>(null);
+     const [isCollapsed, setIsCollapsed] = useState(false);
      const filteredNotifications = user?.notifications.filter(item =>
          item.isSelected && !item.approved) ?? [];
 
+     useEffect(() => {
+
+         if (typeof window !== 'undefined') {
+             // Function to check screen width
+             const handleResize = () => {
+                 const menuElement = document.getElementById(`menuButton`);
+                 if(window?.innerWidth <= 919){
+                     setIsCollapsed(true);
+                     if (menuElement) {
+                         menuElement.style.display = 'none';
+                     }
+                 }else{
+                     setIsCollapsed(false);
+                     if (menuElement) {
+                         menuElement.style.display = 'flex';
+                     }
+                 }
+             };
+
+             // Run check on mount
+             handleResize();
+
+             // Add resize listener
+             window.addEventListener('resize', handleResize);
+
+             // Clean up listener on unmount
+             return () => window.removeEventListener('resize', handleResize);
+         }
+     }, [activeTab,window.innerWidth]);
+
+
+     const toggleSidebar = () => {
+         setIsCollapsed(!isCollapsed);
+     };
     // Education Handlers
     const addEducation = (
         e: React.MouseEvent<HTMLButtonElement>) => {
@@ -240,11 +276,32 @@ interface User {
          }
      };
 
+
+
      const togglePopup = () => {
          if(user && filteredNotifications.length>0){
              setIsOpen(!isOpen);
          }
      };
+
+     const toggleNavIcon = () => {
+         if( window.innerWidth <= 919){
+             setIsCollapsed(true);
+         }
+     };
+
+     const handleMouseMove = (e: React.MouseEvent, text: string) => {
+         if (isCollapsed && window?.innerWidth >= 919){
+             setTooltip({
+                 text,
+                 x: e.clientX + 10, // Slight offset for better visibility
+                 y: e.clientY + 10,
+             });
+         }
+     };
+
+     const handleMouseLeave = () => setTooltip(null);
+
 
      const handleApprove = (index:number) => {
          if(user){
@@ -263,100 +320,165 @@ interface User {
         <><Suspense fallback={<div>Loading...</div>}>
             <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
                 <div className={styles.innerContainer}>
-                    {/* Sidebar */}
-                    <aside className={styles.sidebar}>
-                        <div className={styles.logoContainer}>
-                            <Image src={"/logo.png"} alt="Logo" width={120} height={120} className={styles.logo}
-                                   priority/>
+                    {/* Tooltip */}
+                    {tooltip && (
+                        <div
+                            className="absolute bg-blue-600 text-white text-sm px-2 py-1 rounded shadow-md z-[9999]"
+                            style={{
+                                top: `${tooltip.y}px`,
+                                left: `${tooltip.x}px`,
+                                pointerEvents: 'none', // Prevents tooltip from interfering with hover
+                            }}
+                        >
+                            {tooltip.text}
+                        </div>
+                    )}
+
+                    <aside className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ''}`}>
+                        <div className={`${styles.logoContainer} ${isCollapsed ? styles.collapsed : ''}`}>
+                            <Image id={"menuButton"} src="/user/navMenu.svg"
+                                   alt="navMenuIcon" width={30} height={30}
+                                   onClick={toggleSidebar} className={`${styles.menuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
+                            {!isCollapsed && <Image src="/logo.png" alt="Logo" width={isCollapsed ? 50 : 120}
+                                                    height={isCollapsed ? 50 : 120} className={styles.logo} priority/>}
                         </div>
                         <nav className={styles.nav}>
                             <ul>
-                                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-                                <li><a href="/">
+                                <li
+                                    onMouseMove={(e) => handleMouseMove(e, 'Home')}
+                                    onMouseLeave={handleMouseLeave}>
+                                    <a href="/">
+                                <div className={styles.navTab}>
+                                        <Image src="/user/homeIcon.svg" alt="homeIcon" width={40} height={40}
+                                               className={styles.navImage}/> {!isCollapsed && 'Home'}
+                                    </div>
+                                </a></li>
+                                <li onClick={() => {setActiveTab(0); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Overview')}
+                                    onMouseLeave={handleMouseLeave}
+                                    className={activeTab === 0 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
-                                        <Image src={"/user/homeIcon.svg"} alt="homeIcon"
-                                               width={40} height={40}
-                                               className={styles.navImage}/> Home </div>
-                                </a>
+                                        <Image src="/user/overviewIcon.svg"
+                                               alt="OverviewIcon" width={40} height={40}
+                                               className={styles.navImage}/> {!isCollapsed && 'Overview'}
+                                    </div>
                                 </li>
-                                <li
-                                    onClick={() => setActiveTab(0)}
-                                    className={activeTab === 0 ? styles.activeLink : ''}
-                                ><div className={styles.navTab}><Image src={"/user/overviewIcon.svg"} alt="OverviewIcon"
-                                                    width={40} height={40} className={styles.navImage}/> Overview </div>
+                                <li onClick={() => {setActiveTab(1); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Progress')}
+                                    onMouseLeave={handleMouseLeave}
+                                    className={activeTab === 1 ? styles.activeLink : ''}>
+                                    <div className={styles.navTab}>
+                                        <Image src="/user/progressIcon.svg"
+                                               alt="progressIcon" width={40} height={40}
+                                               className={styles.navImage}/> {!isCollapsed && 'Progress'}
+                                    </div>
                                 </li>
-                                <li
-                                    onClick={() => setActiveTab(1)}
-                                    className={activeTab === 1 ? styles.activeLink : ''}
-                                ><div className={styles.navTab}><Image src={"/user/progressIcon.svg"} alt="progressIcon"
-                                                    width={40} height={40} className={styles.navImage}/> Progress </div>
+                                <li onClick={() => { setActiveTab(2); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Courses')}
+                                    onMouseLeave={handleMouseLeave}
+                                    className={activeTab === 2 ? styles.activeLink : ''}>
+                                    <div className={styles.navTab}>
+                                        <Image src="/user/courseIcon.svg" alt="courseIcon"
+                                               width={50} height={40}
+                                               className={styles.navImage}/> {!isCollapsed && 'Courses'}
+                                    </div>
                                 </li>
-                                <li
-                                    onClick={() => setActiveTab(2)}
-                                    className={activeTab === 2 ? styles.activeLink : ''}
-                                ><div className={styles.navTab}><Image src={"/user/courseIcon.svg"} alt="courseIcon"
-                                                    width={50} height={40} className={styles.navImage}/> Courses </div>
+                                <li onClick={() => { setActiveTab(3); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Resume')}
+                                    onMouseLeave={handleMouseLeave}
+                                    className={activeTab === 3 ? styles.activeLink : ''}>
+                                    <div className={styles.navTab}>
+                                        <Image src="/user/cvIcon.svg" alt="cvIcon" width={30}
+                                               height={40}
+                                               className={styles.navImage}/> {!isCollapsed && 'Resume'}
+                                    </div>
                                 </li>
-                                <li
-                                    onClick={() => setActiveTab(3)}
-                                    className={activeTab === 3 ? styles.activeLink : ''}
-                                ><div className={styles.navTab}><Image src={"/user/cvIcon.svg"} alt="cvIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Resume</div></li>
-                                <li
-                                    onClick={() => setActiveTab(4)}
-                                    className={activeTab === 4 ? styles.activeLink : ''}
-                                ><div className={styles.navTab}><Image src={"/user/mockInterview.svg"} alt="mockInterviewIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Mock Interview</div>
+                                <li onClick={() => { setActiveTab(4); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Interview')}
+                                    onMouseLeave={handleMouseLeave}
+                                    className={activeTab === 4 ? styles.activeLink : ''}>
+                                    <div className={styles.navTab}>
+                                        <Image src="/user/mockInterview.svg"
+                                               alt="mockInterviewIcon" width={30} height={40}
+                                               className={styles.navImage}/> {!isCollapsed && 'Mock Interview'}
+                                    </div>
                                 </li>
-                                <li
-                                    onClick={() => setActiveTab(5)}
-                                    className={activeTab === 5 ? styles.activeLink : ''}
-                                ><div className={styles.navTab}><Image src={"/user/assessments.svg"} alt="assessmentsIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Assessments
-                                </div>
+                                <li onClick={() => { setActiveTab(5); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Assessments')}
+                                    onMouseLeave={handleMouseLeave}
+                                    className={activeTab === 5 ? styles.activeLink : ''}>
+                                    <div className={styles.navTab}>
+                                        <Image src="/user/assessments.svg"
+                                               alt="assessmentsIcon" width={30} height={40}
+                                               className={styles.navImage}/> {!isCollapsed && 'Assessments'}
+                                    </div>
                                 </li>
-                                <li
-                                    onClick={() => setActiveTab(6)}
-                                    className={activeTab === 6 ? styles.activeLink : ''}
-                                ><div className={styles.navTab}><Image src={"/user/Careers.svg"} alt="CareersIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Employment </div>
+                                <li onClick={() => { setActiveTab(6); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Employment')}
+                                    onMouseLeave={handleMouseLeave}
+                                    className={activeTab === 6 ? styles.activeLink : ''}>
+                                    <div className={styles.navTab}>
+                                        <Image src="/user/Careers.svg" alt="CareersIcon"
+                                               width={30} height={40}
+                                               className={styles.navImage}/> {!isCollapsed && 'Employment'}
+                                    </div>
                                 </li>
-                                <li
-                                    onClick={() => setActiveTab(7)}
-                                    className={activeTab === 7 ? styles.activeLink : ''}
-                                ><div className={styles.navTab}><Image src={"/user/settingsIcon.svg"} alt="settingsIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Settings </div>
+                                <li onClick={() => { setActiveTab(7); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Settings')}
+                                    onMouseLeave={handleMouseLeave}
+                                    className={activeTab === 7 ? styles.activeLink : ''}>
+                                    <div className={styles.navTab}>
+                                        <Image src="/user/settingsIcon.svg"
+                                               alt="settingsIcon" width={30} height={40}
+                                               className={styles.navImage}/> {!isCollapsed && 'Settings'}
+                                    </div>
                                 </li>
-                                <li
-                                    onClick={logout}
-                                    className={activeTab === 8 ? styles.activeLink : ''}
-                                ><div className={styles.navTab}><Image src={"/user/logOut.svg"} alt="logOutIcon"
-                                                    width={30} height={40} className={styles.navImage}/> Log Out </div>
+                                <li onClick={logout} className={activeTab === 8 ? styles.activeLink : ''}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Log Out')}
+                                    onMouseLeave={handleMouseLeave}
+                                >
+                                    <div className={styles.navTab}>
+                                        <Image src="/user/logOut.svg" alt="logOutIcon"
+                                               width={30} height={40}
+                                               className={styles.navImage}/> {!isCollapsed && 'Log Out'}
+                                    </div>
                                 </li>
                             </ul>
                         </nav>
-
                     </aside>
 
                     {/* Main Content */}
-                    <main className={styles.mainContent}>
+                    <main className={`${styles.mainContent} ${isCollapsed ? styles.collapsed : ''}`}>
                         <div>
                             {/* Show loading spinner while content is loading */}
                             {loading ? (
                                 <div className="d-flex justify-content-center align-items-center"
                                      style={{height: '100vh'}}>
                                     <div className="spinner-border text-primary" role="status">
-                                        <span className="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
                             ) : (
                                 // Your main content once loading is done
                                 <div>
-                                    <header className={styles.header}>
-                                        <div className={styles.searchContainer}>
-                                            <div className={styles.welcomeMessage}>Welcome, {user?.userName}</div>
-                                        </div>
-                                        <div className={styles.notificationWrapper} ref={notificationRef}>
+                                    <header className={`${styles.header} ${isCollapsed ? styles.collapsed : ''}`}>
+                                        { isCollapsed && <div className={styles.logoContainer}>
+                                            <Image src="/user/navMenu.svg"
+                                                   alt="navMenuIcon" width={30} height={30}
+                                                   onClick={toggleSidebar}
+                                                   className={`${styles.headerMenuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
+                                            <Image src="/logo.png" alt="Logo" width={120}
+                                                   height={120} className={`${styles.logo} ${isCollapsed ? styles.collapsed : ''}`} priority/>
+                                        </div>}
+                                        {/*{ isCollapsed && <Image src="/user/navMenu.svg"*/}
+                                        {/*                        alt="navMenuIcon" width={30} height={30}*/}
+                                        {/*                        onClick={toggleSidebar} */}
+                                        {/*                        className={`${styles.menuButton} ${isCollapsed ? styles.collapsed : ''}`}/>}*/}
+                                        {/*{ isCollapsed && <Image src="/logo.png" alt="Logo" width={120}*/}
+                                        {/*                        height={120} className={styles.logo} priority/>}*/}
+                                        {/*<div className={styles.searchContainer}>*/}
+                                        {/*    <div className={styles.welcomeMessage}>Welcome, {user?.userName}</div>*/}
+                                        {/*</div>*/}
+                                        <div className={`${styles.notificationWrapper} ${isCollapsed ? styles.collapsed : ''}`} ref={notificationRef}>
                                             <div className={styles.notificationContainer} onClick={togglePopup}>
                                                 {filteredNotifications.length > 0 ? (
                                                     <div>
@@ -388,9 +510,16 @@ interface User {
                                                         {user?.notifications.filter(item => item.isSelected && !item.approved).map((notification, index) => (
                                                             <li key={index}>
                                                                 {messageIndex === index && showMessage === true ? (
-                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle} <br/> {notification.jobType} <br/> {notification.companyName} <br/> {notification.companyEmail}</p>) : (
-                                                                    <p onClick={() => {setMessageIndex(index); setShowMessage(true);}}>{notification.recruiterNote}</p>)}
-                                                                <button onClick={()=> handleApprove(index)}>Approve</button>
+                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle}
+                                                                        <br/> {notification.jobType}
+                                                                        <br/> {notification.companyName}
+                                                                        <br/> {notification.companyEmail}</p>) : (
+                                                                    <p onClick={() => {
+                                                                        setMessageIndex(index);
+                                                                        setShowMessage(true);
+                                                                    }}>{notification.recruiterNote}</p>)}
+                                                                <button onClick={() => handleApprove(index)}>Approve
+                                                                </button>
                                                             </li>
                                                         ))}
                                                     </ul>
@@ -400,7 +529,6 @@ interface User {
                                     </header>
                                     <div className={styles.contentWrapper}>
                                         <section className={styles.tabsSection}>
-
                                             {activeTab === 0 && user && <Overview user={user}/>}
                                             {activeTab === 1 && user && <Progress user={user}/>}
                                             {activeTab === 2 && user && <COURSE/>}
@@ -410,7 +538,7 @@ interface User {
                                                 // removeExperience={removeExperience}
                                                 // updateNestedChanges={updateNestedChanges}
                                             />}
-                                            {activeTab === 4 && user && <MockInterview/>}.
+                                            {activeTab === 4 && user && <MockInterview/>}
                                             {activeTab === 5 && user && <Assessment/>}
                                             {activeTab === 6 && user && <JobRecommendations/>}
                                             {activeTab === 7 && user && <Settings
