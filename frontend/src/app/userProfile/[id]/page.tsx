@@ -413,7 +413,23 @@ interface User {
                                 // Your main content once loading is done
                                 <div>
                                     <header className={`${styles.header} ${isCollapsed ? styles.collapsed : ''}`}>
-
+                                        { isCollapsed && <div className={styles.logoContainer}>
+                                            <Image src="/user/navMenu.svg"
+                                                   alt="navMenuIcon" width={30} height={30}
+                                                   onClick={toggleSidebar}
+                                                   className={`${styles.headerMenuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
+                                            <Image src="/logo.png" alt="Logo" width={120}
+                                                   height={120} className={`${styles.logo} ${isCollapsed ? styles.collapsed : ''}`} priority/>
+                                        </div>}
+                                        {/*{ isCollapsed && <Image src="/user/navMenu.svg"*/}
+                                        {/*                        alt="navMenuIcon" width={30} height={30}*/}
+                                        {/*                        onClick={toggleSidebar} */}
+                                        {/*                        className={`${styles.menuButton} ${isCollapsed ? styles.collapsed : ''}`}/>}*/}
+                                        {/*{ isCollapsed && <Image src="/logo.png" alt="Logo" width={120}*/}
+                                        {/*                        height={120} className={styles.logo} priority/>}*/}
+                                        {/*<div className={styles.searchContainer}>*/}
+                                        {/*    <div className={styles.welcomeMessage}>Welcome, {user?.userName}</div>*/}
+                                        {/*</div>*/}
                                         <div className={`${styles.notificationWrapper} ${isCollapsed ? styles.collapsed : ''}`} ref={notificationRef}>
                                             <div className={styles.notificationContainer} onClick={togglePopup}>
                                                 {filteredNotifications.length > 0 ? (
