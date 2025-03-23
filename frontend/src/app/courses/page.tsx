@@ -4,7 +4,7 @@ import React, { useEffect, useState, type ChangeEvent } from "react";
 import Image from "next/image";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { Search, BookOpen, Loader2 } from "lucide-react";
+import { Search, BookOpen, Loader2, Briefcase, Database } from "lucide-react";
 import CourseCard from "./coursecard";
 
 const DEEPSEEK_API_URL = "https://openrouter.ai/api/v1/chat/completions";
@@ -109,6 +109,40 @@ Output the result as a JSON array, where each object has the following fields: i
             <p className="text-xl max-w-2xl mx-auto">
               Expand your knowledge with our extensive library of high-quality courses
             </p>
+          </div>
+        </div>
+
+        {/* Jobs Section - Database */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+          <div className="flex items-center mb-8">
+            <Briefcase className="text-primary mr-2" size={24} />
+            <Database className="text-primary mr-2" size={24} />
+            <h2 className="text-2xl font-bold text-gray-800">Recommended Courses - SkillSync</h2>
+          </div>
+          {dbCourses.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {dbCourses.map((course) => (
+                <CourseCard key={course.id} courses={courses} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20 bg-gray-50 rounded-lg">
+              <p className="text-lg text-gray-600">
+                No jobs found in database.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Section Divider */}
+        <div className="bg-gray-100 py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-gray-800">Find Your Next Course</h2>
+              <p className="text-lg text-gray-600 mt-2">
+                Search for courses based on your skills needed to be improved.
+              </p>
+            </div>
           </div>
         </div>
 
