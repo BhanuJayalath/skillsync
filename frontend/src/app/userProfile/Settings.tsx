@@ -62,6 +62,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const [loading, setLoading] = useState(false);
     const isBrowser = typeof window !== "undefined";
 
+    // Function to load button
     const buttonLoad = ()=>{
         setLoading(true);
         setTimeout(() => {
@@ -98,6 +99,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
         setSummary(user.cvSummary);
     }, []);
 
+    // Function to generate CV summary
     const handleGenerate = async (e:React.FormEvent) =>{
         e.preventDefault();
 
@@ -121,6 +123,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
           "summary": "Your generated summary here"
         }`;
 
+        // Function to fetch summary from API
         const fetchSummary = async (retries = 3) => {
             try {
                 const response = await fetch(`${apiUrl}`, {
@@ -163,6 +166,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     }
 
     useEffect(() => {
+        // Check if window is defined
         if(isBrowser){
             // Function to check screen width
             const handleResize = () => {
@@ -209,6 +213,8 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             })
             .catch(error => console.error('Error fetching cities:', error));
     }, [user.country]);
+
+    // Function to upload profile pics
     const handleUpload = async (e:React.FormEvent) =>{
         e.preventDefault();
         const blobUrl = process.env.NEXT_PUBLIC_BLOB_UPLOAD_PATH;
@@ -226,12 +232,13 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     useEffect(() => {
         handleFields(blob?.url || user.avatar,"avatar");
     }, [blob?.url]);
-    console.log(user.avatar);
     return (
         <section className={styles.userSettings}>
+            {/* Profile section */}
             <div className={styles.userDetails}>
                 <div className={styles.profileHeader}>
                     <div className={styles.profilePic}>
+                        {/* Display user avatar if available, else display default icon */}
                         {user.avatar ? (
                             <span><Image src={user.avatar} alt="userIcon"
                                          width={100} height={100} className={styles.profilePic}/></span>
@@ -242,6 +249,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                          className={styles.profilePic}/></span>
                         )}
                     </div>
+                    {/* Upload button */}
                     <div id={'uploadButton1'} className={styles.uploadContainer}>
                         <input name="file" ref={inputFileRef} type="file" accept="image/*"
                                onChange={(e) => handleUpload(e)}
@@ -249,12 +257,14 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                         <button className={styles.customUploadButton}>Upload</button>
                     </div>
                 </div>
+                {/* User details */}
                 <div className={styles.userDetailsText}>
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
                 </div>
                 <div className={styles.editButtonContainer}>
 
+                    {/* Second upload button for smaller screens */}
                     <div id={'uploadButton2'} className={styles.uploadContainer}>
                         <input name="file" ref={inputFileRef} type="file" accept="image/*"
                                onChange={(e) => handleUpload(e)}
@@ -262,6 +272,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                         <button className={styles.customUploadButton}>Upload</button>
                     </div>
 
+                    {/* Save button */}
                     <button
                         className={styles.saveButton}
                         onClick={() => {
@@ -288,6 +299,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
             </div>
             {/*form section*/}
             <form className={styles.form}>
+                {/* User details */}
                 <div>
                     <label>Full Name</label>
                     <input type="text" name="fullName" value={user.fullName || ''}
@@ -421,6 +433,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             </div>
                         </div>
                     ))}
+                    {/* Add new experience button */}
                     <button onClick={addExperience}>New</button>
                 </div>
 
@@ -468,6 +481,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             />
                         </div>
                     ))}
+                    {/* Add new education button */}
                     <button onClick={addEducation}>New</button>
                 </div>
             </form>
