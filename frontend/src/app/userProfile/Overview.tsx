@@ -63,7 +63,7 @@ const Overview = ({ user }: { user: User }) => {
                     <div className={styles.profilePicContainer}>
                         {user?.avatar ? (
                             <span><Image src={user?.avatar} alt="userIcon"
-                                         width={100} height={100} className={styles.userAvatar}/></span>
+                                         width={100} height={100} className={styles.userAvatar} priority/></span>
                         ) : (
                             <span><Image src={"/user/userIcon.svg"} alt="userIcon"
                                          width={100} height={100} className={styles.userAvatar}/></span>
