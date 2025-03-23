@@ -135,10 +135,11 @@ export default function JobListing({
         )}
       </div>
       <div className={styles.mockExamscontainerSection}>
-        {loadJobPosts?.map((item: any, index: number) => {
-          return (
-            <div key={index} id={styles.mockExamscontainerDisplaySection}>
+        <div id={styles.mockExamscontainerOverflowSection}>
+          {loadJobPosts?.map((item: any, index: number) => {
+            return (
               <button
+                key={index}
                 onClick={() => {
                   if (removeJobPostContainers) {
                     removeJobPostComponent(item.jobId); // Use jobId here instead of mockExamId
@@ -149,10 +150,10 @@ export default function JobListing({
                 id={styles.mockExamscontainer}
               >
                 <Image
-                  alt="exam-icon"
+                  alt="job-icon"
                   width={60}
                   height={60}
-                  src="/recruiter/exam-icon.svg"
+                  src="/recruiter/job-icon.svg"
                 />
                 <h1>Open Position {index + 1}</h1>
                 <div id={styles.mockExamscontainerButtons}>
@@ -166,9 +167,9 @@ export default function JobListing({
                   ) : null}
                 </div>
               </button>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );

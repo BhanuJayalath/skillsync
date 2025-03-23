@@ -26,6 +26,7 @@ export default function TestListing({
   testResponse,
   setTestResponse,
   loadJobPostContent,
+  setNotification,
 }: {
   loadTests: any;
   setLoadTests: any;
@@ -41,6 +42,7 @@ export default function TestListing({
   testResponse: any;
   setTestResponse: any;
   loadJobPostContent: any;
+  setNotification: any;
 }) {
   const [remove, setRemove] = useState(false);
   const [addTestLevel, setAddTestLevel] = useState(false);
@@ -198,7 +200,15 @@ export default function TestListing({
           ) : (
             <button
               onClick={() => {
-                setAddTestLevel(true);
+                if (loadJobPostContent.jobTitle !== "") {
+                  setAddTestLevel(true);
+                } else {
+                  setNotification({
+                    show: true,
+                    message: "Add Position Before Editing the Test",
+                    status: true,
+                  });
+                }
               }}
             >
               <Image
@@ -213,10 +223,11 @@ export default function TestListing({
         </div>
       </div>
       <div className={styles.testListingSection}>
-        {loadTests?.map((item: any, index: number) => {
-          return (
-            <div key={item.testId} id={styles.testListingDisplaySection}>
+        <div id={styles.testListingOverflowSection}>
+          {loadTests?.map((item: any, index: number) => {
+            return (
               <button
+                key={item.testId}
                 onClick={() => {
                   if (removeTestBlock) {
                     removeTestComponent(item.testId);
@@ -244,9 +255,9 @@ export default function TestListing({
                   ) : null}
                 </div>
               </button>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
