@@ -76,7 +76,6 @@ interface User {
  function UserProfile() {
      const { id } = useParams();
      const router = useRouter();
-     //Adding a useState for the active section
     const [activeTab, setActiveTab] = useState(0);
     const [loading, setLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
@@ -84,9 +83,9 @@ interface User {
     const [messageIndex, setMessageIndex] = useState<number | null>(null);
     const [showMessage, setShowMessage] = useState(false);
     const notificationRef = useRef<HTMLDivElement>(null);
-    // Initializing profile state with default user details
      const [user, setUser] = useState<User | null>(null);
      const [isCollapsed, setIsCollapsed] = useState(false);
+     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
      const filteredNotifications = user?.notifications.filter(item =>
          item.isSelected && !item.approved) ?? [];
 
@@ -179,13 +178,12 @@ interface User {
          } : null);
      };
     const handleSubmit = async () => {
-        const updateUserUrl = process.env.NEXT_PUBLIC_UPDATE_USER_URL;
         if (user) {
             user.experience = user.experience.filter(item => item.jobName);
             user.education = user.education.filter(item => item.courseName);
 
             try {
-                const response = await fetch(`${updateUserUrl}/${id}`, {
+                const response = await fetch(`${baseUrl}/updateUser/${id}`, {
                     method: "PATCH",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
@@ -228,8 +226,7 @@ interface User {
 
         if(id){
             const fetchUserDetails = async () => {
-                const getUserUrl = process.env.NEXT_PUBLIC_GET_USER_URL;
-                const response = await fetch(`${getUserUrl}/${id}`, {
+                const response = await fetch(`${baseUrl}/getUser/${id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -249,8 +246,7 @@ interface User {
             };
             fetchUserDetails().then(e => console.log(e));
         }else{
-            const reDirectUrl = process.env.NEXT_PUBLIC_LOGIN_PAGE_URL;
-            router.push(`${reDirectUrl}`);
+            router.push(`${baseUrl}/login`);
         }
 
         const handleClickOutside = (event: MouseEvent) => {
