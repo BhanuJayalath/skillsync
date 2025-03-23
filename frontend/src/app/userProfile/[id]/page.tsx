@@ -105,7 +105,20 @@ function useMediaQuery(query: string) {
          item.isSelected && !item.approved) ?? [];
      const isSmallScreen = useMediaQuery('(max-width: 919px)');
 
+     useEffect(() => {
+         // Function to check screen width
+         const handleResize = () => {
+             const menuElement = document.getElementById('menuButton');
+             if (isSmallScreen) {
+                 setIsCollapsed(true);
+             } else {
+                 setIsCollapsed(false);
+             }
+         };
 
+         // Run check on mount
+         handleResize();
+     }, [isSmallScreen]);
 
      const toggleSidebar = () => {
          setIsCollapsed(!isCollapsed);
