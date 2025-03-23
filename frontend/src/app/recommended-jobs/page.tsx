@@ -172,7 +172,7 @@ Output the result as a JSON array, where each object has the following fields: i
               </div>
               <Button
                 onClick={() => searchJobs(searchTerm)}
-                className="bg-blue-500 hover:bg-primary/90 text-white"
+                className="bg-[rgb(96,166,236)] hover:bg-primary/90 text-white"
                 disabled={isLoading}
               >
                 {isLoading ? (

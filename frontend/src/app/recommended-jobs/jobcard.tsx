@@ -143,7 +143,7 @@ const JobCard = ({ job }: JobProps) => {
 
       <CardFooter className="pt-0 pb-4">
         <div className="flex gap-2 w-full">
-          <Button asChild className="w-full" size="sm">
+          <Button asChild className="bg-gray-100 w-full" size="sm">
             <Link href={job.link} target="_blank" rel="noopener noreferrer">
               View Details
               <ExternalLink className="ml-1.5 h-3.5 w-3.5" />
