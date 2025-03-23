@@ -13,6 +13,7 @@ const Navbar = () => {
   interface User {
     userName: string;
     _id: string;
+    isRecruiter: boolean;
     // Add other user properties if needed
   }
 
@@ -31,12 +32,27 @@ const Navbar = () => {
         }
         const data = await response.json()
         if (data.user) {
-          setUser(data.user)
+          setUser({ ...data.user, isRecruiter: false })
         } else {
-          console.error("User data not found")
+          console.log("User data not found")
+          // Try fetching recruiter data if user data is not found
+          const recruiterResponse = await fetch("/api/recruiters/me", {
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+          if (!recruiterResponse.ok) {
+            throw new Error(`Error: ${recruiterResponse.statusText}`);
+          }
+          const recruiterData = await recruiterResponse.json()
+          if (recruiterData.recruiter) {
+            setUser({ ...recruiterData.recruiter, isRecruiter: true })
+          } else {
+            console.log("Recruiter data not found")
+          }
         }
       } catch (error) {
-        console.log("User not loggedin", error)
+        console.log("User not logged in", error)
         setUser(null) // Set default user name as Linuka
       }
     }
@@ -45,7 +61,6 @@ const Navbar = () => {
   }, [])
   const router = useRouter()
 
-  
   const handleLogout = async () => {
     try {
       await axios.get('/api/users/logout');
@@ -77,7 +92,7 @@ const Navbar = () => {
               <div className={styles.userMenu}>
                 <span className={styles.Hi}>Hi, {user.userName}</span>
                 <div className={styles.dropdown}>
-                  <Link href={`/userProfile/${user._id}`} className={styles.dropdownItem}>Profile</Link>
+                  <Link href={user.isRecruiter ? `/recruiter-profile/${user._id}` : `/userProfile/${user._id}`} className={styles.dropdownItem}>Profile</Link>
                   <button onClick={handleLogout} className={styles.dropdownItem}>Logout</button>
                 </div>
               </div>
@@ -133,7 +148,7 @@ const Navbar = () => {
           </Link>
           {user ? (
             <>
-              <Link href={`/userProfile/${user._id}`} className={styles.mobileNavLink}>Profile</Link>
+              <Link href={user.isRecruiter ? `/recruiterProfile/${user._id}` : `/userProfile/${user._id}`} className={styles.mobileNavLink}>Profile</Link>
               <Link href="#" onClick={handleLogout} className={`${styles.mobileNavLink} ${styles.fn}`}>Logout</Link>
             </>
           ) : (
