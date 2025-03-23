@@ -354,7 +354,7 @@ function useMediaQuery(query: string) {
                             <Image id={"menuButton"} src="/user/navMenu.svg"
                                    alt="navMenuIcon" width={30} height={30}
                                    onClick={toggleSidebar} className={`${styles.menuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
-                            {!isCollapsed && <Image src="/logo.png" alt="Logo" width={120}
+                            {!isCollapsed && <Image src="/user/logo.png" alt="Logo" width={120}
                                                     height={120} className={styles.logo} priority/>}
                         </div>
                         {/* Navigation */}
@@ -474,7 +474,7 @@ function useMediaQuery(query: string) {
                                        onClick={toggleSidebar}
                                        className={`${styles.headerMenuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
                                 {/* Logo */}
-                                <Image src="/logo.png" alt="Logo" width={120}
+                                <Image src="/user/logo.png" alt="Logo" width={120}
                                        height={120} className={`${styles.logo} ${isCollapsed ? styles.collapsed : ''}`}
                                        priority/>
                             </div>}
