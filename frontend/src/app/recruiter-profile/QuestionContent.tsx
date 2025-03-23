@@ -92,8 +92,8 @@ export default function QuestionContent({
             >
               <Image
                 alt="remove-icon"
-                width={25}
-                height={25}
+                width={40}
+                height={40}
                 src="/recruiter/remove-icon.svg"
               />
             </button>

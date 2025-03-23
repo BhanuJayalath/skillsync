@@ -35,12 +35,14 @@ export default function UserProfile({
   setDashboardTab,
   jobId,
   recruiterDetails,
+  setNotification,
 }: {
   userId: string;
   setUserProfile: any;
   setDashboardTab: any;
   jobId: any;
   recruiterDetails: any;
+  setNotification: any;
 }) {
   const [userDetails, setUserDetails] = useState<UserDetails>();
   const [jobDetails, setJobDetails] = useState({
@@ -123,7 +125,11 @@ export default function UserProfile({
           }
         )
         .then((response) => {
-          console.log("Updated successfully:", response.data);
+          setNotification({
+            show: true,
+            message: "Candidate Selected Sucessfully",
+            status: false,
+          });
           setCheckBoxValue(true);
         })
         .catch((error) => {
@@ -139,7 +145,11 @@ export default function UserProfile({
           }
         )
         .then((response) => {
-          console.log("Updated successfully:", response.data);
+          setNotification({
+            show: true,
+            message: "Candidate Unselected Sucessfully",
+            status: false,
+          });
           setCheckBoxValue(false);
         })
         .catch((error) => {
@@ -159,8 +169,8 @@ export default function UserProfile({
         >
           <Image
             alt="delete-icon"
-            width={30}
-            height={30}
+            width={40}
+            height={40}
             src="/recruiter/delete-icon.svg"
           />
         </button>
@@ -208,7 +218,7 @@ export default function UserProfile({
             </div>
             <div id={styles.userProfileContent}>
               <h1>{userDetails.city}</h1>
-              <h1>{userDetails.country}</h1>
+              <h1>| {userDetails.country} |</h1>
               <h1>{userDetails.language}</h1>
             </div>
             <div id={styles.userProfileContent}>
