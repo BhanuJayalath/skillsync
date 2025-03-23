@@ -17,6 +17,11 @@
   align-items: center;
   height: 100px;
 }
+.navigation #HamburgerIcon {
+  display: none;
+  gap: 20px;
+  flex-direction: row;
+}
 .navigation #pageTitle {
   display: flex;
   flex-direction: row;
@@ -60,7 +65,7 @@
 .contentContainer {
   flex: 1;
   min-height: 100vh;
-  margin-left: 15.5em;
+  margin-left: 5em;
   color: white;
 }
 
@@ -816,6 +821,7 @@
     margin-bottom: 30px;
   }
 }
+
 @media only screen and (max-width: 1090px) {
   #contentContainer1 {
     flex-direction: column;
@@ -871,14 +877,18 @@
     align-items: flex-start;
   }
 }
-
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 919px) {
+  .navigation #pageTitle {
+    display: none;
+  }
+  .navigation .welcomeBar {
+    width: 80%;
+  }
   .contentContainer {
     width: 100%;
     margin-left: 0%;
   }
 }
-
 @media only screen and (max-width: 800px) {
   #JobContentHeading {
     display: flex;
@@ -1033,9 +1043,6 @@
   }
   .navigation .welcomeBar {
     width: 100%;
-  }
-  .navigation #pageTitle {
-    display: none;
   }
   #jobListingHeaderButtonsSection {
     display: flex;
