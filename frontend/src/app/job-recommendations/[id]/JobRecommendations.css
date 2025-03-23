@@ -268,21 +268,22 @@ footer {
     margin-top: 0.5rem;
   }
   
-  .select-job-button {
-    background-color: #d1e5f4;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s;
-  }
-  
-  .select-job-button:hover {
-    background-color: #578bb3;
-  }
-  
+  button.select-job-button {
+    background-color: #87CEEB !important; /* Light blue */
+    color: white !important;
+    font-size: 16px !important;
+    padding: 10px 15px !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease !important;
+}
+
+button.select-job-button:hover {
+    background-color: #6495ED !important; /* Darker shade of light blue */
+}
+
+
   /* Pagination */
   .pagination {
     display: flex;
@@ -339,7 +340,7 @@ footer {
   }
   
   .login-button {
-    background-color: #007bff;
+    background-color: #9ec3ea;
     color: white;
     border: none;
     padding: 0.8rem 1.5rem;
@@ -350,7 +351,7 @@ footer {
   }
   
   .login-button:hover {
-    background-color: #0069d9;
+    background-color: #abc3dd;
   }
   
   
