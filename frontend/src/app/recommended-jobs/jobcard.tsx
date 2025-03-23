@@ -61,8 +61,6 @@ const JobCard = ({ job }: JobProps) => {
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          {/* Overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-70"></div>
 
           {/* Company name overlay */}
           {job.company && (
