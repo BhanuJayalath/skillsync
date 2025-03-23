@@ -94,7 +94,6 @@ function useMediaQuery(query: string) {
      const { id } = useParams();
      const router = useRouter();
      const [activeTab, setActiveTab] = useState(0);
-     const [loading, setLoading] = useState(true);
      const [isOpen, setIsOpen] = useState(false);
      const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
      const [messageIndex, setMessageIndex] = useState<number | null>(null);
@@ -355,7 +354,7 @@ function useMediaQuery(query: string) {
                             <Image id={"menuButton"} src="/user/navMenu.svg"
                                    alt="navMenuIcon" width={30} height={30}
                                    onClick={toggleSidebar} className={`${styles.menuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
-                            {!isCollapsed && <Image src="/logo.png" alt="Logo" width={120}
+                            {!isCollapsed && <Image src="/user/logo.png" alt="Logo" width={120}
                                                     height={120} className={styles.logo} priority/>}
                         </div>
                         {/* Navigation */}
@@ -475,7 +474,7 @@ function useMediaQuery(query: string) {
                                        onClick={toggleSidebar}
                                        className={`${styles.headerMenuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
                                 {/* Logo */}
-                                <Image src="/logo.png" alt="Logo" width={120}
+                                <Image src="/user/logo.png" alt="Logo" width={120}
                                        height={120} className={`${styles.logo} ${isCollapsed ? styles.collapsed : ''}`}
                                        priority/>
                             </div>}
