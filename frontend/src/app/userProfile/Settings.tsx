@@ -60,6 +60,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
     const [loading, setLoading] = useState(false);
+    const isBrowser = typeof window !== "undefined";
 
     const buttonLoad = ()=>{
         setLoading(true);
@@ -162,32 +163,35 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     }
 
     useEffect(() => {
-        // Function to check screen width
-        const handleResize = () => {
-            const uploadElement1 = document.getElementById(`uploadButton1`);
-            const uploadElement2 = document.getElementById(`uploadButton2`);
-            if(window.innerWidth < 919){
-                if (uploadElement1 && uploadElement2) {
-                    uploadElement1.style.display = 'none';
-                    uploadElement2.style.display = 'flex';
+        if(isBrowser){
+            // Function to check screen width
+            const handleResize = () => {
+                const uploadElement1 = document.getElementById(`uploadButton1`);
+                const uploadElement2 = document.getElementById(`uploadButton2`);
+                if(window.innerWidth < 919){
+                    if (uploadElement1 && uploadElement2) {
+                        uploadElement1.style.display = 'none';
+                        uploadElement2.style.display = 'flex';
+                    }
+                }else{
+                    if (uploadElement1 && uploadElement2) {
+                        uploadElement1.style.display = 'flex';
+                        uploadElement2.style.display = 'none';
+                    }
                 }
-            }else{
-                if (uploadElement1 && uploadElement2) {
-                    uploadElement1.style.display = 'flex';
-                    uploadElement2.style.display = 'none';
-                }
-            }
-        };
 
-        // Run check on mount
-        handleResize();
+            };
 
-        // Add resize listener
-        window.addEventListener('resize', handleResize);
+            // Run check on mount
+            handleResize();
 
-        // Clean up listener on unmount
-        return () => window.removeEventListener('resize', handleResize);
-    }, [window.innerWidth]);
+            // Add resize listener
+            window.addEventListener('resize', handleResize);
+
+            // Clean up listener on unmount
+            return () => window.removeEventListener('resize', handleResize);
+        }
+    }, [isBrowser && window.innerWidth]);
 
     // Fetch cities when a country is selected
     useEffect(() => {
