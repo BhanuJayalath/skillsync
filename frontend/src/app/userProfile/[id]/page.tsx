@@ -284,7 +284,11 @@ interface User {
          }
      };
 
-
+     const toggleNavIcon = () => {
+         if( window.innerWidth <= 919){
+             setIsCollapsed(true);
+         }
+     };
 
      const handleApprove = (index:number) => {
          if(user){
