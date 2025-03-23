@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { Job } from './job.schema';
 
 @Injectable()
-export class JobRecommendationService {
+export class JobsService {
   constructor(
     private configService: ConfigService,
     @InjectModel(Job.name) private jobModel: Model<Job>,

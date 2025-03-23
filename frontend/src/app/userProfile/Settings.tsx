@@ -161,6 +161,34 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
         await fetchSummary();
     }
 
+    useEffect(() => {
+        // Function to check screen width
+        const handleResize = () => {
+            const uploadElement1 = document.getElementById(`uploadButton1`);
+            const uploadElement2 = document.getElementById(`uploadButton2`);
+            if(window.innerWidth < 919){
+                if (uploadElement1 && uploadElement2) {
+                    uploadElement1.style.display = 'none';
+                    uploadElement2.style.display = 'flex';
+                }
+            }else{
+                if (uploadElement1 && uploadElement2) {
+                    uploadElement1.style.display = 'flex';
+                    uploadElement2.style.display = 'none';
+                }
+            }
+        };
+
+        // Run check on mount
+        handleResize();
+
+        // Add resize listener
+        window.addEventListener('resize', handleResize);
+
+        // Clean up listener on unmount
+        return () => window.removeEventListener('resize', handleResize);
+    }, [window.innerWidth]);
+
     // Fetch cities when a country is selected
     useEffect(() => {
         if (!countries) return;
@@ -183,7 +211,6 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
         if (!inputFileRef.current?.files) {
             throw new Error('No file selected');
         }
-
         const file = inputFileRef.current.files[0];
 
         const newBlob = await upload(file.name, file, {
@@ -211,20 +238,28 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                                          className={styles.profilePic}/></span>
                         )}
                     </div>
-                    <div className={styles.uploadContainer}>
+                    <div id={'uploadButton1'} className={styles.uploadContainer}>
                         <input name="file" ref={inputFileRef} type="file" accept="image/*"
                                onChange={(e) => handleUpload(e)}
                                className={styles.hiddenInput}/>
                         <button className={styles.customUploadButton}>Upload</button>
                     </div>
                 </div>
-                <div>
+                <div className={styles.userDetailsText}>
                     <strong>{user.userName}</strong>
                     <p>{user.email}</p>
                 </div>
-                <div className={styles.editButton}>
+                <div className={styles.editButtonContainer}>
+
+                    <div id={'uploadButton2'} className={styles.uploadContainer}>
+                        <input name="file" ref={inputFileRef} type="file" accept="image/*"
+                               onChange={(e) => handleUpload(e)}
+                               className={styles.hiddenInput}/>
+                        <button className={styles.customUploadButton}>Upload</button>
+                    </div>
+
                     <button
-                        className="btn btn-primary d-flex align-items-center"
+                        className={styles.saveButton}
                         onClick={() => {
                             handleSubmit();
                             buttonLoad();
@@ -234,11 +269,12 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                         {/* Display spinner when loading */}
                         {loading ? (
                             <>
-                                <div className="spinner-border spinner-border-sm text-light" role="status"
-                                     style={{marginRight: '10px'}}>
-                                    <span className="visually-hidden">Loading...</span>
+                                <div className={styles.saveSpinner} role="status">
+                                    <div>
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                    Loading...
                                 </div>
-                                Loading...
                             </>
                         ) : (
                             'Save'
@@ -354,6 +390,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             <div className={styles.formGroup}>
                                 <label htmlFor={`startDate-${index}`}>Start Date</label>
                                 <input
+                                    className={styles.dateInput}
                                     type="date" // Use type="date"
                                     id={`startDate-${index}`}
                                     value={exp.startDate || ''}
@@ -363,6 +400,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             <div className={styles.formGroup}>
                                 <label htmlFor={`endDate-${index}`}>End Date</label>
                                 <input
+                                    className={styles.dateInput}
                                     type="date" // Use type="date"
                                     id={`endDate-${index}`}
                                     value={exp.endDate || ''}
@@ -404,6 +442,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             />
                             <label htmlFor={`startDate-${index}`}>Start Date</label>
                             <input
+                                className={styles.dateInput}
                                 type="date"
                                 id={`startDate-${index}`}
                                 value={edu.startDate || ''}
@@ -411,6 +450,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             />
                             <label htmlFor={`endDate-${index}`}>End Date</label>
                             <input
+                                className={styles.dateInput}
                                 type="date"
                                 id={`endDate-${index}`}
                                 value={edu.endDate || ''}
