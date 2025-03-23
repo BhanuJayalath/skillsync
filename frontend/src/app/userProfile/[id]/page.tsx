@@ -463,7 +463,9 @@ interface User {
                                                             <li key={index}>
                                                                 {messageIndex === index && showMessage === true ? (
                                                                     <p onClick={() => setShowMessage(false)}>{notification.jobTitle}
-                                                                        <br/> {notification.jobType}</p>) : (
+                                                                        <br/> {notification.jobType}
+                                                                        <br/> {notification.companyName}
+                                                                        <br/> {notification.companyEmail}</p>) : (
                                                                     <p onClick={() => {
                                                                         setMessageIndex(index);
                                                                         setShowMessage(true);
