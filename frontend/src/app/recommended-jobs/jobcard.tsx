@@ -60,7 +60,8 @@ const JobCard = ({ job }: JobProps) => {
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-70"></div>
+
+          {/* Company name overlay */}
           {job.company && (
             <div className="absolute bottom-3 left-3 right-3 text-white">
               <div className="flex items-center gap-2">
@@ -127,11 +128,7 @@ const JobCard = ({ job }: JobProps) => {
 
       <CardFooter className="pt-0 pb-4">
         <div className="flex gap-2 w-full">
-          <Button
-            asChild
-            className="w-full bg-blue-300 hover:bg-blue-400 text-white transition-all duration-300"
-            size="sm"
-          >
+          <Button asChild className="bg-gray-100 w-full" size="sm">
             <Link href={job.link} target="_blank" rel="noopener noreferrer">
               View Details
               <ExternalLink className="ml-1.5 h-3.5 w-3.5" />

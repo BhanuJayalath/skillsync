@@ -162,7 +162,7 @@ const CourseCard = ({ course }: CourseProps) => {
 
       <CardFooter className="pt-0 pb-4">
         <div className="flex gap-2 w-full">
-          <Button asChild className="w-full" size="sm">
+          <Button asChild className="bg-gray-100 w-full" size="sm">
             <Link href={course.link} target="_blank" rel="noopener noreferrer">
               <BookOpen className="mr-1.5 h-4 w-4" />
               View Course

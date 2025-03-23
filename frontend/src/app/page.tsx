@@ -1,16 +1,15 @@
 "use client"
 
-import type React from "react"
-
+import React from "react"
 import Image from "next/image"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronRight, ArrowRight, Star, CheckCircle, Mail } from "lucide-react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import styles from "./assets/styles/landing.module.css"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import ServiceModal from "./components/ServiceModal"
+import { ChevronRight, ArrowRight, Star, CheckCircle, Mail, BarChart2, BookOpen, MessageSquare, Briefcase } from 'lucide-react'
 
 interface Testimonial {
   id: number
@@ -274,23 +273,23 @@ const LandingPage = () => {
               <div className={styles.featureVisual}>
               <div className={styles.featureVisualBg}></div>
               <div className={styles.featureGrid}>
-                {[
-                  { icon: "BarChart2", label: "Analytics" },
-                  { icon: "BookOpen", label: "Courses" },
-                  { icon: "MessageSquare", label: "Feedback" },
-                  { icon: "Briefcase", label: "Jobs" },
-                ].map((item, index) => {
-                  const IconComponent = require('lucide-react')[item.icon];
-                  return (
-                    <div key={index} className={styles.featureGridItem}>
-                      <div className={styles.featureGridIcon}>
-                        <IconComponent size={24} />
-                      </div>
-                      <span>{item.label}</span>
+              {[
+                { icon: BarChart2, label: "Analytics" },
+                { icon: BookOpen, label: "Courses" },
+                { icon: MessageSquare, label: "Feedback" },
+                { icon: Briefcase, label: "Jobs" },
+              ].map((item, index) => {
+                const IconComponent = item.icon;
+                return (
+                  <div key={index} className={styles.featureGridItem}>
+                    <div className={styles.featureGridIcon}>
+                      <IconComponent size={24} />
                     </div>
-                  );
-                })}
-              </div>
+                    <span>{item.label}</span>
+                  </div>
+                );
+              })}
+            </div>
             </div>
 
             </motion.div>
