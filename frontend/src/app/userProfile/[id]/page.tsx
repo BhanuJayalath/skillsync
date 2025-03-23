@@ -309,7 +309,11 @@ interface User {
                 <div className={styles.innerContainer}>
                     <aside className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ''}`}>
                         <div className={`${styles.logoContainer} ${isCollapsed ? styles.collapsed : ''}`}>
-
+                            <Image id={"menuButton"} src="/user/navMenu.svg"
+                                   alt="navMenuIcon" width={30} height={30}
+                                   onClick={toggleSidebar} className={`${styles.menuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
+                            {!isCollapsed && <Image src="/logo.png" alt="Logo" width={isCollapsed ? 50 : 120}
+                                                    height={isCollapsed ? 50 : 120} className={styles.logo} priority/>}
                         </div>
                         <nav className={styles.nav}>
                             <ul>
