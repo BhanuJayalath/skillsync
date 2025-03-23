@@ -333,15 +333,6 @@
   padding: 1em; /* Add padding inside the user info section */
 }
 
-.welcomeMessage {
-  background: #3498db; /* Refined blue */
-  display: flex;
-  flex-direction: row;
-  color: white;
-  border-radius: 0.5em 0.5em 0 0; /* Only round the top corners */
-  font-size: 1.2em;
-}
-
 /* User Details */
 .userProfile {
   display: flex;
@@ -518,7 +509,6 @@
 
 /* CV Section */
 .cvSection {
-
     font-family: Arial, sans-serif;
     width: 75%;
     min-height:70.157489153699rem ;
@@ -547,20 +537,19 @@
 }
 
 .name {
-
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #333;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
 }
 
-.jobTitle {
-    font-size: 0.9rem;
+.jobTitle1 {
+    font-size: 1.4rem;
     color: #555;
     margin-bottom: 0.5em;
 }
 
 .contactDetails {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     margin-top: 1em;
     color: #777;
 }
@@ -582,12 +571,12 @@
 }
 
 .sectionTitle {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: #333;
   margin-bottom: 15px;
   border-bottom: 2px solid #3498db;
-  padding-bottom: 0.5em;
+  padding-bottom: 1em;
 }
 .assessmentDetails {
   padding: -1em;
@@ -602,16 +591,16 @@
 
 .jobTitle,
 .degreeTitle {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #333;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.5em;
 }
 
 .companyName,
 .schoolName,
 .assessmentItem {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #555;
 }
 
@@ -672,8 +661,8 @@
 }
 
 .userSettings .profilePic {
-  width: 100px; /* Match container size */
-  height: 100px; /* Match container size */
+  width: 9em; /* Match container size */
+  height: 9em; /* Match container size */
   object-fit: cover;
   border-radius: 50%;
   margin: 1em 1em 1em 1em;
@@ -814,56 +803,28 @@
   height: 100px;
 }
 
-/*Animations*/
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.welcomeMessage {
-  animation: fadeIn 1s ease-out;
-}
 /*downloading the pdf*/
 @media print {
-  /* making the CV section and its contents visible */
+  /* Make the CV section and all its children visible for print */
   .cvSection,
   .cvSection * {
-    visibility: visible;
+    visibility: visible; /* Ensure all contents are visible */
   }
 
   /* Position the CV section at the top-left of the printed page */
   .cvSection {
     position: absolute;
-    left: 0;
     top: 0;
-    margin: 0; /* Reset any margins */
-    padding: 1cm; /* Keep the padding */
-    width: 21cm; /* Ensure it takes the full page width */
-    height: auto; /* expanding to the full height needed */
-    box-shadow: none; /* Remove shadow for printing */
-    border: none; /*Remove the border*/
+    width: 219cm; /* Full width of the A4 page */
+    height: auto; /* Auto height to fit content */
+    box-shadow: none; /* Remove any shadow for print */
+    border: none; /* Remove borders */
+    background-color: white; /* Ensure background is white for print */
   }
 }
-
 @media (max-width: 1063px){
   .overviewUserContainer {
     width: 40em;
-  }
-
-}
-
-@media (max-width: 919px){
-  .overviewUserContainer {
-    width: 35em;
-  }
-  .userSettings{
-    width: 20em;
   }
 
 }
@@ -940,7 +901,7 @@
   }
   .overviewUserContainer {
     flex-direction: column;
-    width: 30em;
+    width: 35em;
     margin: 1em auto;
   }
 
