@@ -344,14 +344,18 @@ interface User {
                         </div>
                         <nav className={styles.nav}>
                             <ul>
-                                <li>
+                                <li
+                                    onMouseMove={(e) => handleMouseMove(e, 'Home')}
+                                    onMouseLeave={handleMouseLeave}>
                                     <a href="/">
                                 <div className={styles.navTab}>
                                         <Image src="/user/homeIcon.svg" alt="homeIcon" width={40} height={40}
                                                className={styles.navImage}/> {!isCollapsed && 'Home'}
                                     </div>
                                 </a></li>
-                                <li onClick={() => setActiveTab(0)}
+                                <li onClick={() => {setActiveTab(0); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Overview')}
+                                    onMouseLeave={handleMouseLeave}
                                     className={activeTab === 0 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/overviewIcon.svg"
@@ -359,7 +363,9 @@ interface User {
                                                className={styles.navImage}/> {!isCollapsed && 'Overview'}
                                     </div>
                                 </li>
-                                <li onClick={() => setActiveTab(1)}
+                                <li onClick={() => {setActiveTab(1); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Progress')}
+                                    onMouseLeave={handleMouseLeave}
                                     className={activeTab === 1 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/progressIcon.svg"
@@ -368,6 +374,8 @@ interface User {
                                     </div>
                                 </li>
                                 <li onClick={() => { setActiveTab(2); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Courses')}
+                                    onMouseLeave={handleMouseLeave}
                                     className={activeTab === 2 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/courseIcon.svg" alt="courseIcon"
@@ -376,6 +384,8 @@ interface User {
                                     </div>
                                 </li>
                                 <li onClick={() => { setActiveTab(3); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Resume')}
+                                    onMouseLeave={handleMouseLeave}
                                     className={activeTab === 3 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/cvIcon.svg" alt="cvIcon" width={30}
@@ -384,6 +394,8 @@ interface User {
                                     </div>
                                 </li>
                                 <li onClick={() => { setActiveTab(4); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Interview')}
+                                    onMouseLeave={handleMouseLeave}
                                     className={activeTab === 4 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/mockInterview.svg"
@@ -392,6 +404,8 @@ interface User {
                                     </div>
                                 </li>
                                 <li onClick={() => { setActiveTab(5); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Assessments')}
+                                    onMouseLeave={handleMouseLeave}
                                     className={activeTab === 5 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/assessments.svg"
@@ -400,6 +414,8 @@ interface User {
                                     </div>
                                 </li>
                                 <li onClick={() => { setActiveTab(6); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Employment')}
+                                    onMouseLeave={handleMouseLeave}
                                     className={activeTab === 6 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/Careers.svg" alt="CareersIcon"
@@ -408,6 +424,8 @@ interface User {
                                     </div>
                                 </li>
                                 <li onClick={() => { setActiveTab(7); toggleNavIcon();}}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Settings')}
+                                    onMouseLeave={handleMouseLeave}
                                     className={activeTab === 7 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/settingsIcon.svg"
@@ -415,7 +433,10 @@ interface User {
                                                className={styles.navImage}/> {!isCollapsed && 'Settings'}
                                     </div>
                                 </li>
-                                <li onClick={logout} className={activeTab === 8 ? styles.activeLink : ''}>
+                                <li onClick={logout} className={activeTab === 8 ? styles.activeLink : ''}
+                                    onMouseMove={(e) => handleMouseMove(e, 'Log Out')}
+                                    onMouseLeave={handleMouseLeave}
+                                >
                                     <div className={styles.navTab}>
                                         <Image src="/user/logOut.svg" alt="logOutIcon"
                                                width={30} height={40}
