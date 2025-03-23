@@ -73,6 +73,7 @@ interface User {
     skills: string[];
 
 }
+// custom react hook to check screen width
 function useMediaQuery(query: string) {
     const [matches, setMatches] = useState(false);
 
@@ -88,25 +89,26 @@ function useMediaQuery(query: string) {
 
     return matches;
 }
+
  const UserProfile: React.FC = () => {
      const { id } = useParams();
      const router = useRouter();
-    const [activeTab, setActiveTab] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [isOpen, setIsOpen] = useState(false);
+     const [activeTab, setActiveTab] = useState(0);
+     const [loading, setLoading] = useState(true);
+     const [isOpen, setIsOpen] = useState(false);
      const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
-    const [messageIndex, setMessageIndex] = useState<number | null>(null);
-    const [showMessage, setShowMessage] = useState(false);
-    const notificationRef = useRef<HTMLDivElement>(null);
+     const [messageIndex, setMessageIndex] = useState<number | null>(null);
+     const [showMessage, setShowMessage] = useState(false);
+     const notificationRef = useRef<HTMLDivElement>(null);
      const [user, setUser] = useState<User | null>(null);
      const [isCollapsed, setIsCollapsed] = useState(false);
      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-     const filteredNotifications = user?.notifications.filter(item =>
-         item.isSelected && !item.approved) ?? [];
+     const filteredNotifications = user?.notifications.filter(
+         item => item.isSelected && !item.approved) ?? [];
      const isSmallScreen = useMediaQuery('(max-width: 919px)');
 
+     // Check screen size on mount
      useEffect(() => {
-         // Function to check screen width
          const handleResize = () => {
              const menuElement = document.getElementById('menuButton');
              if (isSmallScreen) {
@@ -120,40 +122,45 @@ function useMediaQuery(query: string) {
          handleResize();
      }, [isSmallScreen]);
 
+     // Toggle sidebar
      const toggleSidebar = () => {
          setIsCollapsed(!isCollapsed);
      };
-    // Education Handlers
-    const addEducation = (
+
+     // Education Handlers
+     const addEducation = (
         e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setUser(prevState => prevState?{
             ...prevState,
             education: [...prevState?.education, { courseName: '', schoolName: '', startDate: '', endDate: '', description: '' }]
         }:null);
-    };
-    // Experience Handlers
-    const addExperience = (
+     };
+
+     // Experience Handlers
+     const addExperience = (
         e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setUser(prevState =>prevState?{
             ...prevState,
             experience: [...prevState.experience, { jobName: '', companyName: '', startDate: '', endDate: '', description: '' }]
         }:null);
-    };
-    // Change handler
-    const handleChange = (
+     };
+
+     // Change handler
+     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>, field: string
-    ) => {
+     ) => {
         setUser((prev) => prev? {
             ...prev,
             [field]: e.target.value
         } : null);
-    };
-    const handleFields = (
+     };
+     // Update user fields
+     const handleFields = (
         value: string,
         field:string
-    ) => {
+     ) => {
         setUser(prev => {
             if (!prev) return null;
             console.log("Updating:", field, "with", value);
@@ -162,7 +169,7 @@ function useMediaQuery(query: string) {
                 [field]: value
             };
         });
-    };
+     };
      // Update nested fields (experience, education)
      const handleNestedChange = (
          index: number,
@@ -177,8 +184,10 @@ function useMediaQuery(query: string) {
              ),
          } : null);
      };
-    const handleSubmit = async () => {
+     // handle form submission for user data
+     const handleSubmit = async () => {
         if (user) {
+            // Filter out empty job names and course names
             user.experience = user.experience.filter(item => item.jobName);
             user.education = user.education.filter(item => item.courseName);
 
@@ -216,51 +225,52 @@ function useMediaQuery(query: string) {
                 console.error("Error:", error);
             }
         }
-    }
+     }
 
-    useEffect(() => {
-        // Simulate loading for 1.5 seconds
-        setTimeout(() => {
-            setLoading(false); // Set loading to false after 1.5 seconds
-        }, 1500);
 
-        if(id){
-            const fetchUserDetails = async () => {
-                const response = await fetch(`${baseUrl}/getUser/${id}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+     useEffect(() => {
+         //get user details when userid is available
+         if(id){
+             const fetchUserDetails = async () => {
+                 const response = await fetch(`${baseUrl}/getUser/${id}`, {
+                     method: 'GET',
+                     headers: {
+                         'Content-Type': 'application/json',
+                     },
+                 });
 
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.error) {
-                        console.log(data.error);  // If the backend returns an error, displaying it in the console
-                    } else {
-                        setUser(data);  // Otherwise, display the user details
-                    }
-                } else {
-                    console.log('Failed to fetch user details');
-                }
-            };
-            fetchUserDetails().then(e => console.log(e));
-        }else{
-            router.push(`${baseUrl}/login`);
-        }
+                 if (response.ok) {
+                     const data = await response.json();
+                     if (data.error) {
+                         console.log(data.error);  // If the backend returns an error, displaying it in the console
+                     } else {
+                         setUser(data);  // Otherwise, display the user details
+                     }
+                 } else {
+                     console.log('Failed to fetch user details');
+                 }
+             };
+             fetchUserDetails().then(e => console.log(e));
+         }else{
+             //redirect to login page if user is not logged in
+             router.push(`${baseUrl}/login`);
+         }
+         //handle user clicks outside the notification popup
+         const handleClickOutside = (event: MouseEvent) => {
+             if (
+                 notificationRef.current &&
+                 !notificationRef.current.contains(event.target as Node)
+             ) {
+                 setIsOpen(false);
+             }
+         };
+         // Add event listener
+         document.addEventListener("mousedown", handleClickOutside);
+         // Remove event listener on cleanup
+         return () => document.removeEventListener("mousedown", handleClickOutside);
+     }, [activeTab, id]);
 
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                notificationRef.current &&
-                !notificationRef.current.contains(event.target as Node)
-            ) {
-                setIsOpen(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [activeTab, id]);
-
+     // Logout function
      const logout = async () => {
          try {
              await axios.get('/api/users/logout');
@@ -272,14 +282,14 @@ function useMediaQuery(query: string) {
          }
      };
 
-
-
+     // Notification popup toggle
      const togglePopup = () => {
          if(user && filteredNotifications.length>0){
              setIsOpen(!isOpen);
          }
      };
 
+     //handle sidebar behavior on nav tab clicks
      const toggleNavIcon = () => {
          if (typeof window !== "undefined") {
              if( window.innerWidth <= 919){
@@ -288,6 +298,7 @@ function useMediaQuery(query: string) {
          }
      };
 
+     // handle tooltip behavior
      const handleMouseMove = (e: React.MouseEvent, text: string) => {
          if (isCollapsed && window?.innerWidth >= 919){
              setTooltip({
@@ -298,15 +309,19 @@ function useMediaQuery(query: string) {
          }
      };
 
+     // Remove tooltip on mouse leave
      const handleMouseLeave = () => setTooltip(null);
 
-
+     //handle notification approval
      const handleApprove = (index:number) => {
          if(user){
-                user.notifications[index].approved = true;
-                setUser({...user});
-                 handleSubmit();
+             // Approve notification
+             user.notifications[index].approved = true;
+             setUser({...user});
+             // Update user data
+             handleSubmit();
          }
+         // Close popup if there are no more notifications
          const filteredNotifications = user?.notifications.filter(item =>
              item.isSelected && !item.approved) ?? [];
          if(filteredNotifications.length == 0){
@@ -315,6 +330,7 @@ function useMediaQuery(query: string) {
      };
 
     return (
+        // Suspense component to handle loading state
         <><Suspense fallback={<div>Loading...</div>}>
             <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
                 <div className={styles.innerContainer}>
@@ -332,14 +348,17 @@ function useMediaQuery(query: string) {
                         </div>
                     )}
 
+                    {/* Sidebar */}
                     <aside className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ''}`}>
                         <div className={`${styles.logoContainer} ${isCollapsed ? styles.collapsed : ''}`}>
+                            {/* Menu Button */}
                             <Image id={"menuButton"} src="/user/navMenu.svg"
                                    alt="navMenuIcon" width={30} height={30}
                                    onClick={toggleSidebar} className={`${styles.menuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
                             {!isCollapsed && <Image src="/logo.png" alt="Logo" width={120}
                                                     height={120} className={styles.logo} priority/>}
                         </div>
+                        {/* Navigation */}
                         <nav className={styles.nav}>
                             <ul>
                                 <li
@@ -447,101 +466,93 @@ function useMediaQuery(query: string) {
 
                     {/* Main Content */}
                     <main className={`${styles.mainContent} ${isCollapsed ? styles.collapsed : ''}`}>
-                        <div>
-                            {/* Show loading spinner while content is loading */}
-                            {loading ? (
-                                <div className="d-flex justify-content-center align-items-center"
-                                     style={{height: '100vh'}}>
-                                    <div className="spinner-border text-primary" role="status">
-                                    </div>
-                                </div>
-                            ) : (
-                                // Your main content once loading is done
-                                <div>
-                                    <header className={`${styles.header} ${isCollapsed ? styles.collapsed : ''}`}>
-                                        { isCollapsed && <div className={styles.logoContainer}>
-                                            <Image src="/user/navMenu.svg"
-                                                   alt="navMenuIcon" width={30} height={30}
-                                                   onClick={toggleSidebar}
-                                                   className={`${styles.headerMenuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
-                                            <Image src="/logo.png" alt="Logo" width={120}
-                                                   height={120} className={`${styles.logo} ${isCollapsed ? styles.collapsed : ''}`} priority/>
-                                        </div>}
-                                        <div className={`${styles.notificationWrapper} ${isCollapsed ? styles.collapsed : ''}`} ref={notificationRef}>
-                                            <div className={styles.notificationContainer} onClick={togglePopup}>
-                                                {filteredNotifications.length > 0 ? (
-                                                    <div>
-                                                        <Image
-                                                            src={"/user/notificationBellRing.svg"}
-                                                            alt="notificationBellRing"
-                                                            width={30}
-                                                            height={30}
-                                                            className={styles.notificationIcon}
-                                                        />
-                                                        <span className={styles.notificationCount}>
+                        {/* Header */}
+                        <header className={`${styles.header} ${isCollapsed ? styles.collapsed : ''}`}>
+                            {isCollapsed && <div className={styles.logoContainer}>
+                                {/* Menu Button */}
+                                <Image src="/user/navMenu.svg"
+                                       alt="navMenuIcon" width={30} height={30}
+                                       onClick={toggleSidebar}
+                                       className={`${styles.headerMenuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
+                                {/* Logo */}
+                                <Image src="/logo.png" alt="Logo" width={120}
+                                       height={120} className={`${styles.logo} ${isCollapsed ? styles.collapsed : ''}`}
+                                       priority/>
+                            </div>}
+                            {/* Notification container */}
+                            <div className={`${styles.notificationWrapper} ${isCollapsed ? styles.collapsed : ''}`}
+                                 ref={notificationRef}>
+                                {/* Notification bell */}
+                                <div className={styles.notificationContainer} onClick={togglePopup}>
+                                    {filteredNotifications.length > 0 ? (
+                                        <div>
+                                            <Image
+                                                src={"/user/notificationBellRing.svg"}
+                                                alt="notificationBellRing"
+                                                width={30}
+                                                height={30}
+                                                className={styles.notificationIcon}
+                                            />
+                                            <span className={styles.notificationCount}>
                                                 {filteredNotifications.length}
                                             </span>
-                                                    </div>
-                                                ) : (
-                                                    <Image
-                                                        src={"/user/notificationBell.svg"}
-                                                        alt="notificationBell"
-                                                        width={30}
-                                                        height={30}
-                                                        className={styles.notificationIcon}
-                                                    />
-                                                )}
-                                            </div>
-
-                                            {isOpen && (
-                                                <div id={"notificationContent"} className={styles.notificationPopup}>
-                                                    <ul>
-                                                        {user?.notifications.filter(item => item.isSelected && !item.approved).map((notification, index) => (
-                                                            <li key={index}>
-                                                                {messageIndex === index && showMessage === true ? (
-                                                                    <p onClick={() => setShowMessage(false)}>{notification.jobTitle}
-                                                                        <br/> {notification.jobType}
-                                                                        <br/> {notification.companyName}
-                                                                        <br/> {notification.companyEmail}</p>) : (
-                                                                    <p onClick={() => {
-                                                                        setMessageIndex(index);
-                                                                        setShowMessage(true);
-                                                                    }}>{notification.recruiterNote}</p>)}
-                                                                <button onClick={() => handleApprove(index)}>Approve
-                                                                </button>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            )}
                                         </div>
-                                    </header>
-                                    <div className={styles.contentWrapper}>
-                                        <section className={styles.tabsSection}>
-                                            {activeTab === 0 && user && <Overview user={user}/>}
-                                            {activeTab === 1 && user && <Progress user={user}/>}
-                                            {activeTab === 2 && user && <COURSE/>}
-                                            {activeTab === 3 && user && <Resume
-                                                user={user}
-                                                // removeEducation={removeEducation}
-                                                // removeExperience={removeExperience}
-                                                // updateNestedChanges={updateNestedChanges}
-                                            />}
-                                            {activeTab === 4 && user && <MockInterview/>}
-                                            {activeTab === 5 && user && <Assessment/>}
-                                            {activeTab === 6 && user && <JobRecommendations/>}
-                                            {activeTab === 7 && user && <Settings
-                                                user={user}
-                                                handleSubmit={handleSubmit}
-                                                handleChange={handleChange}
-                                                handleNestedChange={handleNestedChange}
-                                                addEducation={addEducation}
-                                                addExperience={addExperience}
-                                                handleFields={handleFields}/>}
-                                        </section>
-                                    </div>
+                                    ) : (
+                                        <Image
+                                            src={"/user/notificationBell.svg"}
+                                            alt="notificationBell"
+                                            width={30}
+                                            height={30}
+                                            className={styles.notificationIcon}
+                                        />
+                                    )}
                                 </div>
-                            )}
+
+                                {/* Notification popup */}
+                                {isOpen && (
+                                    <div id={"notificationContent"} className={styles.notificationPopup}>
+                                        <ul>
+                                            {user?.notifications.filter(item => item.isSelected && !item.approved).map((notification, index) => (
+                                                <li key={index}>
+                                                    {messageIndex === index && showMessage === true ? (
+                                                        <p onClick={() => setShowMessage(false)}>{notification.jobTitle}
+                                                            <br/> {notification.jobType}
+                                                            <br/> {notification.companyName}
+                                                            <br/> {notification.companyEmail}</p>) : (
+                                                        <p onClick={() => {
+                                                            setMessageIndex(index);
+                                                            setShowMessage(true);
+                                                        }}>{notification.recruiterNote}</p>)}
+                                                    <button onClick={() => handleApprove(index)}>Approve
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        </header>
+                        {/* Content */}
+                        <div className={styles.contentWrapper}>
+                            <section className={styles.tabsSection}>
+                                {activeTab === 0 && user && <Overview user={user}/>}
+                                {activeTab === 1 && user && <Progress user={user}/>}
+                                {activeTab === 2 && user && <COURSE/>}
+                                {activeTab === 3 && user && <Resume
+                                    user={user}
+                                />}
+                                {activeTab === 4 && user && <MockInterview/>}
+                                {activeTab === 5 && user && <Assessment/>}
+                                {activeTab === 6 && user && <JobRecommendations/>}
+                                {activeTab === 7 && user && <Settings
+                                    user={user}
+                                    handleSubmit={handleSubmit}
+                                    handleChange={handleChange}
+                                    handleNestedChange={handleNestedChange}
+                                    addEducation={addEducation}
+                                    addExperience={addExperience}
+                                    handleFields={handleFields}/>}
+                            </section>
                         </div>
                     </main>
                 </div>
@@ -550,9 +561,10 @@ function useMediaQuery(query: string) {
         </>
     );
  }
-
+{/* Exporting the UserProfile component */}
 export default function UserProfilePage() {
     return (
+        // Suspense component to handle loading state
         <Suspense fallback={<div>Loading...</div>}>
             <UserProfile/>
         </Suspense>
