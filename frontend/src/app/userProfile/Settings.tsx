@@ -390,6 +390,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             <div className={styles.formGroup}>
                                 <label htmlFor={`startDate-${index}`}>Start Date</label>
                                 <input
+                                    className={styles.dateInput}
                                     type="date" // Use type="date"
                                     id={`startDate-${index}`}
                                     value={exp.startDate || ''}
@@ -399,6 +400,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             <div className={styles.formGroup}>
                                 <label htmlFor={`endDate-${index}`}>End Date</label>
                                 <input
+                                    className={styles.dateInput}
                                     type="date" // Use type="date"
                                     id={`endDate-${index}`}
                                     value={exp.endDate || ''}
