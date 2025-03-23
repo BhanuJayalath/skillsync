@@ -90,7 +90,35 @@ interface User {
      const filteredNotifications = user?.notifications.filter(item =>
          item.isSelected && !item.approved) ?? [];
 
+     useEffect(() => {
 
+         if (typeof window !== 'undefined') {
+             // Function to check screen width
+             const handleResize = () => {
+                 const menuElement = document.getElementById(`menuButton`);
+                 if(window?.innerWidth <= 919){
+                     setIsCollapsed(true);
+                     if (menuElement) {
+                         menuElement.style.display = 'none';
+                     }
+                 }else{
+                     setIsCollapsed(false);
+                     if (menuElement) {
+                         menuElement.style.display = 'flex';
+                     }
+                 }
+             };
+
+             // Run check on mount
+             handleResize();
+
+             // Add resize listener
+             window.addEventListener('resize', handleResize);
+
+             // Clean up listener on unmount
+             return () => window.removeEventListener('resize', handleResize);
+         }
+     }, [activeTab,window.innerWidth]);
 
 
 
