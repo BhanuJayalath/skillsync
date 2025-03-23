@@ -73,7 +73,8 @@ interface User {
     skills: string[];
 
 }
- function UserProfile() {
+
+ const UserProfile: React.FC = () => {
      const { id } = useParams();
      const router = useRouter();
     const [activeTab, setActiveTab] = useState(0);
@@ -89,35 +90,7 @@ interface User {
      const filteredNotifications = user?.notifications.filter(item =>
          item.isSelected && !item.approved) ?? [];
 
-     useEffect(() => {
 
-         if (typeof window !== 'undefined') {
-             // Function to check screen width
-             const handleResize = () => {
-                 const menuElement = document.getElementById(`menuButton`);
-                 if(window?.innerWidth <= 919){
-                     setIsCollapsed(true);
-                     if (menuElement) {
-                         menuElement.style.display = 'none';
-                     }
-                 }else{
-                     setIsCollapsed(false);
-                     if (menuElement) {
-                         menuElement.style.display = 'flex';
-                     }
-                 }
-             };
-
-             // Run check on mount
-             handleResize();
-
-             // Add resize listener
-             window.addEventListener('resize', handleResize);
-
-             // Clean up listener on unmount
-             return () => window.removeEventListener('resize', handleResize);
-         }
-     }, [activeTab,window.innerWidth]);
 
 
      const toggleSidebar = () => {
@@ -281,8 +254,10 @@ interface User {
      };
 
      const toggleNavIcon = () => {
-         if( window.innerWidth <= 919){
-             setIsCollapsed(true);
+         if (typeof window !== "undefined") {
+             if( window.innerWidth <= 919){
+                 setIsCollapsed(true);
+             }
          }
      };
 
@@ -335,8 +310,8 @@ interface User {
                             <Image id={"menuButton"} src="/user/navMenu.svg"
                                    alt="navMenuIcon" width={30} height={30}
                                    onClick={toggleSidebar} className={`${styles.menuButton} ${isCollapsed ? styles.collapsed : ''}`}/>
-                            {!isCollapsed && <Image src="/logo.png" alt="Logo" width={isCollapsed ? 50 : 120}
-                                                    height={isCollapsed ? 50 : 120} className={styles.logo} priority/>}
+                            {!isCollapsed && <Image src="/logo.png" alt="Logo" width={120}
+                                                    height={120} className={styles.logo} priority/>}
                         </div>
                         <nav className={styles.nav}>
                             <ul>
@@ -465,15 +440,6 @@ interface User {
                                             <Image src="/logo.png" alt="Logo" width={120}
                                                    height={120} className={`${styles.logo} ${isCollapsed ? styles.collapsed : ''}`} priority/>
                                         </div>}
-                                        {/*{ isCollapsed && <Image src="/user/navMenu.svg"*/}
-                                        {/*                        alt="navMenuIcon" width={30} height={30}*/}
-                                        {/*                        onClick={toggleSidebar} */}
-                                        {/*                        className={`${styles.menuButton} ${isCollapsed ? styles.collapsed : ''}`}/>}*/}
-                                        {/*{ isCollapsed && <Image src="/logo.png" alt="Logo" width={120}*/}
-                                        {/*                        height={120} className={styles.logo} priority/>}*/}
-                                        {/*<div className={styles.searchContainer}>*/}
-                                        {/*    <div className={styles.welcomeMessage}>Welcome, {user?.userName}</div>*/}
-                                        {/*</div>*/}
                                         <div className={`${styles.notificationWrapper} ${isCollapsed ? styles.collapsed : ''}`} ref={notificationRef}>
                                             <div className={styles.notificationContainer} onClick={togglePopup}>
                                                 {filteredNotifications.length > 0 ? (
