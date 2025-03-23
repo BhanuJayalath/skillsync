@@ -21,6 +21,7 @@
   width: 100%;
 }
 
+/* Sidebar */
 .sidebar {
   width: 15em; /* Slightly wider sidebar */
   background-color: rgb(96, 166, 236);
@@ -30,11 +31,12 @@
   color: #000000; /* White text on the sidebar */
   transition: width 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
   box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow to separate from content */
-  z-index: 100; /* Ensure it's above other content */
+  z-index: 100;
   overflow: hidden; /* Prevent content overflow during hover */
   height: 100vh;
 }
 
+/* Sidebar Collapsed */
 .sidebar.collapsed {
   width: 5em;
 }
@@ -51,16 +53,19 @@
   margin-left: 0;
 }
 
+/* Logo with menu button*/
 .logoContainer {
   display: flex;
   justify-content: left;
   align-items: center;
   height: 5em;
-  padding: 0.5em; /* Add some padding */
+  padding: 0.5em;
 }
+
 .logoContainer.collapsed{
   justify-content: center;
 }
+
 .logo {
   font-weight: bold;
   color: #050505;
@@ -68,9 +73,12 @@
   text-transform: uppercase; /* Make logo text uppercase */
   letter-spacing: 1px; /* Add letter spacing for visual appeal */
 }
+
 .logo.collapsed{
   margin-left: 0;
 }
+
+/* Navigation */
 .nav {
   margin-top: 0;
 }
@@ -80,7 +88,7 @@
   flex-direction: column;
   list-style: none;
   padding: 0;
-  margin: 0; /* Reset default margin */
+  margin: 0;
 }
 
 .nav a {
@@ -93,7 +101,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0.75em 1.5em; /* More padding */
+  padding: 0.75em 1.5em;
   transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover */
 }
 
@@ -105,11 +113,12 @@
 .nav li {
   font-size: 1.1em;
   cursor: pointer;
-  text-align: left; /* Align text to the left */
-  margin: 0; /* Remove default margins */
-  width: 100%; /* Full width for each list item */
+  text-align: left;
+  margin: 0;
+  width: 100%;
 }
 
+/* Active Link */
 .activeLink {
   background-color: rgba(0, 0, 0, 0.2); /* Darker background for active link */
   border-left: 3px solid #3498db; /* Highlight active link */
@@ -117,7 +126,7 @@
 
 .navImage {
   margin-right: 0.75em;
-  width: 24px; /* Standardize image sizes */
+  width: 24px;
   height: 24px;
   color: black;
   filter: brightness(0) invert(1); /* Ensure icons are always white */
@@ -155,7 +164,7 @@
   margin-left: 3em;
 }
 
-
+/* Notification Popup */
 .notificationWrapper {
   position: relative;
   display: inline-block;
@@ -245,6 +254,7 @@
   align-items: center;
   transition: margin-left 0.3s ease, box-shadow 0.3s ease;
 }
+
 .header.collapsed{
   margin-left: 2em;
   justify-content: space-between;
@@ -281,6 +291,7 @@
   width: 100%;
   padding: 1em; /* Add padding around the content */
 }
+
 .tabsSection {
   flex: 1 1 45%;
   display: flex;
@@ -302,6 +313,7 @@
   color: white;
   margin: 5% 0;
 }
+
 .overviewNavBar ul {
   display: flex;
   flex-direction: row;
@@ -309,6 +321,7 @@
   padding: 0;
   margin: 0;
 }
+
 .overviewNavBar ul li {
   display: flex;
   flex-direction: row;
@@ -320,6 +333,7 @@
   padding: 0.2em;
   margin: 0;
 }
+
 .overviewUserContainer {
   display: flex;
   flex-direction: row;
@@ -383,32 +397,6 @@
 
 .overviewIcons {
   margin: 0.5em;
-}
-.userFooter {
-  background-color: #3498db; /* Refined blue */
-  display: flex;
-  flex-direction: row;
-  color: white;
-  padding: 0.3em;
-  justify-content: center;
-  margin: 1em -1em -1em -1em; /* Adjust to align with userInfo padding */
-  border-radius: 0 0 0.5em 0.5em; /* Only round the top corners */
-  font-size: 0.9em;
-}
-
-.form2 button {
-  margin-top: 1em;
-  background: #3498db; /* Refined blue */
-  color: white;
-  border: none;
-  padding: 0.7em 1.3em;
-  border-radius: 0.3em;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.form2 button:hover {
-  background-color: #2980b9; /* Darker shade on hover */
 }
 
 /* Progress Section */
@@ -714,6 +702,7 @@
   z-index: 1; /* Add z-index */
 }
 
+/* Custom Upload Button */
 .customUploadButton {
   background: #3498db; /* Refined blue */
   border: none;
@@ -756,9 +745,25 @@
   width: 100%; /* Ensure full width */
   box-sizing: border-box;
 }
+
 /* Form_2*/
 .form2 {
   margin: 1em auto;
+}
+
+.form2 button {
+  margin-top: 1em;
+  background: #3498db; /* Refined blue */
+  color: white;
+  border: none;
+  padding: 0.7em 1.3em;
+  border-radius: 0.3em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form2 button:hover {
+  background-color: #2980b9; /* Darker shade on hover */
 }
 
 .formSection {
@@ -811,17 +816,19 @@
     visibility: visible; /* Ensure all contents are visible */
   }
 
-  /* Position the CV section at the top-left of the printed page */
+  /* Position the CV section at the center of the printed page */
   .cvSection {
     position: absolute;
     top: 0;
     width: 219cm; /* Full width of the A4 page */
     height: auto; /* Auto height to fit content */
     box-shadow: none; /* Remove any shadow for print */
-    border: none; /* Remove borders */
-    background-color: white; /* Ensure background is white for print */
+    border: none;
+    background-color: white;
   }
 }
+
+/* Media Queries */
 @media (max-width: 1063px){
   .overviewUserContainer {
     width: 40em;
@@ -830,7 +837,6 @@
 }
 
 @media (max-width: 919px){
-
   .header.collapsed{
     width: 100vw;
     height: 5em;
