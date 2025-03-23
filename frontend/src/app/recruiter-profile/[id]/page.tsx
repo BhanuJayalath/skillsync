@@ -72,6 +72,7 @@ export default function RecruiterProfile() {
       setIsVisible(window.innerWidth < 919);
     };
 
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     // Cleanup event listener on unmount
@@ -104,7 +105,16 @@ export default function RecruiterProfile() {
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
       />
-      <div className={styles.contentContainer }>
+      <div
+        className={`${styles.contentContainer} ${
+          isCollapsed ? styles.collapsed : ""
+        }`}
+        style={
+          !isCollapsed
+            ? { marginLeft: "15em", transition: "margin-left 0.3s ease-in-out" }
+            : {}
+        }
+      >
         <div className={styles.navigation}>
           {isVisible && (
             <div id={styles.HamburgerIcon} style={{ display: "flex" }}>
