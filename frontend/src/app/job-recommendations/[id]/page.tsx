@@ -239,7 +239,7 @@ export default function JobRecommendations() {
             <Tag className="h-4 w-4 text-muted-foreground" />
             <span className="text-sm text-muted-foreground mr-2">Your Skills:</span>
             {skills.map((skill, index) => (
-              <Badge key={index} variant="secondary" className="text-xs">
+              <Badge key={index} variant="secondary" className="bg-gray-100 text-xs">
                 {skill}
               </Badge>
             ))}
@@ -308,7 +308,7 @@ export default function JobRecommendations() {
                   <p className="text-sm text-muted-foreground mb-4">{job.jobDescription}</p>
                   <div className="flex flex-wrap gap-2">
                     {job.requiredSkills.map((skill, index) => (
-                      <Badge key={index} variant={skills.includes(skill) ? "default" : "outline"} className="text-xs">
+                      <Badge key={index} variant={skills.includes(skill) ? "default" : "outline"} className="bg-gray-100 text-xs">
                         {skill}
                       </Badge>
                     ))}
@@ -318,7 +318,7 @@ export default function JobRecommendations() {
                   <Button
                     onClick={() => selectJob(job)}
                     disabled={selectingJob === job.jobId}
-                    className="w-full sm:w-auto bg-blue-300 hover:bg-blue-400 text-white"
+                    className="bg-[rgb(96,166,236)] text-black w-full sm:w-auto"
                   >
                     {selectingJob === job.jobId ? "Selecting..." : "Select This Job"}
                   </Button>
