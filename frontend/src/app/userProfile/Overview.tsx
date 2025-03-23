@@ -38,7 +38,9 @@ interface Education {
 const Overview = ({ user }: { user: User }) => {
     const [activeTab, setActiveTab] = useState(0);
     return (
+        // Overview component
         <section className={styles.overviewContainer}>
+            {/* Overview navigation bar */}
             <nav className={styles.overviewNavBar}>
                 <ul>
                     <li
@@ -58,6 +60,7 @@ const Overview = ({ user }: { user: User }) => {
                     </li>
                 </ul>
             </nav>
+            {/* Overview user container */}
             <section className={styles.overviewUserContainer}>
                 <div className={styles.userProfile}>
                     <div className={styles.profilePicContainer}>
@@ -74,6 +77,7 @@ const Overview = ({ user }: { user: User }) => {
                         <p>{user?.selectedJob?.jobTitle}</p>
                     </div>
                 </div>
+                {/* Overview user profile */}
                 {activeTab === 0 && <div className={styles.userDetails}>
                     <p>{user?.email && <Image src={"/user/email.svg"} alt="email"
                                               className={styles.overviewIcons}
@@ -88,6 +92,7 @@ const Overview = ({ user }: { user: User }) => {
                                                className={styles.overviewIcons}
                                                width={20} height={20}/>}{user?.gitHub}</p>
                 </div>}
+                {/* Overview user details */}
                 {activeTab === 1 && <div className={styles.userDetails}>
                     <h3 className={styles.degreeTitle}>{user?.education[0]?.courseName}</h3>
                     <p className={styles.schoolName}>{user?.education[0]?.schoolName}</p>
@@ -97,6 +102,7 @@ const Overview = ({ user }: { user: User }) => {
                                                   className={styles.overviewIcons}
                                                   width={20} height={20}/>}{user?.portfolio}</p>
                 </div>}
+                {/* Overview user skills */}
                 {activeTab === 2 && <div className={styles.userDetails}>
                     <ul className={styles.userSkillList}>
                         {user.skills.map((skill, index) => (
