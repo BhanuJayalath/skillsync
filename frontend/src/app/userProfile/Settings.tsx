@@ -218,7 +218,31 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const handleUpload = async (e:React.FormEvent, index:number) =>{
         e.preventDefault();
         const blobUrl = process.env.NEXT_PUBLIC_BLOB_UPLOAD_PATH;
+        if(index ==1){
+            if (!inputFileRef1.current?.files) {
+                throw new Error('No file selected');
+            }else{
+                const file = inputFileRef1.current.files[0];
 
+                const newBlob = await upload(file.name, file, {
+                    access: 'public',
+                    handleUploadUrl: `${blobUrl}`,
+                });
+                setBlob(newBlob);
+            }
+        }else{
+            if (!inputFileRef2.current?.files) {
+                throw new Error('No file selected');
+            }else{
+                const file = inputFileRef2.current.files[0];
+
+                const newBlob = await upload(file.name, file, {
+                    access: 'public',
+                    handleUploadUrl: `${blobUrl}`,
+                });
+                setBlob(newBlob);
+            }
+        }
     }
     useEffect(() => {
         handleFields(blob?.url || user.avatar,"avatar");
