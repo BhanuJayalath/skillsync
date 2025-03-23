@@ -94,7 +94,6 @@ function useMediaQuery(query: string) {
      const { id } = useParams();
      const router = useRouter();
      const [activeTab, setActiveTab] = useState(0);
-     const [loading, setLoading] = useState(true);
      const [isOpen, setIsOpen] = useState(false);
      const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
      const [messageIndex, setMessageIndex] = useState<number | null>(null);

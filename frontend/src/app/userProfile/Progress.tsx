@@ -85,10 +85,10 @@ const Progress = ({ user }: { user: User }) => {
             </div>
             {/* Display the test results */}
             <div className={styles.tests}>
-                <h4 className={styles.testTitle}>{user.selectedJob.jobTitle}</h4>
+                <h4 className={styles.testTitle}>{user?.selectedJob?.jobTitle || ''}</h4>
                 <ul className={styles.testsList}>
                     {/* Display the test results */}
-                    {user.tests.map((test, index) => (
+                    {user?.tests.map((test, index) => (
                         <li key={index} className={styles.testItem}
                             onMouseEnter={() => setHoveredIndex(index)} // Track hovered item
                             onMouseLeave={() => setHoveredIndex(null)}   // Reset on mouse leave
