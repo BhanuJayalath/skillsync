@@ -143,7 +143,7 @@ export class User {
   country: string; // User's country
 
   @Prop()
-  timeZone: string; // User's timezone
+  portfolio: string; // User's timezone
 
   @Prop([Course])
   courses: Course[]; // Array of courses

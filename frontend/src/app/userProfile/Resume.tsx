@@ -88,14 +88,14 @@ const Resume = ({user}: ResumeProps) => {
         }}>
             <div className={styles.contactInfo}>
                 <h1 className={styles.name}>{user.fullName}</h1>
-                <p className={styles.jobTitle}>{user.selectedJob.jobTitle}</p>
+                <p className={styles.jobTitle1}>{user.selectedJob.jobTitle}</p>
                 <div className={styles.contactDetails}>
                     <p>Email: {user.email}</p>
                     <p>Phone: {user.contact}</p>
                     <p>Location: {user.city}, {user.country?.split(' (')[0]}</p>
                 </div>
             </div>
-            <div id="summarySection" className={styles.experience}>
+            <div id="summarySection" className={styles.summary}>
                 <h2 className={styles.sectionTitle}>Summary</h2>
                 <div className={styles.job}>
                     <p className={styles.jobResponsibilities}>{user.cvSummary}</p>
@@ -137,7 +137,7 @@ const Resume = ({user}: ResumeProps) => {
                 <ul className={styles.assessmentList}>
                     {user.tests.map((test, index) => (
                         <li key={index} className={styles.assessmentItem}>
-                            <div id={`assessment${index}`} className={styles.degree}>
+                            <div id={`assessment${index}`} className={styles.assessment} >
                                 <p className={styles.assessmentDetails}>{test.testId}: {test.mark}%</p>
                             </div>
                         </li>
