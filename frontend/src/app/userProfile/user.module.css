@@ -1509,6 +1509,12 @@
     margin-left: 0;
   }
 
+  .form {
+    display: flex;
+    flex-direction: column;
+    margin: 0.2em;
+  }
+
   .form label {
     font-weight: bold;
     font-size: 0.8em;
@@ -1530,7 +1536,7 @@
   }
 
   .formSection {
-    width: 16em;
+    width: 18em;
     margin-left: 0;
   }
 
