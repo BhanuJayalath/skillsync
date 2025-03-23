@@ -57,7 +57,8 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     const [languages, setLanguages] = useState<string[]>([]);
     const [cities, setCities] = useState<string[]>([]);
     const [summary, setSummary] = useState("");
-    const inputFileRef = useRef<HTMLInputElement>(null);
+    const inputFileRef1 = useRef<HTMLInputElement>(null);
+    const inputFileRef2 = useRef<HTMLInputElement>(null);
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
     const [loading, setLoading] = useState(false);
     const isBrowser = typeof window !== "undefined";
@@ -89,7 +90,6 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                             );
                         }
                     });
-                    console.log(countryList);
                     setCountries(countryList);
                     setLanguages(Array.from(languageSet));
                 })
@@ -215,19 +215,10 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
     }, [user.country]);
 
     // Function to upload profile pics
-    const handleUpload = async (e:React.FormEvent) =>{
+    const handleUpload = async (e:React.FormEvent, index:number) =>{
         e.preventDefault();
         const blobUrl = process.env.NEXT_PUBLIC_BLOB_UPLOAD_PATH;
-        if (!inputFileRef.current?.files) {
-            throw new Error('No file selected');
-        }
-        const file = inputFileRef.current.files[0];
 
-        const newBlob = await upload(file.name, file, {
-            access: 'public',
-            handleUploadUrl: `${blobUrl}`,
-        });
-        setBlob(newBlob);
     }
     useEffect(() => {
         handleFields(blob?.url || user.avatar,"avatar");
@@ -251,7 +242,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     </div>
                     {/* Upload button */}
                     <div id={'uploadButton1'} className={styles.uploadContainer}>
-                        <input name="file" ref={inputFileRef} type="file" accept="image/*"
+                        <input name="file" ref={inputFileRef1} type="file" accept="image/*"
                                onChange={(e) => handleUpload(e)}
                                className={styles.hiddenInput}/>
                         <button className={styles.customUploadButton}>Upload</button>
@@ -266,7 +257,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
 
                     {/* Second upload button for smaller screens */}
                     <div id={'uploadButton2'} className={styles.uploadContainer}>
-                        <input name="file" ref={inputFileRef} type="file" accept="image/*"
+                        <input name="file" ref={inputFileRef2} type="file" accept="image/*"
                                onChange={(e) => handleUpload(e)}
                                className={styles.hiddenInput}/>
                         <button className={styles.customUploadButton}>Upload</button>
