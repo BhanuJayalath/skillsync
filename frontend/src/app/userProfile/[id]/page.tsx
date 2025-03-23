@@ -340,7 +340,7 @@ interface User {
                                                className={styles.navImage}/> {!isCollapsed && 'Progress'}
                                     </div>
                                 </li>
-                                <li onClick={() => { setActiveTab(2); }}
+                                <li onClick={() => { setActiveTab(2); toggleNavIcon();}}
                                     className={activeTab === 2 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/courseIcon.svg" alt="courseIcon"
@@ -348,7 +348,7 @@ interface User {
                                                className={styles.navImage}/> {!isCollapsed && 'Courses'}
                                     </div>
                                 </li>
-                                <li onClick={() => { setActiveTab(3); }}
+                                <li onClick={() => { setActiveTab(3); toggleNavIcon();}}
                                     className={activeTab === 3 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/cvIcon.svg" alt="cvIcon" width={30}
@@ -356,7 +356,7 @@ interface User {
                                                className={styles.navImage}/> {!isCollapsed && 'Resume'}
                                     </div>
                                 </li>
-                                <li onClick={() => { setActiveTab(4);}}
+                                <li onClick={() => { setActiveTab(4); toggleNavIcon();}}
                                     className={activeTab === 4 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/mockInterview.svg"
@@ -364,7 +364,7 @@ interface User {
                                                className={styles.navImage}/> {!isCollapsed && 'Mock Interview'}
                                     </div>
                                 </li>
-                                <li onClick={() => { setActiveTab(5); }}
+                                <li onClick={() => { setActiveTab(5); toggleNavIcon();}}
                                     className={activeTab === 5 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/assessments.svg"
@@ -372,7 +372,7 @@ interface User {
                                                className={styles.navImage}/> {!isCollapsed && 'Assessments'}
                                     </div>
                                 </li>
-                                <li onClick={() => { setActiveTab(6);}}
+                                <li onClick={() => { setActiveTab(6); toggleNavIcon();}}
                                     className={activeTab === 6 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/Careers.svg" alt="CareersIcon"
@@ -380,7 +380,7 @@ interface User {
                                                className={styles.navImage}/> {!isCollapsed && 'Employment'}
                                     </div>
                                 </li>
-                                <li onClick={() => { setActiveTab(7);}}
+                                <li onClick={() => { setActiveTab(7); toggleNavIcon();}}
                                     className={activeTab === 7 ? styles.activeLink : ''}>
                                     <div className={styles.navTab}>
                                         <Image src="/user/settingsIcon.svg"
