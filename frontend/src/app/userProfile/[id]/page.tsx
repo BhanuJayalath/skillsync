@@ -103,7 +103,7 @@ function useMediaQuery(query: string) {
      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
      const filteredNotifications = user?.notifications.filter(item =>
          item.isSelected && !item.approved) ?? [];
-
+     const isSmallScreen = useMediaQuery('(max-width: 919px)');
 
 
 
