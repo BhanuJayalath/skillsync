@@ -144,7 +144,7 @@ Output the result as a JSON array, where each object has the following fields: i
         </div>
 
         {/* Section Divider */}
-        <div className="bg-[rgb(209,229,244)] py-12">
+        <div className="bg-blue-300 py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h2 className="text-2xl font-bold text-gray-800">Find Your Next Job</h2>
@@ -172,7 +172,7 @@ Output the result as a JSON array, where each object has the following fields: i
               </div>
               <Button
                 onClick={() => searchJobs(searchTerm)}
-                className="bg-[rgb(209,229,244)] hover:bg-primary/90 text-white"
+                className="bg-blue-500 hover:bg-primary/90 text-white"
                 disabled={isLoading}
               >
                 {isLoading ? (
