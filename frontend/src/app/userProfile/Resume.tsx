@@ -17,11 +17,11 @@ interface User {
 }
 
 interface Education {
-  courseName: string;
-  schoolName: string;
-  startDate: string;
-  endDate: string;
-  description: string;
+    courseName: string;
+    schoolName: string;
+    startDate: string;
+    endDate: string;
+    description: string;
 }
 
 interface Tests {
@@ -30,36 +30,39 @@ interface Tests {
 }
 
 interface selectedJob {
-  jobTitle: string;
-  jobId: string;
+    jobTitle: string;
+    jobId: string;
 }
 
 interface Experience {
-  jobName: string;
-  companyName: string;
-  startDate: string;
-  endDate: string;
-  description: string;
+    jobName: string;
+    companyName: string;
+    startDate: string;
+    endDate: string;
+    description: string;
 }
 
 interface ResumeProps {
-
     user: User;
 }
 
 const Resume = ({user}: ResumeProps) => {
 
+    // Hide sections if they are empty
     useEffect(() => {
         if (!user) return; // Prevent running if user is not defined
 
+        // Check if all job names and course names are empty
         const allJobNamesAreEmpty = user.experience?.every((job) => job.jobName === "") ?? true;
         const allCourseNamesAreEmpty = user.education?.every((course) => course.courseName === "") ?? true;
 
+        // Get elements
         const educationElement = document.getElementById('educationSection');
         const skillElement = document.getElementById('skillSection');
         const experienceElement = document.getElementById('experienceSection');
         const summaryElement = document.getElementById('summarySection');
 
+        // Hide elements if they are empty
         if (allJobNamesAreEmpty && experienceElement) {
             experienceElement.style.display = 'none';
         }
@@ -76,15 +79,15 @@ const Resume = ({user}: ResumeProps) => {
             summaryElement.style.display = 'none';
         }
 
-        console.log(user.experience);
-
     }, [user?.cvSummary?.length, user?.skills?.length, user?.education?.length, user?.experience?.length]);
     return (
         <section className={styles.cvSection} onClick={() => {
+            // Print the resume when the section is clicked
             if (typeof window !== "undefined") {
                 window.print();
             }
         }}>
+            {/* Contact information */}
             <div className={styles.contactInfo}>
                 <h1 className={styles.name}>{user.fullName}</h1>
                 <p className={styles.jobTitle1}>{user.selectedJob.jobTitle}</p>
@@ -94,12 +97,14 @@ const Resume = ({user}: ResumeProps) => {
                     <p>Location: {user.city}, {user.country?.split(' (')[0]}</p>
                 </div>
             </div>
+            {/* Summary */}
             <div id="summarySection" className={styles.summary}>
                 <h2 className={styles.sectionTitle}>Summary</h2>
                 <div className={styles.job}>
                     <p className={styles.jobResponsibilities}>{user.cvSummary}</p>
                 </div>
             </div>
+            {/* Experience */}
             <div id="experienceSection" className={styles.experience}>
                 <h2 className={styles.sectionTitle}>Experience</h2>
                 <ul className={styles.jobList}>
@@ -116,6 +121,7 @@ const Resume = ({user}: ResumeProps) => {
                 </ul>
             </div>
 
+            {/* Education */}
             <div id="educationSection" className={styles.education}>
                 <h2 className={styles.sectionTitle}>Education</h2>
                 <ul className={styles.educationList}>
@@ -131,6 +137,7 @@ const Resume = ({user}: ResumeProps) => {
                     ))}
                 </ul>
             </div>
+            {/* Assessments */}
             <div id="assessmentSection" className={styles.assessment}>
                 <h2 className={styles.sectionTitle}>Assessments</h2>
                 <ul className={styles.assessmentList}>
@@ -143,6 +150,7 @@ const Resume = ({user}: ResumeProps) => {
                     ))}
                 </ul>
             </div>
+            {/* Skills */}
             <div id="skillSection" className={styles.skills}>
                 <h2 className={styles.sectionTitle}>Skills</h2>
                 <ul className={styles.skillList}>
