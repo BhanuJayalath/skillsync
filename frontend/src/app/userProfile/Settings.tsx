@@ -267,7 +267,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     {/* Upload button */}
                     <div id={'uploadButton1'} className={styles.uploadContainer}>
                         <input name="file" ref={inputFileRef1} type="file" accept="image/*"
-                               onChange={(e) => handleUpload(e)}
+                               onChange={(e) => handleUpload(e,1)}
                                className={styles.hiddenInput}/>
                         <button className={styles.customUploadButton}>Upload</button>
                     </div>
@@ -282,7 +282,7 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
                     {/* Second upload button for smaller screens */}
                     <div id={'uploadButton2'} className={styles.uploadContainer}>
                         <input name="file" ref={inputFileRef2} type="file" accept="image/*"
-                               onChange={(e) => handleUpload(e)}
+                               onChange={(e) => handleUpload(e,2)}
                                className={styles.hiddenInput}/>
                         <button className={styles.customUploadButton}>Upload</button>
                     </div>
