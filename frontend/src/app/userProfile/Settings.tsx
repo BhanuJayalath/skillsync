@@ -161,7 +161,33 @@ const Settings = ({ user, handleSubmit, handleChange, handleNestedChange, addEdu
         await fetchSummary();
     }
 
+    useEffect(() => {
+        // Function to check screen width
+        const handleResize = () => {
+            const uploadElement1 = document.getElementById(`uploadButton1`);
+            const uploadElement2 = document.getElementById(`uploadButton2`);
+            if(window.innerWidth < 919){
+                if (uploadElement1 && uploadElement2) {
+                    uploadElement1.style.display = 'none';
+                    uploadElement2.style.display = 'flex';
+                }
+            }else{
+                if (uploadElement1 && uploadElement2) {
+                    uploadElement1.style.display = 'flex';
+                    uploadElement2.style.display = 'none';
+                }
+            }
+        };
 
+        // Run check on mount
+        handleResize();
+
+        // Add resize listener
+        window.addEventListener('resize', handleResize);
+
+        // Clean up listener on unmount
+        return () => window.removeEventListener('resize', handleResize);
+    }, [window.innerWidth]);
 
     // Fetch cities when a country is selected
     useEffect(() => {
