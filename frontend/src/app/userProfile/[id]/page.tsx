@@ -291,7 +291,7 @@ interface User {
      };
 
      const handleMouseMove = (e: React.MouseEvent, text: string) => {
-         if (isCollapsed){
+         if (isCollapsed && window?.innerWidth >= 919){
              setTooltip({
                  text,
                  x: e.clientX + 10, // Slight offset for better visibility
