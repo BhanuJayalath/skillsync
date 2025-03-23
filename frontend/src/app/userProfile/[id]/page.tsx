@@ -320,6 +320,20 @@ interface User {
         <><Suspense fallback={<div>Loading...</div>}>
             <div className={`${styles.outerContainer} ${styles.pageContainer}`}>
                 <div className={styles.innerContainer}>
+                    {/* Tooltip */}
+                    {tooltip && (
+                        <div
+                            className="absolute bg-blue-600 text-white text-sm px-2 py-1 rounded shadow-md z-[9999]"
+                            style={{
+                                top: `${tooltip.y}px`,
+                                left: `${tooltip.x}px`,
+                                pointerEvents: 'none', // Prevents tooltip from interfering with hover
+                            }}
+                        >
+                            {tooltip.text}
+                        </div>
+                    )}
+
                     <aside className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ''}`}>
                         <div className={`${styles.logoContainer} ${isCollapsed ? styles.collapsed : ''}`}>
                             <Image id={"menuButton"} src="/user/navMenu.svg"
