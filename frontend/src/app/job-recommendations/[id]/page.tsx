@@ -318,7 +318,7 @@ export default function JobRecommendations() {
                   <Button
                     onClick={() => selectJob(job)}
                     disabled={selectingJob === job.jobId}
-                    className="w-full sm:w-auto"
+                    className="w-full sm:w-auto bg-blue-300 hover:bg-blue-400 text-white"
                   >
                     {selectingJob === job.jobId ? "Selecting..." : "Select This Job"}
                   </Button>
