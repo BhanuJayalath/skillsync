@@ -155,7 +155,7 @@ export default function JobRecommendations() {
 
       const payload = {
         userId: user._id,
-        selectedJob: { jobId: job.jobId, jobTitle: job.jobTitle },
+        selectedJob: { jobId: job.jobId, jobTitle: job.jobTitle }, 
       }
 
       const response = await axios.patch(`/api/jobs/updateUser`, payload, {

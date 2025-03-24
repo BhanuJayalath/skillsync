@@ -37,8 +37,6 @@ const Careers = ({ user }: { user: User }) => {
 
   // Initialize component with user data if available
   useEffect(() => {
-
-   
     // Check if user prop is provided (when component is used inside UserProfile)
     if (user && user._id) {
       setUserId(user._id);
@@ -48,9 +46,7 @@ const Careers = ({ user }: { user: User }) => {
       } else {
         setLoading(false);
       }
-
     } else {
-     
       // Standalone page - get user ID from URL
       const userIdFromUrl = searchParams.get("user_id");
       if (!userIdFromUrl) {
@@ -58,7 +54,7 @@ const Careers = ({ user }: { user: User }) => {
         setLoading(false);
         return;
       }
-      
+
       setUserId(userIdFromUrl);
       fetchUserDetails(userIdFromUrl);
     }
@@ -101,11 +97,12 @@ const Careers = ({ user }: { user: User }) => {
     setError(null);
 
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/jobs/recommendJob`,
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/jobs/recommendJob`,
         { skills: userSkills },
         { headers: { "Content-Type": "application/json" } }
       );
-      
+
       // Assuming response.data.jobs contains the job list
       const jobsWithMatchScore = response.data.jobs.map((job: Job) => {
         const matchingSkills = job.requiredSkills.filter((skill) =>
@@ -113,12 +110,16 @@ const Careers = ({ user }: { user: User }) => {
         );
         const matchScore =
           job.requiredSkills.length > 0
-            ? Math.round((matchingSkills.length / job.requiredSkills.length) * 100)
+            ? Math.round(
+                (matchingSkills.length / job.requiredSkills.length) * 100
+              )
             : 0;
         return { ...job, matchScore };
       });
-      
-      jobsWithMatchScore.sort((a: Job, b: Job) => (b.matchScore || 0) - (a.matchScore || 0));
+
+      jobsWithMatchScore.sort(
+        (a: Job, b: Job) => (b.matchScore || 0) - (a.matchScore || 0)
+      );
       setJobs(jobsWithMatchScore);
     } catch (err) {
       console.error("Error fetching job recommendations:", err);
@@ -135,8 +136,11 @@ const Careers = ({ user }: { user: User }) => {
     try {
       setLoading(true);
       const response = await axios.patch(
-        `${process.env.NEXT_PUBLIC_API_URL}/updateUser/${userId}`,
-        { selectedJob: { jobId: job.jobId, jobTitle: job.jobTitle } },
+        `${process.env.NEXT_PUBLIC_API_URL}/api/jobs/updateUser`,
+        {
+          selectedJob: { jobId: job.jobId, jobTitle: job.jobTitle },
+          userId,
+        }, // Include both jobId and jobTitle
         { headers: { "Content-Type": "application/json" }, withCredentials: true }
       );
 
@@ -153,31 +157,35 @@ const Careers = ({ user }: { user: User }) => {
 
   // Filter jobs based on type and search term
   const applyFilters = () => {
-  let result = [...jobs];
+    let result = [...jobs];
 
-  // Filter out jobs that don't match any of the user's skills
-  result = result.filter(job => 
-    job.requiredSkills.some(skill => skills.includes(skill))
-  );
-
-  // Apply job type filter
-  if (filterType !== "all") {
-    result = result.filter(job => job.jobType.toLowerCase() === filterType.toLowerCase());
-  }
-  
-  // Apply search term filter
-  if (searchTerm.trim() !== "") {
-    const term = searchTerm.toLowerCase();
-    result = result.filter(job => 
-      job.jobTitle.toLowerCase().includes(term) ||
-      job.jobDescription.toLowerCase().includes(term) ||
-      job.requiredSkills.some(skill => skill.toLowerCase().includes(term))
+    // Filter out jobs that don't match any of the user's skills
+    result = result.filter((job) =>
+      job.requiredSkills.some((skill) => skills.includes(skill))
     );
-  }
-  
-  setFilteredJobs(result);
-};
 
+    // Apply job type filter
+    if (filterType !== "all") {
+      result = result.filter(
+        (job) => job.jobType.toLowerCase() === filterType.toLowerCase()
+      );
+    }
+
+    // Apply search term filter
+    if (searchTerm.trim() !== "") {
+      const term = searchTerm.toLowerCase();
+      result = result.filter(
+        (job) =>
+          job.jobTitle.toLowerCase().includes(term) ||
+          job.jobDescription.toLowerCase().includes(term) ||
+          job.requiredSkills.some((skill) =>
+            skill.toLowerCase().includes(term)
+          )
+      );
+    }
+
+    setFilteredJobs(result);
+  };
 
   // Handle job type filter change
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -199,7 +207,9 @@ const Careers = ({ user }: { user: User }) => {
     return (
       <div className="not-logged-in-container">
         <h1>Job Recommendations</h1>
-        <p className="not-logged-in-message">Please log in to see job recommendations.</p>
+        <p className="not-logged-in-message">
+          Please log in to see job recommendations.
+        </p>
         <button onClick={() => router.push("/login")} className="login-button">
           Go to Login
         </button>
@@ -211,19 +221,21 @@ const Careers = ({ user }: { user: User }) => {
     <div className="job-recommendations">
       <div className="job-recommendations-header">
         <h1>Job Recommendations</h1>
-        
+
         {/* User skills section */}
         {skills.length > 0 && (
           <div className="skills-container">
             <h3>Your Skills</h3>
             <div className="skills-tags">
               {skills.map((skill, index) => (
-                <span key={index} className="skill-tag">{skill}</span>
+                <span key={index} className="skill-tag">
+                  {skill}
+                </span>
               ))}
             </div>
           </div>
         )}
-        
+
         {/* Search and filter controls */}
         {!loading && jobs.length > 0 && (
           <div className="job-filters" hidden>
@@ -234,9 +246,9 @@ const Careers = ({ user }: { user: User }) => {
               onChange={handleSearchChange}
               className="search-input"
             />
-            
-            <select 
-              value={filterType} 
+
+            <select
+              value={filterType}
               onChange={handleFilterChange}
               className="filter-select"
             >
@@ -247,17 +259,17 @@ const Careers = ({ user }: { user: User }) => {
               <option value="internship">Internship</option>
               <option value="remote">Remote</option>
             </select>
-            
+
             <button onClick={refreshJobs} className="refresh-button">
               Refresh Jobs
             </button>
           </div>
         )}
       </div>
-      
+
       {loading && <p className="loading-message">Loading job recommendations...</p>}
       {error && <p className="error-message">{error}</p>}
-      
+
       {!loading && jobs.length === 0 && (
         <div className="no-jobs-container">
           <p>No job recommendations found based on your skills.</p>
@@ -270,21 +282,30 @@ const Careers = ({ user }: { user: User }) => {
           <p className="results-count">
             Showing {filteredJobs.length} of {jobs.length} jobs
           </p>
-          
+
           <ul className="job-list">
             {filteredJobs.map((job) => (
               <li key={job.jobId} className="job-item">
                 <div className="job-header">
                   <h2>{job.jobTitle}</h2>
                   {job.matchScore !== undefined && (
-                    <div className={`match-score ${job.matchScore > 70 ? 'high-match' : job.matchScore > 40 ? 'medium-match' : 'low-match'}`} hidden>
+                    <div
+                      className={`match-score ${
+                        job.matchScore > 70
+                          ? "high-match"
+                          : job.matchScore > 40
+                          ? "medium-match"
+                          : "low-match"
+                      }`}
+                      hidden
+                    >
                       {job.matchScore}% Match
                     </div>
                   )}
                 </div>
-                
+
                 <p className="job-description">{job.jobDescription}</p>
-                
+
                 <div className="job-details">
                   <p>
                     <strong>Type:</strong> {job.jobType}
@@ -300,26 +321,29 @@ const Careers = ({ user }: { user: User }) => {
                     </p>
                   )}
                 </div>
-                
+
                 <div className="skills-section">
                   <strong>Required Skills:</strong>
                   <div className="skills-tags">
                     {job.requiredSkills.map((skill, index) => (
-                      <span 
-                        key={index} 
-                        className={`skill-tag ${skills.includes(skill) ? 'matching-skill' : ''}`}
+                      <span
+                        key={index}
+                        className={`skill-tag ${
+                          skills.includes(skill) ? "matching-skill" : ""
+                        }`}
                       >
                         {skill}
                       </span>
                     ))}
                   </div>
                 </div>
-                
-                <button 
-                  onClick={() => selectJob(job)} 
+
+                <button
+                  onClick={() => selectJob(job)}
                   className="select-job-button"
                   disabled={loading}
-                  hidden>
+                  hidden
+                >
                   Select This Job
                 </button>
               </li>
@@ -329,6 +353,6 @@ const Careers = ({ user }: { user: User }) => {
       )}
     </div>
   );
-}
+};
 
 export default Careers;
