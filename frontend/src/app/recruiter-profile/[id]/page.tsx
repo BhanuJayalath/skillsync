@@ -11,10 +11,10 @@ import Dashboard from "../Dashboard";
 import Profile from "../CompanyProfile";
 import UserProfile from "../UserProfile";
 import Notification from "../Notification";
-
 import axios from "axios";
 import TestListing from "../TestListing";
 import SideBar from "../SideBar";
+import CompanyProfile from "../CompanyProfile";
 
 export default function RecruiterProfile() {
   const [loadTests, setLoadTests] = useState<
@@ -57,7 +57,8 @@ export default function RecruiterProfile() {
     message: "",
     status: "",
   });
-
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_RECRUITER_DETAILS}`)
@@ -67,6 +68,17 @@ export default function RecruiterProfile() {
       .catch((error) => {
         console.log(error);
       });
+    const handleResize = () => {
+      setIsVisible(window.innerWidth < 919);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -75,12 +87,14 @@ export default function RecruiterProfile() {
         message: "",
         status: "",
       });
-    }, 5000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [notification]);
 
-  let counter = 0;
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
+  };
   return (
     <section className={styles.main}>
       {notification.show ? <Notification notification={notification} /> : null}
@@ -88,10 +102,47 @@ export default function RecruiterProfile() {
         setProfileTab={setProfileTab}
         setDashboardTab={setDashboardTab}
         setUserProfile={setUserProfile}
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
       />
-      <div className={styles.contentContainer}>
+      <div
+        className={`${styles.contentContainer} ${
+          isCollapsed ? styles.collapsed : ""
+        }`}
+        style={
+          !isCollapsed
+            ? { marginLeft: "15em", transition: "margin-left 0.3s ease-in-out" }
+            : {}
+        }
+      >
         <div className={styles.navigation}>
-          <div id={styles.pageTitle}>Recruiter Profile</div>
+          {isVisible && (
+            <div id={styles.HamburgerIcon} style={{ display: "flex" }}>
+              <Image
+                src="/user/navMenu.svg"
+                alt="navMenuIcon"
+                width={30}
+                height={30}
+                onClick={toggleSidebar}
+                className={`${styles.headerMenuButton} ${
+                  isCollapsed ? styles.collapsed : ""
+                }`}
+              />
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={80}
+                height={80}
+                className={`${styles.logo} ${
+                  isCollapsed ? styles.collapsed : ""
+                }`}
+                priority
+              />
+            </div>
+          )}
+          <div id={styles.pageTitle}>
+            <Image src="/logo.png" alt="Logo" width={80} height={80} />
+          </div>
           <div className={styles.welcomeBar}>
             Welcome{" "}
             {recruiterDetails ? recruiterDetails.company : <h1>User</h1>}
@@ -114,9 +165,13 @@ export default function RecruiterProfile() {
                 recruiterDetails={recruiterDetails}
                 setUserProfile={setUserProfile}
                 setDashboardTab={setDashboardTab}
+                setNotification={setNotification}
               />
             ) : profileTab ? (
-              <Profile recruiterDetails={recruiterDetails} />
+              <CompanyProfile
+                setNotification={setNotification}
+                recruiterDetails={recruiterDetails}
+              />
             ) : null}
           </div>
           <div id={styles.contentContainer2}>
