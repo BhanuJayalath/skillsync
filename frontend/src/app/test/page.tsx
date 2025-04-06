@@ -220,7 +220,7 @@ const MCQTest = () => {
               </div>
             ) : availableTests.length === 0 ? (
               <div className={styles.noTestsContainer}>
-                <p>No tests available for this job.</p>
+                <p>No tests available for this job. Please select a Job from the Employment tab</p>
               </div>
             ) : (
               <>
