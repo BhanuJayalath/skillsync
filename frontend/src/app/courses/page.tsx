@@ -4,14 +4,15 @@ import React, { useEffect, useState, type ChangeEvent } from "react";
 import Image from "next/image";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { Search, BookOpen, Loader2 } from "lucide-react";
+import { Search, BookOpen, Loader2, Briefcase, Database } from "lucide-react";
 import CourseCard from "./coursecard";
 
 const DEEPSEEK_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const DEEPSEEK_API_KEY = process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY; // Now using the API key from .env.local
+const DEEPSEEK_API_KEY = process.env.NEXT_PUBLIC_DEEPSEEK_API_KEY; // Using API key from .env.local
 
 export default function Page() {
   const [courses, setCourses] = useState<any[]>([]);
+  const [dbCourses, setDbCourses] = useState<any[]>([]); // Added dbCourses state
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -30,7 +31,7 @@ export default function Page() {
           messages: [
             {
               role: "user",
-              content: `Please provide a list of five recommended online courses for learning ${topic}. 
+              content: `Please provide a list of six recommended online courses for learning ${topic}. 
 Output the result as a JSON array, where each object has the following fields: id, title, duration, category, instructor, link.`,
             },
           ],
@@ -39,13 +40,13 @@ Output the result as a JSON array, where each object has the following fields: i
 
       const data = await response.json();
       const generatedText = data?.choices?.[0]?.message?.content;
-      
+
       if (!generatedText) {
         console.error("No generated text received. Response data:", data);
         setCourses([]);
         return;
       }
-      
+
       let cleanedText = generatedText.trim();
 
       // Remove markdown code fences if present
@@ -112,6 +113,39 @@ Output the result as a JSON array, where each object has the following fields: i
           </div>
         </div>
 
+        {/* Recommended Courses - SkillSync Section (Database) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+          <div className="flex items-center mb-8">
+            <Database className="text-primary mr-2" size={24} />
+            <h2 className="text-2xl font-bold text-gray-800">Recommended Courses - SkillSync</h2>
+          </div>
+          {dbCourses.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {dbCourses.map((course) => (
+                <CourseCard key={course.id} course={course} /> // Fixed prop name
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20 bg-gray-50 rounded-lg">
+              <p className="text-lg text-gray-600">
+                No courses found in database.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Section Divider */}
+        <div className="bg-blue-300 py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-gray-800">Find Your Next Course</h2>
+              <p className="text-lg text-gray-600 mt-2">
+                Search for courses based on your skills that need improvement.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Search Section */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 w-full">
           <div className="bg-white rounded-lg shadow-lg p-6">
@@ -121,7 +155,6 @@ Output the result as a JSON array, where each object has the following fields: i
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                   size={20}
                 />
-
                 <Input
                   type="text"
                   placeholder="Search courses..."
@@ -133,7 +166,7 @@ Output the result as a JSON array, where each object has the following fields: i
               </div>
               <Button
                 onClick={() => searchCourses(searchTerm)}
-                className="bg-blue-500 hover:bg-primary/90 text-white"
+                className="bg-[rgb(96,166,236)] hover:bg-primary/90 text-white"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -149,13 +182,12 @@ Output the result as a JSON array, where each object has the following fields: i
           </div>
         </div>
 
-        {/* Courses Section */}
+        {/* Available Courses Section */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
           <div className="flex items-center mb-8">
             <BookOpen className="text-primary mr-2" size={24} />
-            <h2 className="text-2xl font-bold text-gray-800">Available Courses</h2>
+            <h2 className="text-2xl font-bold text-gray-800">Available Courses - Online</h2>
           </div>
-
           {isLoading ? (
             <div className="flex justify-center items-center py-20">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />

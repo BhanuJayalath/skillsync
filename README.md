@@ -1,12 +1,12 @@
 <div align="center">
 
-# SkillScync
+# SkillSync
 ![image](https://github.com/user-attachments/assets/8259cf4c-8b45-4609-bfd5-a9f02aec7cf9)
 
 
 
 
-<i>Personal Skill Assesment Tool</i>
+<i>Personal Skill Assessment Tool</i>
 
 </div>
 
@@ -71,6 +71,14 @@ This project aims to create a comprehensive platform that empowers users to effe
 
 ![Next.js](https://img.shields.io/badge/Next.js-%23000000.svg?style=for-the-badge&logo=nextdotjs&logoColor=white)
 ![NestJS](https://img.shields.io/badge/NestJS-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%2347A248.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Gemini API](https://img.shields.io/badge/Gemini%20API-%23000000.svg?style=for-the-badge&logo=gemini&logoColor=white)
+![DeepSeek R1](https://img.shields.io/badge/DeepSeek-%230000FF.svg?style=for-the-badge&logo=deepseek&logoColor=white)
+
+### ☁️ **Hosting**
+![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
+![Render](https://img.shields.io/badge/Render-%23000000.svg?style=for-the-badge&logo=render&logoColor=white)
+
 
 ### 🎨 **UI Design**
 
@@ -97,5 +105,5 @@ You can view the Figma design for this project [here](https://www.figma.com/desi
 ⭐️ Support Our Project
 If you find this project helpful, please consider giving it a star on GitHub! Your support helps to grow the project.
 
-### Show some ❤️ by starring this awesome repository!
+### Show some ❤️ by liking this awesome repository!
 </div>

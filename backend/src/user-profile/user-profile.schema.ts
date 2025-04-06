@@ -1,82 +1,106 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-// Defining the Courses, Tests, Job Role, Experience, Education, and Skills as nested schemas
+// Defining the Courses, Tests, Job Role, Experience, Notification, Education, and Skills as nested schemas
 class Course {
   @Prop()
-  courseId: string;
+  courseId: string; // course ID
 
   @Prop()
-  code: string;
+  code: string; // course code
 
   @Prop()
-  name: string;
+  name: string; // course name
 
   @Prop()
-  result: string;
+  result: string; // result
 
   @Prop()
-  mark: string;
+  mark: string; //  mark
 }
 class Experience {
   @Prop()
-  jobId: string;
+  jobId: string; // job ID
 
   @Prop()
-  jobName: string;
+  jobName: string; // job name
 
   @Prop()
-  companyName: string;
+  companyName: string; // company name
 
   @Prop()
-  startDate: string;
+  startDate: string; // start date
 
   @Prop()
-  endDate: string;
+  endDate: string; // end date
 
   @Prop()
-  description: string;
+  description: string; // description
 }
 class Education {
   @Prop()
-  eduId: string;
+  eduId: string; // education ID
 
   @Prop()
-  courseName: string;
+  courseName: string; // course name
 
   @Prop()
-  schoolName: string;
+  schoolName: string; // school name
 
   @Prop()
-  startDate: string;
+  startDate: string; // start date
 
   @Prop()
-  endDate: string;
+  endDate: string; // end date
 
   @Prop()
-  description: string;
+  description: string; // description
+}
+
+class Notifications {
+  @Prop()
+  jobId: string; // Job ID
+
+  @Prop()
+  jobTitle: string; // job title
+
+  @Prop()
+  jobType: string; // job type
+
+  @Prop()
+  companyName: string; // company name
+
+  @Prop()
+  companyEmail: string; // company email
+
+  @Prop()
+  recruiterNote: string; // recruiter note
+
+  @Prop()
+  isSelected: boolean; // job selected boolean
+
+  @Prop()
+  approved: boolean; // job approved boolean
+
 }
 
 class Test {
   @Prop()
-  jobId: string;
+  jobId: string; // Job ID
 
   @Prop()
-  testId: string;
+  testId: string; // Test ID
 
   @Prop()
-  score: number;
+  testLevel: string; // Test level
 
-  // @Prop()
-  // testLevel: string;
-
-  // @Prop()
-  // mark: string;
+  @Prop()
+  mark: string; // Test mark
 }
 
 class SelectedJob {
   @Prop()
-  jobTitle: string;
+  jobTitle: string; // Job Title
   @Prop()
-  jobId:string;
+  jobId:string; // Job ID
 }
 
 
@@ -98,7 +122,7 @@ export class User {
   avatar: string; // Profile picture URL
 
   @Prop()
-  cvSummary: string;
+  cvSummary: string; // User's CV summary
 
   @Prop()
   gitHub: string; // User gitHub URL
@@ -119,7 +143,7 @@ export class User {
   country: string; // User's country
 
   @Prop()
-  timeZone: string; // User's timezone
+  portfolio: string; // User's portfolio
 
   @Prop([Course])
   courses: Course[]; // Array of courses
@@ -135,6 +159,9 @@ export class User {
 
   @Prop({ type: [Education] })
   education: Education[];
+
+  @Prop({ type: [Notifications] })
+  notifications: Notifications[];
 
   @Prop({ type: [String] })
   skills: string[];

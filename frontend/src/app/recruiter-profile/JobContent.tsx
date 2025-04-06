@@ -8,8 +8,6 @@ import styles from "../assets/styles/recruiter.module.css";
 export default function JobContent({
   loadTests,
   setLoadTests,
-  // updateTestContent,
-  // setUpdateTestContent,
   removeTestBlock,
   setRemoveTestBlock,
   testState,
@@ -17,12 +15,14 @@ export default function JobContent({
   jobPostState,
   setJobPostState,
   setLoadTestQuestions,
-  setTestCount,
+  setTestLevel,
+  testLevel,
   testResponse,
   setTestResponse,
   loadJobPostContent,
   jobCount,
   jobPostResponse,
+  setNotification,
 }: {
   loadJobPostContent: any;
   jobCount: any;
@@ -36,9 +36,11 @@ export default function JobContent({
   jobPostState: any;
   setJobPostState: any;
   setLoadTestQuestions: any;
-  setTestCount: any;
+  setTestLevel: any;
+  testLevel: any;
   testResponse: any;
   setTestResponse: any;
+  setNotification: any;
 }) {
   const [updateJobPostContent, setUpdateJobPostContent] = useState(false);
   const [jobTitle, setJobTitle] = useState<string>();
@@ -70,7 +72,7 @@ export default function JobContent({
       );
       setDatabaseExistingId(DatabaseExistingId);
     }
-  }, []);
+  }, [updateJobPostContent]);
 
   function saveJobTitle(event: any) {
     setJobTitle(event.target.value);
@@ -82,7 +84,6 @@ export default function JobContent({
 
   function saveRequiredSkills(event: any) {
     event.preventDefault();
-    console.log(requiredSkills);
     setRequiredSkills([...requiredSkills, requiredSkillsValue]);
     setRequiredSkillsValue("");
   }
@@ -102,13 +103,41 @@ export default function JobContent({
         headers: { "Content-Type": "application/json" },
       }
     );
-    setUpdateJobPostContent(!updateJobPostContent);
+    setNotification({
+      show: true,
+      message: `Open Position ${jobCount} Saved Successfully`,
+      status: false,
+    });
+    setJobPostState(false);
+    setUpdateJobPostContent(false);
   }
   function saveToDatabase() {
-    axios.post(`${process.env.NEXT_PUBLIC_SAVE_JOB}`, storage, {
-      headers: { "Content-Type": "application/json" },
-    });
-    setUpdateJobPostContent(!updateJobPostContent);
+    if (
+      Object.values(storage).some(
+        (value) =>
+          value === undefined ||
+          value === null ||
+          value === "" ||
+          (Array.isArray(value) && value.length === 0)
+      )
+    ) {
+      setNotification({
+        show: true,
+        message: "All the fields are required",
+        status: true,
+      });
+    } else {
+      axios.post(`${process.env.NEXT_PUBLIC_SAVE_JOB}`, storage, {
+        headers: { "Content-Type": "application/json" },
+      });
+      setJobPostState(false);
+      setNotification({
+        show: true,
+        message: `Open Position ${jobCount} Saved Successfully`,
+        status: false,
+      });
+      setUpdateJobPostContent(false);
+    }
   }
 
   function removeSkill(skillIndex: number) {
@@ -126,56 +155,79 @@ export default function JobContent({
   return (
     <section className={styles.JobContent}>
       <header id={styles.JobContentHeading}>
-        <button onClick={previousPage}>
-          <Image
-            alt="back-icon"
-            width={25}
-            height={25}
-            src="/recruiter/back-icon.svg"
-          />
-        </button>
-        <h1>Job Post {jobCount}</h1>
-        {loadJobPostContent.jobTitle ? (
-          <h3>{loadJobPostContent.jobTitle}</h3>
-        ) : null}
-        <h3>{loadJobPostContent.jobId}</h3>
-        {!updateJobPostContent ? (
-          <button
-            onClick={() => {
-              setUpdateJobPostContent(!updateJobPostContent);
-            }}
-          >
+        <div id={styles.JobContentHeadingTitleButton}>
+          <button id={styles.buttonPreviousPage} onClick={previousPage}>
             <Image
-              alt="update-icon"
-              width={20}
-              height={20}
-              src="/recruiter/update-icon.svg"
+              alt="back-icon"
+              width={25}
+              height={25}
+              src="/recruiter/back-icon.svg"
             />
           </button>
-        ) : (
-          <div id={styles.jobContentSectionSaveandClose}>
-            {updateJobPostContent &&
-              (databaseExistingId ? (
-                <button onClick={updatetoDatabase}>
-                  <Image
-                    alt="save-icon"
-                    width={35}
-                    height={35}
-                    src="/recruiter/save-icon.svg"
-                  />
-                </button>
-              ) : (
-                <button onClick={saveToDatabase}>
-                  <Image
-                    alt="save-icon"
-                    width={35}
-                    height={35}
-                    src="/recruiter/save-icon.svg"
-                  />
-                </button>
-              ))}
-          </div>
-        )}
+          <h1>Open Position {jobCount}</h1>
+          {!updateJobPostContent && jobTitle != "" ? (
+            <button
+              id={styles.buttonAddJobContent}
+              onClick={() => {
+                setUpdateJobPostContent(!updateJobPostContent);
+              }}
+            >
+              <Image
+                alt="update-icon"
+                width={20}
+                height={20}
+                src="/recruiter/update-icon2.svg"
+              />
+              Update Position
+            </button>
+          ) : !updateJobPostContent && jobTitle == "" ? (
+            <button
+              id={styles.buttonAddJobContent}
+              onClick={() => {
+                setUpdateJobPostContent(!updateJobPostContent);
+              }}
+            >
+              <Image
+                alt="add-icon"
+                width={20}
+                height={20}
+                src="/recruiter/plus-icon.svg"
+              />
+              Add Position
+            </button>
+          ) : (
+            <div id={styles.jobContentSectionSaveandClose}>
+              {updateJobPostContent &&
+                (databaseExistingId ? (
+                  <button onClick={updatetoDatabase}>
+                    <Image
+                      alt="save-icon"
+                      width={20}
+                      height={20}
+                      src="/recruiter/save-icon.svg"
+                    />
+                    Save Position
+                  </button>
+                ) : (
+                  <button onClick={saveToDatabase}>
+                    <Image
+                      alt="save-icon"
+                      width={20}
+                      height={20}
+                      src="/recruiter/save-icon.svg"
+                    />
+                    Save Position
+                  </button>
+                ))}
+            </div>
+          )}
+        </div>
+        <div id={styles.JobContentHeadingTags}>
+          {loadJobPostContent.jobTitle ? (
+            <h3>{loadJobPostContent.jobTitle}</h3>
+          ) : null}
+          <h3>{loadJobPostContent.jobId}</h3>
+        </div>
       </header>
       {loadJobPostContent && updateJobPostContent ? (
         <div id={styles.jobContentSection}>
@@ -241,7 +293,7 @@ export default function JobContent({
             </div>
           </div>
         </div>
-      ) : loadJobPostContent && !updateJobPostContent ? (
+      ) : loadJobPostContent && !updateJobPostContent && !(jobTitle == "") ? (
         <div id={styles.jobContentSection}>
           <div id={styles.jobContentSectionBlock}>
             <div id={styles.jobContentSectionTitle}>
@@ -269,11 +321,7 @@ export default function JobContent({
             </div>
           </div>
         </div>
-      ) : (
-        <div id={styles.emptyMockExamSection}>
-          <h1>Add your Job Post Here</h1>
-        </div>
-      )}
+      ) : null}
       <TestListing
         loadTests={loadTests}
         setLoadTests={setLoadTests}
@@ -284,10 +332,12 @@ export default function JobContent({
         setJobPostState={setJobPostState}
         jobPostState={jobPostState}
         setLoadTestQuestions={setLoadTestQuestions}
-        setTestCount={setTestCount}
+        setTestLevel={setTestLevel}
+        testLevel={testLevel}
         testResponse={testResponse}
         setTestResponse={setTestResponse}
         loadJobPostContent={loadJobPostContent}
+        setNotification={setNotification}
       />
     </section>
   );

@@ -8,22 +8,24 @@ export default function TestContent({
   loadJobPostContent,
   loadTestQuestions,
   setLoadTestQuestions,
-  testCount,
+  testLevel,
   testResponse,
   testState,
   setTestState,
   jobPostState,
   setJobPostState,
+  setNotification,
 }: {
   loadJobPostContent: any;
   setLoadTestQuestions: any;
   loadTestQuestions: any;
-  testCount: number;
+  testLevel: string;
   testResponse: any;
   testState: any;
   setTestState: any;
   jobPostState: any;
   setJobPostState: any;
+  setNotification: any;
 }) {
   var counter = 0;
   const [databaseExistingId, setDatabaseExistingId] = useState(false);
@@ -95,12 +97,33 @@ export default function TestContent({
     });
   }
   function save() {
-    axios.post(`${process.env.NEXT_PUBLIC_SAVE_TEST}`, loadTestQuestions, {
-      headers: { "Content-Type": "application/json" },
-    });
-    setJobPostState(!jobPostState);
-    setTestState(!testState);
-    setUpdateTestContent(false);
+    if (
+      loadTestQuestions.testContent.questionContent.some((question: any) =>
+        Object.values(question).some(
+          (value: any) =>
+            value === "" || value === undefined || Number.isNaN(value)
+        )
+      )
+    ) {
+      setNotification({
+        show: true,
+        message: "All the fields are required",
+        status: true,
+      });
+    } else {
+      axios.post(`${process.env.NEXT_PUBLIC_SAVE_TEST}`, loadTestQuestions, {
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(testLevel);
+      setNotification({
+        show: true,
+        message: `${loadTestQuestions.testLevel} Saved Successfully`,
+        status: false,
+      });
+      setJobPostState(!jobPostState);
+      setTestState(!testState);
+      setUpdateTestContent(false);
+    }
   }
   function updatetoDatabase() {
     axios.patch(
@@ -110,6 +133,13 @@ export default function TestContent({
         headers: { "Content-Type": "application/json" },
       }
     );
+    setNotification({
+      show: true,
+      message: `${loadTestQuestions.testLevel} Updated Successfully`,
+      status: false,
+    });
+    setJobPostState(!jobPostState);
+    setTestState(!testState);
     setUpdateTestContent(false);
   }
   function previousPage() {
@@ -121,87 +151,109 @@ export default function TestContent({
 
   return (
     <section className={styles.mockExam}>
-      <header id={styles.mockExamHeading}>
-        <button onClick={previousPage}>
-          <Image
-            alt="back-icon"
-            width={25}
-            height={25}
-            src="/recruiter/back-icon.svg"
-          />
-        </button>
-        <h1>Test {testCount}</h1>
-        <h3>{loadTestQuestions.testId}</h3>
-        {loadJobPostContent.jobTitle ? (
-          <h3>{loadJobPostContent.jobTitle}</h3>
-        ) : null}
-        <h3>{loadJobPostContent.jobId}</h3>
-        {!updateTestContent ? (
-          <button
-            onClick={() => {
-              setUpdateTestContent(true);
-            }}
-          >
+      <header id={styles.TestContentHeading}>
+        <div id={styles.TestContentTitleButton}>
+          <button onClick={previousPage}>
             <Image
-              alt="update-icon"
-              width={20}
-              height={20}
-              src="/recruiter/update-icon.svg"
+              alt="back-icon"
+              width={25}
+              height={25}
+              src="/recruiter/back-icon.svg"
             />
           </button>
-        ) : updateTestContent ? (
-          <>
-            <button onClick={addQuestion}>
-              <Image
-                alt="plus-icon"
-                width={25}
-                height={25}
-                src="/recruiter/plus-icon.svg"
-              />
-            </button>
-            {databaseExistingId ? (
-              <button onClick={updatetoDatabase}>
+          <h1>Test {loadTestQuestions.testLevel}</h1>
+          <div id={styles.TestContentHeadingButtons}>
+            {!updateTestContent &&
+            loadTestQuestions.testContent.questionContent.length > 0 ? (
+              <button
+                onClick={() => {
+                  setUpdateTestContent(true);
+                }}
+              >
                 <Image
-                  alt="save-icon"
-                  width={35}
-                  height={35}
-                  src="/recruiter/save-icon.svg"
+                  alt="update-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/update-icon2.svg"
                 />
+                Update Questions
               </button>
-            ) : (
-              <button onClick={save}>
+            ) : !updateTestContent &&
+              loadTestQuestions.testContent.questionContent.length === 0 ? (
+              <button
+                onClick={() => {
+                  setUpdateTestContent(true);
+                }}
+              >
                 <Image
-                  alt="save-icon"
-                  width={35}
-                  height={35}
-                  src="/recruiter/save-icon.svg"
+                  alt="tick-icon"
+                  width={20}
+                  height={20}
+                  src="/recruiter/tik-icon.svg"
                 />
+                Get Started
               </button>
-            )}
-          </>
-        ) : null}
+            ) : updateTestContent ? (
+              <>
+                <button onClick={addQuestion}>
+                  <Image
+                    alt="plus-icon"
+                    width={20}
+                    height={20}
+                    src="/recruiter/plus-icon.svg"
+                  />
+                  Add Questions
+                </button>
+                {databaseExistingId ? (
+                  <button onClick={updatetoDatabase}>
+                    <Image
+                      alt="save-icon"
+                      width={20}
+                      height={20}
+                      src="/recruiter/save-icon.svg"
+                    />
+                    Save Questions
+                  </button>
+                ) : loadTestQuestions.testContent.questionContent.length > 0 ? (
+                  <button onClick={save}>
+                    <Image
+                      alt="save-icon"
+                      width={20}
+                      height={20}
+                      src="/recruiter/save-icon.svg"
+                    />
+                    Save Questions
+                  </button>
+                ) : null}
+              </>
+            ) : null}
+          </div>
+        </div>
+        <div id={styles.TestContentHeadingTags}>
+          <h3>{loadTestQuestions.testId}</h3>
+          {loadJobPostContent.jobTitle ? (
+            <h3>{loadJobPostContent.jobTitle}</h3>
+          ) : null}
+          <h3>{loadJobPostContent.jobId}</h3>
+        </div>
       </header>
       <div id={styles.questionContentDisplayArea}>
         <div id={styles.questionContentArea}>
-          {loadTestQuestions?.testContent?.questionContent.length > 0 ? (
-            loadTestQuestions.testContent.questionContent.map((item: any) => {
-              questionCounter++;
-              return (
-                <QuestionContent
-                  key={questionCounter}
-                  TestQuestions={item}
-                  questionCounter={questionCounter}
-                  update={update}
-                  removeQuestion={removeQuestion}
-                  updateTestContent={updateTestContent}
-                />
-              );
-            })
-          ) : (
-            <div id={styles.emptyMockExamSection}>
-              <h1>Add your Questions Here</h1>
-            </div>
-          )}
+          {loadTestQuestions?.testContent?.questionContent.length > 0
+            ? loadTestQuestions.testContent.questionContent.map((item: any) => {
+                questionCounter++;
+                return (
+                  <QuestionContent
+                    key={questionCounter}
+                    TestQuestions={item}
+                    questionCounter={questionCounter}
+                    update={update}
+                    removeQuestion={removeQuestion}
+                    updateTestContent={updateTestContent}
+                  />
+                );
+              })
+            : null}
         </div>
       </div>
     </section>

@@ -6,39 +6,33 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 export default function Dashboard({
   recruiterDetails,
+  setUserProfile,
+  setDashboardTab,
+  setUserId,
+  setJobId,
 }: {
   recruiterDetails: any;
+  setUserProfile: any;
+  setDashboardTab: any;
+  setUserId: any;
+  setJobId: any;
 }) {
   const [jobs, setJobs] = useState([]);
   const [tests, setTests] = useState([]);
   const [bestPerformed, setBestPerformed] = useState([]);
-  const [onLoad, setOnLoad] = useState(true);
-  const users = [
-    {
-      userId: "1",
-      jobId: "1",
-      tests: [
-        { testId: "Test1742022418151", result: 25 },
-        { testId: "Test1742022418151", result: 50 },
-      ],
-    },
-    {
-      userId: "2",
-      jobId: "2",
-      tests: [
-        { testId: "Test1742022418151", result: 90 },
-        { testId: "Test1742022418151", result: 80 },
-      ],
-    },
-    {
-      userId: "3",
-      jobId: "1",
-      tests: [
-        { testId: "Test1742022418151", result: 55 },
-        { testId: "Test1742022418151", result: 70 },
-      ],
-    },
-  ];
+  const [onLoad, setOnLoad] = useState(false);
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_GET_USER_DETAILS}`)
+      .then((response) => {
+        setUsers(response.data.users);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // setOnLoad(true);
+  }, []);
 
   useEffect(() => {
     const tempJobSet: any = [];
@@ -49,28 +43,25 @@ export default function Dashboard({
       .then((response) => {
         response.data.map((item: any) => {
           tempJobSet.push(item);
-          if (onLoad) {
-            loadTests(item.jobId);
-          }
+          // if (onLoad && users.length > 0) {
+          //   loadTests(item.jobId);
+          // }
         });
         setJobs(tempJobSet);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [onLoad, setOnLoad]);
+  }, [users]);
 
   function loadTests(jobId: any) {
+    setJobId(jobId);
     const tempTestsSet: any = [];
     axios
       .get(`${process.env.NEXT_PUBLIC_GET_TESTS}/${jobId}`)
       .then((response) => {
         response.data.map((item: any) => {
           tempTestsSet.push(item);
-          if (onLoad) {
-            performance(item.testId);
-            setOnLoad(false);
-          }
         });
         setTests(tempTestsSet);
       })
@@ -80,27 +71,33 @@ export default function Dashboard({
   }
 
   function performance(testId: string) {
+    console.log(testId);
     const tempMarkArray: any = [];
     users.map((item: any) => {
-      if (item.tests) {
+      if (item.tests.length > 0) {
         const test = item.tests.find((item: any) => item.testId == testId);
-        tempMarkArray.push({
-          userId: item.userId,
-          testId: test.testId,
-          testResult: test.result,
-        });
+        if (test) {
+          tempMarkArray.push({
+            userId: item._id,
+            userName: item.userName,
+            avatar: item.avatar ? item.avatar : null,
+            testId: test.testId,
+            mark: test.mark,
+          });
+        }
       }
     });
     const sortedMarkArray = tempMarkArray.sort(
-      (a: any, b: any) => b.testResult - a.testResult
+      (a: any, b: any) => b.mark - a.mark
     );
     setBestPerformed(sortedMarkArray);
+    // setOnLoad(false);
   }
 
   return (
     <>
       <div id={styles.topGraded}>
-        <h1>Job Post</h1>
+        <h1>Open Positions</h1>
         <div id={styles.dashboardDisplayContainer}>
           {jobs.map((item: any) => {
             return (
@@ -129,20 +126,28 @@ export default function Dashboard({
                 key={item.testId}
                 id={styles.profilesContainer}
               >
-                <TestTab testId={item.testId} index={index + 1} />
+                <TestTab testLevel={item.testLevel} />
               </button>
             );
           })}
         </div>
       </div>
       <div id={styles.results}>
-        <h1>Results</h1>
+        <h1>Best Grades</h1>
         <div id={styles.dashboardDisplayContainer}>
           {bestPerformed.map((item: any, index: number) => {
             return (
-              <div key={index} id={styles.resultsContainer}>
+              <button
+                onClick={() => {
+                  setUserProfile(true);
+                  setDashboardTab(false);
+                  setUserId(item.userId);
+                }}
+                key={index}
+                id={styles.resultsContainer}
+              >
                 <ResultTab userDetails={item} />
-              </div>
+              </button>
             );
           })}
         </div>

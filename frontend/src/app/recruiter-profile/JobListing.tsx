@@ -58,7 +58,7 @@ export default function JobListing({
       .catch((error) => {
         console.log(error);
       });
-  }, [remove, jobPostState]);
+  }, [remove]);
 
   function loadJobPostComponent(jobId: string, JobCounter: number) {
     const jobPost = loadJobPosts.find((item: any) => item.jobId === jobId);
@@ -97,63 +97,79 @@ export default function JobListing({
   return (
     <div id={styles.jobListing}>
       <div id={styles.jobListingcontainerHeader}>
-        <h1>Job Listing</h1>
-        <button onClick={addJobPostContainers}>
-          <Image
-            alt="plus-icon"
-            width={23}
-            height={23}
-            src="/recruiter/plus-icon.svg"
-          />
-        </button>
-        <button
-          onClick={() => {
-            setRemoveJobPostContainers(!removeJobPostContainers);
-          }}
-        >
-          {" "}
-          <Image
-            alt="remove-icon"
-            width={23}
-            height={23}
-            src="/recruiter/remove-icon.svg"
-          />
-        </button>
-      </div>
-      <div className={styles.mockExamscontainerSection}>
-        {loadJobPosts?.map((item: any, index: number) => {
-          return (
+        <h1>Open Positions</h1>
+        {loadJobPosts ? (
+          <div id={styles.jobListingHeaderButtonsSection}>
+            <button onClick={addJobPostContainers}>
+              <Image
+                alt="plus-icon"
+                width={20}
+                height={20}
+                src="/recruiter/plus-icon.svg"
+              />
+              Add Positions
+            </button>
             <button
-              key={index} // Ensure key is directly on the button element
               onClick={() => {
-                if (removeJobPostContainers) {
-                  removeJobPostComponent(item.jobId); // Use jobId here instead of mockExamId
-                } else {
-                  loadJobPostComponent(item.jobId, index + 1);
-                }
+                setRemoveJobPostContainers(!removeJobPostContainers);
               }}
-              id={styles.mockExamscontainer}
             >
               <Image
-                alt="exam-icon"
-                width={60}
-                height={60}
-                src="/recruiter/exam-icon.svg"
+                alt="remove-icon"
+                width={20}
+                height={20}
+                src="/recruiter/remove-icon.svg"
               />
-              <h1>Job Post {index + 1}</h1>
-              <div id={styles.mockExamscontainerButtons}>
-                {removeJobPostContainers ? (
-                  <Image
-                    alt="remove-icon"
-                    width={25}
-                    height={25}
-                    src="/recruiter/remove-icon.svg"
-                  />
-                ) : null}
-              </div>
+              Remove Positions
             </button>
-          );
-        })}
+          </div>
+        ) : (
+          <button onClick={addJobPostContainers}>
+            <Image
+              alt="plus-icon"
+              width={23}
+              height={23}
+              src="/recruiter/plus-icon.svg"
+            />
+          </button>
+        )}
+      </div>
+      <div className={styles.mockExamscontainerSection}>
+        <div id={styles.mockExamscontainerOverflowSection}>
+          {loadJobPosts?.map((item: any, index: number) => {
+            return (
+              <button
+                key={index}
+                onClick={() => {
+                  if (removeJobPostContainers) {
+                    removeJobPostComponent(item.jobId); // Use jobId here instead of mockExamId
+                  } else {
+                    loadJobPostComponent(item.jobId, index + 1);
+                  }
+                }}
+                id={styles.mockExamscontainer}
+              >
+                <Image
+                  alt="job-icon"
+                  width={60}
+                  height={60}
+                  src="/recruiter/job-icon.svg"
+                />
+                <h1>Open Position {index + 1}</h1>
+                <div id={styles.mockExamscontainerButtons}>
+                  {removeJobPostContainers ? (
+                    <Image
+                      alt="remove-icon"
+                      width={25}
+                      height={25}
+                      src="/recruiter/remove-icon.svg"
+                    />
+                  ) : null}
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

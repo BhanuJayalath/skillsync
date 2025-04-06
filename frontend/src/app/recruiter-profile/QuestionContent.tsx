@@ -33,7 +33,6 @@ export default function QuestionContent({
     correctAnswer: selectedAnswer,
   };
   useEffect(() => {
-    console.log(updateTestContent, "update test content");
     setQuestion(TestQuestions.question);
     setAnswer1(TestQuestions.answer1);
     setAnswer2(TestQuestions.answer2);
@@ -93,8 +92,8 @@ export default function QuestionContent({
             >
               <Image
                 alt="remove-icon"
-                width={25}
-                height={25}
+                width={40}
+                height={40}
                 src="/recruiter/remove-icon.svg"
               />
             </button>

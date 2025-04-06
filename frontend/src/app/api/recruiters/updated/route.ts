@@ -15,7 +15,15 @@ export async function PATCH(request: NextRequest) {
     // Update the recruiter details (allowing updates for userName, email, and company)
     const updatedRecruiter = await Recruiter.findOneAndUpdate(
       { _id: recruiterId },
-      { $set: { userName: reqBody.userName, email: reqBody.email, company: reqBody.company } },
+      {
+        $set: {
+          userName: reqBody.userName,
+          email: reqBody.email,
+          company: reqBody.company,
+          description: reqBody.description,
+          services: reqBody.services,
+        },
+      },
       { new: true, runValidators: true }
     ).select("-password");
 
