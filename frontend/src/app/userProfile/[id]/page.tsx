@@ -203,10 +203,7 @@ function useMediaQuery(query: string) {
                         linkedIn: user.linkedIn,
                         gender: user.gender,
                         language: user.language,
-                        selectedJob:{
-                            jobTitle: 'Full-stack Developer ',
-                            jobId:'',
-                        },
+                        selectedJob:user.selectedJob,
                         city: user.city,
                         country: user.country,
                         experience: user.experience,
